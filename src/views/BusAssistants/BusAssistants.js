@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
-import usersData from './UsersData'
+import usersData from '../Users/UsersData'
 
 function UserRow(props) {
   const user = props.user;
@@ -29,7 +29,7 @@ function UserRow(props) {
   )
 }
 
-class Users extends Component {
+class BusAssistants extends Component {
 
   render() {
 
@@ -41,24 +41,24 @@ class Users extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader>
-                Users <button class="btn btn-instagram float-lg-right">Create</button>
+                Bus Assistants  <button class="btn btn-instagram float-lg-right">Create</button>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
-                    <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone number</th>
-                      <th scope="col">SignUp Date</th>
-                      <th scope="col">status</th>
-                    </tr>
+                  <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone number</th>
+                    <th scope="col">SignUp Date</th>
+                    <th scope="col">status</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    {usersData.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
+                  {usersData.map((user, index) =>
+                    <UserRow key={index} user={user}/>
+                  )}
                   </tbody>
                 </Table>
               </CardBody>
@@ -70,4 +70,4 @@ class Users extends Component {
   }
 }
 
-export default Users;
+export default BusAssistants;

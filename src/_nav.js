@@ -36,7 +36,7 @@ export default {
         },
         {
           name: 'Area',
-          url: '/base/collapses',
+          url: '/area',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
@@ -90,19 +90,19 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/base/breadcrumbs',
+          url: '/users',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/base/cards',
+          url: '/users/active',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/base/carousels',
+          url: '/users/inactive',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
@@ -114,55 +114,55 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/base/breadcrumbs',
+          url: '/drivers',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/base/cards',
+          url: '/drivers/active',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/base/carousels',
+          url: '/drivers/inactive',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/base/carousels',
+          url: '/drivers/pending',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
       ],
     },
     {
-      name: 'Bus Assistance',
+      name: 'Bus Assistants',
       icon: 'icon-user',
       children: [
         {
           name: 'All',
-          url: '/base/breadcrumbs',
+          url: '/busassisstants',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/base/cards',
+          url: '/busassisstants/active',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/base/carousels',
+          url: '/busassisstants/inactive',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/base/carousels',
+          url: '/busassisstants/pending',
           icon: 'icon-puzzle',
           class: "menu_drop",
         },

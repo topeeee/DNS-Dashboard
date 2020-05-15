@@ -36,11 +36,37 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const OperatorDashboard = React.lazy(() => import('./views/Dashboard/OperatorDashboard'));
+const Area = React.lazy(() => import('./views/Setup/Area'));
+const ActiveUsers = React.lazy(() => import('./views/Users/ActiveUsers'));
+const InactiveUsers = React.lazy(() => import('./views/Users/InactiveUsers'));
+const InactiveDrivers = React.lazy(() => import('./views/Drivers/InactiveDrivers'));
+const ActiveDrivers = React.lazy(() => import('./views/Drivers/ActiveDrivers'));
+const Drivers = React.lazy(() => import('./views/Drivers/Drivers'));
+const Driver = React.lazy(() => import('./views/Drivers/Driver'));
+const PendingDriver = React.lazy(() => import('./views/Drivers/PendingDrivers'));
+const InactiveBusAssistants = React.lazy(() => import('./views/BusAssistants/InactiveBusAssistants'));
+const ActiveBusAssistants = React.lazy(() => import('./views/BusAssistants/ActiveBusAssistants'));
+const BusAssistants = React.lazy(() => import('./views/BusAssistants/BusAssistants'));
+const BusAssistant = React.lazy(() => import('./views/BusAssistants/BusAssistant'));
+const PendingBusAssistant = React.lazy(() => import('./views/BusAssistants/PendingBusAssistants'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/drivers/active', name: 'Dashboard', component: ActiveDrivers },
+  { path: '/busassisstants/active', name: 'Dashboard', component: ActiveBusAssistants },
+  { path: '/busassisstants/inactive', name: 'Dashboard', component: InactiveBusAssistants },
+  { path: '/busassisstants/pending', name: 'Dashboard', component: PendingBusAssistant },
+  { path: '/busassisstants', name: 'Dashboard', component: BusAssistants },
+  { path: '/busassisstant', name: 'Dashboard', component: BusAssistant },
+  { path: '/drivers/pending', name: 'Dashboard', component: PendingDriver },
+  { path: '/drivers/inactive', name: 'Dashboard', component: InactiveDrivers },
+  { path: '/drivers', name: 'Dashboard', component: Drivers },
+  { path: '/driver', name: 'Dashboard', component: Driver },
+  { path: '/users/active', name: 'Dashboard', component: ActiveUsers },
+  { path: '/users/inactive', name: 'Dashboard', component: InactiveUsers },
+  { path: '/area', name: 'Dashboard', component: Area },
   { path: '/operator', name: 'Dashboard', component: OperatorDashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
