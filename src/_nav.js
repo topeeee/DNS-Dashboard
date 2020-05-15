@@ -18,58 +18,45 @@ export default {
           name: 'Operator',
           url: '/operator',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+         class: "menu_drop",
+
         },
         {
           name: 'Mode',
           url: '/base/cards',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
 
         },
         {
           name: 'Zone',
           url: '/base/carousels',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Area',
           url: '/base/collapses',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Routes',
           url: '/base/dropdowns',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Bus Stop',
           url: '/base/forms',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Geo Fences',
           url: '/base/jumbotrons',
           // icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -81,25 +68,19 @@ export default {
           name: 'Modal',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Revenue',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Operator',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -111,25 +92,19 @@ export default {
           name: 'All',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -141,33 +116,25 @@ export default {
           name: 'All',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Pending',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -179,33 +146,25 @@ export default {
           name: 'All',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Pending',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -217,33 +176,25 @@ export default {
           name: 'Waiting',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Completed',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Current',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Canceled',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -255,33 +206,25 @@ export default {
           name: 'Successful',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Unsuccessful',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Refunds',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Promo',
           url: '/base/carousels',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
       ],
     },
@@ -293,17 +236,13 @@ export default {
           name: 'Driver',
           url: '/base/breadcrumbs',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         },
         {
           name: 'Bus',
           url: '/base/cards',
           icon: 'icon-puzzle',
-          attributes: {
-            style:{background: 'gray'}
-          }
+          class: "menu_drop",
         }
       ],
     },

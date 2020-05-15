@@ -52,27 +52,26 @@ class DefaultLayout extends Component {
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            Overview
-            {/*<AppBreadcrumb appRoutes={routes} router={router}/>*/}
-            {/*<Container fluid>*/}
-            {/*  <Suspense fallback={this.loading()}>*/}
-            {/*    <Switch>*/}
-            {/*      {routes.map((route, idx) => {*/}
-            {/*        return route.component ? (*/}
-            {/*          <Route*/}
-            {/*            key={idx}*/}
-            {/*            path={route.path}*/}
-            {/*            exact={route.exact}*/}
-            {/*            name={route.name}*/}
-            {/*            render={props => (*/}
-            {/*              <route.component {...props} />*/}
-            {/*            )} />*/}
-            {/*        ) : (null);*/}
-            {/*      })}*/}
-            {/*      <Redirect from="/" to="/dashboard" />*/}
-            {/*    </Switch>*/}
-            {/*  </Suspense>*/}
-            {/*</Container>*/}
+            <AppBreadcrumb appRoutes={routes} router={router}/>
+            <Container fluid>
+              <Suspense fallback={this.loading()}>
+                <Switch>
+                  {routes.map((route, idx) => {
+                    return route.component ? (
+                      <Route
+                        key={idx}
+                        path={route.path}
+                        exact={route.exact}
+                        name={route.name}
+                        render={props => (
+                          <route.component {...props} />
+                        )} />
+                    ) : (null);
+                  })}
+                  <Redirect from="/" to="/dashboard" />
+                </Switch>
+              </Suspense>
+            </Container>
           </main>
           <AppAside fixed>
             <Suspense fallback={this.loading()}>
@@ -80,11 +79,11 @@ class DefaultLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter>
-          <Suspense fallback={this.loading()}>
-            <DefaultFooter />
-          </Suspense>
-        </AppFooter>
+        {/*<AppFooter>*/}
+        {/*  <Suspense fallback={this.loading()}>*/}
+        {/*    <DefaultFooter />*/}
+        {/*  </Suspense>*/}
+        {/*</AppFooter>*/}
       </div>
     );
   }
