@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
+
 import usersData from './UsersData'
+import Dropdowns from "../Base/Dropdowns";
+import {toggleUserModalCreate} from "../../store/actions/userAction";
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleUserModalCreate: () => dispatch(toggleUserModalCreate())
+  };
+}
+
 
 function UserRow(props) {
   const user = props.user;
@@ -25,49 +37,49 @@ function UserRow(props) {
       <td>{user.registered}</td>
       {/*<td>{user.role}</td>*/}
       <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td> <Dropdowns id={user.id} /> </td>
     </tr>
   )
 }
 
-class Users extends Component {
+const Users = (props)=> {
 
-  render() {
+  // const userList = usersData.filter((user) => user.id < 10)
 
-    // const userList = usersData.filter((user) => user.id < 10)
+  return (
+    <div className="animated fadeIn">
+      <Row>
+        <Col xl={12}>
+          <Card>
+            <CardHeader>
+              Users <button className="btn btn-instagram float-lg-right" onClick={() => props.toggleUserModalCreate()}>Create</button>
+            </CardHeader>
+            <CardBody>
+              <Table responsive hover>
+                <thead>
+                <tr>
+                  <th scope="col">id</th>
+                  <th scope="col">name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone number</th>
+                  <th scope="col">SignUp Date</th>
+                  <th scope="col">status</th>
+                  <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {usersData.map((user, index) =>
+                  <UserRow key={index} user={user}/>
+                )}
+                </tbody>
+              </Table>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  )
 
-    return (
-      <div className="animated fadeIn">
-        <Row>
-          <Col xl={12}>
-            <Card>
-              <CardHeader>
-                Users <button class="btn btn-instagram float-lg-right">Create</button>
-              </CardHeader>
-              <CardBody>
-                <Table responsive hover>
-                  <thead>
-                    <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">Phone number</th>
-                      <th scope="col">SignUp Date</th>
-                      <th scope="col">status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {usersData.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    )
-  }
-}
+};
 
-export default Users;
+export default connect(null, mapDispatchToProps)(Users);

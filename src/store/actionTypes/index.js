@@ -1,0 +1,2 @@
+export const USER_MODAL_CREATE = "USER_MODAL_CREATE";
+
