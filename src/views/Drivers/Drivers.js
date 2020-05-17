@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
+
 import usersData from '../Users/UsersData'
+import {toggleDriverModalCreate} from "../../store/actions/driverAction";
+
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleDriverModalCreate: () => dispatch(toggleDriverModalCreate())
+  };
+}
 
 function UserRow(props) {
   const user = props.user;
@@ -41,7 +52,7 @@ class Drivers extends Component {
           <Col xl={12}>
             <Card>
               <CardHeader>
-                Drivers  <button class="btn btn-instagram float-lg-right">Create</button>
+                Drivers  <button className="btn btn-instagram float-lg-right" onClick={()=> this.props.toggleDriverModalCreate()}>Create</button>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -70,4 +81,4 @@ class Drivers extends Component {
   }
 }
 
-export default Drivers;
+export default connect(null, mapDispatchToProps)(Drivers);

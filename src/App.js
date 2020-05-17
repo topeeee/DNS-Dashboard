@@ -4,9 +4,9 @@ import { Provider} from "react-redux";
 import store from "./store";
 // import { renderRoutes } from 'react-router-config';
 import './App.scss';
-// import UpdateModal from "./views/Users/Modals/UpdateModal";
-import  UserModalCreate from './modals/userModal/UserModalCreate'
-import Dropdowns from "./views/Base/Dropdowns";
+import CombineModal from "./modals";
+
+
 
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
@@ -29,13 +29,9 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        {/*<Dropdowns />*/}
-
         <HashRouter>
           <React.Suspense fallback={loading()}>
-
-            <UserModalCreate />
-            {/*<UpdateModal />*/}
+            <CombineModal />
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
