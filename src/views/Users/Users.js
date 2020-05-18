@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Input } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileExcel, faFilePdf, faPrint, faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
+import DateRangePicker from 'react-bootstrap-daterangepicker';
+import 'bootstrap-daterangepicker/daterangepicker.css';
+
+
 
 
 import usersData from './UsersData'
 import Dropdowns from "../Base/Dropdowns";
 import {toggleUserModalCreate} from "../../store/actions/userAction";
+import PrimaryHeader from "../components/PrimaryHeader";
+import SecondaryHeader from "../components/SecondaryHeader";
+
 
 
 function mapDispatchToProps(dispatch) {
@@ -26,7 +35,7 @@ function UserRow(props) {
         status === 'Pending' ? 'warning' :
           status === 'Banned' ? 'danger' :
             'primary'
-  }
+  };
 
   return (
     <tr key={user.id.toString()}>
@@ -44,6 +53,10 @@ function UserRow(props) {
 
 const Users = (props)=> {
 
+  const handleEvent = (event, picker) => {
+    console.log(picker.startDate);
+  };
+
   // const userList = usersData.filter((user) => user.id < 10)
 
   return (
@@ -51,8 +64,12 @@ const Users = (props)=> {
       <Row>
         <Col xl={12}>
           <Card>
-            <CardHeader>
-              Users <button className="btn btn-instagram float-lg-right" onClick={() => props.toggleUserModalCreate()}>Create</button>
+            <PrimaryHeader />
+            <CardHeader className="d-flex align-items-center">
+              <div className="w-25">
+                Users
+              </div>
+               <SecondaryHeader/>
             </CardHeader>
             <CardBody>
               <Table responsive hover>

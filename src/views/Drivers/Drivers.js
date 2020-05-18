@@ -6,6 +6,8 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 import usersData from '../Users/UsersData'
 import {toggleDriverModalCreate} from "../../store/actions/driverAction";
+import PrimaryHeader from "../components/PrimaryHeader";
+import SecondaryHeader from "../components/SecondaryHeader";
 
 
 
@@ -51,8 +53,12 @@ class Drivers extends Component {
         <Row>
           <Col xl={12}>
             <Card>
-              <CardHeader>
-                Drivers  <button className="btn btn-instagram float-lg-right" onClick={()=> this.props.toggleDriverModalCreate()}>Create</button>
+              <PrimaryHeader />
+              <CardHeader className="d-flex align-items-center">
+                <div className="w-25">
+                  Drivers
+                </div>
+                <SecondaryHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 import usersData from '../Users/UsersData'
+import PrimaryHeader from "../components/PrimaryHeader";
+import SecondaryHeader from "../components/SecondaryHeader";
 
 function UserRow(props) {
   const user = props.user;
@@ -42,8 +44,12 @@ class PendingBusAssistants extends Component {
         <Row>
           <Col xl={12}>
             <Card>
-              <CardHeader>
-                Pending Bus Assistants
+              <PrimaryHeader />
+              <CardHeader className="d-flex align-items-center">
+                <div className="w-25">
+                  Pending Bus Assistants
+                </div>
+                <SecondaryHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
