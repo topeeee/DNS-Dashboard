@@ -7,7 +7,8 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import usersData from '../Users/UsersData'
 import {toggleDriverModalCreate} from "../../store/actions/driverAction";
 import PrimaryHeader from "../components/PrimaryHeader";
-import SecondaryHeader from "../components/SecondaryHeader";
+import DriverDropDown from "./components/DriverDropDown";
+import DriverHeader from "./components/DriverHeader";
 
 
 
@@ -38,6 +39,7 @@ function UserRow(props) {
       <td>{user.registered}</td>
       {/*<td>{user.role}</td>*/}
       <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+     <td><DriverDropDown /></td>
     </tr>
   )
 }
@@ -58,7 +60,7 @@ class Drivers extends Component {
                 <div className="w-25">
                   Drivers
                 </div>
-                <SecondaryHeader/>
+                <DriverHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -70,6 +72,7 @@ class Drivers extends Component {
                     <th scope="col">Phone number</th>
                     <th scope="col">SignUp Date</th>
                     <th scope="col">status</th>
+                    <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

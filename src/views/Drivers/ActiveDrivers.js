@@ -5,6 +5,7 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import usersData from '../Users/UsersData'
 import PrimaryHeader from "../components/PrimaryHeader";
 import SecondaryHeader from "../components/SecondaryHeader";
+import DriverDropDown from "./components/DriverDropDown";
 
 function UserRow(props) {
   const user = props.user;
@@ -24,11 +25,11 @@ function UserRow(props) {
     <tr key={user.id.toString()}>
       <th scope="row"><Link to={userLink}>{user.id}</Link></th>
       <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.lastName}</td>
+      <td>{user.EmailAddress}</td>
       <td>{user.PhoneNumber}</td>
       <td>{user.registered}</td>
-      {/*<td>{user.role}</td>*/}
       <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td><DriverDropDown /></td>
     </tr>
   )
 }
@@ -61,6 +62,7 @@ class  ActiveDrivers extends Component {
                     <th scope="col">Phone number</th>
                     <th scope="col">Register Date</th>
                     <th scope="col">status</th>
+                    <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

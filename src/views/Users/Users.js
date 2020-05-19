@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Input } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileExcel, faFilePdf, faPrint, faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
-import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
-
-
-
-
 import usersData from './UsersData'
 import Dropdowns from "../Base/Dropdowns";
 import {toggleUserModalCreate} from "../../store/actions/userAction";

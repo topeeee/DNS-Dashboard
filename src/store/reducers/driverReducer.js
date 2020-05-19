@@ -1,17 +1,41 @@
-import {DRIVER_MODAL_CREATE} from "../actionTypes";
+import {DRIVER_MODAL_CREATE, DRIVER_MODAL_DELETE, DRIVER_MODAL_STATUS, DRIVER_MODAL_UPDATE} from "../actionTypes";
 
 const initialState = {
-  DriverModalCreate: false
+  DriverModalCreate: false,
+  DriverModalDelete: false,
+  DriverModalUpdate: false,
+  DriverModalStatus: false,
 };
 
 function driverReducer(state = initialState, action) {
-  if (action.type === DRIVER_MODAL_CREATE) {
-    return {
-      ...state,
-      DriverModalCreate: !state.DriverModalCreate,
-    };
-  } else {
-    return state;
+  switch (action.type) {
+    case DRIVER_MODAL_CREATE: {
+        return {
+          ...state,
+          DriverModalCreate: !state.DriverModalCreate,
+        };
+    }
+    case DRIVER_MODAL_DELETE: {
+      return {
+        ...state,
+        DriverModalDelete: !state.DriverModalDelete,
+      };
+    }
+    case DRIVER_MODAL_UPDATE: {
+      return {
+        ...state,
+        DriverModalUpdate: !state.DriverModalUpdate,
+      };
+    }
+
+    case DRIVER_MODAL_STATUS: {
+      return {
+        ...state,
+        DriverModalStatus: !state. DriverModalStatus,
+      };
+    }
+    default:
+      return state
   }
 }
 
