@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { HashRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { Provider} from "react-redux";
 import store from "./store";
 // import { renderRoutes } from 'react-router-config';
@@ -29,7 +29,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <HashRouter>
+        <BrowserRouter>
           <React.Suspense fallback={loading()}>
             <CombineModal />
             <Switch>
@@ -41,7 +41,7 @@ class App extends Component {
               <Route path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />
             </Switch>
           </React.Suspense>
-        </HashRouter>
+          </BrowserRouter>
       </Provider>
 
     );
