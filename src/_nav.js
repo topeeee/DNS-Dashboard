@@ -173,26 +173,33 @@ export default {
       icon: 'icon-user',
       children: [
         {
+          name: 'All',
+          url: '/trips',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+
+        {
           name: 'Waiting',
-          // url: '/base/breadcrumbs',
+          url: '/trips/waiting',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Completed',
-          // url: '/base/cards',
+          url: '/trips/completed',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Current',
-          // url: '/base/carousels',
+          url: '/trips/current',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Canceled',
-          // url: '/base/carousels',
+          url: '/trips/cancelled',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
@@ -203,26 +210,33 @@ export default {
       icon: 'icon-user',
       children: [
         {
+          name: 'All',
+          url: '/payments',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+
+        {
           name: 'Successful',
-          // url: '/base/breadcrumbs',
+          url: '/payments/successful',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Unsuccessful',
-          // url: '/base/cards',
+          url: '/payments/unsuccessful',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Refunds',
-          // url: '/base/carousels',
+          url: '/payments/refunds',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
-          name: 'Promo',
-          // url: '/base/carousels',
+          name: 'Pending',
+          url: '/payments/pending',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },

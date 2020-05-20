@@ -1,37 +1,40 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-import usersData from '../Users/UsersData'
+
 import PrimaryHeader from "../components/PrimaryHeader";
-import BusAssistantHeader from "./components/BusAssistantHeader";
-import BusAssistantDropDown from "./components/BusAssistantDropDown";
+import PaymentsData from "./PaymentsData";
+
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/busassisstant/${user.id}`;
+  const userLink = `/trip/${user.TripID}`;
+
   const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
+    return status === 'Successful' ? 'success' :
+      status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
+          status === 'Unsuccessful' ? 'danger' :
             'primary'
   };
 
   return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.EmailAddress}</td>
-      <td>{user.PhoneNumber}</td>
-      <td>{user.registered}</td>
+    <tr key={user.Name.toString()}>
+      <th scope="row"><Link to={userLink}>{user.Name}</Link></th>
+      <td><Link to={userLink}>{user.Email}</Link></td>
+      <td>{user.Phone}</td>
+      <td>{user.PaymentReference}</td>
+      <td>{user.NormalAmount}</td>
+      <td>{user.DiscountAmount}</td>
       {/*<td>{user.role}</td>*/}
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
-      <td> <BusAssistantDropDown /> </td>
+      <td><Link to={userLink}><Badge color={getBadge(user.Status)}>{user.Status}</Badge></Link></td>
+
     </tr>
   )
 }
 
-class BusAssistants extends Component {
+class Payments extends Component {
 
   render() {
 
@@ -45,25 +48,25 @@ class BusAssistants extends Component {
               <PrimaryHeader />
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                  Bus Assistants
+                  Payments
                 </div>
-                < BusAssistantHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
                   <thead>
                   <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">name</th>
+                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Phone number</th>
-                    <th scope="col">SignUp Date</th>
-                    <th scope="col">status</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Phone Number</th>
+                    <th scope="col">Payment Reference</th>
+                    <th scope="col">Normal Amount</th>
+                    <th scope="col">Discount Amount</th>
+                    <th scope="col">Status</th>
+
                   </tr>
                   </thead>
                   <tbody>
-                  {usersData.map((user, index) =>
+                  {PaymentsData.map((user, index) =>
                     <UserRow key={index} user={user}/>
                   )}
                   </tbody>
@@ -77,4 +80,4 @@ class BusAssistants extends Component {
   }
 }
 
-export default BusAssistants;
+export default Payments;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-
 import usersData from '../Users/UsersData'
 import PrimaryHeader from "../components/PrimaryHeader";
 import SecondaryHeader from "../components/SecondaryHeader";
@@ -9,7 +8,7 @@ import DriverDropDown from "./components/DriverDropDown";
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/users/${user.id}`;
+  const userLink = `/driver/${user.id}`;
 
 
 

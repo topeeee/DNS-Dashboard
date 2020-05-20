@@ -9,6 +9,7 @@ import CombineModal from "./modals";
 
 
 
+
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>;
 
 // Containers
@@ -29,6 +30,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
+
         <BrowserRouter>
           <React.Suspense fallback={loading()}>
             <CombineModal />

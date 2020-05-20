@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-
 import usersData from '../Users/UsersData'
 import PrimaryHeader from "../components/PrimaryHeader";
-import SecondaryHeader from "../components/SecondaryHeader";
+import BusAssistantHeader from "./components/BusAssistantHeader";
+import BusAssistantDropDown from "./components/BusAssistantDropDown";
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/users/${user.id}`;
+  const userLink = `/busassisstant/${user.id}`;
 
 
 
@@ -29,6 +29,7 @@ function UserRow(props) {
       <td>{user.registered}</td>
       {/*<td>{user.role}</td>*/}
       <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td> <BusAssistantDropDown /> </td>
     </tr>
   )
 }
@@ -49,7 +50,7 @@ class InactiveBusAssistants extends Component {
                 <div className="w-25">
                   Inactive Bus Assistants
                 </div>
-                <SecondaryHeader/>
+                <BusAssistantHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -61,6 +62,7 @@ class InactiveBusAssistants extends Component {
                     <th scope="col">Phone number</th>
                     <th scope="col">Register Date</th>
                     <th scope="col">status</th>
+                    <th scope="col">Actions</th>
                   </tr>
                   </thead>
                   <tbody>

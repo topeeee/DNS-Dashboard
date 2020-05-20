@@ -49,22 +49,48 @@ const ActiveBusAssistants = React.lazy(() => import('./views/BusAssistants/Activ
 const BusAssistants = React.lazy(() => import('./views/BusAssistants/BusAssistants'));
 const BusAssistant = React.lazy(() => import('./views/BusAssistants/BusAssistant'));
 const PendingBusAssistant = React.lazy(() => import('./views/BusAssistants/PendingBusAssistants'));
+const Trips = React.lazy(() => import('./views/Trips/Trips'));
+const CancelledTrips = React.lazy(() => import('./views/Trips/CancelledTrips'));
+const CurrentTrips = React.lazy(() => import('./views/Trips/CurrentTrip'));
+const CompletedTrips = React.lazy(() => import('./views/Trips/CompletedTrip'));
+const WaitingTrips = React.lazy(() => import('./views/Trips/WaitingTrip'));
+const Trip = React.lazy(() => import('./views/Trips/Trip'));
+const Payments = React.lazy(() => import('./views/Payments/Payments'));
+// const SuccessfulPayments = React.lazy(() => import('./views/Payments/SuccessfulPayments'));
+const UnsuccessfulPayments = React.lazy(() => import('./views/Payments/UnsuccessfulPayments'));
+const PendingPayments = React.lazy(() => import('./views/Payments/PendingPayments'));
+const RefundPayments = React.lazy(() => import('./views/Payments/RefundsPayments'));
+const successPayment = React.lazy(() => import('./views/Payments/SuccessPayment'));
+
+
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/drivers/active', name: 'Dashboard', component: ActiveDrivers },
-  { path: '/busassisstants/active', name: 'Dashboard', component: ActiveBusAssistants },
-  { path: '/busassisstants/inactive', name: 'Dashboard', component: InactiveBusAssistants },
-  { path: '/busassisstants/pending', name: 'Dashboard', component: PendingBusAssistant },
-  { path: '/busassisstants', name: 'Dashboard', component: BusAssistants },
-  { path: '/busassisstant', name: 'Dashboard', component: BusAssistant },
-  { path: '/drivers/pending', name: 'Dashboard', component: PendingDriver },
-  { path: '/drivers/inactive', name: 'Dashboard', component: InactiveDrivers },
-  { path: '/drivers', name: 'Dashboard', component: Drivers },
-  { path: '/driver', name: 'Dashboard', component: Driver },
-  { path: '/users/active', name: 'Dashboard', component: ActiveUsers },
+  { path: '/payments/successful', name: 'Dashboard', component: successPayment },
+  { path: '/payments', name: 'Payments', component: Payments },
+  // { path: '/payments/successful', name: 'Successful Payments', component: SuccessfulPayments },
+  { path: '/payments/unsuccessful', name: 'Unsuccessful Payments', component: UnsuccessfulPayments },
+  { path: '/payments/pending', name: 'Pending Payments', component: PendingPayments },
+  { path: '/payments/refunds', name: 'Refunds Payments', component: RefundPayments },
+  { path: '/trips/cancelled', name: 'Cancelled Trips', component: CancelledTrips },
+  { path: '/trips/current', name: 'Current Trips', component: CurrentTrips },
+  { path: '/trips/completed', name: 'Completed Trips', component: CompletedTrips },
+  { path: '/trips/waiting', name: 'Waiting Trips', component: WaitingTrips },
+  { path: '/trips', name: 'Trips', component: Trips },
+  { path: '/trip/:id', name: 'Trip Details', component: Trip },
+  { path: '/busassisstants/active', exact: true, name: 'Active Bus Assistants', component: ActiveBusAssistants },
+  { path: '/busassisstants/inactive', exact: true, name: 'Inactive Bus Assistants', component: InactiveBusAssistants },
+  { path: '/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
+  { path: '/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
+  { path: '/busassisstant/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
+  { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers },
+  { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDriver },
+  { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers },
+  { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
+  { path: '/driver/:id', name: 'Driver Details', component: Driver },
+  { path: '/users/active', name: 'ActiveUsers', component: ActiveUsers },
   { path: '/users/inactive', name: 'Dashboard', component: InactiveUsers },
   { path: '/area', name: 'Dashboard', component: Area },
   { path: '/operator', name: 'Dashboard', component: OperatorDashboard },

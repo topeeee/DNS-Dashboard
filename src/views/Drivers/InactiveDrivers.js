@@ -9,7 +9,7 @@ import DriverDropDown from "./components/DriverDropDown";
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/users/${user.id}`;
+  const userLink = `/driver/${user.id}`;
 
 
 

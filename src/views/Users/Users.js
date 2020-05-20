@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Input } from 'reactstrap';
-import 'bootstrap-daterangepicker/daterangepicker.css';
 import usersData from './UsersData'
 import Dropdowns from "../Base/Dropdowns";
 import {toggleUserModalCreate} from "../../store/actions/userAction";
@@ -45,10 +44,6 @@ function UserRow(props) {
 }
 
 const Users = (props)=> {
-
-  const handleEvent = (event, picker) => {
-    console.log(picker.startDate);
-  };
 
   // const userList = usersData.filter((user) => user.id < 10)
 
