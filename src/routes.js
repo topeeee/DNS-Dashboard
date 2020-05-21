@@ -56,11 +56,11 @@ const CompletedTrips = React.lazy(() => import('./views/Trips/CompletedTrip'));
 const WaitingTrips = React.lazy(() => import('./views/Trips/WaitingTrip'));
 const Trip = React.lazy(() => import('./views/Trips/Trip'));
 const Payments = React.lazy(() => import('./views/Payments/Payments'));
-// const SuccessfulPayments = React.lazy(() => import('./views/Payments/SuccessfulPayments'));
+const SuccessfulPayments = React.lazy(() => import('./views/Payments/SuccessfulPayments'));
 const UnsuccessfulPayments = React.lazy(() => import('./views/Payments/UnsuccessfulPayments'));
 const PendingPayments = React.lazy(() => import('./views/Payments/PendingPayments'));
 const RefundPayments = React.lazy(() => import('./views/Payments/RefundsPayments'));
-const successPayment = React.lazy(() => import('./views/Payments/SuccessPayment'));
+
 
 
 
@@ -68,12 +68,11 @@ const successPayment = React.lazy(() => import('./views/Payments/SuccessPayment'
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/payments/successful', name: 'Dashboard', component: successPayment },
-  { path: '/payments', name: 'Payments', component: Payments },
-  // { path: '/payments/successful', name: 'Successful Payments', component: SuccessfulPayments },
+  { path: '/payments/successful', name: 'Successful Payments', component: SuccessfulPayments },
   { path: '/payments/unsuccessful', name: 'Unsuccessful Payments', component: UnsuccessfulPayments },
   { path: '/payments/pending', name: 'Pending Payments', component: PendingPayments },
   { path: '/payments/refunds', name: 'Refunds Payments', component: RefundPayments },
+  { path: '/payments', name: 'Payments', component: Payments },
   { path: '/trips/cancelled', name: 'Cancelled Trips', component: CancelledTrips },
   { path: '/trips/current', name: 'Current Trips', component: CurrentTrips },
   { path: '/trips/completed', name: 'Completed Trips', component: CompletedTrips },

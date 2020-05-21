@@ -49,7 +49,7 @@ class UnsuccessfulPayments extends Component {
               <PrimaryHeader />
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                  Payments
+               Unsuccessful Payments
                 </div>
               </CardHeader>
               <CardBody>

@@ -49,7 +49,7 @@ class PendingPayments extends Component {
               <PrimaryHeader />
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                  Payments
+                  Pending Payments
                 </div>
               </CardHeader>
               <CardBody>
