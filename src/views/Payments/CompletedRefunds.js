@@ -4,7 +4,9 @@ import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 import PrimaryHeader from "../components/PrimaryHeader";
-import PaymentsData from "./PaymentsData";
+
+import Refundsdata from "./RefundsData";
+import RefundsHeader from "./components/RefundsHeader";
 
 
 
@@ -13,7 +15,7 @@ function UserRow(props) {
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
+    return status === 'Completed' ? 'success' :
       status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
           status === 'Unsuccessful' ? 'danger' :
@@ -26,8 +28,8 @@ function UserRow(props) {
       <td><Link to={userLink}>{user.Email}</Link></td>
       <td>{user.Phone}</td>
       <td>{user.PaymentReference}</td>
-      <td>{user.NormalAmount}</td>
-      <td>{user.DiscountAmount}</td>
+      <td>{user.RefundAmount}</td>
+      <td>{user.PaymentMethod}</td>
       {/*<td>{user.role}</td>*/}
       <td><Link to={userLink}><Badge color={getBadge(user.Status)}>{user.Status}</Badge></Link></td>
 
@@ -35,11 +37,11 @@ function UserRow(props) {
   )
 }
 
-class RefundsPayments extends Component {
+class CompletedRefunds extends Component {
 
   render() {
 
-    const userList = PaymentsData.filter((user) => user.Status === "Refunds");
+    const userList = Refundsdata.filter((user) => user.Status === "Completed");
 
     return (
       <div className="animated fadeIn">
@@ -49,8 +51,9 @@ class RefundsPayments extends Component {
               <PrimaryHeader />
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                Refund Payments
+                  Completed Refunds
                 </div>
+                <RefundsHeader />
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -60,8 +63,8 @@ class RefundsPayments extends Component {
                     <th scope="col">Email</th>
                     <th scope="col">Phone Number</th>
                     <th scope="col">Payment Reference</th>
-                    <th scope="col">Normal Amount</th>
-                    <th scope="col">Discount Amount</th>
+                    <th scope="col">Amount to be refund</th>
+                    <th scope="col">Payment method</th>
                     <th scope="col">Status</th>
 
                   </tr>
@@ -81,4 +84,4 @@ class RefundsPayments extends Component {
   }
 }
 
-export default RefundsPayments;
+export default CompletedRefunds;

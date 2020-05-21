@@ -49,7 +49,6 @@ class InactiveUsers extends Component {
                 <div className="w-25">
                 Inactive  Users
                 </div>
-                <SecondaryHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>

@@ -49,7 +49,6 @@ class ActiveUsers extends Component {
                 <div className="w-25">
                  Active Users
                 </div>
-                <SecondaryHeader/>
               </CardHeader>
               <CardBody>
                 <Table responsive hover>

@@ -8,15 +8,15 @@ import BusAssistantModalCreate from "./busAssistantModal/BusAssistantModalCreate
 import BusAssistantModalDelete from "./busAssistantModal/BusAssistantModalDelete";
 import BusAssistantModalStatus from "./busAssistantModal/BusAssistantModalStatus";
 import BusAssistantModalUpdate from "./busAssistantModal/BusAssistantModalUpdate";
+import RefundModalCreate from "./paymentModal/RefundModalCreate";
+import PromoModalCreate from "./paymentModal/PromoModalCreate";
 
 
 const CombineModal = () => {
-
-
-
-
   return (
     <div>
+      <PromoModalCreate />
+      <RefundModalCreate />
       <BusAssistantModalUpdate />
       <BusAssistantModalStatus />
       <BusAssistantModalDelete />
@@ -26,7 +26,6 @@ const CombineModal = () => {
       <DriverModalUpdate />
       <DriverModalStatus />
       <UserModalCreate />
-
     </div>
   );
 };

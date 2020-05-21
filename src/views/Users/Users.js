@@ -57,7 +57,6 @@ const Users = (props)=> {
               <div className="w-25">
                 Users
               </div>
-               <SecondaryHeader/>
             </CardHeader>
             <CardBody>
               <Table responsive hover>
