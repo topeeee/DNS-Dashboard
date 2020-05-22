@@ -8,7 +8,7 @@ export default {
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-center, text-primary'             // optional class names space delimited list for title item ex: "text-center"
     },
     {
       name: 'Setup',
@@ -260,13 +260,13 @@ export default {
       children: [
         {
           name: 'Driver',
-          // url: '/base/breadcrumbs',
+          url: '/ratings/driver',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
           name: 'Bus',
-          // url: '/base/cards',
+          url: '/ratings/bus',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         }

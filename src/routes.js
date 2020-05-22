@@ -62,6 +62,8 @@ const RefundPayments = React.lazy(() => import('./views/Payments/Refunds'));
 const PendingRefunds = React.lazy(() => import('./views/Payments/PendingRefunds'));
 const CompletedRefunds = React.lazy(() => import('./views/Payments/CompletedRefunds'));
 const Promo = React.lazy(() => import('./views/Payments/Promo'));
+const DriverRatings = React.lazy(() => import('./views/Ratings/DriverRatings'));
+const BusRatings = React.lazy(() => import('./views/Ratings/BusRatings'));
 
 
 
@@ -70,6 +72,8 @@ const Promo = React.lazy(() => import('./views/Payments/Promo'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/ratings/driver', name: 'Driver Ratings', component: DriverRatings },
+  { path: '/ratings/bus', name: 'Bus Ratings', component: BusRatings },
   { path: '/payments/promo', name: 'Promo', component: Promo },
   { path: '/payments/refunds/pending', name: 'Pending Refunds', component: PendingRefunds },
   { path: '/payments/refunds/completed', name: 'Completed Refunds', component: CompletedRefunds },

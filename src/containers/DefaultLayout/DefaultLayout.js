@@ -36,7 +36,7 @@ class DefaultLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed>
+        <AppHeader fixed className="bg-dark" style={{border: "none"}}>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader onLogout={e=>this.signOut(e)}/>
           </Suspense>
@@ -79,11 +79,11 @@ class DefaultLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        {/*<AppFooter>*/}
-        {/*  <Suspense fallback={this.loading()}>*/}
-        {/*    <DefaultFooter />*/}
-        {/*  </Suspense>*/}
-        {/*</AppFooter>*/}
+        <AppFooter className="bg-dark">
+          <Suspense fallback={this.loading()}>
+            <DefaultFooter />
+          </Suspense>
+        </AppFooter>
       </div>
     );
   }
