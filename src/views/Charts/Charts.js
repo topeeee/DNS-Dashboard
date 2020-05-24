@@ -231,21 +231,21 @@ class Charts extends Component {
               </div>
             </CardBody>
           </Card>
-          <Card>
-            <CardHeader>
-              Polar Area Chart
-              <div className="card-header-actions">
-                <a href="http://www.chartjs.org" className="card-header-action">
-                  <small className="text-muted">docs</small>
-                </a>
-              </div>
-            </CardHeader>
-            <CardBody>
-              <div className="chart-wrapper">
-                <Polar data={polar} options={options}/>
-              </div>
-            </CardBody>
-          </Card>
+          {/*<Card>*/}
+          {/*  <CardHeader>*/}
+          {/*    Polar Area Chart*/}
+          {/*    <div className="card-header-actions">*/}
+          {/*      <a href="http://www.chartjs.org" className="card-header-action">*/}
+          {/*        <small className="text-muted">docs</small>*/}
+          {/*      </a>*/}
+          {/*    </div>*/}
+          {/*  </CardHeader>*/}
+          {/*  <CardBody>*/}
+          {/*    <div className="chart-wrapper">*/}
+          {/*      <Polar data={polar} options={options}/>*/}
+          {/*    </div>*/}
+          {/*  </CardBody>*/}
+          {/*</Card>*/}
         </CardColumns>
       </div>
     );

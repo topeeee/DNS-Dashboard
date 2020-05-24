@@ -133,3 +133,22 @@
   }
 
 }
+
+
+.custom-card{
+  height:200px;
+  width:200px;
+  border-radius:100%;
+  border: 10px solid;
+  //background: linear-gradient(to right, red 25%, yellow 25%, green 25%, blue 25%);
+  border-color: orange orange green lightblue;
+  //margin: auto;
+
+}
+
+.cus-card{
+  flex: 0 0 32.4%;
+  min-width: 200px;
+  margin-right: 10px;
+}
+
