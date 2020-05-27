@@ -1,52 +1,85 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux"
+import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, FormFeedback } from 'reactstrap';
+import zeno from "../../../assets/img/brand/zeno.png";
+import {AppNavbarBrand} from "@coreui/react";
+import {LogIn} from "../../../store/actions/authenticationAction";
 
-class Login extends Component {
-  render() {
-    return (
-      <div className="app flex-row align-items-center">
+
+
+const Login  = ({LogIn, isAuthenticated, errors}) => {
+  const [formData, setFormData] = useState({username: '', password: ''});
+
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { username, password } = formData;
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    LogIn(username, password);
+  };
+
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
+  return (
+      <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
         <Container>
           <Row className="justify-content-center">
-            <Col md="6">
+            <Col md="5">
               <CardGroup>
-                <Card className="p-4">
+                <Card className="px-4 bg-dark">
                   <CardBody>
-                    <Form>
-                      <h1>Login</h1>
-                      <p className="text-muted">Sign In to your account</p>
+                    <Form onSubmit={onSubmit}>
+                      <AppNavbarBrand className="d-flex align-items-center justify-content-center mb-1"
+                        full={{src:zeno,  width: 89, height: 25, alt: 'Zeno Logo' }}
+                      />
+                      {/*<h1>Login</h1>*/}
+                      <p className="text-primary text-center">Sign In to your account</p>
+                      <div className="d-flex justify-content-center align-items-center">
+                        {errors && <small className="text-danger text-center pb-1 font-italic">Incorrect Username or Password</small>}
+                      </div>
+
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-user"></i>
+                            <i className="icon-user text-primary"/>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" />
+                        <Input
+
+                          placeholder="Username"
+                          autoComplete="username"
+                          name="username"
+                          value={username}
+                          onChange={onChange}
+                        />
+
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-lock"></i>
+                            <i className="icon-lock text-primary"/>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" />
+                        <Input
+                          type="password"
+                          placeholder="Password"
+                          autoComplete="current-password"
+                          name="password"
+                          value={password}
+                          onChange={onChange}
+                        />
                       </InputGroup>
                       <Row>
-                        <Col xs="6">
-                          <Button color="primary" className="px-4">Login</Button>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
+                        <Col className="d-flex align-items-center justify-content-center">
+                          <Button color="primary" className="px-4 btn btn-ladda" data-style="expand-right" type="submit">Login</Button>
                         </Col>
                       </Row>
                       <Row>
-                        <Col xs="12" className="text-center">
-                          Don't have an account?
-                          <Link to="/register">
-                            <Button color="link" className="px-0">Register</Button>
-                          </Link>
-                        </Col>
-
                       </Row>
                     </Form>
                   </CardBody>
@@ -57,7 +90,23 @@ class Login extends Component {
         </Container>
       </div>
     );
-  }
+  };
+
+Login.propTypes = {
+  LogIn: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    LogIn: (username, password) => dispatch(LogIn(username,  password))
+  };
 }
 
-export default Login;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+  errors: state.auth.errors
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

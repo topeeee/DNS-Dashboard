@@ -65,6 +65,8 @@ const Promo = React.lazy(() => import('./views/Payments/Promo'));
 const DriverRatings = React.lazy(() => import('./views/Ratings/DriverRatings'));
 const BusRatings = React.lazy(() => import('./views/Ratings/BusRatings'));
 const Mode = React.lazy(() => import('./views/Mode/Mode'));
+const States = React.lazy(() => import('./views/Setup/State'));
+const Zones = React.lazy(() => import('./views/Setup/Zone'));
 
 
 
@@ -76,6 +78,8 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/modee', name: 'Mode', component: Mode },
+  { path: '/states', name: 'States', component: States },
+  { path: '/zones', name: 'Zones', component: Zones },
   { path: '/ratings/driver', name: 'Driver Ratings', component: DriverRatings },
   { path: '/ratings/bus', name: 'Bus Ratings', component: BusRatings },
   { path: '/payments/promo', name: 'Promo', component: Promo },

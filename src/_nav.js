@@ -22,6 +22,13 @@ export default {
 
         },
         {
+          name: 'State',
+          url: '/states',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+
+        },
+        {
           name: 'Mode',
           url: '/modee',
           // icon: 'icon-puzzle',
@@ -30,7 +37,7 @@ export default {
         },
         {
           name: 'Zone',
-          // url: '/base/carousels',
+          url: '/zones',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },

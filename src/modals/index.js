@@ -10,11 +10,19 @@ import BusAssistantModalStatus from "./busAssistantModal/BusAssistantModalStatus
 import BusAssistantModalUpdate from "./busAssistantModal/BusAssistantModalUpdate";
 import RefundModalCreate from "./paymentModal/RefundModalCreate";
 import PromoModalCreate from "./paymentModal/PromoModalCreate";
+import StateModalCreate from "./stateModal/StateModalCreate";
+import StateModalDelete from "./stateModal/StateModalDelete";
+import ZoneModalCreate from "./zoneModal/ZoneModalCreate";
+import ZoneModalDelete from "./zoneModal/ZoneModalDelete";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <ZoneModalDelete />
+      <ZoneModalCreate />
+      <StateModalDelete />
+      <StateModalCreate />
       <PromoModalCreate />
       <RefundModalCreate />
       <BusAssistantModalUpdate />
