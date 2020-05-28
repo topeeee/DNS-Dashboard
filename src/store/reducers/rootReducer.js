@@ -6,6 +6,7 @@ import paymentReducer from "./paymentReducer";
 import authenticationReducer from "./authenticationReducer";
 import stateReducer from "./stateReducer";
 import zoneReducer from "./zoneReducer";
+import routeReducer from "./routeReducer";
 
 
 export default combineReducers({
@@ -15,5 +16,6 @@ export default combineReducers({
   payment:  paymentReducer,
   auth: authenticationReducer,
   state: stateReducer,
-  zone: zoneReducer
+  zone: zoneReducer,
+  route: routeReducer
 });

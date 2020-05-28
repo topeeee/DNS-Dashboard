@@ -49,7 +49,7 @@ const Zones = ({ZoneUser, zones}) => {
             <PrimaryHeader />
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Payments
+                Zones
               </div>
               <ZoneHeader />
             </CardHeader>

@@ -14,11 +14,15 @@ import StateModalCreate from "./stateModal/StateModalCreate";
 import StateModalDelete from "./stateModal/StateModalDelete";
 import ZoneModalCreate from "./zoneModal/ZoneModalCreate";
 import ZoneModalDelete from "./zoneModal/ZoneModalDelete";
+import RouteModalCreate from "./routeModal/RouteModalCreate";
+import RouteModalDelete from "./routeModal/RouteModalDelete";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <RouteModalDelete />
+      <RouteModalCreate />
       <ZoneModalDelete />
       <ZoneModalCreate />
       <StateModalDelete />

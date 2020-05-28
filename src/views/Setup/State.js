@@ -42,7 +42,7 @@ const States = ({StateUser, states}) => {
               <PrimaryHeader />
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                  Payments
+                  States
                 </div>
                 <StateHeader />
               </CardHeader>

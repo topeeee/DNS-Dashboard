@@ -1,16 +1,16 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Provider} from "react-redux";
 import store from "./store";
 import './App.scss';
 import Home from "./views/Home/Home";
-import setAuthToken from "./utils/setAuthToken";
+import {Authorized} from "./store/actions/authenticationAction";
 
 
 const App = ()=> {
-  // useEffect(() => {
-  //   setAuthToken()
-  // },[]);
 
+  if(sessionStorage.getItem("token")){
+     store.dispatch(Authorized())
+   }
 
   return (
       <Provider store={store}>

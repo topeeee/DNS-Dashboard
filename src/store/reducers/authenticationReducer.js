@@ -1,7 +1,7 @@
-import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR} from "../actionTypes";
+import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR, USER_AUTHORIZED} from "../actionTypes";
 
 const initialState = {
-  isAuthenticated: true,
+  isAuthenticated: null,
   loading: false,
   errors: null
 };
@@ -28,6 +28,12 @@ function authenticationReducer(state = initialState, action) {
       return {
         ...state,
         errors: null
+      };
+    }
+    case  USER_AUTHORIZED: {
+      return {
+        ...state,
+        isAuthenticated: true,
       };
     }
     default:
