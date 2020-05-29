@@ -8,7 +8,7 @@ export const LogIn = (username, password) => async dispatch => {
   try {
     const res = await axios.post(api.login, body);
     const token  = res.data.Authorized;
-    sessionStorage.setItem("token", token);
+    localStorage.setItem("token", token);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data

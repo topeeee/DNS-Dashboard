@@ -23,8 +23,8 @@ function UserRow(props) {
 
   return (
     <tr key={user.statecode.toString()}>
-      <th scope="row">{user.id}</th>
-      <th scope="row">{user.statecode}</th>
+      <td>{user.id}</td>
+      <td>{user.statecode}</td>
       <td>{user.username}</td>
       <td>{user.zone}</td>
       <td>{user.zonecode}</td>

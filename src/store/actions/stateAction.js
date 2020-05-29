@@ -6,7 +6,7 @@ import setAuthToken from "../../utils/setAuthToken";
 
 export const StateUser = () => async dispatch => {
   try {
-    const res = await axios.get(api.stateMe, setAuthToken);
+    const res = await axios.get(api.stateMe);
     dispatch({
       type: STATES_BY_USER,
       payload: res.data
@@ -23,7 +23,7 @@ export const StateUser = () => async dispatch => {
 export const createState = (xstatecode, xstate, countrycode) => async dispatch => {
   const body = {xstatecode, xstate, countrycode};
   try {
-    const res = await axios.post(api.stateMe, body, setAuthToken);
+    const res = await axios.post(api.stateMe, body);
     dispatch({
       type: CREATE_STATE,
       payload: res.data
@@ -41,7 +41,7 @@ export const createState = (xstatecode, xstate, countrycode) => async dispatch =
 export const deleteState = (id) => async dispatch => {
 
   try {
-    const res = await axios.delete(`http://165.22.116.11:7008/admin/xstates/${id}/`, setAuthToken);
+    const res = await axios.delete(`http://165.22.116.11:7008/admin/xstates/${id}/`);
     dispatch({
       type: DELETE_STATE,
       payload: res.data

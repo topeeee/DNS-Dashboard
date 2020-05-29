@@ -16,8 +16,8 @@ function UserRow(props) {
 
   return (
     <tr key={user.countrycode.toString()}>
-      <th scope="row">{user.id}</th>
-      <th scope="row">{user.countrycode}</th>
+      <td>{user.id}</td>
+      <td>{user.countrycode}</td>
       <td>{user.username}</td>
       <td>{user.xstate}</td>
       <td>{user.xstatecode}</td>

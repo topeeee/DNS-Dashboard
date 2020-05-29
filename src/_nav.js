@@ -55,7 +55,7 @@ export default {
         },
         {
           name: 'Bus Stop',
-          // url: '/base/forms',
+          url: '/busstops',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },

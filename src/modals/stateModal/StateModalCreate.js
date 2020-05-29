@@ -32,9 +32,10 @@ const StateModalCreate = (props) => {
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const { stateCode, state, countryCode } = formData;
 
-  const onSubmit = async () => {
-    console.log('submitted');
+  const onSubmit = async (e) => {
+    e.preventDefault();
     createState(stateCode, state, countryCode);
+    setFormData({stateCode: '', state: '', countryCode: ''})
 
   };
 
@@ -45,7 +46,7 @@ const StateModalCreate = (props) => {
       <Modal isOpen={ stateModalCreate} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle} className="text-center">Create State</ModalHeader>
         <ModalBody>
-          <Form>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="name" className="font-weight-bold mb-0 ">State Code</Label>
               <Input
@@ -54,6 +55,7 @@ const StateModalCreate = (props) => {
                 placeholder="State Code"
                 value={stateCode}
                 onChange={onChange}
+                required
               />
               <Label for="state" className="font-weight-bold mb-0 mt-1">State</Label>
               <Input
@@ -62,22 +64,27 @@ const StateModalCreate = (props) => {
                 placeholder="State"
                 value={state}
                 onChange={onChange}
+                required
               />
               <Label for="country" className="font-weight-bold mb-0 mt-1">Country Code</Label>
               <Input
-                type="text"
+                style={{cursor: 'pointer'}}
+                type="select"
                 name="countryCode"
                 placeholder=" Country Code"
                 value={countryCode}
                 onChange={onChange}
-              />
+                required>
+                <option value="">Select Country code</option>
+                <option value={"NIG"}>NIG</option>
+              </Input>
             </FormGroup>
+            <div className="d-flex justify-content-md-end">
+              <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </div>
           </Form>
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={()=>onSubmit()}>Submit</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
       </Modal>
     </div>
   );

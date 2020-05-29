@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { connect } from "react-redux";
 import {toggleRouteModalCreate, createRoute} from "../../store/actions/routeAction";
@@ -32,8 +32,10 @@ const RouteModalCreate = (props) => {
 
   const { routeCode, route, areaCode } = formData;
 
-  const onSubmit = async () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     createRoute(routeCode, route, areaCode);
+    setFormData({routeCode: '', route: '', areaCode: ''})
 
   };
 
@@ -44,7 +46,7 @@ const RouteModalCreate = (props) => {
       <Modal isOpen={ routeModalCreate} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle} className="text-center">Create Route</ModalHeader>
         <ModalBody>
-          <Form>
+          <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for="name" className="font-weight-bold mb-0 ">Route Code</Label>
               <Input
@@ -53,6 +55,7 @@ const RouteModalCreate = (props) => {
                 placeholder="Route Code"
                 value={routeCode}
                 onChange={onChange}
+                required
               />
               <Label for="state" className="font-weight-bold mb-0 mt-1">Route</Label>
               <Input
@@ -61,22 +64,29 @@ const RouteModalCreate = (props) => {
                 placeholder="Route"
                 value={route}
                 onChange={onChange}
+                required
               />
               <Label for="country" className="font-weight-bold mb-0 mt-1">Area Code</Label>
               <Input
-                type="text"
+                style={{cursor: 'pointer'}}
+                type="select"
                 name="areaCode"
                 placeholder=" Area Code"
                 value={areaCode}
                 onChange={onChange}
-              />
+                required
+              >
+                <option value="">Select Area code</option>
+                <option value={"LEK"}>LEK</option>
+              </Input>
             </FormGroup>
+            <div className="d-flex justify-content-md-end">
+              <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </div>
           </Form>
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={()=>onSubmit()}>Submit</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
+
       </Modal>
     </div>
   );

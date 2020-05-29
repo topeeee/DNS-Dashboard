@@ -7,7 +7,7 @@ import setAuthToken from "../../utils/setAuthToken";
 export const RouteUser = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(api.route, setAuthToken);
+    const res = await axios.get(api.route);
     dispatch({
       type: ROUTE_BY_USER,
       payload: res.data
@@ -25,7 +25,7 @@ export const RouteUser = () => async dispatch => {
 export const createRoute = (routecode, route, areacode) => async dispatch => {
   const body = {routecode, route, areacode};
   try {
-    const res = await axios.post(api.route, body, setAuthToken);
+    const res = await axios.post(api.route, body);
     dispatch({
       type: CREATE_ROUTE,
       payload: res.data
@@ -43,7 +43,7 @@ export const createRoute = (routecode, route, areacode) => async dispatch => {
 export const deleteRoute = (id) => async dispatch => {
 
   try {
-    const res = await axios.delete(`http://165.22.116.11:7009/admin/routes/${id}/`, setAuthToken);
+    const res = await axios.delete(`http://165.22.116.11:7009/admin/routes/${id}/`);
     dispatch({
       type: DELETE_ROUTE,
       payload: res.data

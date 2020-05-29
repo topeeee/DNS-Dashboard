@@ -7,6 +7,7 @@ import authenticationReducer from "./authenticationReducer";
 import stateReducer from "./stateReducer";
 import zoneReducer from "./zoneReducer";
 import routeReducer from "./routeReducer";
+import busStopReducer from "./busStopReducer";
 
 
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
   auth: authenticationReducer,
   state: stateReducer,
   zone: zoneReducer,
-  route: routeReducer
+  route: routeReducer,
+  busStop: busStopReducer
 });
