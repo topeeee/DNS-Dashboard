@@ -1,11 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import PrimaryHeader from "../components/PrimaryHeader";
-import {BusStopUser} from "../../store/actions/busStopAction";
+import {BusStopUser, searchBusStop} from "../../store/actions/busStopAction";
 import BusStopHeader from "./components/BusStopHeader";
 import BusStopDeleteBtn from "./components/BusStopDeleteBtn";
+import DateRangePicker from "react-bootstrap-daterangepicker";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -38,11 +41,28 @@ function UserRow(props) {
   )
 }
 
-const BusStops = ({BusStopUser, busStops, isLoading}) => {
+const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop}) => {
+  const [formData, setFormData] = useState('');
 
+
+
+  const onChange = (e) =>{
+    e.preventDefault();
+    setFormData(e.target.value );
+    // if(formData.length > 0) {
+    //   console.log(formData)
+    //   // searchBusStop(formData)
+    // }
+
+  };
+  const handleEvent = (event, picker) => {
+    console.log(picker.startDate);
+  };
   useEffect(()=>{
     BusStopUser()
   },[]);
+
+
 
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -51,7 +71,28 @@ const BusStops = ({BusStopUser, busStops, isLoading}) => {
       <Row>
         <Col xl={12}>
           <Card>
-            <PrimaryHeader />
+            {formData}
+            <CardHeader className="bg-secondary d-flex">
+              <div className="w-75 d-flex align-items-center ">
+                <Input type="text"
+                       placeholder="Search by Name or Id"
+                       className="w-25"
+                       name="formData"
+                       value={formData}
+                       onChange={onChange}
+                />
+                <button className="btn btn-success">Search</button>
+                <DateRangePicker onApply={handleEvent}>
+                  <button className="btn btn-instagram ml-2">Filter by Date</button>
+                </DateRangePicker>
+              </div>
+              <div className="w-25 text-right">
+                <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
+                <FontAwesomeIcon className="text-primary py-2" title="Send to Email" style={{fontSize: 40,  cursor: "pointer"}} icon={faEnvelopeSquare} />
+                <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
+              </div>
+            </CardHeader>
+            {/*<PrimaryHeader />*/}
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
                 Bus Stops
@@ -94,6 +135,7 @@ const BusStops = ({BusStopUser, busStops, isLoading}) => {
 function mapDispatchToProps(dispatch) {
   return {
     BusStopUser: () => dispatch(BusStopUser()),
+    searchBusStop: (id) => dispatch( searchBusStop(id))
   };
 }
 

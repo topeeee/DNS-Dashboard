@@ -1,8 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, FormFeedback } from 'reactstrap';
+import {Redirect} from 'react-router-dom';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardGroup,
+  Col,
+  Container,
+  Form,
+  Input,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupText,
+  Row
+} from 'reactstrap';
 import zeno from "../../../assets/img/brand/zeno.png";
 import {AppNavbarBrand} from "@coreui/react";
 import {LogIn} from "../../../store/actions/authenticationAction";
@@ -22,6 +35,9 @@ const Login  = ({LogIn, isAuthenticated, errors}) => {
 
 
   if (isAuthenticated) {
+    setTimeout(()=>{
+      window.location.reload();
+    },0);
     return <Redirect to="/" />;
   }
 

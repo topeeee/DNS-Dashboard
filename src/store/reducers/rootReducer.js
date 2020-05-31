@@ -8,6 +8,7 @@ import stateReducer from "./stateReducer";
 import zoneReducer from "./zoneReducer";
 import routeReducer from "./routeReducer";
 import busStopReducer from "./busStopReducer";
+import tripReducer from "./tripReducer";
 
 
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
   state: stateReducer,
   zone: zoneReducer,
   route: routeReducer,
-  busStop: busStopReducer
+  busStop: busStopReducer,
+  trip:  tripReducer
 });

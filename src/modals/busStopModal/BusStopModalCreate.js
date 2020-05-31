@@ -82,7 +82,7 @@ const BusStopModalCreate = (props) => {
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Bus Stop</Label>
-                <Input type="text" placeholder="Bus Stop" name="busstop" onChange={onChange} value={busstop}required />
+                <Input type="text" placeholder="Bus Stop" name="busstop" onChange={onChange} value={busstop} required />
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Route Code</Label>

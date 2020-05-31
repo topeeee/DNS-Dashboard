@@ -1,7 +1,7 @@
 import {STATES_BY_USER, CREATE_STATE, STATE_MODAL_CREATE, STATE_MODAL_DELETE, DELETE_STATE} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import setAuthToken from "../../utils/setAuthToken";
+
 
 
 export const StateUser = () => async dispatch => {

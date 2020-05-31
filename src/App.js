@@ -12,7 +12,7 @@ const App = ()=> {
     const token = localStorage.getItem("token");
     if (token) {
       axios.defaults.headers.common['Authorization'] = token;
-      store.dispatch(Authorized())
+      store.dispatch(Authorized());
     } else {
       axios.defaults.headers.common['Authorization'] = null;
     }

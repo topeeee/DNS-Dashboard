@@ -60,6 +60,28 @@ export const deleteBusStop = (id) => async dispatch => {
 
   }
 };
+
+export const searchBusStop = (id) => async dispatch => {
+console.log( 'fired')
+  try {
+    const res = await axios.get(`${api.busStop}${id}/`);
+    console.log(res.data)
+    // dispatch({
+    //   type: SEARCH_BUS_STOP,
+    //   payload: res.data
+    // });
+    // dispatch(BusStopUser());
+    // dispatch(closeBusStopModalDelete());
+  } catch (err) {
+    // dispatch({
+    //   type: AUTH_ERROR,
+    //   payload: err.response
+    // });
+
+  }
+};
+
+
 export function toggleBusStopModalCreate() {
   return {
     type: BUS_STOP_MODAL_CREATE

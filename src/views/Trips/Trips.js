@@ -1,9 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-import TripData from "./TripsData";
-import PrimaryHeader from "../components/PrimaryHeader";
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {getTrips, searchTrip} from "../../store/actions/tripAction";
+import DateRangePicker from "react-bootstrap-daterangepicker";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
+import TripDeleteBtn from "./components/TripDeleteBtn";
+import TripHeader from "./components/TripHeader";
+
 
 
 function UserRow(props) {
@@ -11,72 +15,146 @@ function UserRow(props) {
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Completed' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Waiting' ? 'warning' :
-          status === 'Cancelled' ? 'danger' :
+    return status === 'Successful' ? 'success' :
+      status === 'Refunds' ? 'secondary' :
+        status === 'Pending' ? 'warning' :
+          status === 'Unsuccessful' ? 'danger' :
             'primary'
   };
 
-  return (
-    <tr key={user.TripID.toString()}>
-      <th scope="row"><Link to={userLink}>{user.Mode}</Link></th>
-      <td><Link to={userLink}>{user.TripID}</Link></td>
-      <td>{user.Name}</td>
-      <td>{user.Phone}</td>
-      <td>{user.PickUpLocation}</td>
-      <td>{user.DropLocation}</td>
-      {/*<td>{user.role}</td>*/}
-      <td><Link to={userLink}><Badge color={getBadge(user.Status)}>{user.Status}</Badge></Link></td>
 
+  return (
+    <tr key={user.mode.toString()}>
+      <td>{user.id}</td>
+      <td>{user.tripid}</td>
+      <td>{user.mode}</td>
+      <td>{user.name}</td>
+      {/*<td>{user.phone}</td>*/}
+      <td>{user.startbusstop}</td>
+      <td>{user.endbusstop}</td>
+      <td>{user.scheduledpickuptime}</td>
+      {/*<td>{user.drivername}</td>*/}
+      {/*<td>{user.driverphone}</td>*/}
+      {/*<td>{user.vehicledetail}</td>*/}
+      {/*<td>{user.distance}</td>*/}
+      <td>{user.cost}</td>
+      <td> <TripDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-class Trips extends Component {
+const Trips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) => {
+  const [formData, setFormData] = useState('');
 
-  render() {
-
-    // const userList = usersData.filter((user) => user.id < 10)
-
-    return (
-      <div className="animated fadeIn">
-        <Row>
-          <Col xl={12}>
-            <Card>
-              <PrimaryHeader />
-              <CardHeader className="d-flex align-items-center">
-                <div className="w-25">
-                  Trips
-                </div>
-              </CardHeader>
-              <CardBody>
-                <Table responsive hover>
-                  <thead>
-                  <tr>
-                    <th scope="col">Mode</th>
-                    <th scope="col">Trip Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Phone number</th>
-                    <th scope="col">PickUp Location</th>
-                    <th scope="col">Drop Location</th>
-                    <th scope="col">Status</th>
-
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {TripData.map((user, index) =>
-                    <UserRow key={index} user={user}/>
-                  )}
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    )
+useEffect(()=>{
+  if(formData === ''){
+    getTrips()
   }
+},[formData]);
+
+
+const onChange = (e) =>{
+    e.preventDefault();
+    setFormData(e.target.value );
+  };
+  const handleEvent = (event, picker) => {
+    console.log(picker.startDate);
+  };
+
+const onSearch = e => {
+  e.preventDefault();
+  searchTrip(formData)
+};
+  const loading = () => <div className="animated fadeIn pt-1 text-center text-info">Loading...</div>;
+
+  return (
+    <div className="animated fadeIn">
+      <Row>
+        <Col xl={12}>
+          <Card>
+            <CardHeader className="bg-secondary d-flex">
+              <div className="w-75 d-flex align-items-center ">
+                <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
+                  <Input type="text"
+                         placeholder="Search by Id"
+                         className="w-25"
+                         name="formData"
+                         value={formData}
+                         onChange={onChange}
+                  />
+                  <button className="btn btn-success" type="submit">Search</button>
+                </form>
+
+                {/*<DateRangePicker onApply={handleEvent}>*/}
+                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
+                {/*</DateRangePicker>*/}
+              </div>
+              <div className="w-25 text-right">
+                <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
+                <FontAwesomeIcon className="text-primary py-2" title="Send to Email" style={{fontSize: 40,  cursor: "pointer"}} icon={faEnvelopeSquare} />
+                <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
+              </div>
+            </CardHeader>
+            {/*<PrimaryHeader />*/}
+            <CardHeader className="d-flex align-items-center">
+              <div className="w-25">
+                Trips
+              </div>
+              <TripHeader />
+            </CardHeader>
+            <CardBody>
+              {error && <div className="animated fadeIn pt-1 text-center text-info">{error}</div>}
+              {isLoading && loading()}
+              {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
+              {((trips && trips.length > 0) || trip ) &&
+              <Table responsive hover>
+                <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Trip Id</th>
+                  <th scope="col">Mode</th>
+                  <th scope="col">Name</th>
+                  {/*<th scope="col">Passenger Phone N</th>*/}
+                  <th scope="col">Start Bus Stop</th>
+                  <th scope="col">End Bus Stop</th>
+                  <th scope="col">Scheduled Pickup Time</th>
+                  {/*<th scope="col">Driver Name</th>*/}
+                  {/*<th scope="col">Driver Phone no</th>*/}
+                  {/*<th scope="col">Vehicle Detail</th>*/}
+                  {/*<th scope="col">Distance</th>*/}
+                  <th scope="col">Cost</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {trips && trips.map((user, index) =>
+                  <UserRow key={index} user={user}/>
+                )}
+                {trip &&
+                <UserRow user={trip}/>
+                }
+                </tbody>
+              </Table>}
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  )
+};
+function mapDispatchToProps(dispatch) {
+  return {
+    getTrips: () => dispatch(getTrips()),
+    searchTrip: (id) => dispatch(searchTrip(id))
+  };
 }
 
-export default Trips;
+const mapStateToProps = state => ({
+  trips: state.trip.trips,
+  trip: state.trip.trip,
+  error: state.trip.error,
+  isLoading: state.trip.isLoading
+
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Trips);

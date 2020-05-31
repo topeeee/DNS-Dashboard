@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from "react-redux"
 import {toggleZoneModalDelete} from "../../../store/actions/zoneAction";
 import {Button} from "reactstrap";
+import {faTimesCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 
@@ -15,7 +17,12 @@ function mapDispatchToProps(dispatch) {
 const ZoneDeleteBtn = ({toggleZoneModalDelete, id})=> {
   return (
     <div>
-      <Button size="sm" className="btn-pill  btn-danger" onClick={()=>toggleZoneModalDelete(id)}>Delete</Button>
+      <FontAwesomeIcon
+        className="text-danger"
+        title="Upload via Excel"
+        style={{fontSize: 20, cursor: "pointer"}}
+        icon={faTimesCircle}
+        onClick={()=>toggleZoneModalDelete(id)} />
     </div>
   )
 

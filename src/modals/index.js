@@ -18,11 +18,15 @@ import RouteModalCreate from "./routeModal/RouteModalCreate";
 import RouteModalDelete from "./routeModal/RouteModalDelete";
 import BusStopModalCreate from "./busStopModal/BusStopModalCreate";
 import BusStopModalDelete from "./busStopModal/BusStopModalDelete";
+import TripModalCreate from "./tripModal/TripModalCreate";
+import TripModalDelete from "./tripModal/TripModalDelete";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <TripModalDelete />
+      <TripModalCreate />
       <BusStopModalDelete />
       <BusStopModalCreate />
       <RouteModalDelete />

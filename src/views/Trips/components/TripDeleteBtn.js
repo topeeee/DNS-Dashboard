@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux"
-import {toggleBusStopModalDelete} from "../../../store/actions/busStopAction";
+import {toggleTripModalDelete} from "../../../store/actions/tripAction";
 import {Button} from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
@@ -9,12 +9,12 @@ import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleBusStopModalDelete: (id) => dispatch(toggleBusStopModalDelete(id))
+    toggleTripModalDelete: (id) => dispatch(toggleTripModalDelete(id))
   };
 }
 
 
-const BusStopDeleteBtn = ({toggleBusStopModalDelete, id})=> {
+const TripDeleteBtn = ({toggleTripModalDelete, id})=> {
   return (
     <div>
       <FontAwesomeIcon
@@ -22,10 +22,10 @@ const BusStopDeleteBtn = ({toggleBusStopModalDelete, id})=> {
                        title="Upload via Excel"
                        style={{fontSize: 20, cursor: "pointer"}}
                        icon={faTimesCircle}
-                       onClick={()=>toggleBusStopModalDelete(id)} />
+                       onClick={()=>toggleTripModalDelete(id)} />
     </div>
   )
 
 };
 
-export default connect(null, mapDispatchToProps)(BusStopDeleteBtn);
+export default connect(null, mapDispatchToProps)(TripDeleteBtn);
