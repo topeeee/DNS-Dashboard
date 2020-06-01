@@ -1,126 +1,141 @@
-import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
-import {toggleUserModalCreate} from "../../store/actions/userAction";
+import {toggleUserModalCreate, createUser} from "../../store/actions/userAction";
+// import {BusStopUser} from "../../store/actions/busStopAction";
+
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleUserModalCreate: () => dispatch(toggleUserModalCreate())
+    toggleUserModalCreate: () => dispatch(toggleUserModalCreate()),
+    createUser: (first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method) =>
+      dispatch(createUser(first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method)),
+
   };
 }
 
 const mapStateToProps = state => ({
-  userModalCreate: state.users.UserModalCreate,
+  userModalCreate: state.user.UserModalCreate,
+
 
 });
 
 const UserModalCreate = (props) => {
+
   const {
-    buttonLabel,
     className,
     toggleUserModalCreate,
-    userModalCreate
+    userModalCreate,
+    createUser,
   } = props;
 
-  const [modal, setModal] = useState(false);
+
+
+  const [formData, setFormData] = useState({first_name: "", last_name: "", email: "", date_of_birth: "", pax_code: "", home_location: "", home_pickup_time: "", status:"", payment_method: "" });
+
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const {
+    first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method
+  } = formData;
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    createUser(first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method);
+    setFormData({first_name: "", last_name: "", email: "", date_of_birth: "", pax_code: "", home_location: "", home_pickup_time: "", status:"", payment_method: ""})
+
+  };
 
   const toggle = () => {toggleUserModalCreate()};
 
   return (
     <div>
       <Modal isOpen={userModalCreate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Create User</ModalHeader>
+        <ModalHeader toggle={toggle} className="text-center">Create Trip</ModalHeader>
         <ModalBody>
-          <Form>
-            <FormGroup>
-              <Label for="exampleEmail">Email</Label>
-              <Input type="email" name="email" id="exampleEmail" placeholder="with a placeholder" />
+          <Form onSubmit={onSubmit}>
+            <FormGroup row>
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">First Name</Label>*/}
+              {/*  <Input*/}
+              {/*    style={{cursor: 'pointer'}}*/}
+              {/*    type="select"*/}
+              {/*    name="first_name"*/}
+              {/*    value={first_name}*/}
+              {/*    onChange={onChange}*/}
+              {/*    required*/}
+              {/*  >*/}
+              {/*    <option value="">Select Mode</option>*/}
+              {/*    <option value="Zeno Bus">Zeno Bus</option>*/}
+              {/*    <option value="Zeno Shuttle">Zeno Shuttle</option>*/}
+              {/*    /!*{routes && routes.map((route, index) =>*!/*/}
+              {/*    /!*  <option value={route.routecode} key={index}>{route.routecode}</option>*!/*/}
+              {/*    /!*)}*!/*/}
+              {/*  </Input>*/}
+              {/*</Col>*/}
+              <Col md="6">
+                <Label for="name" className="font-weight-bolder mb-0 text-info">First Name</Label>
+                <Input type="text"  name="first_name" onChange={onChange} value={first_name}  required/>
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Last Name</Label>
+                <Input type="text" name="last_name" onChange={onChange} value={last_name} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Email</Label>
+                <Input type="email"  name="email" onChange={onChange} value={email} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Date of birth</Label>
+                <Input type="date" name="date_of_birth" onChange={onChange} value={date_of_birth} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Pax Code</Label>
+                <Input type="text"  name="pax_code" onChange={onChange} value={pax_code} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Home Location</Label>
+                <Input type="text"  name="home_location" onChange={onChange} value={home_location} required/>
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Home Pickup Time</Label>
+                <Input type="text"  name="home_pickup_time" onChange={onChange} value={home_pickup_time} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">First Name</Label>
+                <Input
+                  style={{cursor: 'pointer'}}
+                  type="select"
+                  name="status"
+                  value={status}
+                  onChange={onChange}
+                  required
+                >
+                  <option value="">Select Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Active">Active</option>
+                  <option value="Suspended">Suspended</option>
+                  {/*{routes && routes.map((route, index) =>*/}
+                  {/*  <option value={route.routecode} key={index}>{route.routecode}</option>*/}
+                  {/*)}*/}
+                </Input>
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Payment Method</Label>
+                <Input type="text"  name="payment_method" onChange={onChange} value={payment_method} required />
+              </Col>
             </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
-            <FormGroup>
-              <Label for="examplePassword">Password</Label>
-              <Input type="password" name="password" id="examplePassword" placeholder="password placeholder" />
-            </FormGroup>
+            <div className="d-flex justify-content-md-end">
+              <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}
+              <Button color="secondary" onClick={toggle}>Cancel</Button>
+            </div>
           </Form>
         </ModalBody>
-        <ModalFooter>
-          <Button color="primary" onClick={toggle}>Submit</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
       </Modal>
     </div>
   );
-}
+};
 
-export default  connect( mapStateToProps, mapDispatchToProps)( UserModalCreate);
+export default  connect( mapStateToProps, mapDispatchToProps)(UserModalCreate);
 
-// import React, { useState } from 'react';
-// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-// import { connect } from "react-redux";
-// import {toggleUserModalCreate} from "../../store/actions/userAction";
-//
-//
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     toggleUserModalCreate: () => dispatch(toggleUserModalCreate())
-//   };
-// }
-//
-// const mapStateToProps = state => ({
-//   userModalCreate: state.users.userModalCreate,
-//
-// });
-//
-// const UserModalCreate = (props) => {
-//   const {
-//     buttonLabel,
-//     className,
-//     toggleUserModalCreate,
-//     userModalCreate
-//   } = props;
-//
-//   // const [modal, setModal] = useState(false);
-//
-//   // const toggle = () => {
-//   //   // setModal(!modal);
-//   //   // addMobileNumber()
-//   // };
-//
-//   return (
-//     <div>
-//       <Button color="primary" onClick={toggleUserModalCreate}>Do Something</Button>
-//       <Modal isOpen={userModalCreate} toggle={toggleUserModalCreate} className={className}>
-//         <ModalHeader toggle={toggleUserModalCreate}>sklcscsc</ModalHeader>
-//         <ModalBody>
-//           Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-//         </ModalBody>
-//         <ModalFooter>
-//           <Button color="primary" onClick={toggleUserModalCreate}>Do Something</Button>{' '}
-//           <Button color="secondary" onClick={toggleUserModalCreate}>Cancel</Button>
-//         </ModalFooter>
-//       </Modal>
-//     </div>
-//   );
-// };
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(UserModalCreate);

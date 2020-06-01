@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-import userReducer from "./userReducer";
 import driverReducer from "./driverReducer";
 import busAssistantReducer from "./busAssistantReducer";
 import paymentReducer from "./paymentReducer";
@@ -9,10 +8,11 @@ import zoneReducer from "./zoneReducer";
 import routeReducer from "./routeReducer";
 import busStopReducer from "./busStopReducer";
 import tripReducer from "./tripReducer";
+import userReducer from "./userReducer";
 
 
 export default combineReducers({
-  users: userReducer,
+  user: userReducer,
   drivers: driverReducer,
   busAssistants: busAssistantReducer,
   payment:  paymentReducer,

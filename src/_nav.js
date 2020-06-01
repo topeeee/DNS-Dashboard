@@ -93,57 +93,58 @@ export default {
     },
     {
       name: 'Users',
-      icon: 'icon-user',
-      children: [
-        {
-          name: 'All',
-          url: '/users',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Active',
-          url: '/users/active',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Inactive',
-          url: '/users/inactive',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-      ],
-    },
-    {
-      name: 'Drivers',
-      icon: 'icon-user',
-      children: [
-        {
-          name: 'All',
-          url: '/drivers',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Active',
-          url: '/drivers/active',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Inactive',
-          url: '/drivers/inactive',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Pending',
-          url: '/drivers/pending',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-      ],
+      icon: 'icon-people',
+      url: '/users',
+    //   children: [
+    //     {
+    //       name: 'All',
+    //       url: '/users',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //     {
+    //       name: 'Active',
+    //       url: '/users/active',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //     {
+    //       name: 'Inactive',
+    //       url: '/users/inactive',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //   ],
+    // },
+    // {
+    //   name: 'Drivers',
+    //   icon: 'icon-user',
+    //   children: [
+    //     {
+    //       name: 'All',
+    //       url: '/drivers',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //     {
+    //       name: 'Active',
+    //       url: '/drivers/active',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //     {
+    //       name: 'Inactive',
+    //       url: '/drivers/inactive',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //     {
+    //       name: 'Pending',
+    //       url: '/drivers/pending',
+    //       // icon: 'icon-puzzle',
+    //       class: "menu_drop",
+    //     },
+    //   ],
     },
     {
       name: 'Bus Assistants',

@@ -3,6 +3,7 @@ import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import  {connect} from 'react-redux'
 import CombineModal from "../../modals";
 import {LogIn} from "../../store/actions/authenticationAction";
+import Spinner from "../../spinner/Spinner";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -44,7 +45,7 @@ const Home = ({ isAuthenticated, setLogIn, history}) => {
 //   }, []);
   return (
     <BrowserRouter>
-          <React.Suspense fallback={loading()}>
+          <React.Suspense fallback={<Spinner />}>
             <CombineModal />
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />

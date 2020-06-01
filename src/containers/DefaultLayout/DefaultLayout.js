@@ -19,6 +19,7 @@ import {
 import navigation from '../../_nav';
 // routes config
 import routes from '../../routes';
+import Spinner from "../../spinner/Spinner";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
@@ -55,7 +56,7 @@ class DefaultLayout extends Component {
           <main className="main">
             <AppBreadcrumb appRoutes={routes} router={router}/>
             <Container fluid>
-              <Suspense fallback={this.loading()}>
+              <Suspense fallback={<Spinner />}>
                 <Switch>
                   {routes.map((route, idx) => {
                     return route.component ? (

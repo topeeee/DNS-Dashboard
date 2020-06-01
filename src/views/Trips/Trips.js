@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import TripDeleteBtn from "./components/TripDeleteBtn";
 import TripHeader from "./components/TripHeader";
+import Spinner from "../../spinner/Spinner";
 
 
 
@@ -65,7 +66,7 @@ const onSearch = e => {
   e.preventDefault();
   searchTrip(formData)
 };
-  const loading = () => <div className="animated fadeIn pt-1 text-center text-info">Loading...</div>;
+
 
   return (
     <div className="animated fadeIn">
@@ -102,13 +103,14 @@ const onSearch = e => {
               </div>
               <TripHeader />
             </CardHeader>
+            {isLoading && <Spinner />}
+            {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-info">{error}</div>}
-              {isLoading && loading()}
               {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
               {((trips && trips.length > 0) || trip ) &&
               <Table responsive hover>
-                <thead>
+                <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Trip Id</th>
@@ -126,7 +128,7 @@ const onSearch = e => {
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style={{background: "gray", color: "white"}}>
                 {trips && trips.map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
@@ -136,6 +138,8 @@ const onSearch = e => {
                 </tbody>
               </Table>}
             </CardBody>
+            }
+
           </Card>
         </Col>
       </Row>

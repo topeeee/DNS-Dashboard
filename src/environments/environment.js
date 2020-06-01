@@ -5,6 +5,7 @@
    route: "http://165.22.116.11:7009/api/me/routes/",
    busStop: "http://165.22.116.11:7108/api/me/busstops/",
    trip: "http://165.22.116.11:7500/api/me/trips/",
+   user: "http://165.22.116.11:7200/api/userdetails/"
 };
 
 export default api

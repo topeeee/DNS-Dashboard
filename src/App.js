@@ -9,7 +9,7 @@ import axios from 'axios'
 
 const App = ()=> {
   (function() {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (token) {
       axios.defaults.headers.common['Authorization'] = token;
       store.dispatch(Authorized());

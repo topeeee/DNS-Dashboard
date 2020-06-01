@@ -1,6 +1,5 @@
 import React from "react";
 import DriverModalCreate from "./driverModal/DriverModalCreate";
-import UserModalCreate from "./userModal/UserModalCreate";
 import DriverModalDelete from "./driverModal/DriverModalDelete";
 import DriverModalUpdate from "./driverModal/DriverModalUpdate";
 import DriverModalStatus from "./driverModal/DriverModalStatus";
@@ -20,11 +19,15 @@ import BusStopModalCreate from "./busStopModal/BusStopModalCreate";
 import BusStopModalDelete from "./busStopModal/BusStopModalDelete";
 import TripModalCreate from "./tripModal/TripModalCreate";
 import TripModalDelete from "./tripModal/TripModalDelete";
+import UserModalDelete from "./userModal/UserModalDelete";
+import UserModalCreate from "./userModal/UserModalCreate";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <UserModalDelete />
+      <UserModalCreate />
       <TripModalDelete />
       <TripModalCreate />
       <BusStopModalDelete />
@@ -45,7 +48,6 @@ const CombineModal = () => {
       <DriverModalCreate />
       <DriverModalUpdate />
       <DriverModalStatus />
-      <UserModalCreate />
     </div>
   );
 };
