@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import UserHeader from "./components/UserHeader";
 import UserDeleteBtn from "./components/UserDeleteBtn";
+import Spinner from "../../spinner/Spinner";
 
 
 
@@ -16,10 +17,10 @@ function UserRow(props) {
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
+    return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Unsuccessful' ? 'danger' :
+          status === 'Suspended' ? 'danger' :
             'primary'
   };
 
@@ -36,7 +37,7 @@ function UserRow(props) {
       {/*<td>{user.driverphone}</td>*/}
       {/*<td>{user.vehicledetail}</td>*/}
       {/*<td>{user.distance}</td>*/}
-      <td>{user.status}</td>
+      <td><Badge color={getBadge(user.status)}>{user.status}</Badge></td>
       <td> <UserDeleteBtn id={user.id} /> </td>
     </tr>
   )
@@ -56,15 +57,12 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
     e.preventDefault();
     setFormData(e.target.value );
   };
-  // const handleEvent = (event, picker) => {
-  //   console.log(picker.startDate);
-  // };
+
 
   const onSearch = e => {
     e.preventDefault();
     searchUser(formData)
   };
-  const loading = () => <div className="animated fadeIn pt-1 text-center text-info">Loading...</div>;
 
   return (
     <div className="animated fadeIn">
@@ -83,10 +81,6 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                   />
                   <button className="btn btn-success" type="submit">Search</button>
                 </form>
-
-                {/*<DateRangePicker onApply={handleEvent}>*/}
-                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
-                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
@@ -94,20 +88,22 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                 <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
               </div>
             </CardHeader>
-            {/*<PrimaryHeader />*/}
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Trips
+                Users
               </div>
               <UserHeader />
             </CardHeader>
+            {isLoading && <Spinner />}
+            {!isLoading &&
             <CardBody>
-              {error && <div className="animated fadeIn pt-1 text-center text-info">{error}</div>}
-              {isLoading && loading()}
-              {(users && users.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
-              {((users && users.length > 0) || user ) &&
+              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
+              {/*{isLoading && loading()}*/}
+              {(users && users.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
+              {((users && users.length > 0) || user) &&
               <Table responsive hover>
-                <thead>
+                <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">First Name</th>
@@ -125,7 +121,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody style={{background: "gray", color: "white"}}>
                 {users && users.map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
@@ -135,6 +131,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                 </tbody>
               </Table>}
             </CardBody>
+            }
           </Card>
         </Col>
       </Row>

@@ -6,7 +6,8 @@ import {
   CLOSE_MODAL_DELETE_TRIP,
   LOADING_TRIP,
   TRIP_ERROR,
-  SEARCH_TRIP
+  SEARCH_TRIP,
+  REMOVE_TRIP_ERROR
 } from "../actionTypes";
 
 const initialState = {
@@ -27,6 +28,7 @@ function tripReducer(state = initialState, action) {
       return {
         ...state,
         trip: null,
+        error: null,
         trips: payload,
         isLoading: false,
       };
@@ -35,6 +37,7 @@ function tripReducer(state = initialState, action) {
       return {
         ...state,
         trips: null,
+        error: null,
         trip: payload,
         isLoading: false
 
@@ -74,8 +77,17 @@ function tripReducer(state = initialState, action) {
     case TRIP_ERROR: {
       return {
         ...state,
+        trip: null,
+        trips: null,
         error: payload,
         isLoading: false
+      };
+    }
+    case REMOVE_TRIP_ERROR: {
+      return {
+        ...state,
+        error: null,
+
       };
     }
     default:

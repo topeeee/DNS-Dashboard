@@ -21,11 +21,15 @@ import TripModalCreate from "./tripModal/TripModalCreate";
 import TripModalDelete from "./tripModal/TripModalDelete";
 import UserModalDelete from "./userModal/UserModalDelete";
 import UserModalCreate from "./userModal/UserModalCreate";
+import BookingModalDelete from "./bookingModal/BookingModalDelete";
+import BookingModalCreate from "./bookingModal/BookingModalCreate";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <BookingModalCreate />
+      <BookingModalDelete />
       <UserModalDelete />
       <UserModalCreate />
       <TripModalDelete />

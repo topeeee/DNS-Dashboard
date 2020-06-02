@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
 import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import {StateUser} from '../../store/actions/stateAction'
+import {getStates} from '../../store/actions/stateAction'
 
 const line = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -328,7 +328,7 @@ class Mode extends Component {
           {/*  </CardBody>*/}
           {/*</Card>*/}
         </CardColumns>
-        <button onClick={()=>this.props.StateUser()}>submit</button>
+        <button onClick={()=>this.props.getStates()}>submit</button>
       </div>
     );
   }
@@ -336,7 +336,7 @@ class Mode extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    StateUser: () => dispatch(StateUser())
+    getStates: () => dispatch(getStates())
   };
 }
 

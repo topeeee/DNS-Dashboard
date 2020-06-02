@@ -6,7 +6,8 @@ import {
   CLOSE_MODAL_DELETE_USER,
   LOADING_USER,
   USER_ERROR,
-  SEARCH_USER
+  SEARCH_USER,
+  REMOVE_USER_ERROR
 } from "../actionTypes";
 
 const initialState = {
@@ -27,6 +28,7 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         user: null,
+        error: null,
         users: payload,
         isLoading: false,
       };
@@ -35,6 +37,7 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         users: null,
+        error: null,
         user: payload,
         isLoading: false
 
@@ -74,8 +77,17 @@ function userReducer(state = initialState, action) {
     case USER_ERROR: {
       return {
         ...state,
+        users: null,
+        user: null,
         error: payload,
         isLoading: false
+      };
+    }
+    case REMOVE_USER_ERROR: {
+      return {
+        ...state,
+        error: null,
+
       };
     }
     default:

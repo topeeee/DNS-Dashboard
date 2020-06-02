@@ -1,21 +1,34 @@
-import {STATES_BY_USER, CREATE_STATE, STATE_MODAL_CREATE, STATE_MODAL_DELETE, DELETE_STATE} from "../actionTypes"
+import {
+  STATES_BY_USER,
+  CREATE_STATE,
+  STATE_MODAL_CREATE,
+  STATE_MODAL_DELETE,
+  DELETE_STATE,
+  STATE_ERROR,
+  REMOVE_STATE_ERROR,
+  LOADING_STATE,
+  SEARCH_STATE,
+  CLOSE_MODAL_DELETE_STATE
+} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
 
 
 
-export const StateUser = () => async dispatch => {
+
+export const getStates = () => async dispatch => {
   try {
-    const res = await axios.get(api.stateMe);
+    dispatch(isLoading());
+    const res = await axios.get(`${api.state}/api/xstates/`);
     dispatch({
       type: STATES_BY_USER,
       payload: res.data
     });
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
+    dispatch({
+      type: STATE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
 
   }
 };
@@ -23,39 +36,66 @@ export const StateUser = () => async dispatch => {
 export const createState = (xstatecode, xstate, countrycode) => async dispatch => {
   const body = {xstatecode, xstate, countrycode};
   try {
-    const res = await axios.post(api.stateMe, body);
+    const res = await axios.post(`${api.state}/api/me/xstates/`, body);
     dispatch({
       type: CREATE_STATE,
       payload: res.data
     });
-    dispatch(StateUser());
+    dispatch(getStates());
     dispatch(toggleStateModalCreate());
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
+    dispatch({
+      type: STATE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    dispatch(toggleStateModalCreate());
+    setTimeout(() => dispatch({
+      type: REMOVE_STATE_ERROR
+    }), 5000)
 
   }
 };
 export const deleteState = (id) => async dispatch => {
 
   try {
-    const res = await axios.delete(`http://165.22.116.11:7008/admin/xstates/${id}/`);
+    const res = await axios.delete(`${api.state}/admin/xstates/${id}/`);
     dispatch({
       type: DELETE_STATE,
       payload: res.data
     });
-    dispatch(StateUser());
-    dispatch(toggleStateModalDelete());
+    dispatch(getStates());
+    dispatch( closeStateModalDelete());
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
+    dispatch({
+      type: STATE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    dispatch( closeStateModalDelete());
+    setTimeout(() => dispatch({
+      type: REMOVE_STATE_ERROR
+    }), 5000)
 
   }
 };
+
+export const searchState = (id) => async dispatch => {
+
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.state}/api/xstates/${id}/`);
+    dispatch({
+      type: SEARCH_STATE,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: STATE_ERROR,
+      payload: "State Not Available!!"
+    });
+  }
+};
+
+
 export function toggleStateModalCreate() {
   return {
     type: STATE_MODAL_CREATE
@@ -68,3 +108,17 @@ export function toggleStateModalDelete(id) {
     payload: id
   };
 }
+
+export function closeStateModalDelete() {
+  return {
+    type: CLOSE_MODAL_DELETE_STATE,
+  };
+}
+
+export function isLoading() {
+  return {
+    type: LOADING_STATE,
+  };
+}
+
+

@@ -1,13 +1,23 @@
-import { TRIP_BY_USER, TRIP_MODAL_CREATE, TRIP_MODAL_DELETE, DELETE_TRIP, CLOSE_MODAL_DELETE_TRIP, LOADING_TRIP, CREATE_TRIP, TRIP_ERROR, SEARCH_TRIP} from "../actionTypes"
+import {
+  TRIP_BY_USER,
+  TRIP_MODAL_CREATE,
+  TRIP_MODAL_DELETE,
+  DELETE_TRIP,
+  CLOSE_MODAL_DELETE_TRIP,
+  LOADING_TRIP,
+  CREATE_TRIP,
+  TRIP_ERROR,
+  SEARCH_TRIP,
+  REMOVE_TRIP_ERROR
+} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import setAuthToken from "../../utils/setAuthToken";
 
 
 export const getTrips = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(api.trip);
+    const res = await axios.get(`${api.trip}/api/trips/`);
     dispatch({
       type: TRIP_BY_USER,
       payload: res.data
@@ -24,7 +34,7 @@ export const getTrips = () => async dispatch => {
 export const createTrip = (mode, tripid, name, phone, startbusstop, endbusstop, scheduledpickuptime, drivername, driverphone, vehicledetail, distance, cost) => async dispatch => {
   const body = {mode, tripid, name, phone, startbusstop, endbusstop, scheduledpickuptime, drivername, driverphone, vehicledetail, distance, cost};
   try {
-    const res = await axios.post(api.trip, body);
+    const res = await axios.post(`${api.trip}/api/me/trips/`, body);
     dispatch({
       type: CREATE_TRIP,
       payload: res.data
@@ -32,17 +42,21 @@ export const createTrip = (mode, tripid, name, phone, startbusstop, endbusstop, 
     dispatch(getTrips());
     dispatch(toggleTripModalCreate());
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
+    dispatch({
+      type: TRIP_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    dispatch(toggleTripModalCreate());
+    setTimeout(() => dispatch({
+      type: REMOVE_TRIP_ERROR
+    }), 5000)
 
   }
 };
 export const deleteTrip = (id) => async dispatch => {
 
   try {
-    const res = await axios.delete(`http://165.22.116.11:7500/admin/trips/${id}/`);
+    const res = await axios.delete(`${api.trip}/admin/trips/${id}/`);
     dispatch({
       type: DELETE_TRIP,
       payload: res.data
@@ -50,10 +64,14 @@ export const deleteTrip = (id) => async dispatch => {
     dispatch(getTrips());
     dispatch(closeTripModalDelete());
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
+    dispatch({
+      type: TRIP_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    dispatch(closeTripModalDelete());
+    setTimeout(() => dispatch({
+      type: REMOVE_TRIP_ERROR
+    }), 5000)
 
   }
 };
@@ -61,20 +79,17 @@ export const deleteTrip = (id) => async dispatch => {
 export const searchTrip = (id) => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(`http://165.22.116.11:7500/api/trips/${id}/`);
+    const res = await axios.get(`${api.trip}/api/trips/${id}/`);
     dispatch({
       type: SEARCH_TRIP,
       payload: res.data
     });
-    // dispatch(isLoading());
-    // dispatch(BusStopUser());
-    // dispatch(closeBusStopModalDelete());
-  } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
 
+  } catch (err) {
+    dispatch({
+      type: TRIP_ERROR,
+      payload: "Trip Not Available"
+    });
   }
 };
 

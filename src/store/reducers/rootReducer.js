@@ -9,6 +9,7 @@ import routeReducer from "./routeReducer";
 import busStopReducer from "./busStopReducer";
 import tripReducer from "./tripReducer";
 import userReducer from "./userReducer";
+import bookingReducer from "./bookingReducer";
 
 
 export default combineReducers({
@@ -21,5 +22,6 @@ export default combineReducers({
   zone: zoneReducer,
   route: routeReducer,
   busStop: busStopReducer,
-  trip:  tripReducer
+  trip:  tripReducer,
+  booking:  bookingReducer
 });

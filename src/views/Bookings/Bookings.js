@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getTrips, searchTrip} from "../../store/actions/tripAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import TripDeleteBtn from "./components/TripDeleteBtn";
-import TripHeader from "./components/TripHeader";
 import Spinner from "../../spinner/Spinner";
+import BookingDeleteBtn from "./components/BookingDeleteBtn";
+import BookingHeader from "./components/BookingHeader";
+import {getBookings, searchBooking} from "../../store/actions/bookingAction";
+
 
 
 
@@ -16,57 +16,52 @@ function UserRow(props) {
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
+    return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Unsuccessful' ? 'danger' :
+          status === 'Suspended' ? 'danger' :
             'primary'
   };
 
-
   return (
-    <tr key={user.mode.toString()}>
+    <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.tripid}</td>
-      <td>{user.mode}</td>
-      <td>{user.name}</td>
-      {/*<td>{user.phone}</td>*/}
-      <td>{user.startbusstop}</td>
-      <td>{user.endbusstop}</td>
-      <td>{user.scheduledpickuptime}</td>
-      {/*<td>{user.drivername}</td>*/}
-      {/*<td>{user.driverphone}</td>*/}
-      {/*<td>{user.vehicledetail}</td>*/}
+      <td>{user.trip}</td>
+      <td>{user.route}</td>
+      {/*<td>{user.driver}</td>*/}
+      <td>{user.beginbusstop}</td>
+      <td>{user.destinationbustop}</td>
+      <td>{user.pickedstatus}</td>
+      <td>{user.pickedtimestamp}</td>
+      <td>{user.dropstatus}</td>
+      <td>{user.droptimestamp}</td>
       {/*<td>{user.distance}</td>*/}
-      <td>{user.cost}</td>
-      <td> <TripDeleteBtn id={user.id} /> </td>
+      {/*<td><Badge color={getBadge(user.status)}>{user.status}</Badge></td>*/}
+      <td> <BookingDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Trips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) => {
+const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, error}) => {
   const [formData, setFormData] = useState('');
 
-useEffect(()=>{
-  if(formData === ''){
-    getTrips()
-  }
-},[formData]);
+  useEffect(()=>{
+    if(formData === ''){
+      getBookings()
+    }
+  },[formData]);
 
 
-const onChange = (e) =>{
+  const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
-  const handleEvent = (event, picker) => {
-    console.log(picker.startDate);
+
+
+  const onSearch = e => {
+    e.preventDefault();
+    searchBooking(formData)
   };
-
-const onSearch = e => {
-  e.preventDefault();
-  searchTrip(formData)
-};
-
 
   return (
     <div className="animated fadeIn">
@@ -85,10 +80,6 @@ const onSearch = e => {
                   />
                   <button className="btn btn-success" type="submit">Search</button>
                 </form>
-
-                {/*<DateRangePicker onApply={handleEvent}>*/}
-                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
-                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
@@ -96,50 +87,51 @@ const onSearch = e => {
                 <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
               </div>
             </CardHeader>
-            {/*<PrimaryHeader />*/}
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Trips
+                Bookings
               </div>
-              <TripHeader />
+              <BookingHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
-              {((trips && trips.length > 0) || trip ) &&
+              {/*{isLoading && loading()}*/}
+              {(bookings && bookings.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Bookings Available</div>}
+              {((bookings && bookings.length > 0) || booking) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Trip Id</th>
-                  <th scope="col">Mode</th>
-                  <th scope="col">Name</th>
+                  <th scope="col">Route</th>
+                  <th scope="col">Begin Bus stop</th>
+                  {/*<th scope="col">End</th>*/}
                   {/*<th scope="col">Passenger Phone N</th>*/}
-                  <th scope="col">Start Bus Stop</th>
-                  <th scope="col">End Bus Stop</th>
-                  <th scope="col">Scheduled Pickup Time</th>
-                  {/*<th scope="col">Driver Name</th>*/}
-                  {/*<th scope="col">Driver Phone no</th>*/}
+                  <th scope="col">Destination</th>
+                  <th scope="col">Pick Status</th>
+                  <th scope="col">Pick Time</th>
+                  <th scope="col">Drop status</th>
+                  <th scope="col">Drop Time</th>
                   {/*<th scope="col">Vehicle Detail</th>*/}
                   {/*<th scope="col">Distance</th>*/}
-                  <th scope="col">Cost</th>
+                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {trips && trips.map((user, index) =>
+                {bookings && bookings.map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
-                {trip &&
-                <UserRow user={trip}/>
+                {booking &&
+                <UserRow user={booking}/>
                 }
                 </tbody>
               </Table>}
             </CardBody>
             }
-
           </Card>
         </Col>
       </Row>
@@ -148,17 +140,17 @@ const onSearch = e => {
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getTrips: () => dispatch(getTrips()),
-    searchTrip: (id) => dispatch(searchTrip(id))
+    getBookings: () => dispatch(getBookings()),
+    searchBooking: (id) => dispatch(searchBooking(id))
   };
 }
 
 const mapStateToProps = state => ({
-  trips: state.trip.trips,
-  trip: state.trip.trip,
-  error: state.trip.error,
-  isLoading: state.trip.isLoading
+  bookings: state.booking.bookings,
+  booking: state.booking.booking,
+  error: state.booking.error,
+  isLoading: state.booking.isLoading
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Trips);
+export default connect(mapStateToProps,mapDispatchToProps)(Bookings);

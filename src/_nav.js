@@ -146,6 +146,12 @@ export default {
     //     },
     //   ],
     },
+
+    {
+      name: 'Bookings',
+      icon: 'icon-people',
+      url: '/bookings',
+    },
     {
       name: 'Bus Assistants',
       icon: 'icon-user',

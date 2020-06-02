@@ -52,7 +52,7 @@ const UserModalCreate = (props) => {
   return (
     <div>
       <Modal isOpen={userModalCreate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Create Trip</ModalHeader>
+        <ModalHeader toggle={toggle} className="text-center">Create User</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup row>
@@ -103,7 +103,7 @@ const UserModalCreate = (props) => {
                 <Input type="text"  name="home_pickup_time" onChange={onChange} value={home_pickup_time} required />
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info">First Name</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Status</Label>
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"

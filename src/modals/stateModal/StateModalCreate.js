@@ -48,25 +48,23 @@ const StateModalCreate = (props) => {
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="name" className="font-weight-bold mb-0 ">State Code</Label>
+              <Label for="name" className="font-weight-bold mb-0 text-info">State Code</Label>
               <Input
                 type="text"
                 name="stateCode"
-                placeholder="State Code"
                 value={stateCode}
                 onChange={onChange}
                 required
               />
-              <Label for="state" className="font-weight-bold mb-0 mt-1">State</Label>
+              <Label for="state" className="font-weight-bold mb-0 mt-1 text-info">State</Label>
               <Input
                 type="text"
                 name="state"
-                placeholder="State"
                 value={state}
                 onChange={onChange}
                 required
               />
-              <Label for="country" className="font-weight-bold mb-0 mt-1">Country Code</Label>
+              <Label for="country" className="font-weight-bold mb-0 mt-1 text-info">Country Code</Label>
               <Input
                 style={{cursor: 'pointer'}}
                 type="select"
