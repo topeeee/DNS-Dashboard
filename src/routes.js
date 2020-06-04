@@ -70,6 +70,8 @@ const Zones = React.lazy(() => import('./views/Setup/Zone'));
 const Routes = React.lazy(() => import('./views/Setup/Routes'));
 const BusStops = React.lazy(() => import('./views/Setup/BusStop'));
 const Bookings = React.lazy(() => import('./views/Bookings/Bookings'));
+const Vehicles = React.lazy(() => import('./views/Vehicle/Vehicles'));
+const DriverLoggings =  React.lazy(() => import('./views/Drivers/DriverLoggings'));
 
 
 
@@ -80,8 +82,10 @@ const Bookings = React.lazy(() => import('./views/Bookings/Bookings'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/modee', name: 'Mode', component: Mode },
+  { path: '/modes', name: 'Mode', component: Mode },
+  { path: '/driverloggings', name: 'Driver Loggings', component: DriverLoggings },
   { path: '/bookings', name: 'Bookings', component: Bookings },
+  { path: '/vehicles', name: 'Vehicles', component: Vehicles },
   { path: '/busstops', name: 'Bus Stops', component: BusStops },
   { path: '/routes', name: 'Routes', component: Routes },
   { path: '/states', name: 'States', component: States },

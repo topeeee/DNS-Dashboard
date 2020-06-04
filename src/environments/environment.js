@@ -6,7 +6,10 @@
    busStop: "http://165.22.116.11:7108/api/me/busstops/",
    trip: "http://165.22.116.11:7500",
    user: "http://165.22.116.11:7200",
-   booking: "http://165.22.116.11:7088"
+   booking: "http://165.22.116.11:7088",
+   vehicle: "http://165.22.116.11:7044",
+   mode: "http://165.22.116.11:7045",
+   driverLogging: "http://165.22.116.11:7043"
 };
 
 export default api

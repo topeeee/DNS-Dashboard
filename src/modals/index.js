@@ -23,11 +23,23 @@ import UserModalDelete from "./userModal/UserModalDelete";
 import UserModalCreate from "./userModal/UserModalCreate";
 import BookingModalDelete from "./bookingModal/BookingModalDelete";
 import BookingModalCreate from "./bookingModal/BookingModalCreate";
+import VehicleModalDelete from "./vehicleModal/VehicleModalDelete";
+import VehicleModalCreate from "./vehicleModal/VehicleModalCreate";
+import ModeModalDelete from "./modeModal/ModeModalDelete";
+import ModeModalCreate from "./modeModal/ModeModalCreate";
+import DriverLoggingModalCreate from "./driverLoggingModal/DriverLoggingModalCreate";
+import DriverLoggingModalDelete from "./driverLoggingModal/DriverLoggingModalDelete";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <DriverLoggingModalDelete />
+      <DriverLoggingModalCreate />
+      <ModeModalCreate />
+      <ModeModalDelete />
+      <VehicleModalCreate />
+      <VehicleModalDelete />
       <BookingModalCreate />
       <BookingModalDelete />
       <UserModalDelete />

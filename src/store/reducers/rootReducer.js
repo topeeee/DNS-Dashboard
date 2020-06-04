@@ -10,6 +10,9 @@ import busStopReducer from "./busStopReducer";
 import tripReducer from "./tripReducer";
 import userReducer from "./userReducer";
 import bookingReducer from "./bookingReducer";
+import vehicleReducer from "./vehicleReducer";
+import modeReducer from "./modeReducer";
+import driverLoggingReducer from "./driverLoggingReducer";
 
 
 export default combineReducers({
@@ -23,5 +26,8 @@ export default combineReducers({
   route: routeReducer,
   busStop: busStopReducer,
   trip:  tripReducer,
-  booking:  bookingReducer
+  booking:  bookingReducer,
+  vehicle: vehicleReducer,
+  mode:  modeReducer,
+  driverLogging: driverLoggingReducer
 });
