@@ -17,7 +17,7 @@ import driverLoggingReducer from "./driverLoggingReducer";
 
 export default combineReducers({
   user: userReducer,
-  drivers: driverReducer,
+  driver: driverReducer,
   busAssistants: busAssistantReducer,
   payment:  paymentReducer,
   auth: authenticationReducer,

@@ -1,8 +1,6 @@
 import React from "react";
 import DriverModalCreate from "./driverModal/DriverModalCreate";
 import DriverModalDelete from "./driverModal/DriverModalDelete";
-import DriverModalUpdate from "./driverModal/DriverModalUpdate";
-import DriverModalStatus from "./driverModal/DriverModalStatus";
 import BusAssistantModalCreate from "./busAssistantModal/BusAssistantModalCreate";
 import BusAssistantModalDelete from "./busAssistantModal/BusAssistantModalDelete";
 import BusAssistantModalStatus from "./busAssistantModal/BusAssistantModalStatus";
@@ -60,10 +58,8 @@ const CombineModal = () => {
       <BusAssistantModalStatus />
       <BusAssistantModalDelete />
       <BusAssistantModalCreate />
-      <DriverModalDelete />
-      <DriverModalCreate />
-      <DriverModalUpdate />
-      <DriverModalStatus />
+     <DriverModalDelete />
+     <DriverModalCreate />
     </div>
   );
 };

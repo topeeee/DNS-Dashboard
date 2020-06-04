@@ -9,7 +9,8 @@
    booking: "http://165.22.116.11:7088",
    vehicle: "http://165.22.116.11:7044",
    mode: "http://165.22.116.11:7045",
-   driverLogging: "http://165.22.116.11:7043"
+   driverLogging: "http://165.22.116.11:7043",
+   driver: "http://165.22.116.11:7042",
 };
 
 export default api

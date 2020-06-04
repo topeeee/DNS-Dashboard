@@ -121,17 +121,17 @@ export default {
       icon: 'icon-user',
       children: [
         {
+          name: 'Drivers',
+          url: '/drivers',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
           name: 'Driver Loggings',
           url: '/driverloggings',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
-        // {
-        //   name: 'Active',
-        //   url: '/drivers/active',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        // },
         // {
         //   name: 'Inactive',
         //   url: '/drivers/inactive',

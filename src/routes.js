@@ -39,11 +39,8 @@ const OperatorDashboard = React.lazy(() => import('./views/Dashboard/OperatorDas
 const Area = React.lazy(() => import('./views/Setup/Area'));
 const ActiveUsers = React.lazy(() => import('./views/Users/ActiveUsers'));
 const InactiveUsers = React.lazy(() => import('./views/Users/InactiveUsers'));
-const InactiveDrivers = React.lazy(() => import('./views/Drivers/InactiveDrivers'));
-const ActiveDrivers = React.lazy(() => import('./views/Drivers/ActiveDrivers'));
 const Drivers = React.lazy(() => import('./views/Drivers/Drivers'));
 const Driver = React.lazy(() => import('./views/Drivers/Driver'));
-const PendingDriver = React.lazy(() => import('./views/Drivers/PendingDrivers'));
 const InactiveBusAssistants = React.lazy(() => import('./views/BusAssistants/InactiveBusAssistants'));
 const ActiveBusAssistants = React.lazy(() => import('./views/BusAssistants/ActiveBusAssistants'));
 const BusAssistants = React.lazy(() => import('./views/BusAssistants/BusAssistants'));
@@ -110,9 +107,6 @@ const routes = [
   { path: '/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
   { path: '/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
   { path: '/busassisstant/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
-  { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers },
-  { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDriver },
-  { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers },
   { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
   { path: '/driver/:id', name: 'Driver Details', component: Driver },
   { path: '/users/active', name: 'ActiveUsers', component: ActiveUsers },

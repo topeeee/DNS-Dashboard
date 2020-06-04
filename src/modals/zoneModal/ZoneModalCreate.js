@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
 import { connect } from "react-redux";
-import {toggleZoneModalCreate, createZone} from "../../store/actions/zoneAction";
+import {toggleZoneModalCreate, createZone, ZoneUser} from "../../store/actions/zoneAction";
 import {getStates} from "../../store/actions/stateAction";
 
 
@@ -11,6 +11,7 @@ function mapDispatchToProps(dispatch) {
     toggleZoneModalCreate: () => dispatch(toggleZoneModalCreate()),
     createZone: (zoneCode, zone, stateCode) => dispatch(createZone(zoneCode, zone, stateCode)),
     getStates: () => dispatch(getStates()),
+
 
   };
 }
