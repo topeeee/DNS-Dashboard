@@ -73,8 +73,8 @@ const BusAssistantModalCreate = (props) => {
               <Input type="text" name="account"  placeholder="Vehicle Make" />
               <Label for="account">Vehicle Model</Label>
               <Input type="text" name="account"  placeholder="Vehicle Model" />
-              <Label for="account">Assigned Mode</Label>
-              <Input type="text" name="account"  placeholder="Assigned Mode" />
+              <Label for="account">Assigned Area</Label>
+              <Input type="text" name="account"  placeholder="Assigned Area" />
               <Label for="account"> Zone</Label>
               <Input type="text" name="account"  placeholder="Zone" />
               <Label for="account">Area</Label>

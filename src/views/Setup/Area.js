@@ -1,393 +1,128 @@
-import React, { Component } from 'react';
-import { Badge, Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux"
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {getAreas, searchArea} from "../../store/actions/areaAction";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../../spinner/Spinner";
+import AreaDeleteBtn from "./components/AreaDeleteBtn";
+import AreaHeader from "./components/AreaHeader";
 
-class Area extends Component {
-  render() {
-    return (
-      <div className="animated fadeIn">
-        {/*<Row>*/}
-        {/*  <Col xs="12" lg="6">*/}
-        {/*    <Card>*/}
-        {/*      <CardHeader>*/}
-        {/*        <i className="fa fa-align-justify"></i> Simple Table*/}
-        {/*      </CardHeader>*/}
-        {/*      <CardBody>*/}
-        {/*        <Table responsive>*/}
-        {/*          <thead>*/}
-        {/*          <tr>*/}
-        {/*            <th>Username</th>*/}
-        {/*            <th>Date registered</th>*/}
-        {/*            <th>Role</th>*/}
-        {/*            <th>Status</th>*/}
-        {/*          </tr>*/}
-        {/*          </thead>*/}
-        {/*          <tbody>*/}
-        {/*          <tr>*/}
-        {/*            <td>Samppa Nori</td>*/}
-        {/*            <td>2012/01/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Estavan Lykos</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="danger">Banned</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Chetan Mohamed</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Admin</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="secondary">Inactive</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Derick Maximinus</td>*/}
-        {/*            <td>2012/03/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="warning">Pending</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Friderik Dávid</td>*/}
-        {/*            <td>2012/01/21</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          </tbody>*/}
-        {/*        </Table>*/}
-        {/*        <Pagination>*/}
-        {/*          <PaginationItem>*/}
-        {/*            <PaginationLink previous tag="button"></PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem active>*/}
-        {/*            <PaginationLink tag="button">1</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem>*/}
-        {/*            <PaginationLink tag="button">2</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem>*/}
-        {/*            <PaginationLink tag="button">3</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem>*/}
-        {/*            <PaginationLink tag="button">4</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem>*/}
-        {/*            <PaginationLink next tag="button"></PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*        </Pagination>*/}
-        {/*      </CardBody>*/}
-        {/*    </Card>*/}
-        {/*  </Col>*/}
 
-        {/*  <Col xs="12" lg="6">*/}
-        {/*    <Card>*/}
-        {/*      <CardHeader>*/}
-        {/*        <i className="fa fa-align-justify"></i> Striped Table*/}
-        {/*      </CardHeader>*/}
-        {/*      <CardBody>*/}
-        {/*        <Table responsive striped>*/}
-        {/*          <thead>*/}
-        {/*          <tr>*/}
-        {/*            <th>Username</th>*/}
-        {/*            <th>Date registered</th>*/}
-        {/*            <th>Role</th>*/}
-        {/*            <th>Status</th>*/}
-        {/*          </tr>*/}
-        {/*          </thead>*/}
-        {/*          <tbody>*/}
-        {/*          <tr>*/}
-        {/*            <td>Yiorgos Avraamu</td>*/}
-        {/*            <td>2012/01/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Avram Tarasios</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="danger">Banned</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Quintin Ed</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Admin</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="secondary">Inactive</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Enéas Kwadwo</td>*/}
-        {/*            <td>2012/03/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="warning">Pending</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Agapetus Tadeáš</td>*/}
-        {/*            <td>2012/01/21</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          </tbody>*/}
-        {/*        </Table>*/}
-        {/*        <Pagination>*/}
-        {/*          <PaginationItem disabled><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem active>*/}
-        {/*            <PaginationLink tag="button">1</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>*/}
-        {/*        </Pagination>*/}
-        {/*      </CardBody>*/}
-        {/*    </Card>*/}
-        {/*  </Col>*/}
-        {/*</Row>*/}
 
-        {/*<Row>*/}
 
-        {/*  <Col xs="12" lg="6">*/}
-        {/*    <Card>*/}
-        {/*      <CardHeader>*/}
-        {/*        <i className="fa fa-align-justify"></i> Condensed Table*/}
-        {/*      </CardHeader>*/}
-        {/*      <CardBody>*/}
-        {/*        <Table responsive size="sm">*/}
-        {/*          <thead>*/}
-        {/*          <tr>*/}
-        {/*            <th>Username</th>*/}
-        {/*            <th>Date registered</th>*/}
-        {/*            <th>Role</th>*/}
-        {/*            <th>Status</th>*/}
-        {/*          </tr>*/}
-        {/*          </thead>*/}
-        {/*          <tbody>*/}
-        {/*          <tr>*/}
-        {/*            <td>Carwyn Fachtna</td>*/}
-        {/*            <td>2012/01/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Nehemiah Tatius</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="danger">Banned</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Ebbe Gemariah</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Admin</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="secondary">Inactive</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Eustorgios Amulius</td>*/}
-        {/*            <td>2012/03/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="warning">Pending</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Leopold Gáspár</td>*/}
-        {/*            <td>2012/01/21</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          </tbody>*/}
-        {/*        </Table>*/}
-        {/*        <Pagination>*/}
-        {/*          <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem active>*/}
-        {/*            <PaginationLink tag="button">1</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>*/}
-        {/*        </Pagination>*/}
-        {/*      </CardBody>*/}
-        {/*    </Card>*/}
-        {/*  </Col>*/}
-
-        {/*  <Col xs="12" lg="6">*/}
-        {/*    <Card>*/}
-        {/*      <CardHeader>*/}
-        {/*        <i className="fa fa-align-justify"></i> Bordered Table*/}
-        {/*      </CardHeader>*/}
-        {/*      <CardBody>*/}
-        {/*        <Table responsive bordered>*/}
-        {/*          <thead>*/}
-        {/*          <tr>*/}
-        {/*            <th>Username</th>*/}
-        {/*            <th>Date registered</th>*/}
-        {/*            <th>Role</th>*/}
-        {/*            <th>Status</th>*/}
-        {/*          </tr>*/}
-        {/*          </thead>*/}
-        {/*          <tbody>*/}
-        {/*          <tr>*/}
-        {/*            <td>Pompeius René</td>*/}
-        {/*            <td>2012/01/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Paĉjo Jadon</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="danger">Banned</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Micheal Mercurius</td>*/}
-        {/*            <td>2012/02/01</td>*/}
-        {/*            <td>Admin</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="secondary">Inactive</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Ganesha Dubhghall</td>*/}
-        {/*            <td>2012/03/01</td>*/}
-        {/*            <td>Member</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="warning">Pending</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          <tr>*/}
-        {/*            <td>Hiroto Šimun</td>*/}
-        {/*            <td>2012/01/21</td>*/}
-        {/*            <td>Staff</td>*/}
-        {/*            <td>*/}
-        {/*              <Badge color="success">Active</Badge>*/}
-        {/*            </td>*/}
-        {/*          </tr>*/}
-        {/*          </tbody>*/}
-        {/*        </Table>*/}
-        {/*        <Pagination>*/}
-        {/*          <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem active>*/}
-        {/*            <PaginationLink tag="button">1</PaginationLink>*/}
-        {/*          </PaginationItem>*/}
-        {/*          <PaginationItem className="page-item"><PaginationLink tag="button">2</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>*/}
-        {/*          <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>*/}
-        {/*        </Pagination>*/}
-        {/*      </CardBody>*/}
-        {/*    </Card>*/}
-        {/*  </Col>*/}
-
-        {/*</Row>*/}
-
-        <Row>
-          <Col>
-            <Card>
-              <CardHeader>
-                <i className="fa fa-align-justify"></i> Combined All Table
-              </CardHeader>
-              <CardBody>
-                <Table hover bordered striped responsive size="sm">
-                  <thead>
-                  <tr>
-                    <th>Username</th>
-                    <th>Date registered</th>
-                    <th>Role</th>
-                    <th>Status</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Vishnu Serghei</td>
-                    <td>2012/01/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Zbyněk Phoibos</td>
-                    <td>2012/02/01</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="danger">Banned</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Einar Randall</td>
-                    <td>2012/02/01</td>
-                    <td>Admin</td>
-                    <td>
-                      <Badge color="secondary">Inactive</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Félix Troels</td>
-                    <td>2012/03/01</td>
-                    <td>Member</td>
-                    <td>
-                      <Badge color="warning">Pending</Badge>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Aulus Agmundr</td>
-                    <td>2012/01/21</td>
-                    <td>Staff</td>
-                    <td>
-                      <Badge color="success">Active</Badge>
-                    </td>
-                  </tr>
-                  </tbody>
-                </Table>
-                <nav>
-                  <Pagination>
-                    <PaginationItem><PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                    <PaginationItem active>
-                      <PaginationLink tag="button">1</PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                    <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                  </Pagination>
-                </nav>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-
-    );
-  }
+function UserRow(props) {
+  const user = props.user;
+  return (
+    <tr key={user.id}>
+      <td>{user.id}</td>
+      <td>{user.xareacode}</td>
+      <td>{user.xarea}</td>
+      <td>{user.zonecode}</td>
+      <td> <AreaDeleteBtn id={user.id} /> </td>
+    </tr>
+  )
 }
 
-export default Area;
+const Area = ({getAreas, areas, area, isLoading,  searchArea, error}) => {
+  const [formData, setFormData] = useState('');
+
+  useEffect(()=>{
+    if(formData === ''){
+      getAreas()
+    }
+  },[formData]);
+
+
+  const onChange = (e) =>{
+    e.preventDefault();
+    setFormData(e.target.value );
+  };
+
+
+  const onSearch = e => {
+    e.preventDefault();
+    searchArea(formData)
+  };
+
+  return (
+    <div className="animated fadeIn">
+      <Row>
+        <Col xl={12}>
+          <Card>
+            <CardHeader className="bg-secondary d-flex">
+              <div className="w-75 d-flex align-items-center ">
+                <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
+                  <Input type="text"
+                         placeholder="Search by Id"
+                         className="w-25"
+                         name="formData"
+                         value={formData}
+                         onChange={onChange}
+                  />
+                  <button className="btn btn-success" type="submit">Search</button>
+                </form>
+              </div>
+              <div className="w-25 text-right">
+                <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
+                <FontAwesomeIcon className="text-primary py-2" title="Send to Email" style={{fontSize: 40,  cursor: "pointer"}} icon={faEnvelopeSquare} />
+                <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
+              </div>
+            </CardHeader>
+            <CardHeader className="d-flex align-items-center">
+              <div className="w-25">
+                Modes
+              </div>
+              <AreaHeader />
+            </CardHeader>
+            {isLoading && <Spinner />}
+            {!isLoading &&
+            <CardBody>
+              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
+              {/*{isLoading && loading()}*/}
+              {(areas && areas.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
+              {((areas && areas.length > 0) || area) &&
+              <Table responsive hover>
+                <thead className="bg-dark">
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Area Code</th>
+                  <th scope="col">Area</th>
+                  <th scope="col">Zone Code</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody style={{background: "gray", color: "white"}}>
+                {areas && areas.map((mode, index) =>
+                  <UserRow key={index} user={mode}/>
+                )}
+                {area &&
+                <UserRow user={area}/>
+                }
+                </tbody>
+              </Table>}
+            </CardBody>
+            }
+          </Card>
+        </Col>
+      </Row>
+    </div>
+  )
+};
+function mapDispatchToProps(dispatch) {
+  return {
+    getAreas: () => dispatch(getAreas()),
+    searchArea: (id) => dispatch(searchArea(id))
+  };
+}
+
+const mapStateToProps = state => ({
+  areas: state.area.areas,
+  area: state.area.area,
+  error: state.area.error,
+  isLoading: state.area.isLoading
+
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Area);

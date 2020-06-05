@@ -43,7 +43,7 @@ export default {
         },
         {
           name: 'Areas',
-          // url: '/area',
+          url: '/areas',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },

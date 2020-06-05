@@ -11,6 +11,7 @@
    mode: "http://165.22.116.11:7045",
    driverLogging: "http://165.22.116.11:7043",
    driver: "http://165.22.116.11:7042",
+   area: "http://165.22.116.11:7007"
 };
 
 export default api

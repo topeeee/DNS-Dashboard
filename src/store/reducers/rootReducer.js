@@ -13,6 +13,7 @@ import bookingReducer from "./bookingReducer";
 import vehicleReducer from "./vehicleReducer";
 import modeReducer from "./modeReducer";
 import driverLoggingReducer from "./driverLoggingReducer";
+import areaReducer from "./areaReducer";
 
 
 export default combineReducers({
@@ -29,5 +30,6 @@ export default combineReducers({
   booking:  bookingReducer,
   vehicle: vehicleReducer,
   mode:  modeReducer,
-  driverLogging: driverLoggingReducer
+  driverLogging: driverLoggingReducer,
+  area: areaReducer
 });

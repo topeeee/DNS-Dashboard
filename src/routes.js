@@ -75,10 +75,12 @@ const DriverLoggings =  React.lazy(() => import('./views/Drivers/DriverLoggings'
 
 
 
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/areas', name: 'Areas', component: Area },
   { path: '/modes', name: 'Mode', component: Mode },
   { path: '/driverloggings', name: 'Driver Loggings', component: DriverLoggings },
   { path: '/bookings', name: 'Bookings', component: Bookings },
@@ -111,7 +113,6 @@ const routes = [
   { path: '/driver/:id', name: 'Driver Details', component: Driver },
   { path: '/users/active', name: 'ActiveUsers', component: ActiveUsers },
   { path: '/users/inactive', name: 'Dashboard', component: InactiveUsers },
-  { path: '/area', name: 'Dashboard', component: Area },
   { path: '/operator', name: 'Dashboard', component: OperatorDashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
