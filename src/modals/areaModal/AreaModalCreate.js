@@ -87,7 +87,7 @@ const AreaModalCreate = (props) => {
                 required>
                 <option value="">Select Zone</option>
                 {zones &&  zones.map((zone, index) =>
-                  <option value={zone.zonecode} key={index}>{zone.zonecode}</option>
+                  <option value={zone.zonecode} key={index}>{zone.zone}</option>
                 )}
               </Input>
             </FormGroup>

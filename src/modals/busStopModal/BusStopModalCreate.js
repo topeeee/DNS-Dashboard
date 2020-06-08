@@ -78,14 +78,14 @@ const BusStopModalCreate = (props) => {
             <FormGroup row>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Bus Stop Code</Label>
-                <Input type="text" placeholder="Bus Stop Code" name="busstopcode" onChange={onChange} value={busstopcode}  required/>
+                <Input type="text"  name="busstopcode" onChange={onChange} value={busstopcode}  required/>
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Bus Stop</Label>
-                <Input type="text" placeholder="Bus Stop" name="busstop" onChange={onChange} value={busstop} required />
+                <Input type="text"  name="busstop" onChange={onChange} value={busstop} required />
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Route Code</Label>
+                <Label for="name" className="font-weight-bold mb-0 ">Route</Label>
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"
@@ -94,40 +94,55 @@ const BusStopModalCreate = (props) => {
                   onChange={onChange}
                   required
                 >
-                  <option value="">Select state code</option>
+                  <option value="">Select Route</option>
                   {routes && routes.map((route, index) =>
-                    <option value={route.routecode} key={index}>{route.routecode}</option>
+                    <option value={route.routecode} key={index}>{route.route}</option>
                   )}
                 </Input>
                 {/*<Input type="text" placeholder="Route code" name="routecode" onChange={onChange}  value={routecode} />*/}
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Heading</Label>
-                <Input type="text" placeholder="Heading" name="heading" onChange={onChange} value={heading} required />
+              <Label for="name" className="font-weight-bold mb-0 ">Direction</Label>
+              <Input
+                style={{cursor: 'pointer'}}
+                type="select"
+                name="heading"
+                value={heading}
+                onChange={onChange}
+                required
+              >
+                <option value="">Select Direction</option>
+                <option value="North">North</option>
+                <option value="South">South</option>
+              </Input>
               </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Speed</Label>
-                <Input type="text" placeholder="Speeding" name="speed" onChange={onChange} value={speed} required />
-              </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Accuracy</Label>
-                <Input type="text" placeholder="Accuracy" name="accuracy" onChange={onChange} value={accuracy} required/>
-              </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Altitude Accuracy</Label>
-                <Input type="text" placeholder="Altitude Accuracy" name="altitudeaccuracy" onChange={onChange} value={altitudeaccuracy} required />
-              </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 ">Altitude</Label>
-                <Input type="text" placeholder="Altitude" name="altitude" onChange={onChange} value={altitude} required />
-              </Col>
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 ">Direction</Label>*/}
+              {/*  <Input type="text"  name="heading" onChange={onChange} value={heading} required />*/}
+              {/*</Col>*/}
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 ">Speed</Label>*/}
+              {/*  <Input type="text" placeholder="Speeding" name="speed" onChange={onChange} value={speed} required />*/}
+              {/*</Col>*/}
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 ">Accuracy</Label>*/}
+              {/*  <Input type="text" name="accuracy" onChange={onChange} value={accuracy}/>*/}
+              {/*</Col>*/}
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 ">Altitude Accuracy</Label>*/}
+              {/*  <Input type="text" placeholder="Altitude Accuracy" name="altitudeaccuracy" onChange={onChange} value={altitudeaccuracy}/>*/}
+              {/*</Col>*/}
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 ">Altitude</Label>*/}
+              {/*  <Input type="text" placeholder="Altitude" name="altitude" onChange={onChange} value={altitude} />*/}
+              {/*</Col>*/}
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Longitude</Label>
-                <Input type="text" placeholder="Longitude" name="longitude" onChange={onChange} value={longitude} required/>
+                <Input type="text"  name="longitude" onChange={onChange} value={longitude} required/>
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 ">Latitude</Label>
-                <Input type="text" placeholder="Latitude" name="latitude" onChange={onChange} value={latitude} required/>
+                <Input type="text"  name="latitude" onChange={onChange} value={latitude} required/>
               </Col>
             </FormGroup>
             {/*<FormGroup>*/}

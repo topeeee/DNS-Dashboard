@@ -9,11 +9,13 @@ import BusStopDeleteBtn from "./components/BusStopDeleteBtn";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
+import {RouteUser} from "../../store/actions/routeAction";
 
 
 
 function UserRow(props) {
   const user = props.user;
+  const route = props.route;
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
@@ -25,23 +27,25 @@ function UserRow(props) {
   };
 
   return (
-    <tr key={user.busstopcode.toString()}>
+    <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.busstopcode}</td>
-      <td>{user.routecode}</td>
-      <td>{user.accuracy}</td>
-      <td>{user.altitude}</td>
-      <td>{user.altitudeaccuracy}</td>
+      <td>{user.busstop}</td>
+      {/*<td>{user.busstopcode}</td>*/}
+      {route && route.map((sta, index) =>{
+        if(sta.routecode === user.routecode) {
+          return  <td key={index}>{sta.route}</td>
+        }}
+      )}
+      {/*<td>{user.routecode}</td>*/}
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
       <td>{user.heading}</td>
-      <td>{user.speed}</td>
       <td> <BusStopDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop}) => {
+const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser, routes}) => {
   const [formData, setFormData] = useState('');
 
 
@@ -59,7 +63,8 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop}) => {
     console.log(picker.startDate);
   };
   useEffect(()=>{
-    BusStopUser()
+    BusStopUser();
+    RouteUser()
   },[]);
 
 
@@ -107,21 +112,18 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop}) => {
                 <thead>
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col"> Bus Stop Code</th>
-                  <th scope="col">Route Code</th>
-                  <th scope="col">Accuracy</th>
-                  <th scope="col">Altitude </th>
-                  <th scope="col">Altitude Accuracy</th>
+                  <th scope="col"> Bus Stop</th>
+                  {/*<th scope="col"> Bus Stop Code</th>*/}
+                  <th scope="col">Route</th>
                   <th scope="col">Latitude</th>
                   <th scope="col">Longitude</th>
-                  <th scope="col">Heading	Speed</th>
-                  <th scope="col">Speed</th>
+                  <th scope="col">Direction</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {busStops && busStops.map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} route={routes}/>
                 )}
                 </tbody>
               </Table>}
@@ -135,13 +137,15 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop}) => {
 function mapDispatchToProps(dispatch) {
   return {
     BusStopUser: () => dispatch(BusStopUser()),
-    searchBusStop: (id) => dispatch( searchBusStop(id))
+    searchBusStop: (id) => dispatch( searchBusStop(id)),
+    RouteUser: () => dispatch(RouteUser()),
   };
 }
 
 const mapStateToProps = state => ({
   busStops: state.busStop.busStops,
-  isLoading: state.busStop.isLoading
+  isLoading: state.busStop.isLoading,
+  routes: state.route.routes,
 
 });
 

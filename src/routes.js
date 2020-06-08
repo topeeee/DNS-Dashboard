@@ -69,6 +69,14 @@ const BusStops = React.lazy(() => import('./views/Setup/BusStop'));
 const Bookings = React.lazy(() => import('./views/Bookings/Bookings'));
 const Vehicles = React.lazy(() => import('./views/Vehicle/Vehicles'));
 const DriverLoggings =  React.lazy(() => import('./views/Drivers/DriverLoggings'));
+const DriverRoutes = React.lazy(() => import('./views/Drivers/DriverRoutes'));
+const Operators =  React.lazy(() => import('./views/Setup/operator/Operators'));
+const ActiveOperators =  React.lazy(() => import('./views/Setup/operator/ActiveOperator'));
+const InactiveOperators =  React.lazy(() => import('./views/Setup/operator/InactiveOperator'));
+const ActiveDrivers = React.lazy(() => import('./views/Drivers/ActiveDrivers'));
+const InactiveDrivers = React.lazy(() => import('./views/Drivers/InactiveDrivers'));
+const PendingDrivers = React.lazy(() => import('./views/Drivers/PendingDrivers'));
+const Operator =  React.lazy(() => import('./views/Setup/operator/Operator'));
 
 
 
@@ -80,9 +88,17 @@ const DriverLoggings =  React.lazy(() => import('./views/Drivers/DriverLoggings'
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
+  { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
+  { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/areas', name: 'Areas', component: Area },
   { path: '/modes', name: 'Mode', component: Mode },
-  { path: '/driverloggings', name: 'Driver Loggings', component: DriverLoggings },
+  { path: '/operators/active', name: 'Active Operators', component: ActiveOperators },
+  { path: '/operators/inactive', name: 'Inactive Operators', component: InactiveOperators },
+  { path: '/operators/:id', exact: true, name: 'Operator Details', component: Operator },
+  { path: '/operators', name: 'Operators', component: Operators },
+  { path: '/drivers/driverloggings', name: 'Driver Loggings', component: DriverLoggings },
+  { path: '/drivers/driverroutes', name: 'Driver Routes', component: DriverRoutes },
   { path: '/bookings', name: 'Bookings', component: Bookings },
   { path: '/vehicles', name: 'Vehicles', component: Vehicles },
   { path: '/busstops', name: 'Bus Stops', component: BusStops },

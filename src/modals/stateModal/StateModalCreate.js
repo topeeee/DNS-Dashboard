@@ -73,8 +73,8 @@ const StateModalCreate = (props) => {
                 value={countryCode}
                 onChange={onChange}
                 required>
-                <option value="">Select Country code</option>
-                <option value={"NIG"}>NIG</option>
+                <option value="">Select Country</option>
+                <option value={"Nigeria"}>Nigeria</option>
               </Input>
             </FormGroup>
             <div className="d-flex justify-content-md-end">

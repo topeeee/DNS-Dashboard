@@ -83,8 +83,8 @@ const BusAssistantModalCreate = (props) => {
               <Input type="text" name="account"  placeholder="Route" />
               <Label for="account">Geo-fence Area</Label>
               <Input type="text" name="account"  placeholder="Geo-fence Area" />
-              <Label for="account">Operator Name</Label>
-              <Input type="text" name="account"  placeholder="Operator Name" />
+              <Label for="account">ActiveOperator Name</Label>
+              <Input type="text" name="account"  placeholder="ActiveOperator Name" />
             </FormGroup>
           </Form>
         </ModalBody>

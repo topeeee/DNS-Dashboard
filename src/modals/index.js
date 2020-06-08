@@ -29,11 +29,21 @@ import DriverLoggingModalCreate from "./driverLoggingModal/DriverLoggingModalCre
 import DriverLoggingModalDelete from "./driverLoggingModal/DriverLoggingModalDelete";
 import AreaModalCreate from "./areaModal/AreaModalCreate";
 import AreaModalDelete from "./areaModal/AreaModalDelete";
+import DriverRouteModalCreate from "./driverRouteModal/DriverRouteModalCreate";
+import DriverRouteModalDelete from "./driverRouteModal/DriverRouteModalDelete";
+import OperatorModalCreate from "./operatorModal/OperatorModalCreate";
+import OperatorModalDelete from "./operatorModal/OperatorModalDelete";
+import OperatorModalUpdate from "./operatorModal/OperatorModalUpdate";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <OperatorModalUpdate />
+      <OperatorModalDelete />
+      <OperatorModalCreate />
+      <DriverRouteModalDelete />
+      <DriverRouteModalCreate />
       <AreaModalDelete />
       <AreaModalCreate />
       <DriverLoggingModalDelete />

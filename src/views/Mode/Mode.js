@@ -7,12 +7,14 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
 import ModeDeleteBtn from "./components/ModeDeleteBtn";
+import {getStates} from "../../store/actions/stateAction";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
+  const state = props.state;
 
   const getBadge = (status) => {
     return status === 'True' ? 'success' :
@@ -20,24 +22,33 @@ function UserRow(props) {
         'primary'
   };
   return (
+
     <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.modecode}</td>
+      {/*<td>{user.modecode}</td>*/}
       <td>{user.mode}</td>
-      <td>{user.statecode}</td>
+      {state.map((sta, index) =>{
+        if(sta.xstatecode === user.statecode) {
+          return  <td key={index}>{sta.xstate}</td>
+      }}
+      )}
       <td> <ModeDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Mode = ({getModes, modes, mode, isLoading,  searchMode, error}) => {
+const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, states}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
     if(formData === ''){
-      getModes()
+      getModes();
+      getStates();
     }
   },[formData]);
+
+
+
 
 
   const onChange = (e) =>{
@@ -87,21 +98,21 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error}) => {
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
               {(modes && modes.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Modes Available</div>}
               {((modes && modes.length > 0) || mode) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Mode Code</th>
+                  {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Mode</th>
-                  <th scope="col">State Code</th>
+                  <th scope="col">State</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
                 {modes && modes.map((mode, index) =>
-                  <UserRow key={index} user={mode}/>
+                  <UserRow key={index} user={mode} state={states}/>
                 )}
                 {mode &&
                 <UserRow user={mode}/>
@@ -119,7 +130,8 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error}) => {
 function mapDispatchToProps(dispatch) {
   return {
     getModes: () => dispatch(getModes()),
-    searchMode: (id) => dispatch(searchMode(id))
+    searchMode: (id) => dispatch(searchMode(id)),
+    getStates: () => dispatch(getStates()),
   };
 }
 
@@ -127,7 +139,8 @@ const mapStateToProps = state => ({
   modes: state.mode.modes,
   mode: state.mode.mode,
   error: state.mode.error,
-  isLoading: state.mode.isLoading
+  isLoading: state.mode.isLoading,
+  states: state.state.states,
 
 });
 

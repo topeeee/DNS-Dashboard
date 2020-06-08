@@ -29,15 +29,15 @@ function UserRow(props) {
   return (
     <tr key={user.id}>
       <td>{user.id}</td>
+      <td>{user.firstname}</td>
+      <td>{user.lastname}</td>
+      <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      <td>{user.ratings}</td>
-      <td>{user.zone}</td>
-      <td>{user.area}</td>
-      <td>{user.route}</td>
-      <td>{user.geofencedarea}</td>
-      <td>{user.operatorname}</td>
-      {(user.status == 1) && <td><Badge color={getBadge("Approved")}>Approved</Badge></td>}
-      {(user.status == "") && <td onClick={()=>approved(user.id)}><Badge style={{cursor: "pointer"}} color={getBadge("Unapproved")}>Unapproved</Badge></td>}
+      {/*<td>{user.route}</td>*/}
+      {/*<td>{user.geofencedarea}</td>*/}
+      {/*<td>{user.operatorname}</td>*/}
+      {/*{(user.status == 1) && <td><Badge color={getBadge("Approved")}>Approved</Badge></td>}*/}
+      {/*{(user.status == "") && <td onClick={()=>approved(user.id)}><Badge style={{cursor: "pointer"}} color={getBadge("Unapproved")}>Unapproved</Badge></td>}*/}
       <td> <DriverDeleteBtn id={user.id} /> </td>
     </tr>
   )
@@ -98,7 +98,7 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Users
+                Drivers
               </div>
               <DriverHeader />
             </CardHeader>
@@ -114,13 +114,14 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Ratings</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col"> Phone No</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">App status</th>
+                  <th scope="col">Mode</th>
                   <th scope="col">Zone</th>
                   <th scope="col">Area</th>
-                  <th scope="col">Route</th>
-                  <th scope="col">Geo fenced area</th>
-                  <th scope="col">Operator Name</th>
                   <th scope="col">Status</th>
                   {/*<th scope="col">Driver Name</th>*/}
                   {/*<th scope="col">Driver Phone no</th>*/}

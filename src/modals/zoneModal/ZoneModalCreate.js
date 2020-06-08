@@ -70,7 +70,7 @@ const ZoneModalCreate = (props) => {
               <Input
                 type="text"
                 name="zoneCode"
-                placeholder="Zone Code"
+                // placeholder="Zone Code"
                 value={zoneCode}
                 onChange={onChange}
                 required
@@ -79,12 +79,12 @@ const ZoneModalCreate = (props) => {
               <Input
                 type="text"
                 name="zone"
-                placeholder="Zone"
+                // placeholder="Zone"
                 value={zone}
                 onChange={onChange}
                 required
               />
-              <Label for="country" className="font-weight-bold mb-0 mt-1">State Code</Label>
+              <Label for="country" className="font-weight-bold mb-0 mt-1">State</Label>
               <Input
                 style={{cursor: 'pointer'}}
                 type="select"
@@ -93,9 +93,9 @@ const ZoneModalCreate = (props) => {
                 onChange={onChange}
                 required
               >
-                <option value="">Select state code</option>
+                <option value="">Select state</option>
                 {states && states.map((state, index) =>
-                  <option value={state.xstatecode} key={index}>{state.xstatecode}</option>
+                  <option value={state.xstatecode} key={index}>{state.xstate}</option>
                 )}
               </Input>
             </FormGroup>

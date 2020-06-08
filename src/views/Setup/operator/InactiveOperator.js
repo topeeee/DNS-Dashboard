@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getAreas, searchArea} from "../../store/actions/areaAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import Spinner from "../../spinner/Spinner";
-import AreaDeleteBtn from "./components/AreaDeleteBtn";
-import AreaHeader from "./components/AreaHeader";
-import {ZoneUser} from "../../store/actions/zoneAction";
+import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
+import OperatorHeader from "./components/OperatorHeader";
+import Spinner from "../../../spinner/Spinner";
+import OperatorActionBtn from "./components/OperatorActionBtn";
+import {Link} from "react-router-dom";
+import usersData from "../../Users/UsersData";
 
 
 
@@ -15,35 +16,41 @@ import {ZoneUser} from "../../store/actions/zoneAction";
 function UserRow(props) {
   const user = props.user;
   const zone = props.zone;
+
+  const getBadge = (status) => {
+    return status === 'Active' ? 'success' :
+      status === 'Inactive' ? 'danger' :
+        status === 'Pending' ? 'warning' :
+          status === 'Banned' ? 'danger' :
+            'primary'
+  };
   return (
     <tr key={user.id}>
-      <td>{user.id}</td>
-      {/*<td>{user.xareacode}</td>*/}
-      <td>{user.xarea}</td>
-      {zone.map((sta, index) =>{
-        if(sta.zonecode === user.zonecode) {
-          return  <td key={index}>{sta.zone}</td>
-        }}
-      )}
-      {/*<td>{user.zonecode}</td>*/}
-      <td> <AreaDeleteBtn id={user.id} /> </td>
+      <td>{user.name}</td>
+      <td>{user.phoneNo}</td>
+      <td>{user.email}</td>
+      <td>{user.officeAddress}</td>
+      <td>{user.numberOfVehicle}</td>
+      {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
+      {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
+      <td> <OperatorActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
 
-const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  ZoneUser}) => {
+const InactiveOperators = ({getOperators, operators, operator, isLoading,  searchOperator, error}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
     if(formData === ''){
-      getAreas()
+      getOperators()
     }
   },[formData]);
 
-  useEffect(()=>{
-    ZoneUser();
-
-  }, []);
+  // useEffect(()=>{
+  //   ZoneUser();
+  //
+  // }, []);
 
 
   const onChange = (e) =>{
@@ -54,7 +61,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
 
   const onSearch = e => {
     e.preventDefault();
-    searchArea(formData)
+    searchOperator(formData)
   };
 
   return (
@@ -83,37 +90,42 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Areas
+                Inactive Operators
               </div>
-              <AreaHeader />
+              <OperatorHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
-              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
+              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
               {/*{isLoading && loading()}*/}
-              {(areas && areas.length === 0) &&
+              {(operators && operators.length === 0) &&
               <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
-              {((areas && areas.length > 0) || area) &&
+              {((operators && operators.length > 0) || operator) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
-                  <th scope="col">Area</th>
-                  <th scope="col">Zone</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Operator Name</th>
+                  <th scope="col">Operator Phone</th>
+                  <th scope="col">Operator Email</th>
+                  <th scope="col">Office Address</th>
+                  <th scope="col">Number of Vehicles</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {areas && areas.map((mode, index) =>
-                  <UserRow key={index} user={mode} zone={zones}/>
+                {operators &&  operators.filter((user) => user.status == 0).map((operator, index) =>
+                  <UserRow key={index} user={operator} />
                 )}
-                {area &&
-                <UserRow user={area}/>
+                {operator &&
+                <UserRow user={operator}/>
                 }
                 </tbody>
-              </Table>}
+              </Table>
+              }
             </CardBody>
             }
           </Card>
@@ -124,19 +136,25 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getAreas: () => dispatch(getAreas()),
-    searchArea: (id) => dispatch(searchArea(id)),
-    ZoneUser: () => dispatch(ZoneUser()),
+    getOperators: () => dispatch(getOperators()),
+    searchOperator: (id) => dispatch(searchOperator(id)),
   };
 }
 
 const mapStateToProps = state => ({
-  areas: state.area.areas,
-  area: state.area.area,
-  error: state.area.error,
-  isLoading: state.area.isLoading,
-  zones: state.zone.zones,
+  operators: state.operator.operators,
+  operator: state.operator.operator,
+  error: state.operator.error,
+  isLoading: state.operator.isLoading,
+
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Area);
+export default connect(mapStateToProps,mapDispatchToProps)(InactiveOperators);
+
+
+
+
+
+
+

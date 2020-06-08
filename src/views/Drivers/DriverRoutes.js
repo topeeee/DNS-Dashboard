@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {getDriverRoutes, searchDriverRoute, toggleDriverRouteModalDelete} from "../../store/actions/driverRouteAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import BookingDeleteBtn from "./components/BookingDeleteBtn";
-import BookingHeader from "./components/BookingHeader";
-import {getBookings, searchBooking} from "../../store/actions/bookingAction";
+import DriverRouteDeleteBtn from "./components/DriverRouteDeleteBtn";
+import DriverRouteHeader from "./components/DriverRouteHeader";
 
 
 
@@ -14,54 +14,34 @@ import {getBookings, searchBooking} from "../../store/actions/bookingAction";
 function UserRow(props) {
   const user = props.user;
   const userLink = `/trip/${user.TripID}`;
-
-  const getBadge = (status) => {
-    return status === 'Picked' ? 'success' :
-      status === 'Not Picked' ? 'warning' :
-        status === 'Dropped' ? 'success' :
-          status === 'Not Dropped' ? 'warning' :
-            'primary'
-  };
-
   return (
     <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.route}</td>
-      {/*<td>{user.driver}</td>*/}
-      <td>{user.beginbusstop}</td>
-      <td>{user.destinationbustop}</td>
-      {(user.pickedstatus == 1) && <td><Badge color={getBadge("Picked")}>Picked</Badge></td>}
-      {(user.pickedstatus == 0) && <td><Badge color={getBadge("Not Picked")}>Not Picked</Badge></td>}
-      <td>{user.pickedtimestamp}</td>
-      {(user.dropstatus == 1) && <td><Badge color={getBadge("Dropped")}>Dropped</Badge></td>}
-      {(user.dropstatus == 0) && <td><Badge color={getBadge("Not Dropped")}>Not Dropped</Badge></td>}
-      <td>{user.droptimestamp}</td>
-      {/*<td>{user.distance}</td>*/}
-      {/*<td><Badge color={getBadge(user.status)}>{user.status}</Badge></td>*/}
-      <td> <BookingDeleteBtn id={user.id} /> </td>
+      <td>{user.routecode}</td>
+      <td>{user.driverUsername}</td>
+      <td>{user.driverLicense}</td>
+      <td> <DriverRouteDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, error}) => {
+const DriverRoutes = ({getDriverRoutes, driverRoutes, driverRoute, isLoading,  searchDriverRoute, error}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
     if(formData === ''){
-      getBookings()
+      getDriverRoutes()
     }
   },[formData]);
-
 
   const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
 
-
   const onSearch = e => {
     e.preventDefault();
-    searchBooking(formData)
+    searchDriverRoute(formData)
   };
 
   return (
@@ -90,41 +70,33 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Bookings
+                States
               </div>
-              <BookingHeader />
+              <DriverRouteHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {/*{isLoading && loading()}*/}
-              {(bookings && bookings.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Bookings Available</div>}
-              {((bookings && bookings.length > 0) || booking) &&
+              {(driverRoutes && driverRoutes.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No States Available</div> }
+              {((driverRoutes && driverRoutes.length > 0) || driverRoute ) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Route</th>
-                  <th scope="col">Begin Bus stop</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">Pick Status</th>
-                  <th scope="col">Pick Time</th>
-                  <th scope="col">Drop status</th>
-                  <th scope="col">Drop Time</th>
-                  {/*<th scope="col">Vehicle Detail</th>*/}
-                  {/*<th scope="col">Distance</th>*/}
-                  {/*<th scope="col">Cost</th>*/}
+                  <th scope="col">Route Code</th>
+                  <th scope="col">Driver UserName</th>
+                  <th scope="col">Driver License</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {bookings && bookings.map((user, index) =>
+                {driverRoutes && driverRoutes.map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
-                {booking &&
-                <UserRow user={booking}/>
+                {driverRoute &&
+                <UserRow user={driverRoute}/>
                 }
                 </tbody>
               </Table>}
@@ -138,17 +110,17 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getBookings: () => dispatch(getBookings()),
-    searchBooking: (id) => dispatch(searchBooking(id))
+    getDriverRoutes: () => dispatch(getDriverRoutes()),
+    searchDriverRoute: (id) => dispatch(searchDriverRoute(id))
   };
 }
 
 const mapStateToProps = state => ({
-  bookings: state.booking.bookings,
-  booking: state.booking.booking,
-  error: state.booking.error,
-  isLoading: state.booking.isLoading
+  driverRoutes: state.driverRoute.driverRoutes,
+  driverRoute: state.driverRoute.driverRoute,
+  error: state.driverRoute.error,
+  isLoading: state.driverRoute.isLoading,
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Bookings);
+export default connect(mapStateToProps,mapDispatchToProps)(DriverRoutes);

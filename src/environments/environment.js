@@ -6,12 +6,15 @@
    busStop: "http://165.22.116.11:7108/api/me/busstops/",
    trip: "http://165.22.116.11:7500",
    user: "http://165.22.116.11:7200",
-   booking: "http://165.22.116.11:7088",
+   booking: "http://165.22.116.11:7041",
    vehicle: "http://165.22.116.11:7044",
    mode: "http://165.22.116.11:7045",
    driverLogging: "http://165.22.116.11:7043",
    driver: "http://165.22.116.11:7042",
-   area: "http://165.22.116.11:7007"
+   area: "http://165.22.116.11:7007",
+   driverRoute: "http://165.22.116.11:7048",
+   operator: "http://165.22.116.11:7046",
+   register: "http://165.22.116.11:8001"
 };
 
 export default api

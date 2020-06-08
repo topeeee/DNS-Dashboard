@@ -16,9 +16,32 @@ export default {
       children: [
         {
           name: 'Operators',
-          // url: '/operator',
+          children: [
+            {
+              name: 'All',
+              url: '/operators',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Active',
+              url: '/operators/active',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Inactive',
+              url: '/operators/inactive',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+          ]
+          // url: '/operators',
           // icon: 'icon-puzzle',
-         class: "menu_drop",
+         // class: "menu_drop",
 
         },
         {
@@ -121,23 +144,41 @@ export default {
       icon: 'icon-user',
       children: [
         {
-          name: 'Drivers',
+          name: 'All',
           url: '/drivers',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         {
-          name: 'Driver Loggings',
-          url: '/driverloggings',
+          name: 'Active',
+          url: '/drivers/active',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/drivers/inactive',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Pending',
+          url: '/drivers/pending',
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
         // {
-        //   name: 'Inactive',
-        //   url: '/drivers/inactive',
+        //   name: 'Driver Loggings',
+        //   url: '/drivers/driverloggings',
         //   // icon: 'icon-puzzle',
         //   class: "menu_drop",
         // },
+        {
+          name: 'Driver Routes',
+          url: '/drivers/driverroutes',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
         // {
         //   name: 'Pending',
         //   url: '/drivers/pending',

@@ -84,7 +84,7 @@ useEffect(()=> {
                 >
                   <option value="">Select State</option>
                   {states && states.map((state, index) =>
-                    <option value={state.xstatecode} key={index}>{state.xstatecode}</option>
+                    <option value={state.xstatecode} key={index}>{state.xstate}</option>
                   )}
                 </Input>
             </FormGroup>

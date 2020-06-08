@@ -23,7 +23,7 @@ const AreaModalDelete = (props)=> {
     toggleAreaModalDelete,
     AreaModalDelete,
     id,
-    deleteState
+    deleteArea
   } = props;
 
   const toggle = () => {toggleAreaModalDelete()};
@@ -35,7 +35,7 @@ const AreaModalDelete = (props)=> {
           <div className="text-center text-danger text-capitalize font-weight-bold" style={{fontSize: 15}}>delete Area?</div>
           <div className="d-flex align-items-center justify-content-around mt-2">
             <Button className="btn-pill btn-instagram" onClick={()=>toggle()}>Cancel</Button>
-            <Button className="btn-pill btn-danger" onClick={()=>deleteState(id)}>Continue</Button>
+            <Button className="btn-pill btn-danger" onClick={()=>deleteArea(id)}>Continue</Button>
           </div>
         </div>
       </Modal>

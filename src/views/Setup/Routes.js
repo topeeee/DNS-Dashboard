@@ -6,11 +6,13 @@ import PrimaryHeader from "../components/PrimaryHeader";
 import {RouteUser} from "../../store/actions/routeAction";
 import RouteHeader from "./components/RouteHeader";
 import RouteDeleteBtn from "./components/RouteDeleteBtn";
+import {getAreas} from "../../store/actions/areaAction";
 
 
 
 function UserRow(props) {
   const user = props.user;
+  const area = props.area;
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
@@ -22,24 +24,28 @@ function UserRow(props) {
   };
 
   return (
-    <tr key={user.areacode.toString()}>
+    <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.areacode}</td>
-      <td>{user.username}</td>
       <td>{user.route}</td>
-      <td>{user.routecode}</td>
+      {area.map((sta, index) =>{
+        if(sta.xareacode === user.areacode) {
+          return  <td key={index}>{sta.xarea}</td>
+        }}
+      )}
+      {/*<td>{user.areacode}</td>*/}
+      {/*<td>{user.username}</td>*/}
+
+      {/*<td>{user.routecode}</td>*/}
       <td> <RouteDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Routes = ({RouteUser, routes, isLoading}) => {
+const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
 
   useEffect(()=>{
-    RouteUser()
-    if(routes){
-      console.log(routes)
-    }
+    RouteUser();
+    getAreas()
   },[]);
 
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
@@ -64,16 +70,16 @@ const Routes = ({RouteUser, routes, isLoading}) => {
                 <thead>
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Area Code</th>
-                  <th scope="col">User Name</th>
                   <th scope="col">Route</th>
-                  <th scope="col">Route Code </th>
+                  <th scope="col">Area</th>
+                  {/*<th scope="col">User Name</th>*/}
+                  {/*<th scope="col">Route Code </th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {routes && routes.map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} area={areas}/>
                 )}
                 </tbody>
               </Table>}
@@ -87,12 +93,14 @@ const Routes = ({RouteUser, routes, isLoading}) => {
 function mapDispatchToProps(dispatch) {
   return {
     RouteUser: () => dispatch(RouteUser()),
+    getAreas: () => dispatch(getAreas()),
   };
 }
 
 const mapStateToProps = state => ({
   routes: state.route.routes,
   isLoading: state.route.isLoading,
+  areas: state.area.areas,
 
 });
 

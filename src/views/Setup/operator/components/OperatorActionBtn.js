@@ -32,18 +32,22 @@
 
 
 import React, { Component } from 'react';
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
-import {toggleAreaModalDelete} from "../../../store/actions/areaAction";
+import {changeOperatorStatus, toggleOperatorModalDelete, toggleOperatorModalUpdate} from "../../../../store/actions/operatorAction";
+import {Link} from "react-router-dom";
+
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleAreaModalDelete: (id) => dispatch(toggleAreaModalDelete(id))
+    toggleOperatorModalDelete: (id) => dispatch(toggleOperatorModalDelete(id)),
+    toggleOperatorModalUpdate: (id) => dispatch(toggleOperatorModalUpdate(id)),
+    changeOperatorStatus: (id, status) => dispatch(changeOperatorStatus(id, status))
   };
 }
 
-class AreaDeleteBtn extends Component {
+class OperatorActionBtn extends Component {
   constructor(props) {
     super(props);
 
@@ -72,8 +76,11 @@ class AreaDeleteBtn extends Component {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem className='bg-danger text-center' onClick={()=>this.props.toggleAreaModalDelete(this.props.id)}>Delete</DropdownItem>
-            <DropdownItem className='bg-info text-center'>Update</DropdownItem>
+            <DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.toggleOperatorModalDelete(this.props.id)}>Delete</DropdownItem>
+            <DropdownItem className='bg-info text-center p-0' onClick={()=>this.props.toggleOperatorModalUpdate(this.props.id)}>Update</DropdownItem>
+            {(this.props.user.status == 1) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>this.props.changeOperatorStatus(this.props.id, '0')}>Suspend</DropdownItem>}
+            {(this.props.user.status == 0) && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.changeOperatorStatus(this.props.id, '1')}>Reactivate</DropdownItem>}
+            <Link to={`/operators/${this.props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
             {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
@@ -82,4 +89,4 @@ class AreaDeleteBtn extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AreaDeleteBtn);
+export default connect(null, mapDispatchToProps)(OperatorActionBtn);

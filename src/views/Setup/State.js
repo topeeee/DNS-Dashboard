@@ -7,6 +7,7 @@ import StateDeleteBtn from "./components/StateDeleteBtn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
+import axios from "axios"
 
 
 
@@ -19,9 +20,8 @@ function UserRow(props) {
     <tr key={user.countrycode.toString()}>
       <td>{user.id}</td>
       <td>{user.countrycode}</td>
-      <td>{user.username}</td>
       <td>{user.xstate}</td>
-      <td>{user.xstatecode}</td>
+      {/*<td>{user.xstatecode}</td>*/}
       <td> <StateDeleteBtn id={user.id} /> </td>
     </tr>
   )
@@ -45,6 +45,12 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
     e.preventDefault();
     searchState(formData)
   };
+
+  // const myArr = [{vehicleType:"Mini", operatorId: 46, operatorName: "zeno"},
+  //   {vehicleType:"bus", operatorId: 46, operatorName: "zeno"},
+  //   {vehicleType:"car", operatorId: 46, operatorName: "zeno"}];
+
+
 
   return (
       <div className="animated fadeIn">
@@ -87,10 +93,9 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
                   <thead className="bg-dark">
                   <tr>
                     <th scope="col">Id</th>
-                    <th scope="col">Country Code</th>
-                    <th scope="col">User Name</th>
+                    <th scope="col">Country</th>
                     <th scope="col">State</th>
-                    <th scope="col">State Code</th>
+                    {/*<th scope="col">State Code</th>*/}
                     <th scope="col">Action</th>
                   </tr>
                   </thead>

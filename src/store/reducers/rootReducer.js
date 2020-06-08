@@ -14,6 +14,8 @@ import vehicleReducer from "./vehicleReducer";
 import modeReducer from "./modeReducer";
 import driverLoggingReducer from "./driverLoggingReducer";
 import areaReducer from "./areaReducer";
+import driverRouteReducer from "./driverRouteReducer";
+import operatorReducer from "./operatorReducer";
 
 
 export default combineReducers({
@@ -31,5 +33,7 @@ export default combineReducers({
   vehicle: vehicleReducer,
   mode:  modeReducer,
   driverLogging: driverLoggingReducer,
-  area: areaReducer
+  area: areaReducer,
+  driverRoute: driverRouteReducer,
+  operator: operatorReducer
 });

@@ -32,8 +32,8 @@ export const getDrivers = () => async dispatch => {
   }
 };
 
-export const createDriver = (residentialaddress, email, status,ratings,reviews, bankname, accountname, accountnumber, earnings, zone, area, route, geofencedarea, operatorname) => async dispatch => {
-  const body = {residentialaddress, email, status,ratings,reviews, bankname, accountname, accountnumber, earnings, zone, area, route, geofencedarea, operatorname};
+export const createDriver = (firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
+  const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
   try {
     const res = await axios.post(`${api.driver}/api/me/drivers/`, body);
     dispatch({

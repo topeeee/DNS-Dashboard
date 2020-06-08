@@ -1,56 +1,64 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {getUsers, searchUser} from "../../store/actions/userAction";
+import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import BookingDeleteBtn from "./components/BookingDeleteBtn";
-import BookingHeader from "./components/BookingHeader";
-import {getBookings, searchBooking} from "../../store/actions/bookingAction";
+import DriverHeader from "./components/DriverHeader";
+import DriverDeleteBtn from "./components/DriverDeleteBtn";
+import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
+  const approved = props.approved;
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Picked' ? 'success' :
-      status === 'Not Picked' ? 'warning' :
-        status === 'Dropped' ? 'success' :
-          status === 'Not Dropped' ? 'warning' :
+    return status === 'Approved' ? 'success' :
+      status === 'Refunds' ? 'secondary' :
+        status === 'Pending' ? 'warning' :
+          status === 'Unapproved' ? 'danger' :
             'primary'
   };
 
   return (
     <tr key={user.id}>
       <td>{user.id}</td>
+      <td>{user.email}</td>
+      <td>{user.ratings}</td>
+      <td>{user.zone}</td>
+      <td>{user.area}</td>
       <td>{user.route}</td>
-      {/*<td>{user.driver}</td>*/}
-      <td>{user.beginbusstop}</td>
-      <td>{user.destinationbustop}</td>
-      {(user.pickedstatus == 1) && <td><Badge color={getBadge("Picked")}>Picked</Badge></td>}
-      {(user.pickedstatus == 0) && <td><Badge color={getBadge("Not Picked")}>Not Picked</Badge></td>}
-      <td>{user.pickedtimestamp}</td>
-      {(user.dropstatus == 1) && <td><Badge color={getBadge("Dropped")}>Dropped</Badge></td>}
-      {(user.dropstatus == 0) && <td><Badge color={getBadge("Not Dropped")}>Not Dropped</Badge></td>}
-      <td>{user.droptimestamp}</td>
-      {/*<td>{user.distance}</td>*/}
-      {/*<td><Badge color={getBadge(user.status)}>{user.status}</Badge></td>*/}
-      <td> <BookingDeleteBtn id={user.id} /> </td>
+      <td>{user.geofencedarea}</td>
+      <td>{user.operatorname}</td>
+      {(user.status == 1) && <td><Badge color={getBadge("Approved")}>Approved</Badge></td>}
+      {(user.status == "") && <td onClick={()=>approved(user.id)}><Badge style={{cursor: "pointer"}} color={getBadge("Unapproved")}>Unapproved</Badge></td>}
+      <td> <DriverDeleteBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, error}) => {
+const InactiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
   const [formData, setFormData] = useState('');
+
+
+
+
+
 
   useEffect(()=>{
     if(formData === ''){
-      getBookings()
+      getDrivers();
+
     }
   },[formData]);
+
+
 
 
   const onChange = (e) =>{
@@ -61,7 +69,7 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
 
   const onSearch = e => {
     e.preventDefault();
-    searchBooking(formData)
+    searchDriver(formData)
   };
 
   return (
@@ -90,29 +98,33 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Bookings
+                Inactive Drivers
               </div>
-              <BookingHeader />
+              <DriverHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
-              {(bookings && bookings.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Bookings Available</div>}
-              {((bookings && bookings.length > 0) || booking) &&
+              {(drivers && drivers.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
+              {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Route</th>
-                  <th scope="col">Begin Bus stop</th>
-                  <th scope="col">Destination</th>
-                  <th scope="col">Pick Status</th>
-                  <th scope="col">Pick Time</th>
-                  <th scope="col">Drop status</th>
-                  <th scope="col">Drop Time</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col"> Phone No</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">App status</th>
+                  <th scope="col">Mode</th>
+                  <th scope="col">Zone</th>
+                  <th scope="col">Area</th>
+                  <th scope="col">Status</th>
+                  {/*<th scope="col">Driver Name</th>*/}
+                  {/*<th scope="col">Driver Phone no</th>*/}
                   {/*<th scope="col">Vehicle Detail</th>*/}
                   {/*<th scope="col">Distance</th>*/}
                   {/*<th scope="col">Cost</th>*/}
@@ -120,12 +132,12 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {bookings && bookings.map((user, index) =>
-                  <UserRow key={index} user={user}/>
-                )}
-                {booking &&
-                <UserRow user={booking}/>
-                }
+                {/*{drivers && drivers.map((user, index) =>*/}
+                {/*  <UserRow key={index} user={user} approved={approveDriver}/>*/}
+                {/*)}*/}
+                {/*{driver &&*/}
+                {/*<UserRow user={driver} approved={approveDriver}/>*/}
+                {/*}*/}
                 </tbody>
               </Table>}
             </CardBody>
@@ -138,17 +150,18 @@ const Bookings = ({getBookings, bookings, booking, isLoading,  searchBooking, er
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getBookings: () => dispatch(getBookings()),
-    searchBooking: (id) => dispatch(searchBooking(id))
+    getDrivers: () => dispatch(getDrivers()),
+    searchDriver: (id) => dispatch(searchDriver(id)),
+    approveDriver: (id) =>dispatch(approveDriver(id))
   };
 }
 
 const mapStateToProps = state => ({
-  bookings: state.booking.bookings,
-  booking: state.booking.booking,
-  error: state.booking.error,
-  isLoading: state.booking.isLoading
+  drivers: state.driver.drivers,
+  driver: state.driver.driver,
+  error: state.driver.error,
+  isLoading: state.driver.isLoading
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Bookings);
+export default connect(mapStateToProps,mapDispatchToProps)(InactiveDrivers);

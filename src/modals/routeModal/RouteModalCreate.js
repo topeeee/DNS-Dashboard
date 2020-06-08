@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { connect } from "react-redux";
 import {toggleRouteModalCreate, createRoute} from "../../store/actions/routeAction";
+import {getAreas} from "../../store/actions/areaAction";
 
 
 
@@ -9,13 +10,15 @@ function mapDispatchToProps(dispatch) {
   return {
     toggleRouteModalCreate: () => dispatch(toggleRouteModalCreate()),
     createRoute: (routeCode, route, areaCode) => dispatch(createRoute(routeCode, route, areaCode)),
+    getAreas: () => dispatch(getAreas()),
 
   };
 }
 
 const mapStateToProps = state => ({
   routeModalCreate: state.route.RouteModalCreate,
-
+  areas: state.area.areas,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const RouteModalCreate = (props) => {
@@ -23,8 +26,18 @@ const RouteModalCreate = (props) => {
     className,
     toggleRouteModalCreate,
     routeModalCreate,
-    createRoute
+    createRoute,
+    areas,
+    getAreas,
+    isAuthenticated
+
   } = props;
+
+  useEffect(()=> {
+    if(isAuthenticated){
+      getAreas()
+    }
+  }, []);
 
   const [formData, setFormData] = useState({routeCode: '', route: '', areaCode: ''});
 
@@ -52,7 +65,7 @@ const RouteModalCreate = (props) => {
               <Input
                 type="text"
                 name="routeCode"
-                placeholder="Route Code"
+                // placeholder="Route Code"
                 value={routeCode}
                 onChange={onChange}
                 required
@@ -61,23 +74,25 @@ const RouteModalCreate = (props) => {
               <Input
                 type="text"
                 name="route"
-                placeholder="Route"
+                // placeholder="Route"
                 value={route}
                 onChange={onChange}
                 required
               />
-              <Label for="country" className="font-weight-bold mb-0 mt-1">Area Code</Label>
+              <Label for="country" className="font-weight-bold mb-0 mt-1">Area</Label>
               <Input
                 style={{cursor: 'pointer'}}
                 type="select"
                 name="areaCode"
-                placeholder=" Area Code"
+                // placeholder=" Area Code"
                 value={areaCode}
                 onChange={onChange}
                 required
               >
-                <option value="">Select Area code</option>
-                <option value={"LEK"}>LEK</option>
+                <option value="">Select Area</option>
+                {areas &&  areas.map((area, index) =>
+                  <option value={area.xareacode} key={index}>{area.xarea}</option>
+                )}
               </Input>
             </FormGroup>
             <div className="d-flex justify-content-md-end">

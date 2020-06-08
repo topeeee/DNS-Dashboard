@@ -210,7 +210,7 @@ Support for Internet Explorer 9, 10, and 11 requires [polyfills](https://github.
 This project supports a superset of the latest JavaScript standard.<br>
 In addition to [ES6](https://github.com/lukehoban/es6features) syntax features, it also supports:
 
-- [Exponentiation Operator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
+- [Exponentiation ActiveOperator](https://github.com/rwaldron/exponentiation-operator) (ES2016).
 - [Async/await](https://github.com/tc39/ecmascript-asyncawait) (ES2017).
 - [Object Rest/Spread Properties](https://github.com/tc39/proposal-object-rest-spread) (ES2018).
 - [Dynamic import()](https://github.com/tc39/proposal-dynamic-import) (stage 3 proposal)
