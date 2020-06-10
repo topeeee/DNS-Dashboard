@@ -47,10 +47,11 @@ const BusAssistants = React.lazy(() => import('./views/BusAssistants/BusAssistan
 const BusAssistant = React.lazy(() => import('./views/BusAssistants/BusAssistant'));
 const PendingBusAssistant = React.lazy(() => import('./views/BusAssistants/PendingBusAssistants'));
 const Trips = React.lazy(() => import('./views/Trips/Trips'));
+const TripsOverView = React.lazy(() => import('./views/Trips/TripsOverView'));
 const CancelledTrips = React.lazy(() => import('./views/Trips/CancelledTrips'));
-const CurrentTrips = React.lazy(() => import('./views/Trips/CurrentTrip'));
-const CompletedTrips = React.lazy(() => import('./views/Trips/CompletedTrip'));
-const WaitingTrips = React.lazy(() => import('./views/Trips/WaitingTrip'));
+const TransitTrips = React.lazy(() => import('./views/Trips/TransitTrips'));
+const CompletedTrips = React.lazy(() => import('./views/Trips/CompletedTrips'));
+const WaitingTrips = React.lazy(() => import('./views/Trips/WaitingTrips'));
 const Trip = React.lazy(() => import('./views/Trips/Trip'));
 const Payments = React.lazy(() => import('./views/Payments/Payments'));
 const SuccessfulPayments = React.lazy(() => import('./views/Payments/SuccessfulPayments'));
@@ -77,6 +78,11 @@ const ActiveDrivers = React.lazy(() => import('./views/Drivers/ActiveDrivers'));
 const InactiveDrivers = React.lazy(() => import('./views/Drivers/InactiveDrivers'));
 const PendingDrivers = React.lazy(() => import('./views/Drivers/PendingDrivers'));
 const Operator =  React.lazy(() => import('./views/Setup/operator/Operator'));
+const ActiveVehicles = React.lazy(() => import('./views/Vehicle/ActiveVehicles'));
+const InactiveVehicles = React.lazy(() => import('./views/Vehicle/InactiveVehicles'));
+const PendingVehicles = React.lazy(() => import('./views/Vehicle/PendingVehicles'));
+const Vehicle = React.lazy(() => import('./views/Vehicle/Vehicle'));
+
 
 
 
@@ -100,6 +106,10 @@ const routes = [
   { path: '/drivers/driverloggings', name: 'Driver Loggings', component: DriverLoggings },
   { path: '/drivers/driverroutes', name: 'Driver Routes', component: DriverRoutes },
   { path: '/bookings', name: 'Bookings', component: Bookings },
+  { path: '/vehicles/active', name: 'Active Vehicles', component: ActiveVehicles },
+  { path: '/vehicles/inactive', name: 'Inactive Vehicles', component: InactiveVehicles },
+  { path: '/vehicles/pending', name: 'Pending Vehicles', component: PendingVehicles },
+  { path: '/vehicles/:id', exact: true, name: 'Vehicle Details', component: Vehicle },
   { path: '/vehicles', name: 'Vehicles', component: Vehicles },
   { path: '/busstops', name: 'Bus Stops', component: BusStops },
   { path: '/routes', name: 'Routes', component: Routes },
@@ -115,7 +125,8 @@ const routes = [
   { path: '/payments/refunds', name: 'Refunds', component: RefundPayments },
   { path: '/payments', name: 'Payments', component: Payments },
   { path: '/trips/cancelled', name: 'Cancelled Trips', component: CancelledTrips },
-  { path: '/trips/current', name: 'Current Trips', component: CurrentTrips },
+  { path: '/trips/overview', name: 'Trips Overview', component: TripsOverView },
+  { path: '/trips/transit', name: 'Transit Trips', component: TransitTrips },
   { path: '/trips/completed', name: 'Completed Trips', component: CompletedTrips },
   { path: '/trips/waiting', name: 'Waiting Trips', component: WaitingTrips },
   { path: '/trips', name: 'Trips', component: Trips },
@@ -125,8 +136,8 @@ const routes = [
   { path: '/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
   { path: '/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
   { path: '/busassisstant/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
+  { path: '/drivers/:id', name: 'Driver Details', component: Driver },
   { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
-  { path: '/driver/:id', name: 'Driver Details', component: Driver },
   { path: '/users/active', name: 'ActiveUsers', component: ActiveUsers },
   { path: '/users/inactive', name: 'Dashboard', component: InactiveUsers },
   { path: '/operator', name: 'Dashboard', component: OperatorDashboard },

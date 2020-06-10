@@ -34,11 +34,15 @@ import DriverRouteModalDelete from "./driverRouteModal/DriverRouteModalDelete";
 import OperatorModalCreate from "./operatorModal/OperatorModalCreate";
 import OperatorModalDelete from "./operatorModal/OperatorModalDelete";
 import OperatorModalUpdate from "./operatorModal/OperatorModalUpdate";
+import VehicleModalUpdate from "./vehicleModal/VehicleModalUpdate";
+import DriverModalUpdate from "./driverModal/DriverModalUpdate";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <DriverModalUpdate />
+      <VehicleModalUpdate />
       <OperatorModalUpdate />
       <OperatorModalDelete />
       <OperatorModalCreate />

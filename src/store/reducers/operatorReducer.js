@@ -36,6 +36,7 @@ function operatorReducer(state = initialState, action) {
         error: null,
         operators: payload,
         isLoading: false,
+        OperatorModalCreate: false,
       };
     }
     case REGISTER_OPERATOR: {

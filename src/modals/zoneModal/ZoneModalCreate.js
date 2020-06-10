@@ -95,7 +95,7 @@ const ZoneModalCreate = (props) => {
               >
                 <option value="">Select state</option>
                 {states && states.map((state, index) =>
-                  <option value={state.xstatecode} key={index}>{state.xstate}</option>
+                  <option value={state.xstate} key={index}>{state.xstate}</option>
                 )}
               </Input>
             </FormGroup>

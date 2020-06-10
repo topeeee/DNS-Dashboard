@@ -20,12 +20,12 @@ function UserRow(props) {
       <td>{user.id}</td>
       {/*<td>{user.xareacode}</td>*/}
       <td>{user.xarea}</td>
-      {zone.map((sta, index) =>{
-        if(sta.zonecode === user.zonecode) {
-          return  <td key={index}>{sta.zone}</td>
-        }}
-      )}
-      {/*<td>{user.zonecode}</td>*/}
+      {/*{zone.map((sta, index) =>{*/}
+      {/*  if(sta.zonecode === user.zonecode) {*/}
+      {/*    return  <td key={index}>{sta.zone}</td>*/}
+      {/*  }}*/}
+      {/*)}*/}
+      <td>{user.zonecode}</td>
       <td> <AreaDeleteBtn id={user.id} /> </td>
     </tr>
   )

@@ -91,7 +91,7 @@ const RouteModalCreate = (props) => {
               >
                 <option value="">Select Area</option>
                 {areas &&  areas.map((area, index) =>
-                  <option value={area.xareacode} key={index}>{area.xarea}</option>
+                  <option value={area.xarea} key={index}>{area.xarea}</option>
                 )}
               </Input>
             </FormGroup>

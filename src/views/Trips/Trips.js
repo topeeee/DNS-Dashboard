@@ -106,25 +106,25 @@ const onSearch = e => {
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
-              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
-              {((trips && trips.length > 0) || trip ) &&
+              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
+              {/*{(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}*/}
+              {/*{((trips && trips.length > 0) || trip ) &&*/}
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
-                  <th scope="col">Trip Id</th>
-                  <th scope="col">Mode</th>
-                  <th scope="col">Name</th>
-                  {/*<th scope="col">Passenger Phone N</th>*/}
-                  <th scope="col">Start Bus Stop</th>
-                  <th scope="col">End Bus Stop</th>
-                  <th scope="col">Scheduled Pickup Time</th>
+                  <th scope="col">ID</th>
+                  <th scope="col">PIN</th>
+                  <th scope="col"> Full Name</th>
+                  <th scope="col">Pick Up</th>
+                  <th scope="col">Drop Off</th>
+                  <th scope="col">Booking Date/time</th>
+                  <th scope="col">Phone</th>
+                  {/*<th scope="col">Scheduled Pickup Time</th>*/}
                   {/*<th scope="col">Driver Name</th>*/}
                   {/*<th scope="col">Driver Phone no</th>*/}
                   {/*<th scope="col">Vehicle Detail</th>*/}
                   {/*<th scope="col">Distance</th>*/}
-                  <th scope="col">Cost</th>
+                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -136,7 +136,8 @@ const onSearch = e => {
                 <UserRow user={trip}/>
                 }
                 </tbody>
-              </Table>}
+              </Table>
+              {/*}*/}
             </CardBody>
             }
 

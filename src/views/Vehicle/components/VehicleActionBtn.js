@@ -34,20 +34,24 @@
 import React, { Component } from 'react';
 import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
-import {changeOperatorStatus, toggleOperatorModalDelete, toggleOperatorModalUpdate} from "../../../../store/actions/operatorAction";
+
 import {Link} from "react-router-dom";
+
+import {changeVehicleStatus, toggleVehicleModalDelete, toggleVehicleUpdate} from "../../../store/actions/vehicleAction";
+import axios from "axios";
+import api from "../../../environments/environment";
 
 
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleOperatorModalDelete: (id) => dispatch(toggleOperatorModalDelete(id)),
-    toggleOperatorModalUpdate: (id) => dispatch(toggleOperatorModalUpdate(id)),
-    changeOperatorStatus: (id, status) => dispatch(changeOperatorStatus(id, status))
+    toggleVehicleModalDelete: (id) => dispatch(toggleVehicleModalDelete(id)),
+    toggleVehicleUpdate: (id) => dispatch(toggleVehicleUpdate(id)),
+    changeVehicleStatus: (id, status) => dispatch(changeVehicleStatus(id, status))
   };
 }
 
-class OperatorActionBtn extends Component {
+class VehicleActionBtn extends Component {
   constructor(props) {
     super(props);
 
@@ -56,6 +60,7 @@ class OperatorActionBtn extends Component {
       dropdownOpen: new Array(6).fill(false),
     };
   }
+
 
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => {
@@ -76,11 +81,13 @@ class OperatorActionBtn extends Component {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            {/*<DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.toggleOperatorModalDelete(this.props.id)}>Delete</DropdownItem>*/}
-            <DropdownItem className='bg-info text-center p-0' onClick={()=>this.props.toggleOperatorModalUpdate(this.props.id)}>Update</DropdownItem>
-            {(this.props.user.status == 1) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>this.props.changeOperatorStatus(this.props.id, '0')}>Suspend</DropdownItem>}
-            {(this.props.user.status == 0) && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.changeOperatorStatus(this.props.id, '1')}>Reactivate</DropdownItem>}
-            <Link to={`/operators/${this.props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
+            {/*<DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.toggleVehicleModalDelete(this.props.id)}>Delete</DropdownItem>*/}
+            <DropdownItem className='bg-info text-center p-0' onClick={()=>this.props.toggleVehicleUpdate(this.props.id)}>Update</DropdownItem>
+            {(this.props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>this.props.changeVehicleStatus(this.props.id, '0')}>Suspend</DropdownItem>}
+            {(this.props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.changeVehicleStatus(this.props.id, '1')}>Reactivate</DropdownItem>}
+            {(this.props.user.status == null) && <DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.changeVehicleStatus(this.props.id, '0')}>Deny</DropdownItem>}
+            {(this.props.user.status === null) && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.changeVehicleStatus(this.props.id, '1')}>Approve</DropdownItem>}
+            <Link to={`/vehicles/${this.props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
             {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
@@ -89,4 +96,4 @@ class OperatorActionBtn extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(OperatorActionBtn);
+export default connect(null, mapDispatchToProps)(VehicleActionBtn);

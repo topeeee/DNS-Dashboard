@@ -27,12 +27,12 @@ function UserRow(props) {
     <tr key={user.statecode.toString()}>
       <td>{user.id}</td>
       <td>{user.zone}</td>
-      {state.map((sta, index) =>{
-        if(sta.xstatecode === user.statecode) {
-          return  <td key={index}>{sta.xstate}</td>
-        }}
-      )}
-      {/*<td>{user.statecode}</td>*/}
+      {/*{state.map((sta, index) =>{*/}
+      {/*  if(sta.xstatecode === user.statecode) {*/}
+      {/*    return  <td key={index}>{sta.xstate}</td>*/}
+      {/*  }}*/}
+      {/*)}*/}
+      <td>{user.statecode}</td>
       {/*<td>{user.username}</td>*/}
 
       {/*<td>{user.zonecode}</td>*/}

@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
-import {toggleVehicleModalCreate, createVehicle} from "../../store/actions/vehicleAction";
+import {
+  updateVehicle,
+  toggleVehicleUpdate, getVehicles
+} from "../../store/actions/vehicleAction";
 import {getOperators} from "../../store/actions/operatorAction";
 
 
@@ -9,42 +12,46 @@ import {getOperators} from "../../store/actions/operatorAction";
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleVehicleModalCreate: () => dispatch(toggleVehicleModalCreate()),
-    createVehicle: (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) =>
-      dispatch(createVehicle(vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator)),
+    toggleVehicleModalUpdate: () => dispatch(toggleVehicleUpdate()),
+    updateVehicle: (vehicleId, vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) =>
+      dispatch(updateVehicle(vehicleId, vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator)),
     getOperators: () => dispatch(getOperators()),
+    getVehicles: () => dispatch(getVehicles()),
 
   };
 }
 
 const mapStateToProps = state => ({
-  vehicleModalCreate: state.vehicle.VehicleModalCreate,
+  vehicleModalUpdate: state.vehicle.VehicleModalUpdate,
   operators: state.operator.operators,
-
-
-
-
+  vehicleId: state.vehicle.vehicleId,
+  vehicles: state.vehicle.vehicles
 });
 
-const VehicleModalCreate = (props) => {
+const VehicleModalUpdate = (props) => {
 
   const {
     className,
-    toggleVehicleModalCreate,
-    vehicleModalCreate,
-    createVehicle,
+    toggleVehicleModalUpdate,
+    vehicleModalUpdate,
+    updateVehicle,
     operators,
-    getOperators
+    getOperators,
+    vehicleId,
+    getVehicles,
+    vehicles
   } = props;
 
 
 
 
   useEffect(()=> {
-    getOperators()
-  }, [])
+    getOperators();
+    getVehicles()
+  }, []);
 
   const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" });
+  const [newOperator, setNewOperator] = useState([]);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -54,19 +61,41 @@ const VehicleModalCreate = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createVehicle(vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator);
+    updateVehicle(vehicleId,vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator);
     setFormData({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" })
 
   };
 
+  function getNewVehicle() {
+    if(newOperator){
+      newOperator.map(operator => {
+        if(operator.id === vehicleId) {
+          setFormData({vehicle_make: operator.vehicle_make, vehicle_model: operator.vehicle_model, vehicle_type: operator.vehicle_type, plate_number: operator.plate_number, capacity: operator.capacity, operator: operator.operator})
+        }
+      });
+    }
+  };
+
+  useEffect(()=> {
+    if(vehicleId) {
+      getNewVehicle()
+    }
+  },[vehicleId]);
+
+  useEffect(()=> {
+    if(vehicles) {
+      setNewOperator(vehicles)
+    }
+  },[vehicles]);
 
 
-  const toggle = () => {toggleVehicleModalCreate()};
+
+  const toggle = () => {toggleVehicleModalUpdate()};
 
   return (
     <div>
-      <Modal isOpen={vehicleModalCreate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Create Vehicle</ModalHeader>
+      <Modal isOpen={vehicleModalUpdate} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle} className="text-center">Update Vehicle</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup row>
@@ -90,6 +119,7 @@ const VehicleModalCreate = (props) => {
                   required
                 >
                   <option value="">Select Vehicle Type</option>
+                  Bus, car, minivan
                   <option value="Bus">Bus</option>
                   <option value="Car">Car</option>
                   <option value="MiniVan">MiniVan</option>
@@ -131,5 +161,5 @@ const VehicleModalCreate = (props) => {
   );
 };
 
-export default  connect( mapStateToProps, mapDispatchToProps)(VehicleModalCreate);
+export default  connect( mapStateToProps, mapDispatchToProps)(VehicleModalUpdate);
 

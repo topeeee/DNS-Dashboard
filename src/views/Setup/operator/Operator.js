@@ -1,13 +1,46 @@
 import React, {Component, useEffect, useState} from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import * as usersData from "core-js";
 import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
 import {connect} from "react-redux";
+import axios from "axios"
 
 
-const Operator = ({getOperators, operators, operator, isLoading,  searchOperator, error, match})=> {
+const Operator = ({getOperators, operators, operator, isLoading,  searchOperator, error, match, states})=> {
   // const [operator, setOperator] = useState([]);
   const [newOperator, setNewOperator] = useState({});
+  const [operatorVehicle, setOperatorVehicle] = useState([]);
+  const [operatorZone, setOperatorZone] = useState([]);
+  const [operatorMode, setOperatorMode] = useState([]);
+
+  const getBadge = (status) => {
+    return status === 'Active' ? 'success' :
+      status === 'Inactive' ? 'danger' :
+        status === 'Pending' ? 'warning' :
+          status === 'Banned' ? 'danger' :
+            'primary'
+  };
+
+  function getOperatorVehicle() {
+    axios.get(`http://165.22.116.11:7055/api/operators/?operatorId=${match.params.id}`)
+      .then(res=> {
+        setOperatorVehicle(res.data);
+      })
+  }
+
+  function getOperatorMode() {
+    axios.get(`http://165.22.116.11:7053/api/mode/?operator_name=${newOperator.name}`)
+      .then(res=> {
+        setOperatorMode(res.data);
+      })
+  }
+
+  function getOperatorZone() {
+    axios.get(`http://165.22.116.11:7052/api/operators/?operatorId=${match.params.id}`)
+      .then(res=> {
+        setOperatorZone(res.data);
+      })
+  }
 
   function setOperator() {
     if (operators){
@@ -19,12 +52,20 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
     }
   }
   useEffect(()=>{
-    getOperators()
+    getOperators();
+    getOperatorVehicle();
+    getOperatorZone()
   },[]);
 
 useEffect(()=>{
   setOperator();
 },[operators]);
+
+  useEffect(()=>{
+  if(newOperator.name) {
+    getOperatorMode()
+  }
+  },[newOperator]);
   // const user = operators.find( user => user.id === this.props.match.params.id);
 
     // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
@@ -37,56 +78,62 @@ useEffect(()=>{
               <CardHeader className="bg-dark">
                 <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
               </CardHeader>
-              <CardBody>
-                <Table responsive striped hover>
-                  {/*email: "t@gmail.com"*/}
-                  {/*id: 46*/}
-                  {/*name: "Tope"*/}
-                  {/*numberOfVehicle: "7"*/}
-                  {/*officeAddress: "Ajah"*/}
-                  {/*phoneNo: "789654"*/}
-                  {/*pin: "78"*/}
-                  {/*status: "1"*/}
-                  {/*statusTimestamp: "2020-06-07T16:51:13.288908"*/}
-                  {/*timestamp: "2020-06-07T14:46:56.345861"*/}
-                  {/*username: "bruce"*/}
-
-                  {/*Operator Name*/}
-                  {/*Operator Phone*/}
-                  {/*Operator Email*/}
-                  {/*Office Address*/}
-                  {/*Number of Vehicles*/}
-                  {/*Vehicle Types*/}
-                  {/*State(s) Name*/}
-                  {/*Mode(s) Name*/}
-                  {/*Zone(s) Name*/}
-                  {/*Geo-fenced Area(s)*/}
-
+              <CardBody >
+                <Table>
                   {newOperator &&
                   <tbody>
                   <tr>
-                    <td>Operator Name</td>
-                    <td><strong>{newOperator.name}</strong></td>
+                    <td><strong>Operator Name</strong></td>
+                    <td>{newOperator.name}</td>
+                  </tr>
+                  <tr className="w-100">
+                    <td><strong>Operator Phone</strong></td>
+                    <td>{newOperator.phoneNo}</td>
                   </tr>
                   <tr>
-                    <td>Operator Phone</td>
-                    <td><strong>{newOperator.phoneNo}</strong></td>
+                    <td><strong>Operator Email</strong></td>
+                    <td>{newOperator.email}</td>
                   </tr>
                   <tr>
-                    <td>Operator Email</td>
-                    <td><strong>{newOperator.email}</strong></td>
+                    <td><strong>Office Address</strong></td>
+                    <td>{newOperator.officeAddress}</td>
                   </tr>
                   <tr>
-                    <td>Office Address</td>
-                    <td><strong>{newOperator.officeAddress}</strong></td>
+                    <td><strong>Number of Vehicles</strong></td>
+                    <td>{newOperator.numberOfVehicle}</td>
                   </tr>
                   <tr>
-                    <td>Number of Vehicles</td>
-                    <td><strong>{newOperator.numberOfVehicle}</strong></td>
+                    <td><strong>Operator Email</strong></td>
+                    <td>{newOperator.email}</td>
                   </tr>
                   <tr>
-                    <td>Operator Email</td>
-                    <td><strong>{newOperator.email}</strong></td>
+                    <td><strong>Vehicle Type</strong></td>
+                    {operatorVehicle && operatorVehicle.map((vehicle, index) =>
+                      <td  key={index}>{vehicle.vehicleType}</td>
+                    )}
+                  </tr>
+                  <tr>
+                    <td><strong>Mode</strong></td>
+                    {operatorMode && operatorMode.map((mode, index) =>
+                      <td  key={index}>{mode.modecode}</td>
+                    )}
+                  </tr>
+                  <tr>
+                    <td><strong>Zone</strong></td>
+                    {operatorZone && operatorZone.map((zone, index) =>
+                      <td  key={index}>{zone.zoneCode}</td>
+                    )}
+                  </tr>
+                  <tr>
+                    <td><strong>State</strong></td>
+                    {states && states.map((state, index) =>
+                      <td  key={index}>{state.xstate}</td>
+                    )}
+                  </tr>
+                  <tr>
+                    <td><strong>Status</strong></td>
+                    {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
+                    {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
                   </tr>
                   </tbody>
                   }
@@ -109,10 +156,12 @@ function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = state => ({
+  drivers: state.driver.drivers,
   operators: state.operator.operators,
   operator: state.operator.operator,
   error: state.operator.error,
   isLoading: state.operator.isLoading,
+  states: state.state.states,
 
 
 });

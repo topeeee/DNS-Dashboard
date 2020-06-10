@@ -4,28 +4,24 @@ import * as usersData from "core-js";
 
 import {connect} from "react-redux";
 import axios from "axios"
-import {getDrivers} from "../../store/actions/driverAction";
+import {getVehicles} from "../../store/actions/vehicleAction";
 
 
-const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, error, match, drivers})=> {
+const Operator = ({getVehicles, match, vehicles})=> {
   // const [operator, setOperator] = useState([]);
   const [newOperator, setNewOperator] = useState({});
-  const [operatorVehicle, setOperatorVehicle] = useState([]);
-  const [operatorZone, setOperatorZone] = useState([]);
-  const [operatorMode, setOperatorMode] = useState([]);
+
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
+      status === 'Inactive' ? 'danger' :
         status === 'Pending' ? 'warning' :
-          status === 'Inactive' ? 'danger' :
-            'primary'
+          'primary'
   };
 
-
-  function setDriver() {
-    if (drivers){
-      drivers.map(op=> {
+  function setVehicle() {
+    if (vehicles){
+      vehicles.map(op=> {
         if(op.id == match.params.id){
           setNewOperator(op)
         }
@@ -33,21 +29,13 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     }
   }
   useEffect(()=>{
-    getDrivers();
+    getVehicles();
   },[]);
 
   useEffect(()=>{
-    setDriver();
-  },[drivers]);
+    setVehicle();
+  },[vehicles]);
 
-  // useEffect(()=>{
-  //   if(newOperator.name) {
-  //     getOperatorMode()
-  //   }
-  // },[newOperator]);
-  // const user = operators.find( user => user.id === this.props.match.params.id);
-
-  // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
 
   return (
     <div className="animated fadeIn">
@@ -62,59 +50,44 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                 {newOperator &&
                 <tbody>
                 <tr>
-                  <td><strong>Driver  FirstName</strong></td>
-                  <td>{newOperator.firstname}</td>
+                  <td><strong>Vehicle Type</strong></td>
+                  <td>{newOperator.vehicle_type}</td>
                 </tr>
                   <tr className="w-100">
-                    <td><strong>Driver LastName</strong></td>
-                    <td>{newOperator.lastname}</td>
+                    <td><strong>Vehicle Make</strong></td>
+                    <td>{newOperator.vehicle_make}</td>
                   </tr>
                 <tr className="w-100">
-                  <td><strong>Operator Phone</strong></td>
-                  <td>{newOperator.phoneno}</td>
+                  <td><strong>Vehicle Model</strong></td>
+                  <td>{newOperator.vehicle_model}</td>
                 </tr>
                 <tr>
-                  <td><strong>Driver Email</strong></td>
-                  <td>{newOperator.email}</td>
+                  <td><strong>Plate Number</strong></td>
+                  <td>{newOperator.plate_number}</td>
                 </tr>
                 <tr>
-                  <td><strong>Driver Address</strong></td>
-                  <td>{newOperator.residentialaddress}</td>
+                  <td><strong>Capacity</strong></td>
+                  <td>{newOperator.capacity}</td>
                 </tr>
                 <tr>
-                  <td><strong>App Status</strong></td>
-                  <td>{newOperator.appstatus}</td>
+                  <td><strong>Operator</strong></td>
+                  <td>{newOperator.operator}</td>
                 </tr>
                 <tr>
-                  <td><strong>Bank Name</strong></td>
-                  <td>{newOperator.bankname}</td>
-                </tr>
-                <tr>
-                  <td><strong>Account Name</strong></td>
-                  <td>{newOperator.accountname}</td>
-                </tr>
-                <tr>
-                  <td><strong>Account Number</strong></td>
-                  <td>{newOperator.accountnumber}</td>
-                </tr>
-                <tr>
-                  <td><strong>Route</strong></td>
-                  <td>{newOperator.route}</td>
-                </tr>
-                <tr>
-                  <td><strong>Area</strong></td>
-                  <td>{newOperator.area}</td>
-                </tr>
-                <tr>
-                  <td><strong>Zone</strong></td>
-                  <td>{newOperator.zone}</td>
+                  <td><strong>Assigned</strong></td>
+                  {(newOperator.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+                  {((newOperator.assigned == null) || (newOperator.assigned == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>
-                  {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-                  {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-                  {(newOperator.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
+                  {(newOperator.status === null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
+                  {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
+                  {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
                 </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Operator Email</strong></td>*/}
+                {/*  <td>{newOperator.email}</td>*/}
+                {/*</tr>*/}
                 {/*<tr>*/}
                 {/*  <td><strong>Vehicle Type</strong></td>*/}
                 {/*  {operatorVehicle && operatorVehicle.map((vehicle, index) =>*/}
@@ -154,19 +127,15 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
 
 function mapDispatchToProps(dispatch) {
   return {
-    getDrivers: () => dispatch(getDrivers()),
+    getVehicles: () => dispatch(getVehicles()),
     // getOperators: () => dispatch(getOperators()),
     // searchOperator: (id) => dispatch(searchOperator(id)),
   };
 }
 
 const mapStateToProps = state => ({
-  drivers: state.driver.drivers,
-  // operators: state.operator.operators,
-  // operator: state.operator.operator,
-  // error: state.operator.error,
-  // isLoading: state.operator.isLoading,
-  // states: state.state.states,
+  vehicles: state.vehicle.vehicles,
+
 
 
 });

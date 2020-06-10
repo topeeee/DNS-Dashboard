@@ -27,12 +27,12 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.id}</td>
       <td>{user.route}</td>
-      {area.map((sta, index) =>{
-        if(sta.xareacode === user.areacode) {
-          return  <td key={index}>{sta.xarea}</td>
-        }}
-      )}
-      {/*<td>{user.areacode}</td>*/}
+      {/*{area.map((sta, index) =>{*/}
+      {/*  if(sta.xareacode === user.areacode) {*/}
+      {/*    return  <td key={index}>{sta.xarea}</td>*/}
+      {/*  }}*/}
+      {/*)}*/}
+      <td>{user.areacode}</td>
       {/*<td>{user.username}</td>*/}
 
       {/*<td>{user.routecode}</td>*/}

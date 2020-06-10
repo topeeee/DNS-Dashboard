@@ -196,7 +196,32 @@ export default {
     {
       name: 'Vehicles',
       icon: 'icon-people',
-      url: '/vehicles',
+      children: [
+        {
+          name: 'All',
+          url: '/vehicles',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Active',
+          url: '/vehicles/active',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/vehicles/inactive',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Pending',
+          url: '/vehicles/pending',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+      ]
     },
     {
       name: 'Bus Assistants',
@@ -232,39 +257,45 @@ export default {
       name: 'Trips',
       icon: 'icon-speedometer',
       url: '/trips',
-      // children: [
-      //   {
-      //     name: 'All',
-      //     url: '/trips',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //
-      //   {
-      //     name: 'Waiting',
-      //     url: '/trips/waiting',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //   {
-      //     name: 'Completed',
-      //     url: '/trips/completed',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //   {
-      //     name: 'Current',
-      //     url: '/trips/current',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //   {
-      //     name: 'Canceled',
-      //     url: '/trips/cancelled',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      // ],
+      children: [
+        {
+          name: 'Overview',
+          url: '/trips/overview',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'All',
+          url: '/trips',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+
+        {
+          name: 'Waiting',
+          url: '/trips/waiting',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Transit',
+          url: '/trips/transit',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Completed',
+          url: '/trips/completed',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Canceled',
+          url: '/trips/cancelled',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+      ],
     },
     {
       name: 'Payments',

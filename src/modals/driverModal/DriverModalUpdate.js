@@ -1,7 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
-import {toggleDriverModalCreate, createDriver} from "../../store/actions/driverAction";
+import {
+  toggleDriverModalCreate,
+  createDriver,
+  toggleDriverModalUpdate,
+  getDrivers, updateDriver
+} from "../../store/actions/driverAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {RouteUser} from "../../store/actions/routeAction";
 import Select from "react-select";
@@ -11,7 +16,6 @@ import {getOperators} from "../../store/actions/operatorAction";
 import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
 // import {BusStopUser} from "../../store/actions/busStopAction";
-import api from '../../environments/environment'
 
 const animatedComponents = makeAnimated();
 
@@ -26,37 +30,40 @@ const options = [
 
 function mapDispatchToProps(dispatch) {
   return {
-    toggleDriverModalCreate: () => dispatch(toggleDriverModalCreate()),
-    createDriver: (vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
-      dispatch(createDriver(vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
+    toggleDriverModalUpdate: () => dispatch(toggleDriverModalUpdate()),
+    updateDriver: (id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
+      dispatch(updateDriver(id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
     getVehicles: () => dispatch(getVehicles()),
     getAreas: () => dispatch(getAreas()),
+    getDrivers: () => dispatch(getDrivers()),
 
   };
 }
 
 
 const mapStateToProps = state => ({
-  driverModalCreate: state.driver.DriverModalCreate,
+  driverModalUpdate: state.driver.DriverModalUpdate,
   zones: state.zone.zones,
   routes: state.route.routes,
   isAuthenticated: state.auth.isAuthenticated,
   operators: state.operator.operators,
   vehicles: state.vehicle.vehicles,
   areas: state.area.areas,
+  drivers: state.driver.drivers,
+  UpdateDriverId: state.driver.UpdateDriverId,
 
 
 });
 
-const DriverModalCreate = (props) => {
+const DriverModalUpdate = (props) => {
   const {
     className,
-    toggleDriverModalCreate,
-    driverModalCreate,
-    createDriver,
+    toggleDriverModalUpdate,
+    driverModalUpdate,
+    updateDriver,
     zones,
     routes,
     ZoneUser,
@@ -67,7 +74,10 @@ const DriverModalCreate = (props) => {
     vehicles,
     getVehicles,
     getAreas,
-    areas
+    areas,
+    drivers,
+    getDrivers,
+    UpdateDriverId
   } = props;
 
   function getOperatorZone() {
@@ -97,7 +107,8 @@ const DriverModalCreate = (props) => {
       ZoneUser();
       getOperators();
       getVehicles();
-      getAreas()
+      getAreas();
+      getDrivers()
     }
   }, []);
 
@@ -117,7 +128,6 @@ const DriverModalCreate = (props) => {
   const [zoneInput, setZoneInput] = useState('');
   const [areaInput, setAreaInput] = useState('');
   const [routeInput, setRouteInput] = useState('');
-  const [vehicleId, setVehicleId] = useState('');
   const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
@@ -130,7 +140,7 @@ const DriverModalCreate = (props) => {
 
 
   const onClickContinue1 = () => {
-    register();
+    // register();
     setForm1(false);
     setForm3(false);
     setForm2(true);
@@ -185,22 +195,12 @@ const DriverModalCreate = (props) => {
       })
   }
 
-  function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
-      .then(res=> {
-      })
-  }
-
-
   const handleChange3 = (selected2) => {
     setSelected2(selected2);
   };
-
-
   const onSubmit = async (e) => {
      e.preventDefault();
-    createDriver(vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
-    assignVehicle(vehicleId, "1");
+    updateDriver(UpdateDriverId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
     setFormData({
       firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "0", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
     })
@@ -230,23 +230,31 @@ const DriverModalCreate = (props) => {
     }
   },[routeSelected]);
 
-
-  useEffect(()=> {
-    if(vehicles && plateInput) {
-      vehicles.map(vehicle => {
-        if(vehicle.plate_number === plateInput) {
-          setVehicleId(vehicle.id);
+  function setDriver() {
+    if (drivers){
+      drivers.map(driver=> {
+        if(driver.id === UpdateDriverId){
+          setFormData({
+            firstname: driver.firstname, lastname: driver.lastname, residentialaddress: driver.residentialaddress, email: driver.email, phoneno: driver.phoneno, status: "0", pin: "", bankname: driver.bankname, accountname: driver.accountname, accountnumber: driver.accountnumber, zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
+          });
+          setZoneInput(driver.zone);
+          setAreaInput(driver.area);
+          setRouteInput(driver.route);
         }
       })
     }
-  }, [plateInput]);
+  }
+
+  useEffect(()=> {
+    setDriver();
+  },[UpdateDriverId]);
 
 
-  const toggle = () => {toggleDriverModalCreate()};
+  const toggle = () => {toggleDriverModalUpdate()};
 
   return (
     <div>
-      <Modal isOpen={driverModalCreate} toggle={toggle} className={className}>
+      <Modal isOpen={driverModalUpdate} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle} className="text-center">Create Driver</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
@@ -319,7 +327,7 @@ const DriverModalCreate = (props) => {
                   // required
                 >
                   <option value="">Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned === null || user.assigned === "null")).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => user.vehicle_type === vehicleInput).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}
@@ -461,5 +469,5 @@ const DriverModalCreate = (props) => {
   );
 };
 
-export default  connect( mapStateToProps, mapDispatchToProps)(DriverModalCreate);
+export default  connect( mapStateToProps, mapDispatchToProps)(DriverModalUpdate);
 

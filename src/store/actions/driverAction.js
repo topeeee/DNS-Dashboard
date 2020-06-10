@@ -9,10 +9,17 @@ import {
   SEARCH_DRIVER,
   CREATE_DRIVER,
   REMOVE_DRIVER_ERROR,
-  APPROVE_DRIVER
+  APPROVE_DRIVER,
+  DRIVER_STATUS,
+  DRIVER_MODAL_UPDATE,
+  UPDATE_DRIVER,
+  DRIVER_VEHICLE_ID,
+  DRIVER_VEHICLE_ID2,
+  CLEAR_DRIVER_VEHICLE_ID
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+
 
 
 export const getDrivers = () => async dispatch => {
@@ -31,8 +38,27 @@ export const getDrivers = () => async dispatch => {
 
   }
 };
+export const changeDriverStatus = (id, status) => async dispatch => {
+  try {
+    const res = await axios.put(`${api.driver}/api/status/${id}/`, {status});
+    dispatch({
+      payload: id,
+      type: DRIVER_STATUS,
+    });
+    dispatch(getDrivers());
+  } catch (err) {
+    // dispatch({
+    //   type: OPERATOR_ERROR,
+    //   payload: "Opps! Something Went Wrong Try Again"
+    // });
+    // setTimeout(() => dispatch({
+    //   type: REMOVE_OPERATOR_ERROR
+    // }), 5000)
+  }
+};
 
-export const createDriver = (firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
+
+export const createDriver = (vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
   const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
   try {
     const res = await axios.post(`${api.driver}/api/me/drivers/`, body);
@@ -40,8 +66,34 @@ export const createDriver = (firstname, lastname, residentialaddress, email, pho
       type: CREATE_DRIVER,
       payload: res.data
     });
+    if(res.data) {
+     await axios.post("http://165.22.116.11:7054/api/me/drivervehicles/", {vehicleId: vehicleId, driverId: res.data.id})
+    }
     dispatch(getDrivers());
     dispatch(toggleDriverModalCreate());
+  } catch (err) {
+    dispatch({
+      type: DRIVER_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    dispatch(toggleDriverModalCreate());
+    setTimeout(() => dispatch({
+      type: REMOVE_DRIVER_ERROR
+    }), 5000)
+
+  }
+};
+
+export const updateDriver = (id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
+  const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
+  try {
+    const res = await axios.put(`${api.driver}/api/drivers/${id}/`, body);
+    dispatch({
+      type: UPDATE_DRIVER,
+      payload: res.data
+    });
+    dispatch(getDrivers());
+    dispatch(toggleDriverModalUpdate());
   } catch (err) {
     dispatch({
       type: DRIVER_ERROR,
@@ -113,6 +165,34 @@ export const approveDriver = (id) => async dispatch => {
 export function toggleDriverModalCreate() {
   return {
     type: DRIVER_MODAL_CREATE
+  };
+}
+
+export function toggleDriverModalUpdate(id) {
+  return {
+    type: DRIVER_MODAL_UPDATE,
+    payload: id
+  };
+}
+
+export function getDriverVehicleId(id) {
+  return {
+    type: DRIVER_VEHICLE_ID,
+    payload: id
+  };
+}
+
+export function getDriverVehicleId2(id) {
+  return {
+    type: DRIVER_VEHICLE_ID2,
+    payload: id
+  };
+}
+
+export function clearDriverVehicleId() {
+  return {
+    type: CLEAR_DRIVER_VEHICLE_ID,
+
   };
 }
 

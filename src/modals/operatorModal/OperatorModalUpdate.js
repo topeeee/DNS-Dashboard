@@ -130,64 +130,64 @@ const OperatorModalUpdate = (props) => {
                 <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />
               </Col>
             </FormGroup>}
-            {form2 &&
-            <FormGroup>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Types</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">State</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options}
-                  value={selected}
-                  onChange={handleChange}
-                />
+            {/*{form2 &&*/}
+            {/*<FormGroup>*/}
+            {/*  <Col md="12">*/}
+            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Types</Label>*/}
+            {/*    <Select*/}
+            {/*      closeMenuOnSelect={false}*/}
+            {/*      components={animatedComponents}*/}
+            {/*      isMulti*/}
+            {/*      options={options} />*/}
+            {/*  </Col>*/}
+            {/*  <Col md="12">*/}
+            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">State</Label>*/}
+            {/*    <Select*/}
+            {/*      closeMenuOnSelect={false}*/}
+            {/*      components={animatedComponents}*/}
+            {/*      isMulti*/}
+            {/*      options={options}*/}
+            {/*      value={selected}*/}
+            {/*      onChange={handleChange}*/}
+            {/*    />*/}
 
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Zone</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
-            </FormGroup>}
+            {/*  </Col>*/}
+            {/*  <Col md="12">*/}
+            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>*/}
+            {/*    <Select*/}
+            {/*      closeMenuOnSelect={false}*/}
+            {/*      components={animatedComponents}*/}
+            {/*      isMulti*/}
+            {/*      options={options} />*/}
+            {/*  </Col>*/}
+            {/*  <Col md="12">*/}
+            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">Zone</Label>*/}
+            {/*    <Select*/}
+            {/*      closeMenuOnSelect={false}*/}
+            {/*      components={animatedComponents}*/}
+            {/*      isMulti*/}
+            {/*      options={options} />*/}
+            {/*  </Col>*/}
+            {/*  <Col md="12">*/}
+            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>*/}
+            {/*    <Select*/}
+            {/*      closeMenuOnSelect={false}*/}
+            {/*      components={animatedComponents}*/}
+            {/*      isMulti*/}
+            {/*      options={options} />*/}
+            {/*  </Col>*/}
+            {/*</FormGroup>}*/}
 
             <div className="d-flex justify-content-md-end">
-              {form2  &&
-              <Button color="primary" type="button" className="mr-1" onClick={onClickBack1}>Back</Button>
-              }
-              {form1 &&
-              <Button color="primary" type="button" className="mr-1" onClick={onClickContinue1}>Continue</Button>
-              }
-              {form2 &&
+              {/*{form2  &&*/}
+              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickBack1}>Back</Button>*/}
+              {/*}*/}
+              {/*{form1 &&*/}
+              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickContinue1}>Continue</Button>*/}
+              {/*}*/}
+              {/*{form2 &&*/}
               <Button color="primary" type="submit" className="mr-1" >Submit</Button>
-              }
+              {/*}*/}
             </div>
           </Form>
         </ModalBody>

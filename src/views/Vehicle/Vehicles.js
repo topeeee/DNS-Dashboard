@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
-import VehicleDeleteBtn from "./components/VehicleDeleteBtn";
+import VehicleActionBtn from "./components/VehicleActionBtn";
 
 
 
@@ -15,19 +15,28 @@ function UserRow(props) {
   const user = props.user;
 
   const getBadge = (status) => {
-    return status === 'True' ? 'success' :
-          status === 'False' ? 'danger' :
+    return status === 'Active' ? 'success' :
+          status === 'Inactive' ? 'danger' :
+            status === 'Pending' ? 'warning' :
             'primary'
   };
   return (
+
     <tr key={user.id}>
-      <td>{user.id}</td>
+      <td>{user.vehicle_type}</td>
       <td>{user.vehicle_make}</td>
       <td>{user.vehicle_model}</td>
-      <td>{user.vehicle_type}</td>
-      <td>{user.status}</td>
-      <td><Badge color={getBadge(user.approved)}>{user.approved}</Badge></td>
-      <td> <VehicleDeleteBtn id={user.id} /> </td>
+      <td>{user.plate_number}</td>
+      <td>{user.capacity}</td>
+      <td>{user.operator}</td>
+      {/*<td>{user.assigned}</td>*/}
+      {(user.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {((user.assigned == null) ||(user.assigned == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
+      {/*<td>{user.status}</td>*/}
+      {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
+      {(user.status == "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
+      {(user.status == "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
+      <td> <VehicleActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
@@ -79,7 +88,7 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Users
+                Vehicles
               </div>
               <VehicleHeader />
             </CardHeader>
@@ -94,13 +103,15 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  <th scope="col">Vehicle Type</th>
                   <th scope="col">Vehicle Make</th>
                   <th scope="col">Vehicle Model</th>
-                  <th scope="col">Vehicle Type</th>
-                  <th scope="col">vehicle Status</th>
-                  <th scope="col">Approved</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Vehicle Plate number</th>
+                  <th scope="col">Capacity</th>
+                  <th scope="col">Operator</th>
+                  <th scope="col">Assigned</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>

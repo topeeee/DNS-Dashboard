@@ -8,7 +8,10 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
 import DriverDeleteBtn from "./components/DriverDeleteBtn";
-import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
+import {getDrivers, searchDriver, approveDriver, clearDriverVehicleId} from "../../store/actions/driverAction";
+import DriverActionBtn from "./components/DriverActionBtn";
+import axios from "axios";
+import api from "../../environments/environment";
 
 
 
@@ -19,32 +22,34 @@ function UserRow(props) {
   const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
-    return status === 'Approved' ? 'success' :
+    return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Unapproved' ? 'danger' :
+          status === 'Inactive' ? 'danger' :
             'primary'
   };
 
   return (
     <tr key={user.id}>
-      <td>{user.id}</td>
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
+      <td>{user.phoneno}</td>
       <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      {/*<td>{user.route}</td>*/}
-      {/*<td>{user.geofencedarea}</td>*/}
-      {/*<td>{user.operatorname}</td>*/}
-      {/*{(user.status == 1) && <td><Badge color={getBadge("Approved")}>Approved</Badge></td>}*/}
-      {/*{(user.status == "") && <td onClick={()=>approved(user.id)}><Badge style={{cursor: "pointer"}} color={getBadge("Unapproved")}>Unapproved</Badge></td>}*/}
-      <td> <DriverDeleteBtn id={user.id} /> </td>
+      <td>{user.appstatus}</td>
+      <td>Not Available</td>
+      <td>Not Available</td>
+      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
+      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
+      {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
+      <td> <DriverActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
 
-const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
+const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId}) => {
   const [formData, setFormData] = useState('');
+  const [driverVehicle, setDriverVehicle] = useState([]);
 
 
 
@@ -58,6 +63,45 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
     }
   },[formData]);
 
+  function getDriverVehicle() {
+    axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
+      .then(res=> {
+        setDriverVehicle(res.data);
+      })
+  }
+
+  function changeDriverVehicleStatus(id, status) {
+    driverVehicle.map(DV=> {
+      if(DV.driverId == id) {
+        assignVehicle(DV.vehicleId, status)
+      }
+    })
+  }
+
+  function assignVehicle(id, status) {
+    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
+      .then(res=> {
+        if(res) {
+          clearDriverVehicleId()
+        }
+      })
+  }
+
+useEffect(()=> {
+  getDriverVehicle();
+},[]);
+
+useEffect(()=> {
+  if(getDriverVehicleId) {
+    changeDriverVehicleStatus(getDriverVehicleId, "null")
+  }
+},[getDriverVehicleId]);
+
+  useEffect(()=> {
+    if(getDriverVehicleId2) {
+      changeDriverVehicleStatus(getDriverVehicleId2, "1")
+    }
+  },[getDriverVehicleId2]);
 
 
 
@@ -108,32 +152,26 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
               {(drivers && drivers.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
               {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
+                  <th scope="col">Residential Address</th>
                   <th scope="col">Email Address</th>
                   <th scope="col">App status</th>
-                  <th scope="col">Mode</th>
-                  <th scope="col">Zone</th>
-                  <th scope="col">Area</th>
+                  <th scope="col">Rating</th>
+                  <th scope="col">Review</th>
                   <th scope="col">Status</th>
-                  {/*<th scope="col">Driver Name</th>*/}
-                  {/*<th scope="col">Driver Phone no</th>*/}
-                  {/*<th scope="col">Vehicle Detail</th>*/}
-                  {/*<th scope="col">Distance</th>*/}
-                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
                 {drivers && drivers.map((user, index) =>
-                  <UserRow key={index} user={user} approved={approveDriver}/>
+                  <UserRow key={index} user={user} approved={approveDriver} driverVehicle={driverVehicle}/>
                 )}
                 {driver &&
                 <UserRow user={driver} approved={approveDriver}/>
@@ -152,7 +190,8 @@ function mapDispatchToProps(dispatch) {
   return {
     getDrivers: () => dispatch(getDrivers()),
     searchDriver: (id) => dispatch(searchDriver(id)),
-    approveDriver: (id) =>dispatch(approveDriver(id))
+    approveDriver: (id) =>dispatch(approveDriver(id)),
+    clearDriverVehicleId: () =>dispatch(clearDriverVehicleId())
   };
 }
 
@@ -160,8 +199,10 @@ const mapStateToProps = state => ({
   drivers: state.driver.drivers,
   driver: state.driver.driver,
   error: state.driver.error,
-  isLoading: state.driver.isLoading
-
+  isLoading: state.driver.isLoading,
+  approveId: state.driver.approveId,
+  getDriverVehicleId: state.driver.getDriverVehicleId,
+  getDriverVehicleId2: state.driver.getDriverVehicleId2
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(Drivers);

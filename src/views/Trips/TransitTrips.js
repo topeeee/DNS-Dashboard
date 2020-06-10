@@ -44,7 +44,7 @@ function UserRow(props) {
   )
 }
 
-const CancelledTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) => {
+const TransitTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
@@ -99,7 +99,7 @@ const CancelledTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
             {/*<PrimaryHeader />*/}
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-              Cancelled  Trips
+               Transit Trips
               </div>
               <TripHeader />
             </CardHeader>
@@ -162,4 +162,4 @@ const mapStateToProps = state => ({
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(CancelledTrips);
+export default connect(mapStateToProps,mapDispatchToProps)(TransitTrips);

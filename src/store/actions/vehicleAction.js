@@ -8,10 +8,12 @@ import {
   VEHICLE_ERROR,
   SEARCH_VEHICLE,
   CREATE_VEHICLE,
-  REMOVE_VEHICLE_ERROR
+  REMOVE_VEHICLE_ERROR,
+  VEHICLE_STATUS, UPDATE_VEHICLE, VEHICLE_MODAL_UPDATE
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+
 
 
 
@@ -32,9 +34,9 @@ export const getVehicles = () => async dispatch => {
   }
 };
 
-export const createVehicle = (approved, vehicle_make, vehicle_model, vehicle_type, status) => async dispatch => {
+export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) => async dispatch => {
   const body = {
-  approved, vehicle_make, vehicle_model, vehicle_type, status
+    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator
    };
 
 
@@ -52,6 +54,32 @@ export const createVehicle = (approved, vehicle_make, vehicle_model, vehicle_typ
       payload: "Opps! Something Went Wrong Try Again"
     });
     dispatch(toggleVehicleModalCreate());
+    setTimeout(() => dispatch({
+      type: REMOVE_VEHICLE_ERROR
+    }), 5000)
+
+  }
+};
+
+export const updateVehicle = (id,vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) => async dispatch => {
+  const body = {
+    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator
+  };
+
+
+  try {
+    const res = await axios.put(`${api.vehicle}/api/vehicles/${id}/`, body);
+    dispatch({
+      type: UPDATE_VEHICLE,
+      payload: res.data
+    });
+    dispatch(getVehicles());
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    // dispatch(toggleVehicleModalCreate());
     setTimeout(() => dispatch({
       type: REMOVE_VEHICLE_ERROR
     }), 5000)
@@ -80,6 +108,24 @@ export const deleteVehicle = (id) => async dispatch => {
   }
 };
 
+  export const changeVehicleStatus = (id, status) => async dispatch => {
+    try {
+      const res = await axios.put(`${api.vehicle}/api/status/${id}/`, {status});
+      dispatch({
+        payload: res.data,
+        type: VEHICLE_STATUS,
+      });
+      dispatch(getVehicles());
+    } catch (err) {
+      dispatch({
+        type: VEHICLE_ERROR,
+        payload: "Opps! Something Went Wrong Try Again"
+      });
+      setTimeout(() => dispatch({
+        type: REMOVE_VEHICLE_ERROR
+      }), 5000)
+    }
+  };
 export const searchVehicle = (id) => async dispatch => {
   try {
     dispatch(isLoading());
@@ -106,6 +152,13 @@ export function toggleVehicleModalCreate() {
 export function toggleVehicleModalDelete(id) {
   return {
     type: VEHICLE_MODAL_DELETE,
+    payload: id
+  };
+}
+
+export function toggleVehicleUpdate(id) {
+  return {
+    type: VEHICLE_MODAL_UPDATE,
     payload: id
   };
 }

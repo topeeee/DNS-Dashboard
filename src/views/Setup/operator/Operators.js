@@ -99,7 +99,7 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
               {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
               {/*{isLoading && loading()}*/}
               {(operators && operators.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Operator Available</div>}
               {((operators && operators.length > 0) || operator) &&
               <Table responsive hover>
                 <thead className="bg-dark">

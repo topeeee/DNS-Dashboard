@@ -25,13 +25,13 @@ function UserRow(props) {
 
     <tr key={user.id}>
       <td>{user.id}</td>
-      {/*<td>{user.modecode}</td>*/}
+      <td>{user.modecode}</td>
       <td>{user.mode}</td>
-      {state.map((sta, index) =>{
-        if(sta.xstatecode === user.statecode) {
-          return  <td key={index}>{sta.xstate}</td>
-      }}
-      )}
+      {/*{state.map((sta, index) =>{*/}
+      {/*  if(sta.xstatecode === user.statecode) {*/}
+      {/*    return  <td key={index}>{sta.xstate}</td>*/}
+      {/*}}*/}
+      {/*)}*/}
       <td> <ModeDeleteBtn id={user.id} /> </td>
     </tr>
   )

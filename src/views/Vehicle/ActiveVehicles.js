@@ -1,66 +1,52 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getUsers, searchUser} from "../../store/actions/userAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
+import {getVehicles, searchVehicle} from "../../store/actions/vehicleAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import DriverHeader from "./components/DriverHeader";
-import DriverDeleteBtn from "./components/DriverDeleteBtn";
-import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
-import DriverActionBtn from "./components/DriverActionBtn";
+import VehicleHeader from "./components/VehicleHeader";
+import VehicleActionBtn from "./components/VehicleActionBtn";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const approved = props.approved;
-  const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
           status === 'Inactive' ? 'danger' :
+            status === 'Pending' ? 'warning' :
             'primary'
   };
-
   return (
+
     <tr key={user.id}>
-      <td>{user.firstname}</td>
-      <td>{user.lastname}</td>
-      <td>{user.phoneno}</td>
-      <td>{user.residentialaddress}</td>
-      <td>{user.email}</td>
-      <td>{user.appstatus}</td>
-      <td>Not Available</td>
-      <td>Not Available</td>
-      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-      {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
-      <td> <DriverActionBtn id={user.id} user={user} /> </td>
+      <td>{user.vehicle_type}</td>
+      <td>{user.vehicle_make}</td>
+      <td>{user.vehicle_model}</td>
+      <td>{user.plate_number}</td>
+      <td>{user.capacity}</td>
+      <td>{user.operator}</td>
+      <td>{user.assigned}</td>
+      {/*<td>{user.status}</td>*/}
+      {(user.status === null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
+      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
+      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
+      <td> <VehicleActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
 
-const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
+const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
-
-
-
-
-
 
   useEffect(()=>{
     if(formData === ''){
-      getDrivers();
-
+      getVehicles()
     }
   },[formData]);
-
-
 
 
   const onChange = (e) =>{
@@ -71,7 +57,7 @@ const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
 
   const onSearch = e => {
     e.preventDefault();
-    searchDriver(formData)
+    searchVehicle(formData)
   };
 
   return (
@@ -100,39 +86,38 @@ const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Drivers
+                Active Vehicles
               </div>
-              <DriverHeader />
+              <VehicleHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
-              {(drivers && drivers.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
-              {((drivers && drivers.length > 0) || driver) &&
+              {(vehicles && vehicles.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
+              {((vehicles && vehicles.length > 0) || vehicle) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col"> Phone No</th>
-                  <th scope="col">Residential Address</th>
-                  <th scope="col">Email Address</th>
-                  <th scope="col">App status</th>
-                  <th scope="col">Rating</th>
-                  <th scope="col">Review</th>
+                  <th scope="col">Vehicle Type</th>
+                  <th scope="col">Vehicle Make</th>
+                  <th scope="col">Vehicle Model</th>
+                  <th scope="col">Vehicle Plate number</th>
+                  <th scope="col">Capacity</th>
+                  <th scope="col">Operator</th>
+                  <th scope="col">Assigned</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {drivers && drivers.filter((user) => user.status === "").map((user, index) =>
-                  <UserRow key={index} user={user} approved={approveDriver}/>
+                {vehicles && vehicles.filter((user) => user.status === "1").map((vehicle, index) =>
+                  <UserRow key={index} user={vehicle}/>
                 )}
-                {driver &&
-                <UserRow user={driver} approved={approveDriver}/>
+                {vehicle &&
+                <UserRow user={vehicle}/>
                 }
                 </tbody>
               </Table>}
@@ -146,18 +131,17 @@ const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getDrivers: () => dispatch(getDrivers()),
-    searchDriver: (id) => dispatch(searchDriver(id)),
-    approveDriver: (id) =>dispatch(approveDriver(id))
+    getVehicles: () => dispatch(getVehicles()),
+    searchVehicle: (id) => dispatch(searchVehicle(id))
   };
 }
 
 const mapStateToProps = state => ({
-  drivers: state.driver.drivers,
-  driver: state.driver.driver,
-  error: state.driver.error,
-  isLoading: state.driver.isLoading
+  vehicles: state.vehicle.vehicles,
+  vehicle: state.vehicle.vehicle,
+  error: state.vehicle.error,
+  isLoading: state.vehicle.isLoading
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(PendingDrivers);
+export default connect(mapStateToProps,mapDispatchToProps)(ActiveVehicles);
