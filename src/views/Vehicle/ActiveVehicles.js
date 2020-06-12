@@ -29,7 +29,9 @@ function UserRow(props) {
       <td>{user.plate_number}</td>
       <td>{user.capacity}</td>
       <td>{user.operator}</td>
-      <td>{user.assigned}</td>
+      {/*<td>{user.assigned}</td>*/}
+      {(user.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {((user.assigned == null) ||(user.assigned == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
       {/*<td>{user.status}</td>*/}
       {(user.status === null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}

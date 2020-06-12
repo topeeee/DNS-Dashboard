@@ -117,27 +117,28 @@ export default {
     {
       name: 'Users',
       icon: 'icon-people',
-      url: '/users',
-      // children: [
-      //   {
-      //     name: 'All',
-      //     url: '/users',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //   {
-      //     name: 'Active',
-      //     url: '/users/active',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      //   {
-      //     name: 'Inactive',
-      //     url: '/users/inactive',
-      //     // icon: 'icon-puzzle',
-      //     class: "menu_drop",
-      //   },
-      // ],
+      children: [
+        {
+          name: 'Overview',
+          url: '/users/overview',
+          class: "menu_drop",
+        },
+        {
+          name: 'All',
+          url: '/users',
+          class: "menu_drop",
+        },
+        {
+          name: 'Active',
+          url: '/users/active',
+          class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/users/inactive',
+          class: "menu_drop",
+        },
+      ],
     },
     {
       name: 'Drivers',
@@ -188,11 +189,11 @@ export default {
       ],
     },
 
-    {
-      name: 'Bookings',
-      icon: 'icon-people',
-      url: '/bookings',
-    },
+    // {
+    //   name: 'Bookings',
+    //   icon: 'icon-people',
+    //   url: '/bookings',
+    // },
     {
       name: 'Vehicles',
       icon: 'icon-people',

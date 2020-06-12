@@ -24,9 +24,10 @@ function UserRow(props) {
   return (
 
     <tr key={user.id}>
-      <td>{user.id}</td>
-      <td>{user.modecode}</td>
       <td>{user.mode}</td>
+      <td>{user.modecode}</td>
+      <td>{user.statecode}</td>
+
       {/*{state.map((sta, index) =>{*/}
       {/*  if(sta.xstatecode === user.statecode) {*/}
       {/*    return  <td key={index}>{sta.xstate}</td>*/}
@@ -103,9 +104,9 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
-                  {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Mode</th>
+                  {/*<th scope="col">Mode Code</th>*/}
+                  <th scope="col">Mode Code</th>
                   <th scope="col">State</th>
                   <th scope="col">Action</th>
                 </tr>

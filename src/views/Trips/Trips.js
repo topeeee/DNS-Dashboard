@@ -2,18 +2,18 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {getTrips, searchTrip} from "../../store/actions/tripAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import TripDeleteBtn from "./components/TripDeleteBtn";
-import TripHeader from "./components/TripHeader";
 import Spinner from "../../spinner/Spinner";
+import TripActionBtn from "./components/TripActionBtn";
+import {getUsers} from "../../store/actions/userAction";
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/trip/${user.TripID}`;
+  const newUser = props.newUser;
+
 
   const getBadge = (status) => {
     return status === 'Successful' ? 'success' :
@@ -25,27 +25,47 @@ function UserRow(props) {
 
 
   return (
-    <tr key={user.mode.toString()}>
+    // "id": 42,
+    // "username": "bruce",
+    // "passengerPin": "34",
+    // "mode": "shuttle",
+    // "pickUp": "bustop1",
+    // "dropOff": "bustop2",
+    // "cost": "466",
+    // "route": "route1",
+    // "distance": "500",
+    // "driverPin": "driver2",
+    // "pickStatus": "no",
+    // "pickedTimestamp": "4567",
+    // "dropStatus": "0",
+    // "schedulePickTime": "456",
+    // "scheduleDropTime": "4567",
+    // "dropTimestamp": null,
+    <tr key={user.id}>
       <td>{user.id}</td>
-      <td>{user.tripid}</td>
-      <td>{user.mode}</td>
-      <td>{user.name}</td>
-      {/*<td>{user.phone}</td>*/}
-      <td>{user.startbusstop}</td>
-      <td>{user.endbusstop}</td>
-      <td>{user.scheduledpickuptime}</td>
-      {/*<td>{user.drivername}</td>*/}
-      {/*<td>{user.driverphone}</td>*/}
-      {/*<td>{user.vehicledetail}</td>*/}
-      {/*<td>{user.distance}</td>*/}
-      <td>{user.cost}</td>
-      <td> <TripDeleteBtn id={user.id} /> </td>
+      <td>{user.passengerPin}</td>
+      {newUser && newUser.map((newuser, index) =>{
+        if(newuser.pin === user.passengerPin){
+          return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>
+        }
+      })}
+      <td>{user.pickUp}</td>
+      <td>{user.dropOff}</td>
+      <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
+      {newUser && newUser.map((newuser, index) =>{
+        if(newuser.pin === user.passengerPin){
+          return  <td key={index}>{newuser.phoneNumber}</td>
+        }
+      })}
+      <td>Not available</td>
+      <td> <TripActionBtn id={user.id} /> </td>
     </tr>
   )
 }
 
-const Trips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) => {
+const Trips = ({getTrips, trips, trip, isLoading,  searchTrip, error, users, getUsers}) => {
   const [formData, setFormData] = useState('');
+  const [newUser, setNewUser] = useState([]);
 
 useEffect(()=>{
   if(formData === ''){
@@ -54,13 +74,22 @@ useEffect(()=>{
 },[formData]);
 
 
+useEffect(()=> {
+  getUsers();
+},[]);
+
+useEffect(()=> {
+  if(users){}
+  setNewUser(users)
+
+},[users]);
+
+
 const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
-  const handleEvent = (event, picker) => {
-    console.log(picker.startDate);
-  };
+
 
 const onSearch = e => {
   e.preventDefault();
@@ -85,10 +114,6 @@ const onSearch = e => {
                   />
                   <button className="btn btn-success" type="submit">Search</button>
                 </form>
-
-                {/*<DateRangePicker onApply={handleEvent}>*/}
-                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
-                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
@@ -101,14 +126,14 @@ const onSearch = e => {
               <div className="w-25">
                 Trips
               </div>
-              <TripHeader />
+              {/*<TripHeader />*/}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
-              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
-              {/*{(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}*/}
-              {/*{((trips && trips.length > 0) || trip ) &&*/}
+              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
+              {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
+              {((trips && trips.length > 0) || trip ) &&
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
@@ -119,6 +144,7 @@ const onSearch = e => {
                   <th scope="col">Drop Off</th>
                   <th scope="col">Booking Date/time</th>
                   <th scope="col">Phone</th>
+                  <th scope="col">Status</th>
                   {/*<th scope="col">Scheduled Pickup Time</th>*/}
                   {/*<th scope="col">Driver Name</th>*/}
                   {/*<th scope="col">Driver Phone no</th>*/}
@@ -130,14 +156,14 @@ const onSearch = e => {
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
                 {trips && trips.map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} newUser={newUser}/>
                 )}
                 {trip &&
                 <UserRow user={trip}/>
                 }
                 </tbody>
               </Table>
-              {/*}*/}
+              }
             </CardBody>
             }
 
@@ -150,7 +176,8 @@ const onSearch = e => {
 function mapDispatchToProps(dispatch) {
   return {
     getTrips: () => dispatch(getTrips()),
-    searchTrip: (id) => dispatch(searchTrip(id))
+    searchTrip: (id) => dispatch(searchTrip(id)),
+    getUsers: () => dispatch(getUsers()),
   };
 }
 
@@ -158,7 +185,8 @@ const mapStateToProps = state => ({
   trips: state.trip.trips,
   trip: state.trip.trip,
   error: state.trip.error,
-  isLoading: state.trip.isLoading
+  isLoading: state.trip.isLoading,
+  users: state.user.users,
 
 });
 

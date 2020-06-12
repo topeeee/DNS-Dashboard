@@ -82,7 +82,7 @@ const ActiveVehicles = React.lazy(() => import('./views/Vehicle/ActiveVehicles')
 const InactiveVehicles = React.lazy(() => import('./views/Vehicle/InactiveVehicles'));
 const PendingVehicles = React.lazy(() => import('./views/Vehicle/PendingVehicles'));
 const Vehicle = React.lazy(() => import('./views/Vehicle/Vehicle'));
-
+const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 
 
 
@@ -138,8 +138,9 @@ const routes = [
   { path: '/busassisstant/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
   { path: '/drivers/:id', name: 'Driver Details', component: Driver },
   { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
-  { path: '/users/active', name: 'ActiveUsers', component: ActiveUsers },
-  { path: '/users/inactive', name: 'Dashboard', component: InactiveUsers },
+  { path: '/users/active', name: 'Active Users', component: ActiveUsers },
+  { path: '/users/overview', name: 'Users Overview', component: UsersOverview },
+  { path: '/users/inactive', name: 'Inactive Users', component: InactiveUsers },
   { path: '/operator', name: 'Dashboard', component: OperatorDashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
@@ -178,8 +179,9 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/widgets', name: 'Widgets', component: Widgets },
   { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/users', exact: true,  name: 'Users', component: Users },
+
 ];
 
 export default routes;

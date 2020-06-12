@@ -2,12 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {getUsers, searchUser} from "../../store/actions/userAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import UserHeader from "./components/UserHeader";
-import UserDeleteBtn from "./components/UserDeleteBtn";
 import Spinner from "../../spinner/Spinner";
+import UserActionBtn from "./components/UserActionBtn";
 
 
 
@@ -20,25 +18,20 @@ function UserRow(props) {
     return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Suspended' ? 'danger' :
+          status === 'Inactive' ? 'danger' :
             'primary'
   };
-
   return (
-    <tr key={user.first_name.toString()}>
-      <td>{user.id}</td>
-      <td>{user.first_name}</td>
-      <td>{user.last_name}</td>
-      {/*<td>{user.phone}</td>*/}
+    <tr key={user.id}>
+      {/*<td>{user.id}</td>*/}
+      <td>{user.pin}</td>
+      <td>{user.firstName}</td>
+      <td>{user.lastName}</td>
+      <td>{user.phoneNumber}</td>
       <td>{user.email}</td>
-      <td>{user.home_location}</td>
-      <td>{user. home_pickup_time}</td>
-      {/*<td>{user.drivername}</td>*/}
-      {/*<td>{user.driverphone}</td>*/}
-      {/*<td>{user.vehicledetail}</td>*/}
-      {/*<td>{user.distance}</td>*/}
-      <td><Badge color={getBadge(user.status)}>{user.status}</Badge></td>
-      <td> <UserDeleteBtn id={user.id} /> </td>
+      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
+      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
+      <td> <UserActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
@@ -92,7 +85,6 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
               <div className="w-25">
                 Users
               </div>
-              <UserHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -105,19 +97,13 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">ID</th>*/}
+                  <th scope="col">PIN</th>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
+                  <th scope="col">Phone Number</th>
                   <th scope="col">Email</th>
-                  {/*<th scope="col">Passenger Phone N</th>*/}
-                  <th scope="col">Home Location</th>
-                  <th scope="col">Pick Time</th>
                   <th scope="col">Status</th>
-                  {/*<th scope="col">Driver Name</th>*/}
-                  {/*<th scope="col">Driver Phone no</th>*/}
-                  {/*<th scope="col">Vehicle Detail</th>*/}
-                  {/*<th scope="col">Distance</th>*/}
-                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>

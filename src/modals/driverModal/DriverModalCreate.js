@@ -203,7 +203,11 @@ const DriverModalCreate = (props) => {
     assignVehicle(vehicleId, "1");
     setFormData({
       firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "0", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
-    })
+    });
+    setForm1(true);
+    setForm3(false);
+    setForm2(false);
+    setForm4(false);
 
   };
 
@@ -285,7 +289,7 @@ const DriverModalCreate = (props) => {
                   onChange={e=>setOperatorInput(e.target.value)}
                   // required
                 >
-                  <option value="">Operator</option>
+                  <option value="">Select Operator</option>
 
                   {operators && operators.map((operator, index) =>
                     <option value={operator.name} key={index}>{operator.name}</option>
@@ -302,7 +306,7 @@ const DriverModalCreate = (props) => {
                   onChange={e=>setVehicleInput(e.target.value)}
                   // required
                 >
-                  <option value="">Vehicle type</option>
+                  <option value="">Select Vehicle type</option>
                   {(vehicles && operatorInput) && vehicles.filter((user) => user.operator === operatorInput).map((vehicle, index) =>
                     <option value={vehicle.vehicle_type} key={index}>{vehicle.vehicle_type}</option>
                   )}
@@ -318,8 +322,8 @@ const DriverModalCreate = (props) => {
                   onChange={e=>setPlateInput(e.target.value)}
                   // required
                 >
-                  <option value="">Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned === null || user.assigned === "null")).map((vehicle, index) =>
+                  <option value="">Select Vehicle Plate no</option>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned === null || user.assigned === "null") && (user.status === "1")).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}

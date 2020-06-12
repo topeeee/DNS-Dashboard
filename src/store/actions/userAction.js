@@ -8,10 +8,12 @@ import {
   USER_ERROR,
   SEARCH_USER,
   CREATE_USER,
-  REMOVE_USER_ERROR
+  REMOVE_USER_ERROR,
+  USER_STATUS
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+
 
 
 
@@ -52,6 +54,25 @@ export const createUser = (first_name, last_name, email, date_of_birth, pax_code
       type: REMOVE_USER_ERROR
     }), 5000)
 
+  }
+};
+
+export const changeUserStatus = (id, status) => async dispatch => {
+  try {
+    const res = await axios.put(`${api.user}/api/status/${id}/`, {status});
+    dispatch({
+      payload: id,
+      type: USER_STATUS,
+    });
+    dispatch(getUsers());
+  } catch (err) {
+    // dispatch({
+    //   type: OPERATOR_ERROR,
+    //   payload: "Opps! Something Went Wrong Try Again"
+    // });
+    // setTimeout(() => dispatch({
+    //   type: REMOVE_OPERATOR_ERROR
+    // }), 5000)
   }
 };
 export const deleteUser = (id) => async dispatch => {

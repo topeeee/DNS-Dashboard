@@ -5,9 +5,8 @@ import {getTrips, searchTrip} from "../../store/actions/tripAction";
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import TripDeleteBtn from "./components/TripDeleteBtn";
-import TripHeader from "./components/TripHeader";
 import Spinner from "../../spinner/Spinner";
+import TripActionBtn from "./components/TripActionBtn";
 
 
 
@@ -39,7 +38,7 @@ function UserRow(props) {
       {/*<td>{user.vehicledetail}</td>*/}
       {/*<td>{user.distance}</td>*/}
       <td>{user.cost}</td>
-      <td> <TripDeleteBtn id={user.id} /> </td>
+      <td> <TripActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -101,7 +100,7 @@ const CompletedTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
               <div className="w-25">
               Completed  Trips
               </div>
-              <TripHeader />
+              {/*<TripHeader />*/}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -129,12 +128,12 @@ const CompletedTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {trips && trips.map((user, index) =>
-                  <UserRow key={index} user={user}/>
-                )}
-                {trip &&
-                <UserRow user={trip}/>
-                }
+                {/*{trips && trips.map((user, index) =>*/}
+                {/*  <UserRow key={index} user={user}/>*/}
+                {/*)}*/}
+                {/*{trip &&*/}
+                {/*<UserRow user={trip}/>*/}
+                {/*}*/}
                 </tbody>
               </Table>
               {/*}*/}
