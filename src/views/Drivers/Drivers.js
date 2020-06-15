@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getUsers, searchUser} from "../../store/actions/userAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
-import DriverDeleteBtn from "./components/DriverDeleteBtn";
 import {getDrivers, searchDriver, approveDriver, clearDriverVehicleId} from "../../store/actions/driverAction";
 import DriverActionBtn from "./components/DriverActionBtn";
 import axios from "axios";
 import api from "../../environments/environment";
+// import Pagination from "../../pagination/Pagination";
+import Pagination from "react-js-pagination";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const approved = props.approved;
-  const userLink = `/trip/${user.TripID}`;
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -50,18 +47,67 @@ function UserRow(props) {
 const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId}) => {
   const [formData, setFormData] = useState('');
   const [driverVehicle, setDriverVehicle] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
+  // const [activePage, setActivePage] = useState(1);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+
+  // const search = currentPosts.filter(post => {
+  //  setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
+  // });
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+
+// function search() {
+//   if(drivers){
+//    return  drivers.filter(post => {
+//       return post.firstname.toLowerCase().includes(formData.toLowerCase())
+//     })
+//   }
+// }
 
 
 
+// useEffect(()=> {
+//   if(formData && drivers) {
+//     setPosts(search())
+//   } else {
+//     setPosts(drivers)
+//   }
+// },[formData]);
+  //
+  // function search() {
+  //  posts.filter((post => {
+  //    setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
+  //  }))
+  // }
 
+useEffect(()=> {
+  if(formData && drivers){
+    const search = drivers.filter(post => {
+      return post.firstname.toLowerCase().includes(formData.toLowerCase())
+    });
+    setPosts(search)
+  }
+},[formData]);
+
+useEffect(()=> {
+  if(drivers && !formData) {
+    setPosts(drivers)
+  }
+},[drivers, formData]);
 
 
   useEffect(()=>{
-    if(formData === ''){
       getDrivers();
-
-    }
-  },[formData]);
+      },[]);
 
   function getDriverVehicle() {
     axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
@@ -170,7 +216,7 @@ useEffect(()=> {
                 </tr>
                 </thead>
                 <tbody style={{background: "gray", color: "white"}}>
-                {drivers && drivers.map((user, index) =>
+                {posts && currentPosts.map((user, index) =>
                   <UserRow key={index} user={user} approved={approveDriver} driverVehicle={driverVehicle}/>
                 )}
                 {driver &&
@@ -178,6 +224,21 @@ useEffect(()=> {
                 }
                 </tbody>
               </Table>}
+              <div className="d-flex justify-content-end align-items-center">
+                <Pagination
+                  activePage={currentPage}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  itemsCountPerPage={postsPerPage}
+                  totalItemsCount={posts.length}
+                  onChange={paginate}
+                />
+              </div>
+              {/*<Pagination*/}
+              {/*  postsPerPage={postsPerPage}*/}
+              {/*  totalPosts={posts.length}*/}
+              {/*  paginate={paginate}*/}
+              {/*/>*/}
             </CardBody>
             }
           </Card>

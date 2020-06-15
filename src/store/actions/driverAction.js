@@ -58,7 +58,7 @@ export const changeDriverStatus = (id, status) => async dispatch => {
 };
 
 
-export const createDriver = (vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
+export const createDriver = (vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
   const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
   try {
     const res = await axios.post(`${api.driver}/api/me/drivers/`, body);
@@ -67,7 +67,7 @@ export const createDriver = (vehicleId, firstname, lastname, residentialaddress,
       payload: res.data
     });
     if(res.data) {
-     await axios.post("http://165.22.116.11:7054/api/me/drivervehicles/", {vehicleId: vehicleId, driverId: res.data.id})
+     await axios.post("http://165.22.116.11:7054/api/me/drivervehicles/", {vehicleId: vehicleId, driverId: res.data.id, operatorId: operatorInput})
     }
     dispatch(getDrivers());
     dispatch(toggleDriverModalCreate());

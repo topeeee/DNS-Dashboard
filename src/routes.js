@@ -135,7 +135,7 @@ const routes = [
   { path: '/busassisstants/inactive', exact: true, name: 'Inactive Bus Assistants', component: InactiveBusAssistants },
   { path: '/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
   { path: '/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
-  { path: '/busassisstant/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
+  { path: '/busassisstants/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
   { path: '/drivers/:id', name: 'Driver Details', component: Driver },
   { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
   { path: '/users/active', name: 'Active Users', component: ActiveUsers },

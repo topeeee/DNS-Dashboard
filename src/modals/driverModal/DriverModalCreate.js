@@ -27,8 +27,8 @@ const options = [
 function mapDispatchToProps(dispatch) {
   return {
     toggleDriverModalCreate: () => dispatch(toggleDriverModalCreate()),
-    createDriver: (vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
-      dispatch(createDriver(vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
+    createDriver: (vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
+      dispatch(createDriver(vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
@@ -199,7 +199,7 @@ const DriverModalCreate = (props) => {
 
   const onSubmit = async (e) => {
      e.preventDefault();
-    createDriver(vehicleId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
+    createDriver(vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
     assignVehicle(vehicleId, "1");
     setFormData({
       firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "0", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""

@@ -14,7 +14,8 @@
    area: "http://165.22.116.11:7007",
    driverRoute: "http://165.22.116.11:7048",
    operator: "http://165.22.116.11:7046",
-   register: "http://165.22.116.11:8001"
+   register: "http://165.22.116.11:8001",
+   busAssistant: "http://165.22.116.11:7051",
 };
 
 export default api
