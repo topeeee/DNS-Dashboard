@@ -24,8 +24,8 @@ export const BusStopUser = () => async dispatch => {
 
 
 
-export const createBusStop = (busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
-  const body = {busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
+export const createBusStop = (busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
+  const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
   try {
     const res = await axios.post(api.busStop, body);
     dispatch({

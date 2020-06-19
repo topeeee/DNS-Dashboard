@@ -96,7 +96,7 @@ const BusStopModalCreate = (props) => {
                 >
                   <option value="">Select Route</option>
                   {routes && routes.map((route, index) =>
-                    <option value={route.routecode} key={index}>{route.route}</option>
+                    <option value={route.route} key={index}>{route.route}</option>
                   )}
                 </Input>
                 {/*<Input type="text" placeholder="Route code" name="routecode" onChange={onChange}  value={routecode} />*/}
