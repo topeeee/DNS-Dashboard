@@ -28,19 +28,19 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <td>{user.id}</td>
+      {/*<td>{user.id}</td>*/}
       <td>{user.busstop}</td>
-      {/*<td>{user.busstopcode}</td>*/}
-      {route && route.map((sta, index) =>{
-        if(sta.routecode === user.routecode) {
-          return  <td key={index}>{sta.route}</td>
-        }}
-      )}
-      {/*<td>{user.routecode}</td>*/}
+      <td>{user.busstopcode}</td>
+      {/*{route && route.map((sta, index) =>{*/}
+      {/*  if(sta.routecode === user.routecode) {*/}
+      {/*    return  <td key={index}>{sta.route}</td>*/}
+      {/*  }}*/}
+      {/*)}*/}
+      <td>{user.routecode}</td>
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
       <td>{user.heading}</td>
-      <td> <BusStopDeleteBtn id={user.id} /> </td>
+      {/*<td> <BusStopDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -67,7 +67,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
     RouteUser()
   },[]);
 
-
+console.log(busStops, 'dddddddddddddddd')
 
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -111,14 +111,14 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
               <Table responsive hover>
                 <thead>
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">Id</th>*/}
                   <th scope="col"> Bus Stop</th>
                   {/*<th scope="col"> Bus Stop Code</th>*/}
                   <th scope="col">Route</th>
                   <th scope="col">Latitude</th>
                   <th scope="col">Longitude</th>
                   <th scope="col">Direction</th>
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
                 <tbody>

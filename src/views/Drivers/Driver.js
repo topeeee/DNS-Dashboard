@@ -115,30 +115,6 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                   {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
                   {(newOperator.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
                 </tr>
-                {/*<tr>*/}
-                {/*  <td><strong>Vehicle Type</strong></td>*/}
-                {/*  {operatorVehicle && operatorVehicle.map((vehicle, index) =>*/}
-                {/*    <td  key={index}>{vehicle.vehicleType}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>Mode</strong></td>*/}
-                {/*  {operatorMode && operatorMode.map((mode, index) =>*/}
-                {/*    <td  key={index}>{mode.modecode}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>Zone</strong></td>*/}
-                {/*  {operatorZone && operatorZone.map((zone, index) =>*/}
-                {/*    <td  key={index}>{zone.zoneCode}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>State</strong></td>*/}
-                {/*  {states && states.map((state, index) =>*/}
-                {/*    <td  key={index}>{state.xstate}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
                 </tbody>
                 }
 

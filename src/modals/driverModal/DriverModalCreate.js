@@ -69,6 +69,23 @@ const DriverModalCreate = (props) => {
     getAreas,
     areas
   } = props;
+  const [form1, setForm1] = useState(true);
+  const [form2, setForm2] = useState(false);
+  const [form3, setForm3] = useState(false);
+  const [form4, setForm4] = useState(false);
+  const [routeSelected, setRouteSelected] = useState([]);
+  const [selected2, setSelected2] = useState([]);
+  const [regPin, setRegpin] = useState('');
+  const [operatorInput, setOperatorInput] = useState('');
+  const [vehicleInput, setVehicleInput] = useState('');
+  const [plateInput, setPlateInput] = useState('');
+  const [zoneInput, setZoneInput] = useState('');
+  const [areaInput, setAreaInput] = useState('');
+  const [routeInput, setRouteInput] = useState('');
+  const [vehicleId, setVehicleId] = useState('');
+  const [modeInput, setModeInput] = useState('');
+  const [operatorZone, setOperatorZone] = useState([]);
+  const [operatorMode, setOperatorMode] = useState([]);
 
   function getOperatorZone() {
     axios.get(" http://165.22.116.11:7052/api/all/operatorzones/")
@@ -77,6 +94,8 @@ const DriverModalCreate = (props) => {
 
       })
   }
+
+
 
   function getOperatorMode() {
     axios.get("http://165.22.116.11:7053/api/me/operatormodes/")
@@ -104,23 +123,7 @@ const DriverModalCreate = (props) => {
   const [formData, setFormData] = useState({
     firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
   });
-  const [form1, setForm1] = useState(true);
-  const [form2, setForm2] = useState(false);
-  const [form3, setForm3] = useState(false);
-  const [form4, setForm4] = useState(false);
-  const [routeSelected, setRouteSelected] = useState([]);
-  const [selected2, setSelected2] = useState([]);
-  const [regPin, setRegpin] = useState('');
-  const [operatorInput, setOperatorInput] = useState('');
-  const [vehicleInput, setVehicleInput] = useState('');
-  const [plateInput, setPlateInput] = useState('');
-  const [zoneInput, setZoneInput] = useState('');
-  const [areaInput, setAreaInput] = useState('');
-  const [routeInput, setRouteInput] = useState('');
-  const [vehicleId, setVehicleId] = useState('');
-  const [modeInput, setModeInput] = useState('');
-  const [operatorZone, setOperatorZone] = useState([]);
-  const [operatorMode, setOperatorMode] = useState([]);
+
 
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });

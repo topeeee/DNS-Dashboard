@@ -16,48 +16,37 @@ function UserRow(props) {
 
 
   const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
+    return status === 'Completed' ? 'success' :
+      status === 'Transit' ? 'warning' :
+        status === 'Waiting' ? 'primary' :
           status === 'Unsuccessful' ? 'danger' :
             'primary'
   };
 
 
   return (
-    // "id": 42,
-    // "username": "bruce",
-    // "passengerPin": "34",
-    // "mode": "shuttle",
-    // "pickUp": "bustop1",
-    // "dropOff": "bustop2",
-    // "cost": "466",
-    // "route": "route1",
-    // "distance": "500",
-    // "driverPin": "driver2",
-    // "pickStatus": "no",
-    // "pickedTimestamp": "4567",
-    // "dropStatus": "0",
-    // "schedulePickTime": "456",
-    // "scheduleDropTime": "4567",
-    // "dropTimestamp": null,
     <tr key={user.id}>
-      <td>{user.id}</td>
+      {/*<td>{user.id}</td>*/}
       <td>{user.passengerPin}</td>
       {newUser && newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>
         }
+
       })}
-      <td>{user.pickUp}</td>
-      <td>{user.dropOff}</td>
+      {user.pickUp ? <td>{user.pickUp}</td>: <td>Not Available</td>}
+      {user.dropOff ? <td>{user.dropOff}</td>: <td>Not Available</td>}
+      {/*<td>{user.dropOff}</td>*/}
       <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
       {newUser && newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.phoneNumber}</td>
         }
       })}
-      <td>Not available</td>
+      {(user.pickStatus === "1" && user.dropStatus === "0") && <td><Badge color={getBadge("Transit")}>Transit</Badge></td> }
+      {/*<td>Not available</td>*/}
+      {(user.pickStatus === "1" && user.dropStatus === "1") && <td><Badge color={getBadge("Completed")}>Completed</Badge></td> }
+      {(user.pickStatus === "0" && user.dropStatus === "0") && <td><Badge color={getBadge("Waiting")}>Waiting</Badge></td> }
       <td> <TripActionBtn id={user.id} /> </td>
     </tr>
   )
@@ -79,11 +68,12 @@ useEffect(()=> {
 },[]);
 
 useEffect(()=> {
-  if(users){}
-  setNewUser(users)
+  if(users){
+    setNewUser(users)
+  }
+
 
 },[users]);
-
 
 const onChange = (e) =>{
     e.preventDefault();
@@ -137,7 +127,7 @@ const onSearch = e => {
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">ID</th>
+                  {/*<th scope="col">ID</th>*/}
                   <th scope="col">PIN</th>
                   <th scope="col"> Full Name</th>
                   <th scope="col">Pick Up</th>
