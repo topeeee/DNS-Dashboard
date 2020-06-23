@@ -83,7 +83,9 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                 </tr>
                 <tr>
                   <td><strong>App Status</strong></td>
-                  <td>{newOperator.appstatus}</td>
+                  {(newOperator.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
+                  {(newOperator.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
+                  {(newOperator.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
                 </tr>
                 <tr>
                   <td><strong>Bank Name</strong></td>
