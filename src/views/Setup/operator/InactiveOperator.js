@@ -73,7 +73,7 @@ const InactiveOperators = ({getOperators, operators, operator, isLoading,  searc
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -116,8 +116,8 @@ const InactiveOperators = ({getOperators, operators, operator, isLoading,  searc
                   <th scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {operators &&  operators.filter((user) => user.status == 0).map((operator, index) =>
+                <tbody>
+                {operators &&  operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
                   <UserRow key={index} user={operator} />
                 )}
                 {operator &&

@@ -72,7 +72,7 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -115,8 +115,8 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
                   <th scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {operators && operators.map((operator, index) =>
+                <tbody>
+                {operators && operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((operator, index) =>
                   <UserRow key={index} user={operator} />
                 )}
                 {operator &&

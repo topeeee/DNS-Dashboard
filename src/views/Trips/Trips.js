@@ -26,23 +26,23 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
+      <td>{user.id}</td>
       <td>{user.passengerPin}</td>
-      {newUser && newUser.map((newuser, index) =>{
+      {newUser ? newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>
         }
 
-      })}
+      }):<td>Not Available</td>}
       {user.pickUp ? <td>{user.pickUp}</td>: <td>Not Available</td>}
       {user.dropOff ? <td>{user.dropOff}</td>: <td>Not Available</td>}
       {/*<td>{user.dropOff}</td>*/}
       <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
-      {newUser && newUser.map((newuser, index) =>{
+      {newUser ? newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.phoneNumber}</td>
         }
-      })}
+      }):<td>Not Available</td>}
       {(user.pickStatus === "1" && user.dropStatus === "0") && <td><Badge color={getBadge("Transit")}>Transit</Badge></td> }
       {/*<td>Not available</td>*/}
       {(user.pickStatus === "1" && user.dropStatus === "1") && <td><Badge color={getBadge("Completed")}>Completed</Badge></td> }
@@ -96,7 +96,7 @@ const onSearch = e => {
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -127,7 +127,7 @@ const onSearch = e => {
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  {/*<th scope="col">ID</th>*/}
+                  <th scope="col">ID</th>
                   <th scope="col">PIN</th>
                   <th scope="col"> Full Name</th>
                   <th scope="col">Pick Up</th>
@@ -144,8 +144,8 @@ const onSearch = e => {
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {trips && trips.map((user, index) =>
+                <tbody>
+                {trips && trips.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} newUser={newUser}/>
                 )}
                 {trip &&

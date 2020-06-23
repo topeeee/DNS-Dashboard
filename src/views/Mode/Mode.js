@@ -27,13 +27,7 @@ function UserRow(props) {
       <td>{user.mode}</td>
       <td>{user.modecode}</td>
       <td>{user.statecode}</td>
-
-      {/*{state.map((sta, index) =>{*/}
-      {/*  if(sta.xstatecode === user.statecode) {*/}
-      {/*    return  <td key={index}>{sta.xstate}</td>*/}
-      {/*}}*/}
-      {/*)}*/}
-      <td> <ModeDeleteBtn id={user.id} /> </td>
+      {/*<td> <ModeDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -72,7 +66,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -108,11 +102,11 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                   {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Mode Code</th>
                   <th scope="col">State</th>
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {modes && modes.map((mode, index) =>
+                <tbody>
+                {modes && modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode} state={states}/>
                 )}
                 {mode &&

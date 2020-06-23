@@ -16,11 +16,11 @@ const PrimaryHeader = ()=> {
     <div>
       <CardHeader className="bg-secondary d-flex">
               <div className="w-75 d-flex align-items-center ">
-                <Input type="text" placeholder="Search by Name or Id" className="w-25"/>
+                <Input type="text"  className="w-25"/>
                 <button className="btn btn-success">Search</button>
-                <DateRangePicker onApply={handleEvent}>
-                  <button className="btn btn-instagram ml-2">Filter by Date</button>
-                </DateRangePicker>
+                {/*<DateRangePicker onApply={handleEvent}>*/}
+                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
+                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />

@@ -10,6 +10,7 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import {RouteUser} from "../../store/actions/routeAction";
+import Spinner from "../../spinner/Spinner";
 
 
 
@@ -28,18 +29,12 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
       <td>{user.busstop}</td>
-      <td>{user.busstopcode}</td>
-      {/*{route && route.map((sta, index) =>{*/}
-      {/*  if(sta.routecode === user.routecode) {*/}
-      {/*    return  <td key={index}>{sta.route}</td>*/}
-      {/*  }}*/}
-      {/*)}*/}
+      {/*<td>{user.busstopcode}</td>*/}
       <td>{user.routecode}</td>
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
-      <td>{user.heading}</td>
+      <td>{user.direction}</td>
       {/*<td> <BusStopDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
@@ -69,7 +64,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
 
 console.log(busStops, 'dddddddddddddddd')
 
-  const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
+  // const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
   return (
     <div className="animated fadeIn">
@@ -80,16 +75,16 @@ console.log(busStops, 'dddddddddddddddd')
             <CardHeader className="bg-secondary d-flex">
               <div className="w-75 d-flex align-items-center ">
                 <Input type="text"
-                       placeholder="Search by Name or Id"
+                       // placeholder="Search by Name or Id"
                        className="w-25"
                        name="formData"
                        value={formData}
                        onChange={onChange}
                 />
                 <button className="btn btn-success">Search</button>
-                <DateRangePicker onApply={handleEvent}>
-                  <button className="btn btn-instagram ml-2">Filter by Date</button>
-                </DateRangePicker>
+                {/*<DateRangePicker onApply={handleEvent}>*/}
+                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
+                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
@@ -105,11 +100,11 @@ console.log(busStops, 'dddddddddddddddd')
               <BusStopHeader />
             </CardHeader>
             <CardBody>
-              {isLoading && loading()}
+              {isLoading && <Spinner />}
               {(busStops && busStops.length === 0) && <div className="animated fadeIn pt-1 text-center">No Bus Stops Available</div>}
-              {(busStops && busStops.length > 0) &&
+              {(busStops && busStops.length > 0 && !isLoading) &&
               <Table responsive hover>
-                <thead>
+                <thead className="bg-dark">
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   <th scope="col"> Bus Stop</th>
@@ -122,7 +117,7 @@ console.log(busStops, 'dddddddddddddddd')
                 </tr>
                 </thead>
                 <tbody>
-                {busStops && busStops.map((user, index) =>
+                {busStops && busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 )}
                 </tbody>

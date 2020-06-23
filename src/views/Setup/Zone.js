@@ -24,19 +24,15 @@ function UserRow(props) {
   };
 
   return (
-    <tr key={user.statecode.toString()}>
-      <td>{user.id}</td>
+    <tr key={user.id}>
+      {/*<td>{user.id}</td>*/}
       <td>{user.zone}</td>
-      {/*{state.map((sta, index) =>{*/}
-      {/*  if(sta.xstatecode === user.statecode) {*/}
-      {/*    return  <td key={index}>{sta.xstate}</td>*/}
-      {/*  }}*/}
-      {/*)}*/}
+      <td>{user.zonecode}</td>
       <td>{user.statecode}</td>
       {/*<td>{user.username}</td>*/}
 
-      {/*<td>{user.zonecode}</td>*/}
-      <td> <ZoneDeleteBtn id={user.id} /> </td>
+
+      {/*<td> <ZoneDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -66,19 +62,20 @@ const Zones = ({ZoneUser, zones, getStates, states}) => {
               {!zones && loading()}
               {zones &&
               <Table responsive hover>
-                <thead>
+                <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">Id</th>*/}
                   <th scope="col">Zone</th>
+                  <th scope="col">Zone code</th>
                   <th scope="col">State</th>
                   {/*<th scope="col">User Name</th>*/}
 
                   {/*<th scope="col">Zone Code </th>*/}
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
                 <tbody>
-                {zones && zones.map((user, index) =>
+                {zones && zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
                 )}
                 </tbody>

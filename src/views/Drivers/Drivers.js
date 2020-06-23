@@ -33,7 +33,7 @@ function UserRow(props) {
       <td>{user.phoneno}</td>
       <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      <td>{user.appstatus}</td>
+      <td>Not available</td>
       <td>Not Available</td>
       <td>Not Available</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -54,7 +54,7 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => parseFloat(b.id) - parseFloat(a.id));
 
 
   // const search = currentPosts.filter(post => {
@@ -171,7 +171,7 @@ useEffect(()=> {
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -215,7 +215,7 @@ useEffect(()=> {
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
+                <tbody>
                 {posts && currentPosts.map((user, index) =>
                   <UserRow key={index} user={user} approved={approveDriver} driverVehicle={driverVehicle}/>
                 )}

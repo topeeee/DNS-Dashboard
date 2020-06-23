@@ -34,7 +34,7 @@ function UserRow(props) {
       <td>{user.phoneno}</td>
       <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      <td>{user.appstatus}</td>
+      <td>Not available</td>
       <td>Not Available</td>
       <td>Not Available</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -127,8 +127,8 @@ const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, e
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {drivers && drivers.filter((user) => user.status === "1").map((user, index) =>
+                <tbody>
+                {drivers && drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "1").map((user, index) =>
                   <UserRow key={index} user={user} approved={approveDriver}/>
                 )}
                 {driver &&

@@ -174,12 +174,12 @@ export default {
         //   // icon: 'icon-puzzle',
         //   class: "menu_drop",
         // },
-        {
-          name: 'Driver Routes',
-          url: '/drivers/driverroutes',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
+        // {
+        //   name: 'Driver Routes',
+        //   url: '/drivers/driverroutes',
+        //   // icon: 'icon-puzzle',
+        //   class: "menu_drop",
+        // },
         // {
         //   name: 'Pending',
         //   url: '/drivers/pending',

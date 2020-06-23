@@ -71,7 +71,7 @@ const InactiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVeh
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -114,8 +114,8 @@ const InactiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVeh
                   <th scope="col">Actions</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {vehicles && vehicles.filter((user) => user.status === "0").map((vehicle, index) =>
+                <tbody>
+                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "0").map((vehicle, index) =>
                   <UserRow key={index} user={vehicle}/>
                 )}
                 {vehicle &&

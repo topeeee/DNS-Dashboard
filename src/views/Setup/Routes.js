@@ -7,6 +7,7 @@ import {RouteUser} from "../../store/actions/routeAction";
 import RouteHeader from "./components/RouteHeader";
 import RouteDeleteBtn from "./components/RouteDeleteBtn";
 import {getAreas} from "../../store/actions/areaAction";
+import Spinner from "../../spinner/Spinner";
 
 
 
@@ -25,18 +26,14 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <td>{user.id}</td>
+      {/*<td>{user.id}</td>*/}
       <td>{user.route}</td>
-      {/*{area.map((sta, index) =>{*/}
-      {/*  if(sta.xareacode === user.areacode) {*/}
-      {/*    return  <td key={index}>{sta.xarea}</td>*/}
-      {/*  }}*/}
-      {/*)}*/}
+      <td>{user.routecode}</td>
       <td>{user.areacode}</td>
       {/*<td>{user.username}</td>*/}
 
       {/*<td>{user.routecode}</td>*/}
-      <td> <RouteDeleteBtn id={user.id} /> </td>
+      {/*<td> <RouteDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -63,22 +60,23 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
               <RouteHeader />
             </CardHeader>
             <CardBody>
-              {isLoading && loading()}
+              {isLoading && <Spinner />}
               {(routes && routes.length === 0) && <div className="animated fadeIn pt-1 text-center">No Routes Available</div>}
-              {(routes && routes.length > 0) &&
+              {(routes && routes.length > 0 && !isLoading) &&
               <Table responsive hover>
-                <thead>
+                <thead  className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">Id</th>*/}
                   <th scope="col">Route</th>
+                  <th scope="col">Route code</th>
                   <th scope="col">Area</th>
                   {/*<th scope="col">User Name</th>*/}
                   {/*<th scope="col">Route Code </th>*/}
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
                 <tbody>
-                {routes && routes.map((user, index) =>
+                {routes && routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} area={areas}/>
                 )}
                 </tbody>

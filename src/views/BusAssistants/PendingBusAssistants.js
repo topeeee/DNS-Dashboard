@@ -120,7 +120,7 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -165,8 +165,8 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {busAssistants && busAssistants.filter((user) => user.status === "").map((user, index) =>
+                <tbody>
+                {busAssistants && busAssistants.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "").map((user, index) =>
                   <UserRow key={index} user={user} approved={approveBusAssistants} driverVehicle={driverVehicle}/>
                 )}
                 {busAssistant &&

@@ -14,15 +14,15 @@ import axios from "axios"
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/trip/${user.TripID}`;
+
 
   return (
-    <tr key={user.countrycode.toString()}>
+    <tr key={user.id}>
       <td>{user.id}</td>
       <td>{user.countrycode}</td>
       <td>{user.xstate}</td>
       {/*<td>{user.xstatecode}</td>*/}
-      <td> <StateDeleteBtn id={user.id} /> </td>
+      {/*<td> <StateDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -61,7 +61,7 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
                 <div className="w-75 d-flex align-items-center ">
                   <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                     <Input type="text"
-                           placeholder="Search by Id"
+                           // placeholder="Search by Id"
                            className="w-25"
                            name="formData"
                            value={formData}
@@ -96,11 +96,11 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
                     <th scope="col">Country</th>
                     <th scope="col">State</th>
                     {/*<th scope="col">State Code</th>*/}
-                    <th scope="col">Action</th>
+                    {/*<th scope="col">Action</th>*/}
                   </tr>
                   </thead>
-                  <tbody style={{background: "gray", color: "white"}}>
-                  {states && states.map((user, index) =>
+                  <tbody>
+                  {states && states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                     <UserRow key={index} user={user}/>
                   )}
                   {state &&

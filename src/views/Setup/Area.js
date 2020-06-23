@@ -17,16 +17,11 @@ function UserRow(props) {
   const zone = props.zone;
   return (
     <tr key={user.id}>
-      <td>{user.id}</td>
-      {/*<td>{user.xareacode}</td>*/}
+      {/*<td>{user.id}</td>*/}
       <td>{user.xarea}</td>
-      {/*{zone.map((sta, index) =>{*/}
-      {/*  if(sta.zonecode === user.zonecode) {*/}
-      {/*    return  <td key={index}>{sta.zone}</td>*/}
-      {/*  }}*/}
-      {/*)}*/}
+      <td>{user.xareacode}</td>
       <td>{user.zonecode}</td>
-      <td> <AreaDeleteBtn id={user.id} /> </td>
+      {/*<td> <AreaDeleteBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
@@ -66,7 +61,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -98,15 +93,16 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Id</th>
+                  {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
                   <th scope="col">Area</th>
+                  <th scope="col">Area code</th>
                   <th scope="col">Zone</th>
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
-                <tbody style={{background: "gray", color: "white"}}>
-                {areas && areas.map((mode, index) =>
+                <tbody>
+                {areas && areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode} zone={zones}/>
                 )}
                 {area &&

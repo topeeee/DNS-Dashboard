@@ -76,7 +76,7 @@ const CancelledTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         placeholder="Search by Id"
+                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -111,7 +111,7 @@ const CancelledTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">ID</th>
+                  {/*<th scope="col">ID</th>*/}
                   <th scope="col">PIN</th>
                   <th scope="col"> Full Name</th>
                   <th scope="col">Pick Up</th>

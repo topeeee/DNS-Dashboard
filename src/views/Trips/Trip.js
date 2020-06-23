@@ -5,6 +5,7 @@ import * as usersData from "core-js";
 import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
+import Spinner from "../../spinner/Spinner";
 
 
 const Trip = ({match, getDrivers, drivers})=> {
@@ -46,6 +47,7 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
  function getDriverVehicle(id) {
    axios.get('http://165.22.116.11:7054/api/me/drivervehicles/')
      .then(res=> {
+       console.log(res.data, 'yyyyyyyyyyyyyyyyyyyyyyyy')
        res.data.map(driverVehicle=> {
          if(driverVehicle.driverId == id){
            setDriverVehicleDetails(driverVehicle)
@@ -71,6 +73,12 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
         })
       })
  }
+
+  function millisToMinutesAndSeconds(millis) {
+    let minutes = Math.floor(millis / 60000);
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+    return (seconds == 60 ? (minutes+1) + ":00" : minutes + ":" + (seconds < 10 ? "0" : "") + seconds);
+  }
 
  useEffect(()=> {
    if(driverDetails.zone) {
@@ -117,13 +125,17 @@ useEffect(()=> {
   }
 },[drivers, driverPin]);
 
+
   return (
     <div className="animated fadeIn">
       <Row className="d-flex align-items-center justify-content-center">
+        <div className='d-flex align-items-center justify-content-center w-100'> {(!stateDetails) && <Spinner />}</div>
+
         <Col lg={6}>
+          {(trip && driverDetails && userDetails && stateDetails && vehicle) &&
           <Card>
             <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+              <strong><i className="icon-info pr-1"></i>Trip id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>
@@ -164,24 +176,37 @@ useEffect(()=> {
                 </tr>
                 <tr>
                   <td><strong>Mode</strong></td>
-                  <td>{trip.mode}</td>
+                  <td>Zeno shuttle</td>
                 </tr>
                 <tr>
                   <td><strong>State</strong></td>
                   <td>{stateDetails}</td>
                 </tr>
                 <tr>
+                  <td><strong>Zone</strong></td>
+                  <td>{driverDetails.zone}</td>
+                </tr>
+                <tr>
+                  <td><strong>Area</strong></td>
+                  <td>{driverDetails.area}</td>
+                </tr>
+                <tr>
+                  <td><strong>Route</strong></td>
+                  <td>{driverDetails.route}</td>
+                </tr>
+                <tr>
                   <td><strong>Start time</strong></td>
-                  {trip.pickedTimestamp ?  <td>{new Date(trip.pickedTimestamp).toLocaleString()}</td>: null}
+                  {trip.pickedTimestamp ?  <td>{new Date(trip.pickedTimestamp).toLocaleString()}</td>: <td>Not Available</td>}
                   {/*<td>{new Date(trip.pickedTimestamp)}</td>*/}
                 </tr>
                 <tr>
                   <td><strong>End Time</strong></td>
-                  {trip.dropTimestamp ? <td>{new Date(trip.dropTimestamp).toLocaleString()}</td>: null}
+                  {trip.dropTimestamp ? <td>{new Date(trip.dropTimestamp).toLocaleString()}</td>: <td>Not Available</td>}
                 </tr>
                 <tr>
                   <td><strong>Transit Time</strong></td>
-                  {/*<td>{newOperator.zone}</td>*/}
+                  {(trip.pickedTimestamp && trip.dropTimestamp) ? <td>{millisToMinutesAndSeconds(Math.abs(new Date(trip.pickedTimestamp)- new Date(trip.dropTimestamp)))} sec</td>: <td>Not Available</td>}
+
                 </tr>
                 <tr>
                   <td><strong>Driver Name</strong></td>
@@ -215,6 +240,8 @@ useEffect(()=> {
               </Table>
             </CardBody>
           </Card>
+          }
+
         </Col>
       </Row>
     </div>
