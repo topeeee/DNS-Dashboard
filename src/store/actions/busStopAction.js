@@ -1,4 +1,11 @@
-import {BUS_STOP_BY_USER, BUS_STOP_MODAL_CREATE, BUS_STOP_MODAL_DELETE, DELETE_BUS_STOP, CREATE_BUS_STOP, CLOSE_MODAL_DELETE_BUS_STOP, LOADING_BUS_STOP} from "../actionTypes"
+import {
+  BUS_STOP_BY_USER,
+  BUS_STOP_MODAL_CREATE,
+  BUS_STOP_MODAL_UPDATE,
+  CREATE_BUS_STOP,
+  CLOSE_MODAL_DELETE_BUS_STOP,
+  UPDATE_BUS_STOP,
+  LOADING_BUS_STOP} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
 import setAuthToken from "../../utils/setAuthToken";
@@ -42,16 +49,18 @@ export const createBusStop = (busstopcode,busstop,routecode, direction, speed, a
 
   }
 };
-export const deleteBusStop = (id) => async dispatch => {
 
+
+export const updateBusStop = (id,busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
+  const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
   try {
-    const res = await axios.delete(`http://165.22.116.11:7108/admin/busstops/${id}/`);
+    const res = await axios.put(`http://165.22.116.11:7108/api/busstops/${id}/`, body);
     dispatch({
-      type: DELETE_BUS_STOP,
+      type: UPDATE_BUS_STOP,
       payload: res.data
     });
     dispatch(BusStopUser());
-    dispatch(closeBusStopModalDelete());
+    dispatch(toggleBusStopModalUpdate());
   } catch (err) {
     // dispatch({
     //   type: AUTH_ERROR,
@@ -61,8 +70,8 @@ export const deleteBusStop = (id) => async dispatch => {
   }
 };
 
+
 export const searchBusStop = (id) => async dispatch => {
-console.log( 'fired')
   try {
     const res = await axios.get(`${api.busStop}${id}/`);
     console.log(res.data)
@@ -88,9 +97,9 @@ export function toggleBusStopModalCreate() {
   };
 }
 
-export function toggleBusStopModalDelete(id) {
+export function toggleBusStopModalUpdate(id) {
   return {
-    type: BUS_STOP_MODAL_DELETE,
+    type: BUS_STOP_MODAL_UPDATE,
     payload: id
   };
 }

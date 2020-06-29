@@ -19,13 +19,21 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {admin} from "../../environments/constants";
 
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 export const getBusAssistants = () => async dispatch => {
+  let BusApi;
+  if(isAdmin === admin) {
+    BusApi = `${api.busAssistant}/api/busassistants/`
+  }else {
+    BusApi = `${api.busAssistant}/api/me/busassistants/`
+  }
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.busAssistant}/api/busassistants/`);
+    const res = await axios.get(BusApi);
     dispatch({
       type: BUS_ASSISTANT_BY_USER,
       payload: res.data

@@ -4,6 +4,7 @@ import  {connect} from 'react-redux'
 import CombineModal from "../../modals";
 import {LogIn} from "../../store/actions/authenticationAction";
 import Spinner from "../../spinner/Spinner";
+import {admin} from "../../environments/constants";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -22,8 +23,15 @@ const Register = React.lazy(() => import('../Pages/Register'));
 const Page404 = React.lazy(() => import('../Pages/Page404'));
 const Page500 = React.lazy(() => import('../Pages/Page500'));
 
-const PrivateRoute = ({ isLoggedIn, ...props }) =>
-  isLoggedIn ? <Route { ...props } /> : <Redirect to="/login" />;
+
+
+const PrivateRoute = ({ isLoggedIn, isAdmin, ...props }) =>
+  (isLoggedIn && isAdmin === admin) ? <Route { ...props } /> : <Redirect to="/operator" />;
+
+const OperatorRoute = ({ isLoggedIn, isAdmin, ...props }) =>
+  isLoggedIn && (isAdmin !== admin) ? <Route { ...props } /> : <Redirect to="/login" />;
+
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -32,17 +40,15 @@ function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  loading: state.auth.loading,
 });
 
-const Home = ({ isAuthenticated, setLogIn, history}) => {
-// const isLogin = LoggedIn;
-//   useEffect(()=>{
-//    if(!LoggedIn) {
-//      console.log(LO)
-//       // return <Redirect to="/login" />;
-//    }
-//   }, []);
+const Home = ({ isAuthenticated}) => {
+
+  const isAdmin = sessionStorage.getItem('isAdmin');
+
+
   return (
     <BrowserRouter>
           <React.Suspense fallback={<Spinner />}>
@@ -52,8 +58,8 @@ const Home = ({ isAuthenticated, setLogIn, history}) => {
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
-              <Route path="/operator" name="Operator" render={props => <OperatorLayout {...props}/>} />
-              <PrivateRoute isLoggedIn={isAuthenticated} path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />
+              <OperatorRoute isLoggedIn={isAuthenticated} isAdmin={isAdmin} path="/operator" name="Operator" render={props => <OperatorLayout {...props}/>} />
+              <PrivateRoute isLoggedIn={isAuthenticated} isAdmin={isAdmin}  path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />
               {/*<Route path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />*/}
             </Switch>
           </React.Suspense>

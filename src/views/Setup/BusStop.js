@@ -5,12 +5,11 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 
 import PrimaryHeader from "../components/PrimaryHeader";
 import {BusStopUser, searchBusStop} from "../../store/actions/busStopAction";
 import BusStopHeader from "./components/BusStopHeader";
-import BusStopDeleteBtn from "./components/BusStopDeleteBtn";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
+import BusStopActionBtn from "./components/BusStopActionBtn";
 
 
 
@@ -35,7 +34,7 @@ function UserRow(props) {
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
       <td>{user.direction}</td>
-      {/*<td> <BusStopDeleteBtn id={user.id} /> </td>*/}
+      <td> <BusStopActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -62,7 +61,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
     RouteUser()
   },[]);
 
-console.log(busStops, 'dddddddddddddddd')
+
 
   // const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -113,7 +112,7 @@ console.log(busStops, 'dddddddddddddddd')
                   <th scope="col">Latitude</th>
                   <th scope="col">Longitude</th>
                   <th scope="col">Direction</th>
-                  {/*<th scope="col">Action</th>*/}
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -13,14 +13,21 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {admin} from "../../environments/constants";
 
-
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 export const getVehicles = () => async dispatch => {
+  let VehicleApi;
+  if(isAdmin === admin) {
+    VehicleApi = `${api.vehicle}/api/vehicles/`
+  }else {
+    VehicleApi = `${api.vehicle}/api/me/vehicles/`
+  }
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.vehicle}/api/vehicles/`);
+    const res = await axios.get(VehicleApi);
     dispatch({
       type: VEHICLE_BY_USER,
       payload: res.data

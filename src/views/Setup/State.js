@@ -3,11 +3,11 @@ import {connect} from "react-redux"
 import {Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import StateHeader from "./components/StateHeader";
 import {getStates, searchState, toggleStateModalDelete} from "../../store/actions/stateAction";
-import StateDeleteBtn from "./components/StateDeleteBtn";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import axios from "axios"
+import StateActionBtn from "./components/StateActionBtn";
 
 
 
@@ -22,7 +22,7 @@ function UserRow(props) {
       <td>{user.countrycode}</td>
       <td>{user.xstate}</td>
       {/*<td>{user.xstatecode}</td>*/}
-      {/*<td> <StateDeleteBtn id={user.id} /> </td>*/}
+      {/*<td> <StateActionBtn id={user.id} /> </td>*/}
     </tr>
   )
 }

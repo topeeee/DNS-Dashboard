@@ -3,9 +3,10 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Lab
 import { connect } from "react-redux";
 import {toggleVehicleModalCreate, createVehicle} from "../../store/actions/vehicleAction";
 import {getOperators} from "../../store/actions/operatorAction";
+import {admin} from "../../environments/constants";
 
 
-
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -42,7 +43,8 @@ const VehicleModalCreate = (props) => {
 
   useEffect(()=> {
     getOperators()
-  }, [])
+  }, []);
+
 
   const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" });
 
@@ -59,7 +61,16 @@ const VehicleModalCreate = (props) => {
 
   };
 
+  useEffect(()=> {
+    if(operators && isAdmin !== admin){
+      operators.map(operator=> {
+        if(operator.email === isAdmin) {
+          setFormData({...formData, operator: operator.name })
 
+        }
+      })
+    }
+  }, [operators, isAdmin, operator]);
 
   const toggle = () => {toggleVehicleModalCreate()};
 
@@ -105,7 +116,7 @@ const VehicleModalCreate = (props) => {
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                <Input
+                {(operators && isAdmin === admin) &&<Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operator"
@@ -114,10 +125,16 @@ const VehicleModalCreate = (props) => {
                   required
                 >
                   <option value="">Select Operator</option>
-                  {operators && operators.map((operator, index) =>
+                  {(operators && isAdmin === admin) && operators.map((operator, index) =>
                     <option value={operator.name} key={index}>{operator.name}</option>
                   )}
-                </Input>
+                  {/*{(operators && isAdmin !== admin) && operators.filter(user =>(user.email === isAdmin)).map((operator, index) =>*/}
+                  {/*  <option value={operator.name} key={index}>{operator.name}</option>*/}
+                  {/*)}*/}
+
+
+                </Input>}
+                {(operators && isAdmin !== admin) && <Input type="text"  name="operator" readOnly={true} onChange={onChange} value={operator} required />}
               </Col>
             </FormGroup>
             <div className="d-flex justify-content-md-end">

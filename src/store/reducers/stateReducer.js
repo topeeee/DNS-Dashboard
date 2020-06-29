@@ -1,8 +1,8 @@
 import {
   STATES_BY_USER,
   STATE_MODAL_CREATE,
-  STATE_MODAL_DELETE,
-  DELETE_STATE,
+  STATE_MODAL_UPDATE,
+  UPDATE_STATE,
   CLOSE_MODAL_DELETE_STATE,
   LOADING_STATE,
   STATE_ERROR,
@@ -14,8 +14,8 @@ const initialState = {
   states: null,
   state: null,
   StateModalCreate: false,
-  StateModalDelete: false,
-  DeleteID: null,
+  StateModalUpdate: false,
+  updateId: null,
   DeleteRes: null,
   isLoading: false,
   error: null
@@ -49,19 +49,14 @@ function stateReducer(state = initialState, action) {
         StateModalCreate: !state.StateModalCreate
       };
     }
-    case  STATE_MODAL_DELETE: {
+    case  STATE_MODAL_UPDATE: {
       return {
         ...state,
-        StateModalDelete: !state.StateModalDelete,
-        DeleteID: payload
+        StateModalUpdate: !state.StateModalUpdate,
+        updateId: payload
       };
     }
-    case   DELETE_STATE: {
-      return {
-        ...state,
-        DeleteRes: payload
-      };
-    }
+
     case   CLOSE_MODAL_DELETE_STATE: {
       return {
         ...state,

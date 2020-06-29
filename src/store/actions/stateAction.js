@@ -2,8 +2,8 @@ import {
   STATES_BY_USER,
   CREATE_STATE,
   STATE_MODAL_CREATE,
-  STATE_MODAL_DELETE,
-  DELETE_STATE,
+  STATE_MODAL_UPDATE,
+  UPDATE_STATE,
   STATE_ERROR,
   REMOVE_STATE_ERROR,
   LOADING_STATE,
@@ -55,28 +55,30 @@ export const createState = (xstatecode, xstate, countrycode) => async dispatch =
 
   }
 };
-export const deleteState = (id) => async dispatch => {
 
+export const updateState = (id, xstatecode, xstate, countrycode) => async dispatch => {
+  const body = {xstatecode, xstate, countrycode};
   try {
-    const res = await axios.delete(`${api.state}/admin/xstates/${id}/`);
+    const res = await axios.post(`${api.state}/api/me/xstates/`, body);
     dispatch({
-      type: DELETE_STATE,
+      type: UPDATE_STATE,
       payload: res.data
     });
     dispatch(getStates());
-    dispatch( closeStateModalDelete());
+    dispatch(toggleStateModalUpdate());
   } catch (err) {
     dispatch({
       type: STATE_ERROR,
       payload: "Opps! Something Went Wrong Try Again"
     });
-    dispatch( closeStateModalDelete());
+    dispatch(toggleStateModalUpdate());
     setTimeout(() => dispatch({
       type: REMOVE_STATE_ERROR
     }), 5000)
 
   }
 };
+
 
 export const searchState = (id) => async dispatch => {
 
@@ -102,9 +104,9 @@ export function toggleStateModalCreate() {
   };
 }
 
-export function toggleStateModalDelete(id) {
+export function toggleStateModalUpdate(id) {
   return {
-    type: STATE_MODAL_DELETE,
+    type: STATE_MODAL_UPDATE,
     payload: id
   };
 }

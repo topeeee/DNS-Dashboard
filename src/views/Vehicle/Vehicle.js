@@ -5,6 +5,7 @@ import * as usersData from "core-js";
 import {connect} from "react-redux";
 import axios from "axios"
 import {getVehicles} from "../../store/actions/vehicleAction";
+import {admin, isAdmin} from "../../environments/constants";
 
 
 const Operator = ({getVehicles, match, vehicles})=> {
@@ -43,7 +44,7 @@ const Operator = ({getVehicles, match, vehicles})=> {
         <Col lg={6}>
           <Card>
             <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+              <strong><i className="icon-info pr-1"></i>Vehicle id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>
@@ -69,10 +70,10 @@ const Operator = ({getVehicles, match, vehicles})=> {
                   <td><strong>Capacity</strong></td>
                   <td>{newOperator.capacity}</td>
                 </tr>
-                <tr>
+                {isAdmin === admin ? <tr>
                   <td><strong>Operator</strong></td>
                   <td>{newOperator.operator}</td>
-                </tr>
+                </tr>: null}
                 <tr>
                   <td><strong>Assigned</strong></td>
                   {(newOperator.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}

@@ -1,10 +1,10 @@
-import {BUS_STOP_BY_USER, BUS_STOP_MODAL_CREATE, BUS_STOP_MODAL_DELETE, DELETE_BUS_STOP,CLOSE_MODAL_DELETE_BUS_STOP, LOADING_BUS_STOP} from "../actionTypes";
+import {BUS_STOP_BY_USER, BUS_STOP_MODAL_CREATE, BUS_STOP_MODAL_UPDATE, DELETE_BUS_STOP,CLOSE_MODAL_DELETE_BUS_STOP, LOADING_BUS_STOP} from "../actionTypes";
 
 const initialState = {
   busStops: null,
   BusStopModalCreate: false,
-  BusStopModalDelete: false,
-  DeleteID: null,
+  BusStopModalUpdate: false,
+  updateId: null,
   DeleteRes: null,
   isLoading: false
 };
@@ -25,11 +25,11 @@ function busStopReducer(state = initialState, action) {
         BusStopModalCreate: !state.BusStopModalCreate
       };
     }
-    case  BUS_STOP_MODAL_DELETE: {
+    case  BUS_STOP_MODAL_UPDATE: {
       return {
         ...state,
-        BusStopModalDelete: !state.BusStopModalDelete,
-        DeleteID: payload
+        BusStopModalUpdate: !state.BusStopModalUpdate,
+        updateId: payload
       };
     }
     case   DELETE_BUS_STOP: {

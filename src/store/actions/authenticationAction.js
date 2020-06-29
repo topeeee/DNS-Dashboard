@@ -5,13 +5,14 @@ import api from "../../environments/environment";
 
 export const LogIn = (username, password) => async dispatch => {
   const body = {username, password};
+  const isAdmin = sessionStorage.setItem('isAdmin', username);
   try {
-    const res = await axios.post(api.login, body);
+    const res = await axios.post(`${api.login}/api/login/`, body);
     const token  = res.data.Authorized;
     sessionStorage.setItem("token", token);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: username
     });
   } catch (err) {
     dispatch({

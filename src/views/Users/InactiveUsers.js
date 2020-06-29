@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
+import {admin} from "../../environments/constants";
 
 
 
@@ -38,6 +39,8 @@ function UserRow(props) {
 
 const InactiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => {
   const [formData, setFormData] = useState('');
+
+  const isAdmin = sessionStorage.getItem('isAdmin');
 
   useEffect(()=>{
     if(formData === ''){
@@ -83,7 +86,7 @@ const InactiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) =
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-               Inactive Users
+               Inactive {isAdmin === admin ? 'Users': 'Passengers'}
               </div>
             </CardHeader>
             {isLoading && <Spinner />}

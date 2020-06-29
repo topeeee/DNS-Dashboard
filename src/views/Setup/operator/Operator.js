@@ -27,7 +27,6 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
         setOperatorVehicle(res.data);
       })
   }
-
   function getOperatorMode() {
     axios.get(`http://165.22.116.11:7053/api/mode/?operator_name=${newOperator.name}`)
       .then(res=> {

@@ -94,6 +94,7 @@ const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
+  { path: '/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
   { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
   { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
@@ -141,7 +142,6 @@ const routes = [
   { path: '/users/active', name: 'Active Users', component: ActiveUsers },
   { path: '/users/overview', name: 'Users Overview', component: UsersOverview },
   { path: '/users/inactive', name: 'Inactive Users', component: InactiveUsers },
-  { path: '/operator', name: 'Dashboard', component: OperatorDashboard },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
   { path: '/theme/colors', name: 'Colors', component: Colors },
   { path: '/theme/typography', name: 'Typography', component: Typography },

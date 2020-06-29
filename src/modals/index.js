@@ -12,7 +12,7 @@ import ZoneModalDelete from "./zoneModal/ZoneModalDelete";
 import RouteModalCreate from "./routeModal/RouteModalCreate";
 import RouteModalDelete from "./routeModal/RouteModalDelete";
 import BusStopModalCreate from "./busStopModal/BusStopModalCreate";
-import BusStopModalDelete from "./busStopModal/BusStopModalDelete";
+import BusStopModalUpdate from "./busStopModal/BusStopModalUpdate";
 import TripModalCreate from "./tripModal/TripModalCreate";
 import TripModalDelete from "./tripModal/TripModalDelete";
 import UserModalDelete from "./userModal/UserModalDelete";
@@ -60,7 +60,7 @@ const CombineModal = () => {
       <UserModalCreate />
       <TripModalDelete />
       <TripModalCreate />
-      <BusStopModalDelete />
+      <BusStopModalUpdate />
       <BusStopModalCreate />
       <RouteModalDelete />
       <RouteModalCreate />

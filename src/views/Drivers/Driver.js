@@ -10,9 +10,9 @@ import {getDrivers} from "../../store/actions/driverAction";
 const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, error, match, drivers})=> {
   // const [operator, setOperator] = useState([]);
   const [newOperator, setNewOperator] = useState({});
-  const [operatorVehicle, setOperatorVehicle] = useState([]);
-  const [operatorZone, setOperatorZone] = useState([]);
-  const [operatorMode, setOperatorMode] = useState([]);
+  const [driverVehicle, setDriverVehicle] = useState([]);
+  const [vehicleId, setVehicleId] = useState('');
+  const [vehicle, setVehicle] = useState({});
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -32,22 +32,45 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       })
     }
   }
+  function getDriverVehicle() {
+    axios.get('http://165.22.116.11:7054/api/drivervehicles/')
+      .then(res=> {
+        setDriverVehicle(res.data)
+      })
+  }
+
+  function getVehicle(id) {
+    axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
+      .then(res=> {
+        setVehicle(res.data)
+        console.log(res.data)
+      })
+  }
+
   useEffect(()=>{
     getDrivers();
+    getDriverVehicle();
   },[]);
 
   useEffect(()=>{
     setDriver();
   },[drivers]);
 
-  // useEffect(()=>{
-  //   if(newOperator.name) {
-  //     getOperatorMode()
-  //   }
-  // },[newOperator]);
-  // const user = operators.find( user => user.id === this.props.match.params.id);
+  useEffect(()=> {
+    if(vehicleId) {
+      getVehicle(vehicleId)
+    }
+  },[vehicleId]);
 
-  // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
+  useEffect(()=> {
+    if(match.params.id && driverVehicle){
+      driverVehicle.map((driver=> {
+        if(driver.driverId == match.params.id){
+          setVehicleId(driver.vehicleId);
+        }
+      }))
+    }
+  },[match.params.id, driverVehicle]);
 
   return (
     <div className="animated fadeIn">
@@ -55,7 +78,7 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
         <Col lg={6}>
           <Card>
             <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+              <strong><i className="icon-info pr-1"></i>Driver id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>
@@ -70,7 +93,7 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                     <td>{newOperator.lastname}</td>
                   </tr>
                 <tr className="w-100">
-                  <td><strong>Operator Phone</strong></td>
+                  <td><strong>Driver Phone</strong></td>
                   <td>{newOperator.phoneno}</td>
                 </tr>
                 <tr>
@@ -98,6 +121,22 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                 <tr>
                   <td><strong>Account Number</strong></td>
                   <td>{newOperator.accountnumber}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Plate No</strong></td>
+                  <td>{vehicle.plate_number}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Make</strong></td>
+                  <td>{vehicle.vehicle_make}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Model</strong></td>
+                  <td>{vehicle.vehicle_model}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Type</strong></td>
+                  <td>{vehicle.vehicle_type}</td>
                 </tr>
                 <tr>
                   <td><strong>Route</strong></td>

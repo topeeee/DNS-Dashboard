@@ -47,7 +47,6 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
  function getDriverVehicle(id) {
    axios.get('http://165.22.116.11:7054/api/me/drivervehicles/')
      .then(res=> {
-       console.log(res.data, 'yyyyyyyyyyyyyyyyyyyyyyyy')
        res.data.map(driverVehicle=> {
          if(driverVehicle.driverId == id){
            setDriverVehicleDetails(driverVehicle)

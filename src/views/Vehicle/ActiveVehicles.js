@@ -7,8 +7,9 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
 import VehicleActionBtn from "./components/VehicleActionBtn";
+import {admin} from "../../environments/constants";
 
-
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 function UserRow(props) {
@@ -28,7 +29,7 @@ function UserRow(props) {
       <td>{user.vehicle_model}</td>
       <td>{user.plate_number}</td>
       <td>{user.capacity}</td>
-      <td>{user.operator}</td>
+      {isAdmin === admin ?  <td>{user.operator}</td>: null}
       {/*<td>{user.assigned}</td>*/}
       {(user.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
       {((user.assigned == null) ||(user.assigned == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
@@ -108,7 +109,7 @@ const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehic
                   <th scope="col">Vehicle Model</th>
                   <th scope="col">Vehicle Plate number</th>
                   <th scope="col">Capacity</th>
-                  <th scope="col">Operator</th>
+                  {isAdmin === admin ?  <th scope="col">Operator</th>: null}
                   <th scope="col">Assigned</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>

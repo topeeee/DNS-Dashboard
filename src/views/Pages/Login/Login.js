@@ -19,10 +19,11 @@ import {
 import zeno from "../../../assets/img/brand/zeno.png";
 import {AppNavbarBrand} from "@coreui/react";
 import {LogIn} from "../../../store/actions/authenticationAction";
+import {admin} from "../../../environments/constants";
 
 
 
-const Login  = ({LogIn, isAuthenticated, errors}) => {
+const Login  = ({LogIn, isAuthenticated, errors,}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -33,12 +34,21 @@ const Login  = ({LogIn, isAuthenticated, errors}) => {
     LogIn(username, password);
   };
 
+  const isAdmin = sessionStorage.getItem('isAdmin');
 
-  if (isAuthenticated) {
+
+  if (isAuthenticated && isAdmin === admin) {
     setTimeout(()=>{
       window.location.reload();
     },0);
     return <Redirect to="/" />;
+  }
+
+  if (isAuthenticated && isAdmin !== admin) {
+    setTimeout(()=>{
+      window.location.reload();
+    },0);
+    return <Redirect to="/operator" />;
   }
 
   return (
@@ -122,6 +132,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin,
   errors: state.auth.errors
 });
 

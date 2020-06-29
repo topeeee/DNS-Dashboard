@@ -19,13 +19,20 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {admin} from "../../environments/constants";
 
-
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 export const getDrivers = () => async dispatch => {
+  let driverApi;
+  if(isAdmin === admin) {
+    driverApi = `${api.driver}/api/drivers/`
+  }else {
+    driverApi = `${api.driver}/api/me/drivers/`
+  }
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.driver}/api/drivers/`);
+    const res = await axios.get(driverApi);
     dispatch({
       type: DRIVER_BY_USER,
       payload: res.data

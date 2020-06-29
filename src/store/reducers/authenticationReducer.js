@@ -1,9 +1,11 @@
 import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR, USER_AUTHORIZED} from "../actionTypes";
 
 const initialState = {
+  mmmm: null,
   isAuthenticated: null,
   loading: false,
-  errors: null
+  errors: null,
+
 };
 
 function authenticationReducer(state = initialState, action) {
@@ -13,6 +15,7 @@ function authenticationReducer(state = initialState, action) {
       return {
         ...state,
         ...payload,
+        mmmm: true,
         isAuthenticated: true,
         loading: false
       };

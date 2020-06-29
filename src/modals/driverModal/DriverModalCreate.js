@@ -12,8 +12,11 @@ import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
 // import {BusStopUser} from "../../store/actions/busStopAction";
 import api from '../../environments/environment'
+import {admin} from "../../environments/constants";
 
 const animatedComponents = makeAnimated();
+
+const isAdmin = sessionStorage.getItem('isAdmin');
 
 const options = [
   { value: 'Bus', label: 'Zone1' },
@@ -248,6 +251,17 @@ const DriverModalCreate = (props) => {
     }
   }, [plateInput]);
 
+  useEffect(()=> {
+    if(operators && isAdmin !== admin){
+      operators.map(operator=> {
+        if(operator.email === isAdmin) {
+          setOperatorInput(operator.name)
+
+        }
+      })
+    }
+  }, [operators, isAdmin, operatorInput]);
+
 
   const toggle = () => {toggleDriverModalCreate()};
 
@@ -284,7 +298,7 @@ const DriverModalCreate = (props) => {
             <FormGroup row>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                <Input
+                {(operators && isAdmin === admin) && <Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operatorInput"
@@ -297,7 +311,9 @@ const DriverModalCreate = (props) => {
                   {operators && operators.map((operator, index) =>
                     <option value={operator.name} key={index}>{operator.name}</option>
                   )}
-                </Input>
+                </Input>}
+                {(operators && isAdmin !== admin) &&
+                <Input type="text"  name="operatorInput" onChange={onChange} value={operatorInput} readOnly={true} required />}
               </Col>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle type</Label>
