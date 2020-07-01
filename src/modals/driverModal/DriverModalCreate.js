@@ -64,7 +64,7 @@ const DriverModalCreate = (props) => {
     routes,
     ZoneUser,
     RouteUser,
-    isAuthenticate,
+    isAuthenticated,
     operators,
     getOperators,
     vehicles,
@@ -109,12 +109,14 @@ const DriverModalCreate = (props) => {
 
 
   useEffect(()=>{
-    getOperatorZone();
-    getOperatorMode();
+    if(isAuthenticated) {
+      getOperatorZone();
+      getOperatorMode();
+    }
   },[]);
 
   useEffect(()=>{
-    if(isAuthenticate) {
+    if(isAuthenticated) {
       RouteUser();
       ZoneUser();
       getOperators();

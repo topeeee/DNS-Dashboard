@@ -25,7 +25,8 @@ const mapStateToProps = state => ({
   vehicleModalUpdate: state.vehicle.VehicleModalUpdate,
   operators: state.operator.operators,
   vehicleId: state.vehicle.vehicleId,
-  vehicles: state.vehicle.vehicles
+  vehicles: state.vehicle.vehicles,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const VehicleModalUpdate = (props) => {
@@ -39,15 +40,18 @@ const VehicleModalUpdate = (props) => {
     getOperators,
     vehicleId,
     getVehicles,
-    vehicles
+    vehicles,
+    isAuthenticated
   } = props;
 
 
 
 
   useEffect(()=> {
-    getOperators();
-    getVehicles()
+    if(isAuthenticated) {
+      getOperators();
+      getVehicles()
+    }
   }, []);
 
   const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" });

@@ -12,6 +12,7 @@ import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
 // import {BusStopUser} from "../../store/actions/busStopAction";
 import api from '../../environments/environment'
+import {admin, isAdmin} from "../../environments/constants";
 
 const animatedComponents = makeAnimated();
 
@@ -59,7 +60,7 @@ const BusAssistantModalCreate = (props) => {
     routes,
     ZoneUser,
     RouteUser,
-    isAuthenticate,
+    isAuthenticated,
     operators,
     getOperators,
     vehicles,
@@ -85,12 +86,14 @@ const BusAssistantModalCreate = (props) => {
 
 
   useEffect(()=>{
-    getOperatorZone();
-    getOperatorMode();
+   if(isAuthenticated) {
+     getOperatorZone();
+     getOperatorMode();
+   }
   },[]);
 
   useEffect(()=>{
-    if(isAuthenticate) {
+    if(isAuthenticated) {
       RouteUser();
       ZoneUser();
       getOperators();
@@ -246,6 +249,17 @@ const BusAssistantModalCreate = (props) => {
     }
   }, [plateInput]);
 
+  useEffect(()=> {
+    if(operators && isAdmin !== admin){
+      operators.map(operator=> {
+        if(operator.email === isAdmin) {
+          setOperatorInput(operator.name)
+
+        }
+      })
+    }
+  }, [operators, isAdmin, operatorInput]);
+
 
   const toggle = () => {toggleBusAssistantsModalCreate()};
 
@@ -282,7 +296,7 @@ const BusAssistantModalCreate = (props) => {
             <FormGroup row>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                <Input
+                {(operators && isAdmin === admin) && <Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operatorInput"
@@ -295,7 +309,23 @@ const BusAssistantModalCreate = (props) => {
                   {operators && operators.map((operator, index) =>
                     <option value={operator.name} key={index}>{operator.name}</option>
                   )}
-                </Input>
+                </Input>}
+                {(operators && isAdmin !== admin) &&
+                <Input type="text"  name="operatorInput" onChange={onChange} value={operatorInput} readOnly={true} required />}
+                {/*<Input*/}
+                {/*  style={{cursor: 'pointer'}}*/}
+                {/*  type="select"*/}
+                {/*  name="operatorInput"*/}
+                {/*  value={operatorInput}*/}
+                {/*  onChange={e=>setOperatorInput(e.target.value)}*/}
+                {/*  // required*/}
+                {/*>*/}
+                {/*  <option value="">Select Operator</option>*/}
+
+                {/*  {operators && operators.map((operator, index) =>*/}
+                {/*    <option value={operator.name} key={index}>{operator.name}</option>*/}
+                {/*  )}*/}
+                {/*</Input>*/}
               </Col>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle type</Label>
@@ -324,7 +354,7 @@ const BusAssistantModalCreate = (props) => {
                   // required
                 >
                   <option value="">Select Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned === null || user.assigned === "null") && (user.status === "1")).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput)).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}

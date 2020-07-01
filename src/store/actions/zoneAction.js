@@ -6,7 +6,7 @@ import setAuthToken from "../../utils/setAuthToken";
 
 export const ZoneUser = () => async dispatch => {
   try {
-    const res = await axios.get(api.zone);
+    const res = await axios.get(`${api.zone}/api/zones/`);
     dispatch({
       type: ZONE_BY_USER,
       payload: res.data
@@ -23,7 +23,7 @@ export const ZoneUser = () => async dispatch => {
 export const createZone = (zonecode, zone, statecode) => async dispatch => {
   const body = {zonecode, zone, statecode};
   try {
-    const res = await axios.post(api.zone, body);
+    const res = await axios.post(`${api.zone}/api/me/zones/`, body);
     dispatch({
       type: CREATE_ZONE,
       payload: res.data
@@ -41,7 +41,7 @@ export const createZone = (zonecode, zone, statecode) => async dispatch => {
 export const deleteZone = (id) => async dispatch => {
 
   try {
-    const res = await axios.delete(`http://165.22.116.11:7005/admin/zones/${id}/`);
+    const res = await axios.delete(`${api.zone}/admin/zones/${id}/`);
     dispatch({
       type: DELETE_ZONE,
       payload: res.data

@@ -7,7 +7,7 @@ import setAuthToken from "../../utils/setAuthToken";
 export const RouteUser = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(api.route);
+    const res = await axios.get(`${api.route}/api/routes/`);
     dispatch({
       type: ROUTE_BY_USER,
       payload: res.data
@@ -25,7 +25,7 @@ export const RouteUser = () => async dispatch => {
 export const createRoute = (routecode, route, areacode) => async dispatch => {
   const body = {routecode, route, areacode};
   try {
-    const res = await axios.post(api.route, body);
+    const res = await axios.post(`${api.route}/api/me/routes/`, body);
     dispatch({
       type: CREATE_ROUTE,
       payload: res.data

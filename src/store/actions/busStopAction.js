@@ -8,13 +8,13 @@ import {
   LOADING_BUS_STOP} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import setAuthToken from "../../utils/setAuthToken";
+
 
 
 export const BusStopUser = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(api.busStop);
+    const res = await axios.get(`${api.busStop}/api/busstops/`);
     dispatch({
       type: BUS_STOP_BY_USER,
       payload: res.data
@@ -34,7 +34,7 @@ export const BusStopUser = () => async dispatch => {
 export const createBusStop = (busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
   const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
   try {
-    const res = await axios.post(api.busStop, body);
+    const res = await axios.post(`${api.busStop}/api/me/busstops/`, body);
     dispatch({
       type: CREATE_BUS_STOP,
       payload: res.data

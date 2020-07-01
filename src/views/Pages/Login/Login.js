@@ -42,14 +42,14 @@ const Login  = ({LogIn, isAuthenticated, errors,}) => {
       window.location.reload();
     },0);
     return <Redirect to="/" />;
-  }
-
-  if (isAuthenticated && isAdmin !== admin) {
+  } else if (isAuthenticated && isAdmin !== admin) {
     setTimeout(()=>{
       window.location.reload();
     },0);
     return <Redirect to="/operator" />;
   }
+
+
 
   return (
       <div className="app flex-row align-items-center" style={{background: "lightblue"}}>

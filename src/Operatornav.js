@@ -1,9 +1,11 @@
+const OperatorName = sessionStorage.getItem('OperatorName');
+
 export default {
   items: [
 
     {
       title: true,
-      name: 'Operator Dashboard',
+      name: OperatorName,
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
@@ -168,24 +170,36 @@ export default {
           // icon: 'icon-puzzle',
           class: "menu_drop",
         },
-        // {
-        //   name: 'Driver Loggings',
-        //   url: '/drivers/driverloggings',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        // },
-        // {
-        //   name: 'Driver Routes',
-        //   url: '/drivers/driverroutes',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        // },
-        // {
-        //   name: 'Pending',
-        //   url: '/drivers/pending',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        // },
+      ],
+    },
+    {
+      name: 'Bus Assistants',
+      icon: 'icon-user',
+      children: [
+        {
+          name: 'All',
+          url: '/operator/busassisstants',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Active',
+          url: '/operator/busassisstants/active',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/operator/busassisstants/inactive',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
+        {
+          name: 'Pending',
+          url: '/operator/busassisstants/pending',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+        },
       ],
     },
 
@@ -223,36 +237,6 @@ export default {
           class: "menu_drop",
         },
       ]
-    },
-    {
-      name: 'Bus Assistants',
-      icon: 'icon-user',
-      children: [
-        {
-          name: 'All',
-          url: '/operator/busassisstants',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Active',
-          url: '/operator/busassisstants/active',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Inactive',
-          url: '/operator/busassisstants/inactive',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Pending',
-          url: '/operator/busassisstants/pending',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-      ],
     },
     {
       name: 'Trips',

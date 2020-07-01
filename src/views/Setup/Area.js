@@ -5,16 +5,17 @@ import {getAreas, searchArea} from "../../store/actions/areaAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import AreaDeleteBtn from "./components/AreaDeleteBtn";
 import AreaHeader from "./components/AreaHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
+import axios from "axios";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const zone = props.zone;
+
   return (
     <tr key={user.id}>
       {/*<td>{user.id}</td>*/}
@@ -28,6 +29,18 @@ function UserRow(props) {
 
 const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  ZoneUser}) => {
   const [formData, setFormData] = useState('');
+  const [operatorZone, setOperatorZone] = useState('');
+
+  function getOperatorZone() {
+    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
+      .then(res=> {
+        res.data.map(operatorZone => {
+          if(operatorZone.operatorName === OperatorName) {
+            setOperatorZone(operatorZone.zoneCode)
+          }
+        })
+      })
+  }
 
   useEffect(()=>{
     if(formData === ''){
@@ -37,7 +50,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
 
   useEffect(()=>{
     ZoneUser();
-
+    getOperatorZone()
   }, []);
 
 
@@ -80,7 +93,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
               <div className="w-25">
                 Areas
               </div>
-              <AreaHeader />
+              {isAdmin === admin && <AreaHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -102,9 +115,12 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
                 </tr>
                 </thead>
                 <tbody>
-                {areas && areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                {(areas && isAdmin === admin) ? areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode} zone={zones}/>
-                )}
+                ): null}
+                {(areas && operatorZone && isAdmin !== admin) ? areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zonecode === operatorZone).map((mode, index) =>
+                  <UserRow key={index} user={mode} zone={zones}/>
+                ): null}
                 {area &&
                 <UserRow user={area}/>
                 }

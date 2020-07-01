@@ -43,7 +43,6 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
       .then(res=> {
         setVehicle(res.data)
-        console.log(res.data)
       })
   }
 

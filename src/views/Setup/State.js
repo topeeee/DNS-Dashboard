@@ -8,6 +8,8 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import axios from "axios"
 import StateActionBtn from "./components/StateActionBtn";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {ZoneUser} from "../../store/actions/zoneAction";
 
 
 
@@ -21,20 +23,47 @@ function UserRow(props) {
       <td>{user.id}</td>
       <td>{user.countrycode}</td>
       <td>{user.xstate}</td>
-      {/*<td>{user.xstatecode}</td>*/}
       {/*<td> <StateActionBtn id={user.id} /> </td>*/}
     </tr>
   )
 }
 
-const States = ({getStates, states, state, isLoading,  searchState, error}) => {
+const States = ({getStates, states, state, isLoading,  searchState, error, zones, ZoneUser}) => {
   const [formData, setFormData] = useState('');
+  const [operatorZone, setOperatorZone] = useState('');
+  const [isState, setIsState] = useState('');
+
+  function getOperatorZone() {
+    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
+      .then(res=> {
+        res.data.map(operatorZone => {
+          if(operatorZone.operatorName === OperatorName) {
+            setOperatorZone(operatorZone.zoneCode)
+          }
+        })
+      })
+  }
+
+  useEffect(()=> {
+    if(zones && operatorZone) {
+      zones.map(zone=> {
+        if(zone.zone === operatorZone) {
+          setIsState(zone.statecode)
+        }
+      })
+    }
+  },[zones, operatorZone]);
 
   useEffect(()=>{
     if(formData === ''){
       getStates()
     }
     },[formData]);
+
+  useEffect(()=> {
+    ZoneUser();
+    getOperatorZone();
+  },[]);
 
   const onChange = (e) =>{
     e.preventDefault();
@@ -80,7 +109,7 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
                 <div className="w-25">
                   States
                 </div>
-                <StateHeader />
+                {isAdmin === admin &&  <StateHeader />}
               </CardHeader>
               {isLoading && <Spinner />}
               {!isLoading &&
@@ -100,9 +129,12 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
                   </tr>
                   </thead>
                   <tbody>
-                  {states && states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                  {(states && isAdmin === admin) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                     <UserRow key={index} user={user}/>
-                  )}
+                  ): null}
+                  {(states && isState && isAdmin !== admin) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.xstate === isState).map((user, index) =>
+                    <UserRow key={index} user={user}/>
+                  ): null}
                   {state &&
                     <UserRow user={state}/>
                   }
@@ -119,7 +151,8 @@ const States = ({getStates, states, state, isLoading,  searchState, error}) => {
 function mapDispatchToProps(dispatch) {
   return {
     getStates: () => dispatch(getStates()),
-    searchState: (id) => dispatch(searchState(id))
+    searchState: (id) => dispatch(searchState(id)),
+    ZoneUser: () => dispatch(ZoneUser()),
   };
 }
 
@@ -128,6 +161,7 @@ const mapStateToProps = state => ({
   state: state.state.state,
   error: state.state.error,
   isLoading: state.state.isLoading,
+  zones: state.zone.zones,
 
 });
 

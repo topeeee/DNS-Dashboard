@@ -62,7 +62,7 @@ const BusAssistantModalUpdate = (props) => {
     routes,
     ZoneUser,
     RouteUser,
-    isAuthenticate,
+    isAuthenticated,
     operators,
     getOperators,
     vehicles,
@@ -91,12 +91,14 @@ const BusAssistantModalUpdate = (props) => {
 
 
   useEffect(()=>{
-    getOperatorZone();
-    getOperatorMode();
+    if(isAuthenticated) {
+      getOperatorZone();
+      getOperatorMode();
+    }
   },[]);
 
   useEffect(()=>{
-    if(isAuthenticate) {
+    if(isAuthenticated) {
       RouteUser();
       ZoneUser();
       getOperators();

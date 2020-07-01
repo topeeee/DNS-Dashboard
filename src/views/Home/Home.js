@@ -4,7 +4,7 @@ import  {connect} from 'react-redux'
 import CombineModal from "../../modals";
 import {LogIn} from "../../store/actions/authenticationAction";
 import Spinner from "../../spinner/Spinner";
-import {admin} from "../../environments/constants";
+import {admin, isAdmin} from "../../environments/constants";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -26,7 +26,7 @@ const Page500 = React.lazy(() => import('../Pages/Page500'));
 
 
 const PrivateRoute = ({ isLoggedIn, isAdmin, ...props }) =>
-  (isLoggedIn && isAdmin === admin) ? <Route { ...props } /> : <Redirect to="/operator" />;
+  (isLoggedIn && isAdmin === admin) ? <Route { ...props } /> : <Redirect to="/login" />;
 
 const OperatorRoute = ({ isLoggedIn, isAdmin, ...props }) =>
   isLoggedIn && (isAdmin !== admin) ? <Route { ...props } /> : <Redirect to="/login" />;
@@ -42,12 +42,10 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   loading: state.auth.loading,
+  operators: state.operator.operators,
 });
 
-const Home = ({ isAuthenticated}) => {
-
-  const isAdmin = sessionStorage.getItem('isAdmin');
-
+const Home = ({ isAuthenticated, operators}) => {
 
   return (
     <BrowserRouter>

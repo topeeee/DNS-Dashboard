@@ -1,26 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
+import axios from 'axios'
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {getModes, searchMode} from "../../store/actions/modeAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
-import ModeDeleteBtn from "./components/ModeDeleteBtn";
 import {getStates} from "../../store/actions/stateAction";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const state = props.state;
 
-  const getBadge = (status) => {
-    return status === 'True' ? 'success' :
-      status === 'False' ? 'danger' :
-        'primary'
-  };
   return (
 
     <tr key={user.id}>
@@ -34,6 +29,19 @@ function UserRow(props) {
 
 const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, states}) => {
   const [formData, setFormData] = useState('');
+  const [operatorMode, setOperatorMode] = useState('');
+
+
+  function getOperatorMode() {
+    axios.get('http://165.22.116.11:7053/api/operatormodes/')
+      .then(res=> {
+        res.data.map(operatorMode=> {
+          if(operatorMode.operator_name === OperatorName) {
+            setOperatorMode(operatorMode.modecode)
+          }
+        })
+      })
+  }
 
   useEffect(()=>{
     if(formData === ''){
@@ -42,7 +50,9 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
     }
   },[formData]);
 
-
+  useEffect(()=> {
+    getOperatorMode()
+  },[]);
 
 
 
@@ -85,7 +95,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <div className="w-25">
                 Modes
               </div>
-              <ModeHeader />
+              {isAdmin === admin &&  <ModeHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -106,9 +116,12 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 </tr>
                 </thead>
                 <tbody>
-                {modes && modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
-                  <UserRow key={index} user={mode} state={states}/>
-                )}
+                {(modes && isAdmin === admin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                  <UserRow key={index} user={mode}/>
+                ): null}
+                {(modes && operatorMode && isAdmin !== admin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>
+                  <UserRow key={index} user={mode}/>
+                ): null}
                 {mode &&
                 <UserRow user={mode}/>
                 }

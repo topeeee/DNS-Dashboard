@@ -14,7 +14,6 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = state => ({
   OperatorModalDelete: state.operator.OperatorModalDelete,
   id: state.operator. DeleteID
-
 });
 
 const OperatorModalDelete = (props)=> {

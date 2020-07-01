@@ -21,6 +21,7 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = state => ({
   vehicleModalCreate: state.vehicle.VehicleModalCreate,
   operators: state.operator.operators,
+  isAuthenticated: state.auth.isAuthenticated,
 
 
 
@@ -35,14 +36,17 @@ const VehicleModalCreate = (props) => {
     vehicleModalCreate,
     createVehicle,
     operators,
-    getOperators
+    getOperators,
+    isAuthenticated
   } = props;
 
 
 
 
   useEffect(()=> {
-    getOperators()
+    if(isAuthenticated){
+      getOperators()
+    }
   }, []);
 
 

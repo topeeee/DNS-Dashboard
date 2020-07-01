@@ -1,27 +1,18 @@
-import React, {useEffect} from 'react';
-import { Link } from 'react-router-dom';
-import {connect} from "react-redux"
+import React, {useEffect, useState} from 'react';
+import {connect} from "react-redux";
+import axios from 'axios'
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
 import PrimaryHeader from "../components/PrimaryHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import ZoneHeader from "./components/ZoneHeader";
-import ZoneDeleteBtn from "./components/ZoneDeleteBtn";
 import {getStates} from "../../store/actions/stateAction";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import Spinner from "../../spinner/Spinner";
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const state = props.state;
-  const userLink = `/trip/${user.TripID}`;
-
-  const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Unsuccessful' ? 'danger' :
-            'primary'
-  };
 
   return (
     <tr key={user.id}>
@@ -38,11 +29,25 @@ function UserRow(props) {
 }
 
 const Zones = ({ZoneUser, zones, getStates, states}) => {
+const [operatorZone, setOperatorZone] = useState('');
+
+  function getOperatorZone() {
+   axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
+     .then(res=> {
+       res.data.map(operatorZone => {
+         if(operatorZone.operatorName === OperatorName) {
+           setOperatorZone(operatorZone.zoneCode)
+         }
+       })
+     })
+  }
 
   useEffect(()=>{
     ZoneUser();
-    getStates()
+    getStates();
+    getOperatorZone()
   },[]);
+
 
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -56,10 +61,10 @@ const Zones = ({ZoneUser, zones, getStates, states}) => {
               <div className="w-25">
                 Zones
               </div>
-              <ZoneHeader />
+              {isAdmin === admin &&  <ZoneHeader />}
             </CardHeader>
             <CardBody>
-              {!zones && loading()}
+              {!zones && <Spinner />}
               {zones &&
               <Table responsive hover>
                 <thead className="bg-dark">
@@ -75,9 +80,12 @@ const Zones = ({ZoneUser, zones, getStates, states}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {zones && zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(zones && isAdmin === admin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
-                )}
+                ): null}
+                {(zones && operatorZone && isAdmin !== admin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>
+                  <UserRow key={index} user={user} state={states}/>
+                ): null}
                 </tbody>
               </Table>}
             </CardBody>

@@ -10,60 +10,79 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
 import BusStopActionBtn from "./components/BusStopActionBtn";
+import axios from "axios";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {getAreas} from "../../store/actions/areaAction";
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const route = props.route;
-  const userLink = `/trip/${user.TripID}`;
 
-  const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Unsuccessful' ? 'danger' :
-            'primary'
-  };
 
   return (
     <tr key={user.id}>
       <td>{user.busstop}</td>
-      {/*<td>{user.busstopcode}</td>*/}
       <td>{user.routecode}</td>
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
       <td>{user.direction}</td>
-      <td> <BusStopActionBtn id={user.id} /> </td>
+      {isAdmin === admin ?  <td> <BusStopActionBtn id={user.id} /> </td>: null}
     </tr>
   )
 }
 
-const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser, routes}) => {
+const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, getAreas}) => {
   const [formData, setFormData] = useState('');
+  const [operatorZone, setOperatorZone] = useState('');
+  const [area, setArea] = useState('');
+  const [route, setRoute] = useState('');
 
 
 
   const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
-    // if(formData.length > 0) {
-    //   console.log(formData)
-    //   // searchBusStop(formData)
-    // }
+  };
 
-  };
-  const handleEvent = (event, picker) => {
-    console.log(picker.startDate);
-  };
+  function getOperatorZone() {
+    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
+      .then(res=> {
+        res.data.map(operatorZone => {
+          if(operatorZone.operatorName === OperatorName) {
+            setOperatorZone(operatorZone.zoneCode)
+          }
+        })
+      })
+  }
+
+  useEffect(()=> {
+    if(areas && operatorZone) {
+      areas.map(area=> {
+        if(area.zonecode === operatorZone) {
+          setArea(area.xarea)
+        }
+      })
+    }
+  },[areas, operatorZone]);
+
+  useEffect(()=> {
+    if(area && routes) {
+      routes.map(route=> {
+        if(route.areacode === area) {
+          setRoute(route.route)
+        }
+      })
+    }
+  },[area, route]);
+
   useEffect(()=>{
     BusStopUser();
-    RouteUser()
+    RouteUser();
+    getAreas();
+    getOperatorZone();
   },[]);
 
-
-
-  // const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
   return (
     <div className="animated fadeIn">
@@ -81,9 +100,6 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
                        onChange={onChange}
                 />
                 <button className="btn btn-success">Search</button>
-                {/*<DateRangePicker onApply={handleEvent}>*/}
-                {/*  <button className="btn btn-instagram ml-2">Filter by Date</button>*/}
-                {/*</DateRangePicker>*/}
               </div>
               <div className="w-25 text-right">
                 <FontAwesomeIcon className="text-warning py-2" title="Print" style={{fontSize: 40,  cursor: "pointer"}} icon={faPrint} onClick={()=> window.print()} />
@@ -91,12 +107,11 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
                 <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
               </div>
             </CardHeader>
-            {/*<PrimaryHeader />*/}
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
                 Bus Stops
               </div>
-              <BusStopHeader />
+              {isAdmin === admin && <BusStopHeader />}
             </CardHeader>
             <CardBody>
               {isLoading && <Spinner />}
@@ -112,13 +127,16 @@ const BusStops = ({BusStopUser, busStops, isLoading,  searchBusStop,   RouteUser
                   <th scope="col">Latitude</th>
                   <th scope="col">Longitude</th>
                   <th scope="col">Direction</th>
-                  <th scope="col">Action</th>
+                  {isAdmin === admin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>
-                {busStops && busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(busStops && isAdmin === admin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
-                )}
+                ): null}
+                {(busStops && route && isAdmin !== admin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>
+                  <UserRow key={index} user={user} route={routes}/>
+                ): null}
                 </tbody>
               </Table>}
             </CardBody>
@@ -133,6 +151,7 @@ function mapDispatchToProps(dispatch) {
     BusStopUser: () => dispatch(BusStopUser()),
     searchBusStop: (id) => dispatch( searchBusStop(id)),
     RouteUser: () => dispatch(RouteUser()),
+    getAreas: () => dispatch(getAreas()),
   };
 }
 
@@ -140,6 +159,7 @@ const mapStateToProps = state => ({
   busStops: state.busStop.busStops,
   isLoading: state.busStop.isLoading,
   routes: state.route.routes,
+  areas: state.area.areas,
 
 });
 

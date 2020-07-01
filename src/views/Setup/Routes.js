@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
@@ -8,21 +8,13 @@ import RouteHeader from "./components/RouteHeader";
 import RouteDeleteBtn from "./components/RouteDeleteBtn";
 import {getAreas} from "../../store/actions/areaAction";
 import Spinner from "../../spinner/Spinner";
+import axios from "axios";
+import {admin, isAdmin, OperatorName} from "../../environments/constants";
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const area = props.area;
-  const userLink = `/trip/${user.TripID}`;
-
-  const getBadge = (status) => {
-    return status === 'Successful' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Unsuccessful' ? 'danger' :
-            'primary'
-  };
 
   return (
     <tr key={user.id}>
@@ -39,10 +31,34 @@ function UserRow(props) {
 }
 
 const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
+  const [operatorZone, setOperatorZone] = useState('');
+  const [area, setArea] = useState('');
+
+  function getOperatorZone() {
+    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
+      .then(res=> {
+        res.data.map(operatorZone => {
+          if(operatorZone.operatorName === OperatorName) {
+            setOperatorZone(operatorZone.zoneCode)
+          }
+        })
+      })
+  }
+
+  useEffect(()=> {
+    if(areas && operatorZone) {
+      areas.map(area=> {
+        if(area.zonecode === operatorZone) {
+          setArea(area.xarea)
+        }
+      })
+    }
+  },[areas, operatorZone]);
 
   useEffect(()=>{
     RouteUser();
-    getAreas()
+    getAreas();
+    getOperatorZone()
   },[]);
 
   const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
@@ -61,7 +77,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
             </CardHeader>
             <CardBody>
               {isLoading && <Spinner />}
-              {(routes && routes.length === 0) && <div className="animated fadeIn pt-1 text-center">No Routes Available</div>}
+              {(routes && routes.length === 0 && !isLoading) && <div className="animated fadeIn pt-1 text-center">No Routes Available</div>}
               {(routes && routes.length > 0 && !isLoading) &&
               <Table responsive hover>
                 <thead  className="bg-dark">
@@ -76,9 +92,12 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {routes && routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
-                  <UserRow key={index} user={user} area={areas}/>
-                )}
+                {(routes && isAdmin === admin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                  <UserRow key={index} user={user}/>
+                ): null}
+                {(routes && area && isAdmin !== admin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.areacode === area).map((user, index) =>
+                  <UserRow key={index} user={user}/>
+                ): null}
                 </tbody>
               </Table>}
             </CardBody>
