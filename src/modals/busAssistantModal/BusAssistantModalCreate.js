@@ -92,15 +92,7 @@ const BusAssistantModalCreate = (props) => {
    }
   },[]);
 
-  useEffect(()=>{
-    if(isAuthenticated) {
-      RouteUser();
-      ZoneUser();
-      getOperators();
-      getVehicles();
-      getAreas()
-    }
-  }, []);
+
 
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
@@ -188,7 +180,7 @@ const BusAssistantModalCreate = (props) => {
   }
 
   function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
+    axios.put(`${api.vehicle}/api/assign/busassitant/${id}/?assign=${status}`)
       .then(res=> {
       })
   }
@@ -203,7 +195,7 @@ const BusAssistantModalCreate = (props) => {
      e.preventDefault();
     createBusAssistants(vehicleId, operatorInput, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
     );
-    // assignVehicle(vehicleId, "1");
+    assignVehicle(vehicleId, "1");
     setFormData({
       firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
 
@@ -249,6 +241,7 @@ const BusAssistantModalCreate = (props) => {
     }
   }, [plateInput]);
 
+
   useEffect(()=> {
     if(operators && isAdmin !== admin){
       operators.map(operator=> {
@@ -259,6 +252,16 @@ const BusAssistantModalCreate = (props) => {
       })
     }
   }, [operators, isAdmin, operatorInput]);
+
+  useEffect(()=>{
+    if(isAuthenticated) {
+      RouteUser();
+      ZoneUser();
+      getOperators();
+      getVehicles();
+      getAreas()
+    }
+  }, [operatorInput]);
 
 
   const toggle = () => {toggleBusAssistantsModalCreate()};
@@ -354,7 +357,7 @@ const BusAssistantModalCreate = (props) => {
                   // required
                 >
                   <option value="">Select Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput)).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned_BA === null || user.assigned_BA === "null") && (user.status === "1")).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}

@@ -113,7 +113,7 @@ useEffect(()=> {
       },[]);
 
   function getDriverVehicle() {
-    axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
+    axios.get("http://165.22.116.11:7054/api/drivervehicles/")
       .then(res=> {
         setDriverVehicle(res.data);
       })
@@ -128,7 +128,7 @@ useEffect(()=> {
   }
 
   function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
+    axios.put(`${api.vehicle}/api/assign/driver/${id}/?assign=${status}`)
       .then(res=> {
         if(res) {
           clearDriverVehicleId()

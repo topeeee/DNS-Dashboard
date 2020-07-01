@@ -31,9 +31,10 @@ function UserRow(props) {
       <td>{user.capacity}</td>
       {isAdmin === admin ?  <td>{user.operator}</td>: null}
       {/*<td>{user.assigned}</td>*/}
-      {(user.assigned == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-      {((user.assigned == null) ||(user.assigned == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
-      {/*<td>{user.status}</td>*/}
+      {(user.assigned_driver == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {((user.assigned_driver == null) ||(user.assigned_driver == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
+      {(user.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {((user.assigned_BA == null) ||(user.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
       {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
       {(user.status == "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
       {(user.status == "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
@@ -110,7 +111,8 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
                   <th scope="col">Vehicle Plate number</th>
                   <th scope="col">Capacity</th>
                   {isAdmin === admin ?  <th scope="col">Operator</th>: null}
-                  <th scope="col">Assigned</th>
+                  <th scope="col">Assigned To Driver</th>
+                  <th scope="col">Assigned To BA</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>

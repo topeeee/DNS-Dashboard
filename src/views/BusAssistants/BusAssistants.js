@@ -59,7 +59,7 @@ const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading
   },[formData]);
 
   function getDriverVehicle() {
-    axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
+    axios.get("http://165.22.116.11:7056/api/busassitantvehicles/")
       .then(res=> {
         setDriverVehicle(res.data);
       })
@@ -67,14 +67,14 @@ const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading
 
   function changeDriverVehicleStatus(id, status) {
     driverVehicle.map(DV=> {
-      if(DV.driverId == id) {
+      if(DV.busassitantId == id) {
         assignVehicle(DV.vehicleId, status)
       }
     })
   }
 
   function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
+    axios.put(`${api.vehicle}/api/assign/busassitant/${id}/?assign=${status}`)
       .then(res=> {
         if(res) {
           clearBusAssistantsVehicleId()

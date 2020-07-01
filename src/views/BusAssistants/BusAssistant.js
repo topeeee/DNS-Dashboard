@@ -13,6 +13,9 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
   const [operatorVehicle, setOperatorVehicle] = useState([]);
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [driverVehicle, setDriverVehicle] = useState([]);
+  const [vehicleId, setVehicleId] = useState('');
+  const [vehicle, setVehicle] = useState({});
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -32,13 +35,45 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
       })
     }
   }
+
+  function getDriverVehicle() {
+    axios.get('http://165.22.116.11:7056/api/busassitantvehicles/')
+      .then(res=> {
+        setDriverVehicle(res.data)
+      })
+  }
+
+  function getVehicle(id) {
+    axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
+      .then(res=> {
+        setVehicle(res.data)
+      })
+  }
+
   useEffect(()=>{
     getBusAssistants();
+    getDriverVehicle();
   },[]);
 
   useEffect(()=>{
     setBusAssistant();
   },[busAssistants]);
+
+  useEffect(()=> {
+    if(vehicleId) {
+      getVehicle(vehicleId)
+    }
+  },[vehicleId]);
+
+  useEffect(()=> {
+    if(match.params.id && driverVehicle){
+      driverVehicle.map((driver=> {
+        if(driver.busassitantId == match.params.id){
+          setVehicleId(driver.vehicleId);
+        }
+      }))
+    }
+  },[match.params.id, driverVehicle]);
 
   // useEffect(()=>{
   //   if(newOperator.name) {
@@ -96,6 +131,22 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                 <tr>
                   <td><strong>Account Number</strong></td>
                   <td>{newOperator.accountNumber}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Plate No</strong></td>
+                  <td>{vehicle.plate_number}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Make</strong></td>
+                  <td>{vehicle.vehicle_make}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Model</strong></td>
+                  <td>{vehicle.vehicle_model}</td>
+                </tr>
+                <tr>
+                  <td><strong>Vehicle Type</strong></td>
+                  <td>{vehicle.vehicle_type}</td>
                 </tr>
                 <tr>
                   <td><strong>Route</strong></td>

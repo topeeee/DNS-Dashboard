@@ -115,15 +115,7 @@ const DriverModalCreate = (props) => {
     }
   },[]);
 
-  useEffect(()=>{
-    if(isAuthenticated) {
-      RouteUser();
-      ZoneUser();
-      getOperators();
-      getVehicles();
-      getAreas()
-    }
-  }, []);
+
 
   const [formData, setFormData] = useState({
     firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
@@ -194,7 +186,7 @@ const DriverModalCreate = (props) => {
   }
 
   function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
+    axios.put(`${api.vehicle}/api/assign/driver/${id}/?assign=${status}`)
       .then(res=> {
       })
   }
@@ -263,6 +255,16 @@ const DriverModalCreate = (props) => {
       })
     }
   }, [operators, isAdmin, operatorInput]);
+
+  useEffect(()=>{
+    if(isAuthenticated) {
+      RouteUser();
+      ZoneUser();
+      getOperators();
+      getVehicles();
+      getAreas()
+    }
+  }, [operatorInput]);
 
 
   const toggle = () => {toggleDriverModalCreate()};
@@ -344,7 +346,7 @@ const DriverModalCreate = (props) => {
                   // required
                 >
                   <option value="">Select Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned === null || user.assigned === "null") && (user.status === "1")).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned_driver === null || user.assigned_driver === "null") && (user.status === "1")).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}
