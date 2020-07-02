@@ -1,8 +1,8 @@
 import {
   MODE_BY_USER,
   MODE_MODAL_CREATE,
-  MODE_MODAL_DELETE,
-  DELETE_MODE,
+  MODE_MODAL_UPDATE,
+  UPDATE_MODE,
   CLOSE_MODAL_DELETE_MODE,
   LOADING_MODE,
   MODE_ERROR,
@@ -57,27 +57,32 @@ export const createMode = (modecode, mode, statecode) => async dispatch => {
 
   }
 };
-export const deleteMode = (id) => async dispatch => {
+
+export const updateMode = (id, modecode, mode, statecode) => async dispatch => {
+  const body = {modecode, mode, statecode};
+
 
   try {
-    const res = await axios.delete(`${api.mode}/admin/modes/${id}/`);
+    const res = await axios.put(`${api.mode}/api/modes/${id}/`, body);
     dispatch({
-      type: DELETE_MODE,
+      type: UPDATE_MODE,
       payload: res.data
     });
     dispatch(getModes());
-    dispatch(closeModeModalDelete());
+    dispatch(toggleModeModalUpdate());
   } catch (err) {
     dispatch({
       type: MODE_ERROR,
       payload: "Opps! Something Went Wrong Try Again"
     });
-    dispatch(closeModeModalDelete());
+    dispatch(toggleModeModalUpdate());
     setTimeout(() => dispatch({
       type: REMOVE_MODE_ERROR
     }), 5000)
+
   }
 };
+
 
 export const searchMode = (id) => async dispatch => {
   try {
@@ -102,9 +107,9 @@ export function toggleModeModalCreate() {
   };
 }
 
-export function toggleModeModalDelete(id) {
+export function toggleModeModalUpdate(id) {
   return {
-    type: MODE_MODAL_DELETE,
+    type: MODE_MODAL_UPDATE,
     payload: id
   };
 }

@@ -2,8 +2,8 @@ import {
   AREA_BY_USER,
   CREATE_AREA,
   AREA_MODAL_CREATE,
-  AREA_MODAL_DELETE,
-  DELETE_AREA,
+  AREA_MODAL_UPDATE,
+  UPDATE_AREA,
   AREA_ERROR,
   REMOVE_AREA_ERROR,
   LOADING_AREA,
@@ -55,28 +55,30 @@ export const createArea = (xareacode, xarea, zonecode) => async dispatch => {
 
   }
 };
-export const deleteArea = (id) => async dispatch => {
 
+export const updateArea = (id, xareacode, xarea, zonecode) => async dispatch => {
+  const body = {xareacode, xarea, zonecode};
   try {
-    const res = await axios.delete(`${api.area}/admin/xareas/${id}/`);
+    const res = await axios.put(`${api.area}/api/xareas/${id}/`, body);
     dispatch({
-      type: DELETE_AREA,
+      type: UPDATE_AREA,
       payload: res.data
     });
     dispatch(getAreas());
-    dispatch( closeAreaModalDelete());
+    dispatch(toggleAreaModalUpdate());
   } catch (err) {
     dispatch({
       type: AREA_ERROR,
       payload: "Opps! Something Went Wrong Try Again"
     });
-    dispatch( closeAreaModalDelete());
+    dispatch(toggleAreaModalUpdate());
     setTimeout(() => dispatch({
       type: REMOVE_AREA_ERROR
     }), 5000)
 
   }
 };
+
 
 export const searchArea = (id) => async dispatch => {
 
@@ -102,9 +104,9 @@ export function toggleAreaModalCreate() {
   };
 }
 
-export function toggleAreaModalDelete(id) {
+export function toggleAreaModalUpdate(id) {
   return {
-    type: AREA_MODAL_DELETE,
+    type: AREA_MODAL_UPDATE,
     payload: id
   };
 }

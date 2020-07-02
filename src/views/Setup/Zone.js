@@ -8,6 +8,7 @@ import ZoneHeader from "./components/ZoneHeader";
 import {getStates} from "../../store/actions/stateAction";
 import {admin, isAdmin, OperatorName} from "../../environments/constants";
 import Spinner from "../../spinner/Spinner";
+import ZoneActionBtn from "./components/ZoneActionBtn";
 
 
 
@@ -16,14 +17,10 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
       <td>{user.zone}</td>
       <td>{user.zonecode}</td>
       <td>{user.statecode}</td>
-      {/*<td>{user.username}</td>*/}
-
-
-      {/*<td> <ZoneDeleteBtn id={user.id} /> </td>*/}
+      <td> <ZoneActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -76,7 +73,7 @@ const [operatorZone, setOperatorZone] = useState('');
                   {/*<th scope="col">User Name</th>*/}
 
                   {/*<th scope="col">Zone Code </th>*/}
-                  {/*<th scope="col">Action</th>*/}
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

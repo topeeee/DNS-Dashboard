@@ -8,9 +8,9 @@ import PromoModalCreate from "./paymentModal/PromoModalCreate";
 import StateModalCreate from "./stateModal/StateModalCreate";
 import StateModalDelete from "./stateModal/StateModalDelete";
 import ZoneModalCreate from "./zoneModal/ZoneModalCreate";
-import ZoneModalDelete from "./zoneModal/ZoneModalDelete";
+import ZoneModalUpdate from "./zoneModal/ZoneModalUpdate";
 import RouteModalCreate from "./routeModal/RouteModalCreate";
-import RouteModalDelete from "./routeModal/RouteModalDelete";
+import RouteModalUpdate from "./routeModal/RouteModalUpdate";
 import BusStopModalCreate from "./busStopModal/BusStopModalCreate";
 import BusStopModalUpdate from "./busStopModal/BusStopModalUpdate";
 import TripModalCreate from "./tripModal/TripModalCreate";
@@ -21,12 +21,12 @@ import BookingModalDelete from "./bookingModal/BookingModalDelete";
 import BookingModalCreate from "./bookingModal/BookingModalCreate";
 import VehicleModalDelete from "./vehicleModal/VehicleModalDelete";
 import VehicleModalCreate from "./vehicleModal/VehicleModalCreate";
-import ModeModalDelete from "./modeModal/ModeModalDelete";
+import ModeModalUpdate from "./modeModal/ModeModalUpdate";
 import ModeModalCreate from "./modeModal/ModeModalCreate";
 import DriverLoggingModalCreate from "./driverLoggingModal/DriverLoggingModalCreate";
 import DriverLoggingModalDelete from "./driverLoggingModal/DriverLoggingModalDelete";
 import AreaModalCreate from "./areaModal/AreaModalCreate";
-import AreaModalDelete from "./areaModal/AreaModalDelete";
+import AreaModalUpdate from "./areaModal/AreaModalUpdate";
 import DriverRouteModalCreate from "./driverRouteModal/DriverRouteModalCreate";
 import DriverRouteModalDelete from "./driverRouteModal/DriverRouteModalDelete";
 import OperatorModalCreate from "./operatorModal/OperatorModalCreate";
@@ -46,12 +46,12 @@ const CombineModal = () => {
       <OperatorModalCreate />
       <DriverRouteModalDelete />
       <DriverRouteModalCreate />
-      <AreaModalDelete />
+      <AreaModalUpdate />
       <AreaModalCreate />
       <DriverLoggingModalDelete />
       <DriverLoggingModalCreate />
       <ModeModalCreate />
-      <ModeModalDelete />
+      <ModeModalUpdate />
       <VehicleModalCreate />
       <VehicleModalDelete />
       <BookingModalCreate />
@@ -62,9 +62,9 @@ const CombineModal = () => {
       <TripModalCreate />
       <BusStopModalUpdate />
       <BusStopModalCreate />
-      <RouteModalDelete />
+      <RouteModalUpdate />
       <RouteModalCreate />
-      <ZoneModalDelete />
+      <ZoneModalUpdate />
       <ZoneModalCreate />
       <StateModalDelete />
       <StateModalCreate />

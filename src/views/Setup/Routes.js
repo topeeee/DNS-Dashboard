@@ -5,11 +5,11 @@ import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reac
 import PrimaryHeader from "../components/PrimaryHeader";
 import {RouteUser} from "../../store/actions/routeAction";
 import RouteHeader from "./components/RouteHeader";
-import RouteDeleteBtn from "./components/RouteDeleteBtn";
 import {getAreas} from "../../store/actions/areaAction";
 import Spinner from "../../spinner/Spinner";
 import axios from "axios";
 import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import RouteActionBtn from "./components/RouteActionBtn";
 
 
 
@@ -22,10 +22,7 @@ function UserRow(props) {
       <td>{user.route}</td>
       <td>{user.routecode}</td>
       <td>{user.areacode}</td>
-      {/*<td>{user.username}</td>*/}
-
-      {/*<td>{user.routecode}</td>*/}
-      {/*<td> <RouteDeleteBtn id={user.id} /> </td>*/}
+      <td> <RouteActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -82,13 +79,10 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
               <Table responsive hover>
                 <thead  className="bg-dark">
                 <tr>
-                  {/*<th scope="col">Id</th>*/}
                   <th scope="col">Route</th>
                   <th scope="col">Route code</th>
                   <th scope="col">Area</th>
-                  {/*<th scope="col">User Name</th>*/}
-                  {/*<th scope="col">Route Code </th>*/}
-                  {/*<th scope="col">Action</th>*/}
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

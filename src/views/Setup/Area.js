@@ -9,6 +9,7 @@ import AreaHeader from "./components/AreaHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import axios from "axios";
 import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import AreaActionBtn from "./components/AreaActionBtn";
 
 
 
@@ -18,11 +19,10 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
       <td>{user.xarea}</td>
       <td>{user.xareacode}</td>
       <td>{user.zonecode}</td>
-      {/*<td> <AreaDeleteBtn id={user.id} /> </td>*/}
+      <td> <AreaActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -111,7 +111,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
                   <th scope="col">Area</th>
                   <th scope="col">Area code</th>
                   <th scope="col">Zone</th>
-                  {/*<th scope="col">Action</th>*/}
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

@@ -1,4 +1,4 @@
-import {ROUTE_BY_USER, ROUTE_MODAL_CREATE, ROUTE_MODAL_DELETE, DELETE_ROUTE, CREATE_ROUTE, CLOSE_MODAL_DELETE, LOADING} from "../actionTypes"
+import {ROUTE_BY_USER, ROUTE_MODAL_CREATE, ROUTE_MODAL_UPDATE, UPDATE_ROUTE, CREATE_ROUTE, CLOSE_MODAL_DELETE, LOADING} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
 import setAuthToken from "../../utils/setAuthToken";
@@ -40,16 +40,17 @@ export const createRoute = (routecode, route, areacode) => async dispatch => {
 
   }
 };
-export const deleteRoute = (id) => async dispatch => {
 
+export const updateRoute = (id, routecode, route, areacode) => async dispatch => {
+  const body = {routecode, route, areacode};
   try {
-    const res = await axios.delete(`http://165.22.116.11:7009/admin/routes/${id}/`);
+    const res = await axios.put(`${api.route}/api/routes/${id}/`, body);
     dispatch({
-      type: DELETE_ROUTE,
+      type: UPDATE_ROUTE,
       payload: res.data
     });
     dispatch(RouteUser());
-    dispatch(closeRouteModalDelete());
+    dispatch(toggleRouteModalUpdate());
   } catch (err) {
     // dispatch({
     //   type: AUTH_ERROR,
@@ -58,15 +59,16 @@ export const deleteRoute = (id) => async dispatch => {
 
   }
 };
+
 export function toggleRouteModalCreate() {
   return {
     type: ROUTE_MODAL_CREATE
   };
 }
 
-export function toggleRouteModalDelete(id) {
+export function toggleRouteModalUpdate(id) {
   return {
-    type: ROUTE_MODAL_DELETE,
+    type: ROUTE_MODAL_UPDATE,
     payload: id
   };
 }

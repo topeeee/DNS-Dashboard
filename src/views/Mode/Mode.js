@@ -9,6 +9,7 @@ import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
 import {getStates} from "../../store/actions/stateAction";
 import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import ModeActionBtn from "./components/ModeActionBtn";
 
 
 
@@ -22,7 +23,7 @@ function UserRow(props) {
       <td>{user.mode}</td>
       <td>{user.modecode}</td>
       <td>{user.statecode}</td>
-      {/*<td> <ModeDeleteBtn id={user.id} /> </td>*/}
+      <td> <ModeActionBtn id={user.id} /> </td>
     </tr>
   )
 }
@@ -109,10 +110,9 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 <thead className="bg-dark">
                 <tr>
                   <th scope="col">Mode</th>
-                  {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Mode Code</th>
                   <th scope="col">State</th>
-                  {/*<th scope="col">Action</th>*/}
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>

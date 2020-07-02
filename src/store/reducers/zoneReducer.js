@@ -1,10 +1,10 @@
-import {ZONE_BY_USER, ZONE_MODAL_CREATE, ZONE_MODAL_DELETE, DELETE_ZONE} from "../actionTypes";
+import {ZONE_BY_USER, ZONE_MODAL_CREATE, ZONE_MODAL_UPDATE, DELETE_ZONE} from "../actionTypes";
 
 const initialState = {
  zones: null,
   ZoneModalCreate: false,
-  ZoneModalDelete: false,
-  DeleteID: null,
+  ZoneModalUpdate: false,
+  updateID: null,
   DeleteRes: null
 };
 
@@ -23,11 +23,11 @@ function zoneReducer(state = initialState, action) {
         ZoneModalCreate: !state.ZoneModalCreate
       };
     }
-    case  ZONE_MODAL_DELETE: {
+    case  ZONE_MODAL_UPDATE: {
       return {
         ...state,
-        ZoneModalDelete: !state.ZoneModalDelete,
-        DeleteID: payload
+        ZoneModalUpdate: !state.ZoneModalUpdate,
+        updateID: payload
       };
     }
     case   DELETE_ZONE: {

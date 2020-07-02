@@ -1,8 +1,7 @@
 import {
   AREA_BY_USER,
   AREA_MODAL_CREATE,
-  AREA_MODAL_DELETE,
-  DELETE_AREA,
+  AREA_MODAL_UPDATE,
   CLOSE_MODAL_DELETE_AREA,
   LOADING_AREA,
   AREA_ERROR,
@@ -14,8 +13,8 @@ const initialState = {
   areas: null,
   area: null,
   AreaModalCreate: false,
-  AreaModalDelete: false,
-  DeleteID: null,
+  AreaModalUpdate: false,
+  updateID: null,
   DeleteRes: null,
   isLoading: false,
   error: null
@@ -49,19 +48,19 @@ function areaReducer(state = initialState, action) {
         AreaModalCreate: !state.AreaModalCreate
       };
     }
-    case  AREA_MODAL_DELETE: {
+    case  AREA_MODAL_UPDATE: {
       return {
         ...state,
-        AreaModalDelete: !state.AreaModalDelete,
-        DeleteID: payload
+        AreaModalUpdate: !state.AreaModalUpdate,
+        updateID: payload
       };
     }
-    case   DELETE_AREA: {
-      return {
-        ...state,
-        DeleteRes: payload
-      };
-    }
+    // case   DELETE_AREA: {
+    //   return {
+    //     ...state,
+    //     DeleteRes: payload
+    //   };
+    // }
     case   CLOSE_MODAL_DELETE_AREA: {
       return {
         ...state,

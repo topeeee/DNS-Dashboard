@@ -1,10 +1,10 @@
-import {ROUTE_BY_USER, ROUTE_MODAL_CREATE, ROUTE_MODAL_DELETE, DELETE_ROUTE, CLOSE_MODAL_DELETE, LOADING} from "../actionTypes";
+import {ROUTE_BY_USER, ROUTE_MODAL_CREATE, ROUTE_MODAL_UPDATE, CLOSE_MODAL_DELETE, LOADING} from "../actionTypes";
 
 const initialState = {
   routes: null,
   RouteModalCreate: false,
-  RouteModalDelete: false,
-  DeleteID: null,
+  RouteModalUpdate: false,
+  updateID: null,
   DeleteRes: null,
   isLoading: false
 };
@@ -25,19 +25,14 @@ function routeReducer(state = initialState, action) {
         RouteModalCreate: !state.RouteModalCreate
       };
     }
-    case  ROUTE_MODAL_DELETE: {
+    case  ROUTE_MODAL_UPDATE: {
       return {
         ...state,
-        RouteModalDelete: !state.RouteModalDelete,
-        DeleteID: payload
+        RouteModalUpdate: !state.RouteModalUpdate,
+        updateID: payload
       };
     }
-    case   DELETE_ROUTE: {
-      return {
-        ...state,
-        DeleteRes: payload
-      };
-    }
+
     case   CLOSE_MODAL_DELETE: {
       return {
         ...state,

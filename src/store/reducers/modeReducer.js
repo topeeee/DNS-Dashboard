@@ -1,8 +1,7 @@
 import {
   MODE_BY_USER,
   MODE_MODAL_CREATE,
-  MODE_MODAL_DELETE,
-  DELETE_MODE,
+  MODE_MODAL_UPDATE,
   CLOSE_MODAL_DELETE_MODE,
   LOADING_MODE,
   MODE_ERROR,
@@ -14,8 +13,8 @@ const initialState = {
   modes: null,
   mode: null,
   ModeModalCreate: false,
-  ModeModalDelete: false,
-  DeleteID: null,
+  ModeModalUpdate: false,
+  updateID: null,
   DeleteRes: null,
   isLoading: false,
   error: null
@@ -49,19 +48,14 @@ function modeReducer(state = initialState, action) {
         ModeModalCreate: !state.ModeModalCreate
       };
     }
-    case  MODE_MODAL_DELETE: {
+    case  MODE_MODAL_UPDATE: {
       return {
         ...state,
-        ModeModalDelete: !state.ModeModalDelete,
-        DeleteID: payload
+        ModeModalUpdate: !state.ModeModalUpdate,
+        updateID: payload
       };
     }
-    case   DELETE_MODE: {
-      return {
-        ...state,
-        DeleteRes: payload
-      };
-    }
+
     case   CLOSE_MODAL_DELETE_MODE: {
       return {
         ...state,
