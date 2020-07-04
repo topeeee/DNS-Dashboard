@@ -1,18 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader} from 'reactstrap';
 import {connect} from "react-redux";
-import {
-  createOperator,
-  getOperators,
-  registerOperator,
-  toggleOperatorModalUpdate, updateOperator
-} from "../../store/actions/operatorAction";
+import {getOperators, toggleOperatorModalUpdate, updateOperator} from "../../store/actions/operatorAction";
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import axios from "axios";
 import {getStates} from "../../store/actions/stateAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {getModes} from "../../store/actions/modeAction";
+import api from "../../environments/environment";
 
 const animatedComponents = makeAnimated();
 
@@ -47,18 +43,15 @@ const mapStateToProps = state => ({
 
 const OperatorModalUpdate = (props) => {
   const {
-    buttonLabel,
     className,
     operatorModalUpdate,
     toggleOperatorModalUpdate,
-    registerOperator,
     zones,
     states,
     getStates,
     ZoneUser,
     getModes,
     modes,
-    operatorCreated,
     getOperators,
     operatorUpdateId,
     operators,
@@ -72,10 +65,6 @@ const OperatorModalUpdate = (props) => {
   const [selected1, setSelected1] = useState([]);
   const [selected2, setSelected2] = useState([]);
   const [selected3, setSelected3] = useState([]);
-  const [selectedPut, setSelectedPut] = useState([]);
-  const [selectedPut1, setSelectedPut1] = useState([]);
-  const [selectedPut2, setSelectedPut2] = useState([]);
-  const [selectedPut3, setSelectedPut3] = useState([]);
   const [zoneSelected, setZoneSelected] = useState([]);
   const [stateSelected, setStateSelected] = useState([]);
   const [modeSelected, setModeSelected] = useState([]);
@@ -88,114 +77,60 @@ const OperatorModalUpdate = (props) => {
   const [operatorMode, setOperatorMode] = useState([]);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const { name, email, phoneNo, officeAddress, status, numberOfVehicle } = formData;
+  const { name, email, phoneNo, officeAddress, numberOfVehicle } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
     updateOperator(operatorUpdateId, name, email, phoneNo, officeAddress,  numberOfVehicle);
-    setOperatorVehicleTypes();
-    setOperatorZones();
-    setOperatorModes();
+    await setOperatorVehicleTypes();
+    await setOperatorZones();
+    await setOperatorModes();
     getOperators();
   };
 
 
-  const setOperatorZones= () => {
-    selected1.forEach((res)=> {
-      const body = {zoneCode: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
-      axios.post("http://165.22.116.11:7052/api/me/operatorzones/", body)
-        .then(res => {
-        })
-    });
-    operatorZone.forEach((res)=> {
-      axios.delete(`http://165.22.116.11:7052/admin/operatorzones/${res.id}/`)
-        .then(res=> {
+  const setOperatorZones = async () => {
+    try {
+    await  selected1.forEach((res)=> {
+        const body = {zoneCode: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
+        axios.post(`${api.operatorZone}/api/me/operatorzones/`, body)
+      });
+    await  operatorZone.forEach((res)=> {
+        axios.delete(`${api.operatorZone}/admin/operatorzones/${res.id}/`)
+      })
+    }catch (e) {
 
-        })
-    })
+    }
   };
 
-  const setOperatorVehicleTypes= () => {
-    selected.forEach((res)=> {
-      const body = {vehicleType: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
-      axios.post("http://165.22.116.11:7055/api/me/operatorvehicletypes/", body)
-        .then(res => {
-        })
-    });
-    operatorVehicle.forEach((res)=> {
-      axios.delete(`http://165.22.116.11:7055/admin/operatorvehicletypes/${res.id}/`)
-        .then(res=> {
-
-        })
+  const setOperatorVehicleTypes = async () => {
+    try {
+     await selected.forEach((res)=> {
+        const body = {vehicleType: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
+        axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
+     });
+    await  operatorVehicle.forEach((res)=> {
+        axios.delete(`${api.operatorVehicleTypes}/admin/operatorvehicletypes/${res.id}/`)
     })
+    }catch (e) {
+
+    }
   };
 
-  const setOperatorModes= () => {
-    selected2.forEach((res)=> {
-      const body = {modecode: res.value,  operator_name: operatorName};
-      axios.post(" http://165.22.116.11:7053/api/me/operatormodes/", body)
-        .then(res => {
-        })
-    });
+  const setOperatorModes = async () => {
+    try {
+     await selected2.forEach((res)=> {
+        const body = {modecode: res.value,  operator_name: operatorName};
+        axios.post(`${api.operatorMode}/api/me/operatormodes/`, body)
+      });
 
-    operatorMode.forEach((res)=> {
-      axios.delete(`http://165.22.116.11:7053/admin/operatormodes/${res.id}/`)
-        .then(res=> {
-
-        })
+    await  operatorMode.forEach((res)=> {
+        axios.delete(`${api.operatorMode}/admin/operatormodes/${res.id}/`)
     })
-  };
+    }catch (e) {
 
-  // const setOperatorZones= () => {
-  //   let newOperatorZone = [];
-  //
-  //   for(let i=0; i<selected1.length; i++) {
-  //     newOperatorZone.push({
-  //       ...selected1[i],
-  //       ...(operatorZone.find((itmInner) => itmInner.zoneCode === selected1[i].value))}
-  //     );
-  //   }
-  //   newOperatorZone.forEach((res)=> {
-  //     const body = {zoneCode: res.value, operatorId: res.operatorId, operatorName: res.operatorName};
-  //     axios.put(`http://165.22.116.11:7052/api/operatorzones/${res.id}/`, body)
-  //       .then(res => {
-  //       })
-  //   })
-  // };
-  //
-  // const setOperatorVehicleTypes= () => {
-  //   let newOperatorVehicle = [];
-  //
-  //   for(let i=0; i<selected.length; i++) {
-  //     newOperatorVehicle.push({
-  //       ...selected[i],
-  //       ...(operatorVehicle.find((itmInner) => itmInner.vehicleType === selected[i].value))}
-  //     );
-  //   }
-  //   newOperatorVehicle.forEach((res)=> {
-  //     const body = {vehicleType: res.value, operatorId: res.operatorId, operatorName: res.operatorName};
-  //     axios.put(`http://165.22.116.11:7055/api/operatorvehicletypes/${res.id}/`, body)
-  //       .then(res => {
-  //       })
-  //   })
-  // };
-  //
-  // const setOperatorModes= () => {
-  //   let newOperatorMode = [];
-  //
-  //   for(let i=0; i<selected2.length; i++) {
-  //     newOperatorMode.push({
-  //       ...selected2[i],
-  //       ...(operatorMode.find((itmInner) => itmInner.modecode === selected2[i].value))}
-  //     );
-  //   }
-  //   newOperatorMode.forEach((res)=> {
-  //     const body = {modecode: res.value,  operator_name: res.operator_name};
-  //     axios.put(` http://165.22.116.11:7053/api/operatormodes/${res.id}/`, body)
-  //       .then(res => {
-  //       })
-  //   })
-  // };
+    }
+  };
 
   function getNewOperator() {
       if(newOperator){
@@ -206,27 +141,33 @@ const OperatorModalUpdate = (props) => {
           }
         });
       }
-  };
-
-  function getOperatorVehicle(id) {
-    axios.get(`http://165.22.116.11:7055/api/operators/?operatorId=${id}`)
-      .then(res=> {
-        setOperatorVehicle(res.data);
-      })
   }
 
-    function getOperatorMode(operatorname) {
-    axios.get(`http://165.22.116.11:7053/api/mode/?operator_name=${operatorname}`)
-      .then(res=> {
-        setOperatorMode(res.data);
-      })
+  async function getOperatorVehicle(id) {
+    try {
+     const res =  await axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${id}`);
+      setOperatorVehicle(res.data);
+    }catch (e) {
+
+    }
   }
 
-  function getOperatorZone(id) {
-    axios.get(`http://165.22.116.11:7052/api/operators/?operatorId=${id}`)
-      .then(res=> {
-        setOperatorZone(res.data);
-      })
+    async function getOperatorMode(operatorname) {
+    try {
+     const res = await axios.get(`${api.operatorMode}/api/mode/?operator_name=${operatorname}`);
+      setOperatorMode(res.data);
+    }catch (e) {
+
+    }
+  }
+
+  async function getOperatorZone(id) {
+    try {
+    const res = await  axios.get(`${api.operatorZone}/api/operators/?operatorId=${id}`);
+          setOperatorZone(res.data);
+    }catch (e) {
+
+    }
   }
 
   const handleChange = (selected) => {

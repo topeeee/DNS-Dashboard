@@ -1,7 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
-
 import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";

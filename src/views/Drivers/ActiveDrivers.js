@@ -1,13 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getUsers, searchUser} from "../../store/actions/userAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
-import DriverDeleteBtn from "./components/DriverDeleteBtn";
 import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
 import DriverActionBtn from "./components/DriverActionBtn";
 
@@ -16,9 +13,6 @@ import DriverActionBtn from "./components/DriverActionBtn";
 
 function UserRow(props) {
   const user = props.user;
-  const approved = props.approved;
-  const userLink = `/trip/${user.TripID}`;
-
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :

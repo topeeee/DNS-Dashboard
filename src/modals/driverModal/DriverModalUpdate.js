@@ -1,12 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
-import {
-  toggleDriverModalCreate,
-  createDriver,
-  toggleDriverModalUpdate,
-  getDrivers, updateDriver
-} from "../../store/actions/driverAction";
+import {toggleDriverModalUpdate, getDrivers, updateDriver} from "../../store/actions/driverAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {RouteUser} from "../../store/actions/routeAction";
 import Select from "react-select";
@@ -15,6 +10,7 @@ import  axios from "axios";
 import {getOperators} from "../../store/actions/operatorAction";
 import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
+import api from "../../environments/environment";
 // import {BusStopUser} from "../../store/actions/busStopAction";
 
 const animatedComponents = makeAnimated();
@@ -64,7 +60,6 @@ const DriverModalUpdate = (props) => {
     toggleDriverModalUpdate,
     driverModalUpdate,
     updateDriver,
-    zones,
     routes,
     ZoneUser,
     RouteUser,
@@ -80,28 +75,23 @@ const DriverModalUpdate = (props) => {
     UpdateDriverId
   } = props;
 
-  function getOperatorZone() {
-    axios.get(" http://165.22.116.11:7052/api/all/operatorzones/")
-      .then(res=> {
-        setOperatorZone(res.data);
+ async function getOperatorZone() {
+   try {
+   const res = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+     setOperatorZone(res.data);
+   }catch (e) {
 
-      })
+   }
   }
 
-  function getOperatorMode() {
-    axios.get("http://165.22.116.11:7053/api/me/operatormodes/")
-      .then(res=> {
-        setOperatorMode(res.data);
-      })
-  }
+ async function getOperatorMode() {
+    try {
+     const res = await axios.get(`${api.operatorMode}/api/me/operatormodes/`);
+      setOperatorMode(res.data);
+    }catch (e) {
 
-
-  useEffect(()=>{
-    if(isAuthenticated) {
-      getOperatorZone();
-      getOperatorMode();
     }
-  },[]);
+  }
 
   useEffect(()=>{
     if(isAuthenticated) {
@@ -110,7 +100,9 @@ const DriverModalUpdate = (props) => {
       getOperators();
       getVehicles();
       getAreas();
-      getDrivers()
+      getDrivers();
+      getOperatorZone();
+      getOperatorMode();
     }
   }, []);
 
@@ -130,7 +122,7 @@ const DriverModalUpdate = (props) => {
   const [zoneInput, setZoneInput] = useState('');
   const [areaInput, setAreaInput] = useState('');
   const [routeInput, setRouteInput] = useState('');
-  const [modeInput, setModeInput] = useState('');
+  // const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
 
@@ -190,12 +182,7 @@ const DriverModalUpdate = (props) => {
     firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus
   } = formData;
 
-  function register() {
-    axios.post('http://165.22.116.11:8001/admin/users/', {username: email, password: "password"})
-      .then(res=> {
-        setRegpin(res.data.id)
-      })
-  }
+
 
   const handleChange3 = (selected2) => {
     setSelected2(selected2);

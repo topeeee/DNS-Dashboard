@@ -48,7 +48,7 @@ export const getBusAssistants = () => async dispatch => {
 };
 export const changeBusAssistants = (id, status) => async dispatch => {
   try {
-    const res = await axios.put(`${api.busAssistant}/api/status/${id}/`, {status});
+    await axios.put(`${api.busAssistant}/api/status/${id}/`, {status});
     dispatch({
       payload: id,
       type: BUS_ASSISTANT_STATUS,

@@ -1,15 +1,15 @@
 {
-  "name": "@coreui/coreui-free-react-admin-template",
-  "version": "2.6.0",
-  "description": "CoreUI React Open Source Bootstrap 4 Admin Template",
-  "author": "Łukasz Holeczek",
-  "homepage": "https://coreui.io",
-  "copyright": "Copyright 2017-2019 creativeLabs Łukasz Holeczek",
+  "name": "zeno-admin",
+  "version": "1.0",
+  "description": "A Zeno Admin, Operator and Partners Dashboard",
+  "author": "Tope Ajibuwa",
+  "homepage": "https://Zeno.ng",
+  "copyright": "Copyright 2020",
   "license": "MIT",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git@github.com:coreui/coreui-free-react-admin-template.git"
+    "url": "https://github.com/topeeee/Admin-Dashboard"
   },
   "dependencies": {
     "@coreui/coreui": "^2.1.12",
@@ -64,7 +64,7 @@
     "eject": "react-scripts eject"
   },
   "bugs": {
-    "url": "https://github.com/coreui/coreui-free-react-admin-template/issues"
+    "url": "https://github.com/topeeee/Admin-Dashboard"
   },
   "eslintConfig": {
     "extends": "react-app"

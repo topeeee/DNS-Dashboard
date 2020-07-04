@@ -13,6 +13,7 @@ import axios from "axios";
 import {getStates} from "../../store/actions/stateAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {getModes} from "../../store/actions/modeAction";
+import api from "../../environments/environment";
 
 const animatedComponents = makeAnimated();
 
@@ -76,37 +77,44 @@ const OperatorModalCreate = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setOperatorVehicleTypes();
-    setOperatorZones();
-    setOperatorModes();
+    await setOperatorVehicleTypes();
+    await setOperatorZones();
+    await setOperatorModes();
     getOperators();
   };
 
-  const setOperatorZones= () => {
-    selected1.forEach((res)=> {
-      const body = {zoneCode: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name};
-      axios.post("http://165.22.116.11:7052/api/me/operatorzones/", body)
-        .then(res => {
-        })
-    })
+  const setOperatorZones = async () => {
+    try {
+    await  selected1.forEach((res)=> {
+        const body = {zoneCode: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name};
+        axios.post(`${api.operatorZone}/api/me/operatorzones/`, body)
+      })
+    }catch (e) {
+
+    }
+
   };
 
-  const setOperatorVehicleTypes= () => {
-    selected.forEach((res)=> {
-      const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name};
-      axios.post("http://165.22.116.11:7055/api/me/operatorvehicletypes/", body)
-        .then(res => {
-        })
-    })
+  const setOperatorVehicleTypes = async () => {
+    try {
+    await  selected.forEach((res)=> {
+        const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name};
+        axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
+      })
+    }catch (e) {
+
+    }
   };
 
-  const setOperatorModes= () => {
-    selected2.forEach((res)=> {
-      const body = {modecode: res.value,  operator_name: operatorCreated.name};
-      axios.post(" http://165.22.116.11:7053/api/me/operatormodes/", body)
-        .then(res => {
-        })
-    })
+  const setOperatorModes = async () => {
+    try {
+      await selected2.forEach((res)=> {
+        const body = {modecode: res.value,  operator_name: operatorCreated.name};
+        axios.post(`${api.operatorMode}/api/me/operatormodes/`, body)
+      })
+    }catch (e) {
+
+    }
   };
 
  const handleChange = (selected) => {

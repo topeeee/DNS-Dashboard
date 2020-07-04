@@ -148,7 +148,7 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
               {(busAssistants && busAssistants.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Bus Assistants Available</div>}
               {((busAssistants && busAssistants.length > 0) || busAssistant) &&
               <Table responsive hover>
                 <thead className="bg-dark">

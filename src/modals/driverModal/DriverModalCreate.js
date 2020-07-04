@@ -86,25 +86,27 @@ const DriverModalCreate = (props) => {
   const [areaInput, setAreaInput] = useState('');
   const [routeInput, setRouteInput] = useState('');
   const [vehicleId, setVehicleId] = useState('');
-  const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
 
-  function getOperatorZone() {
-    axios.get(" http://165.22.116.11:7052/api/all/operatorzones/")
-      .then(res=> {
-        setOperatorZone(res.data);
+ async function getOperatorZone() {
+    try {
+    const res =  await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+      setOperatorZone(res.data);
+    }catch (e) {
 
-      })
+    }
   }
 
 
 
-  function getOperatorMode() {
-    axios.get("http://165.22.116.11:7053/api/me/operatormodes/")
-      .then(res=> {
-        setOperatorMode(res.data);
-      })
+  async function getOperatorMode() {
+   try {
+   const res =  await axios.get(`${api.operatorMode}/api/me/operatormodes/`);
+     setOperatorMode(res.data);
+   }catch (e) {
+
+   }
   }
 
 
@@ -170,25 +172,26 @@ const DriverModalCreate = (props) => {
     setForm4(false);
   };
 
-  // useEffect(()=> {
-  //   console.log(areas)
-  // }, [areas]);
 
   const {
     firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus
   } = formData;
 
-  function register() {
-    axios.post('http://165.22.116.11:8001/admin/users/', {username: email, password: "password"})
-      .then(res=> {
-        setRegpin(res.data.id)
-      })
+  async function register() {
+   try {
+  const res = await axios.post(`${api.login}/admin/users/`, {username: email, password: "password"})
+     setRegpin(res.data.id)
+   }catch (e) {
+
+   }
   }
 
-  function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/driver/${id}/?assign=${status}`)
-      .then(res=> {
-      })
+ async function assignVehicle(id, status) {
+   try {
+    await axios.put(`${api.vehicle}/api/assign/driver/${id}/?assign=${status}`)
+   }catch (e) {
+
+   }
   }
 
 

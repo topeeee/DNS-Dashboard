@@ -47,7 +47,7 @@ export const getDrivers = () => async dispatch => {
 };
 export const changeDriverStatus = (id, status) => async dispatch => {
   try {
-    const res = await axios.put(`${api.driver}/api/status/${id}/`, {status});
+    await axios.put(`${api.driver}/api/status/${id}/`, {status});
     dispatch({
       payload: id,
       type: DRIVER_STATUS,

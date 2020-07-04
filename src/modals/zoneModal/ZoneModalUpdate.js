@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader,} from 'reactstrap';
 import { connect } from "react-redux";
 import {toggleZoneModalUpdate, updateZone} from "../../store/actions/zoneAction";
-import axios from "axios";
-import api from "../../environments/environment";
+
 
 
 function mapDispatchToProps(dispatch) {
@@ -59,7 +58,6 @@ const ZoneModalUpdate = (props)=> {
   },[zones, id]);
 
   const toggle = () => {toggleZoneModalUpdate()};
-console.log(zonecode)
 
   return (
     <div>

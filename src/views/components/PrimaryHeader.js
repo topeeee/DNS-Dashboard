@@ -2,16 +2,13 @@ import React from 'react';
 import {  CardHeader, Input } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFilePdf, faPrint, faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons'
-import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 
 
 const PrimaryHeader = ()=> {
 
-  const handleEvent = (event, picker) => {
-    console.log(picker.startDate);
-  };
+
   return (
     <div>
       <CardHeader className="bg-secondary d-flex">

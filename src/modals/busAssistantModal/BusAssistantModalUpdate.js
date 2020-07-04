@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
-import {
-  toggleBusAssistantsModalUpdate,
-  getBusAssistants, updateBusAssistants
-} from "../../store/actions/busAssistantAction";
+import {toggleBusAssistantsModalUpdate, getBusAssistants, updateBusAssistants} from "../../store/actions/busAssistantAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {RouteUser} from "../../store/actions/routeAction";
 import Select from "react-select";
@@ -13,6 +10,7 @@ import  axios from "axios";
 import {getOperators} from "../../store/actions/operatorAction";
 import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
+import api from "../../environments/environment";
 // import {BusStopUser} from "../../store/actions/busStopAction";
 
 const animatedComponents = makeAnimated();
@@ -48,8 +46,6 @@ const mapStateToProps = state => ({
   areas: state.area.areas,
   busAssistants: state.busAssistants.busAssistants,
   UpdateBusAssistantId: state.busAssistants.UpdateBusAssistantId,
-
-
 });
 
 const BusAssistantModalUpdate = (props) => {
@@ -58,7 +54,6 @@ const BusAssistantModalUpdate = (props) => {
     toggleBusAssistantsModalUpdate,
     busAssistantModalUpdate,
     updateBusAssistants,
-    zones,
     routes,
     ZoneUser,
     RouteUser,
@@ -74,28 +69,24 @@ const BusAssistantModalUpdate = (props) => {
     UpdateBusAssistantId
   } = props;
 
-  function getOperatorZone() {
-    axios.get(" http://165.22.116.11:7052/api/all/operatorzones/")
-      .then(res=> {
-        setOperatorZone(res.data);
+ async function getOperatorZone() {
+    try {
+     const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+          setOperatorZone(res.data);
+    }catch (e) {
 
-      })
-  }
-
-  function getOperatorMode() {
-    axios.get("http://165.22.116.11:7053/api/me/operatormodes/")
-      .then(res=> {
-        setOperatorMode(res.data);
-      })
-  }
-
-
-  useEffect(()=>{
-    if(isAuthenticated) {
-      getOperatorZone();
-      getOperatorMode();
     }
-  },[]);
+  }
+
+ async function getOperatorMode() {
+    try {
+    const res = await  axios.get(`${api.operatorMode}/api/me/operatormodes/`);
+      setOperatorMode(res.data);
+    }catch (e) {
+
+    }
+  }
+
 
   useEffect(()=>{
     if(isAuthenticated) {
@@ -105,6 +96,8 @@ const BusAssistantModalUpdate = (props) => {
       getVehicles();
       getAreas();
       getBusAssistants()
+      getOperatorZone();
+      getOperatorMode();
     }
   }, []);
 
