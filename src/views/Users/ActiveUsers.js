@@ -6,7 +6,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {admin} from "../../environments/constants";
+import {admin, OperatorId} from "../../environments/constants";
+import axios from "axios";
+import api from "../../environments/environment";
 
 
 
@@ -39,8 +41,19 @@ function UserRow(props) {
 
 const ActiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => {
   const [formData, setFormData] = useState('');
+  const [userPin, setUserPin] = useState([]);
+  const [operatorPassenger, setOperatorPassenger] = useState([]);
 
   const isAdmin = sessionStorage.getItem('isAdmin');
+
+  async function getUsersPin() {
+    try {
+      const res = await axios.get(`${api.trip}/api/operator/passenger?operatorId=${OperatorId}`)
+      setUserPin(res.data.pins);
+    }catch (e) {
+
+    }
+  }
 
   useEffect(()=>{
     if(formData === ''){
@@ -53,6 +66,26 @@ const ActiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => 
     e.preventDefault();
     setFormData(e.target.value );
   };
+
+  useEffect(()=> {
+    if(isAdmin !== admin) {
+      getUsersPin()
+    }
+  },[isAdmin]);
+
+  useEffect(()=> {
+    if(userPin.length > 0 && users) {
+      let operatorUser = [];
+      userPin.forEach((pin=> {
+        users.map(user=> {
+          if(user.pin === pin) {
+            operatorUser.push(user)
+          }
+        })
+      }));
+      setOperatorPassenger(operatorUser)
+    }
+  },[userPin, users]);
 
 
   const onSearch = e => {
@@ -111,7 +144,10 @@ const ActiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => 
                 </tr>
                 </thead>
                 <tbody>
-                {users && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "1")).map((user, index) =>
+                {(users && isAdmin === admin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "1")).map((user, index) =>
+                  <UserRow key={index} user={user}/>
+                )}
+                {(operatorPassenger && isAdmin !== admin) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "1")).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
                 {user &&

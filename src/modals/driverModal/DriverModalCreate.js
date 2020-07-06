@@ -30,8 +30,8 @@ const options = [
 function mapDispatchToProps(dispatch) {
   return {
     toggleDriverModalCreate: () => dispatch(toggleDriverModalCreate()),
-    createDriver: (vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
-      dispatch(createDriver(vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
+    createDriver: (vehicleId, operatorInput, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
+      dispatch(createDriver(vehicleId, operatorInput, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
@@ -88,8 +88,10 @@ const DriverModalCreate = (props) => {
   const [vehicleId, setVehicleId] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [operatorId, setOperatorId] = useState('');
 
- async function getOperatorZone() {
+
+  async function getOperatorZone() {
     try {
     const res =  await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
       setOperatorZone(res.data);
@@ -202,7 +204,7 @@ const DriverModalCreate = (props) => {
 
   const onSubmit = async (e) => {
      e.preventDefault();
-    createDriver(vehicleId, operatorInput, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
+    createDriver(vehicleId, operatorInput, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
     assignVehicle(vehicleId, "1");
     setFormData({
       firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "0", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
@@ -268,6 +270,16 @@ const DriverModalCreate = (props) => {
       getAreas()
     }
   }, [operatorInput]);
+
+  useEffect(()=> {
+    if(operators && operatorInput) {
+      operators.map(operator=> {
+        if(operator.name === operatorInput) {
+          setOperatorId(operator.id)
+        }
+      })
+    }
+  },[operators, operatorInput]);
 
 
   const toggle = () => {toggleDriverModalCreate()};

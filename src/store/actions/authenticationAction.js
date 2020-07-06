@@ -54,7 +54,8 @@ export const getOperator = (username) => async dispatch => {
     });
     res.data.map(operator => {
       if(operator.email === username) {
-        sessionStorage.setItem('OperatorName', operator.name)
+        sessionStorage.setItem('OperatorName', operator.name);
+        sessionStorage.setItem('OperatorId', operator.id);
       }
     })
 

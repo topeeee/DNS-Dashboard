@@ -27,8 +27,8 @@ const options = [
 function mapDispatchToProps(dispatch) {
   return {
     toggleDriverModalUpdate: () => dispatch(toggleDriverModalUpdate()),
-    updateDriver: (id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
-      dispatch(updateDriver(id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
+    updateDriver: (id, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
+      dispatch(updateDriver(id, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
@@ -125,6 +125,7 @@ const DriverModalUpdate = (props) => {
   // const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [operatorId, setOperatorId] = useState('');
 
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -189,7 +190,7 @@ const DriverModalUpdate = (props) => {
   };
   const onSubmit = async (e) => {
      e.preventDefault();
-    updateDriver(UpdateDriverId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
+    updateDriver(UpdateDriverId, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, regPin, bankname, accountname, accountnumber, zoneInput, areaInput, routeInput, geofencedarea, appstatus);
     setFormData({
       firstname: "", lastname: "", residentialaddress: "", email: "", phoneno: "", status: "0", pin: "", bankname: "", accountname: "", accountnumber: "", zone: "", area: "", route: "", geofencedarea: "", appstatus: ""
     })
@@ -237,6 +238,16 @@ const DriverModalUpdate = (props) => {
   useEffect(()=> {
     setDriver();
   },[UpdateDriverId]);
+
+  useEffect(()=> {
+    if(operators && operatorInput) {
+      operators.map(operator=> {
+        if(operator.name === operatorInput) {
+          setOperatorId(operator.id)
+        }
+      })
+    }
+  },[operators, operatorInput]);
 
 
   const toggle = () => {toggleDriverModalUpdate()};

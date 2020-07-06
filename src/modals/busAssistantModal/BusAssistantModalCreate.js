@@ -12,7 +12,7 @@ import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
 // import {BusStopUser} from "../../store/actions/busStopAction";
 import api from '../../environments/environment'
-import {admin, isAdmin} from "../../environments/constants";
+import {admin, isAdmin, OperatorId} from "../../environments/constants";
 
 const animatedComponents = makeAnimated();
 
@@ -24,9 +24,9 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusAssistantsModalCreate: () => dispatch(toggleBusAssistantsModalCreate()),
-    createBusAssistants: (vehicleId, operatorInput, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+    createBusAssistants: (vehicleId, operatorInput, operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
     ) =>
-      dispatch(createBusAssistants(vehicleId, operatorInput, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+      dispatch(createBusAssistants(vehicleId, operatorInput, operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
       )),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
@@ -118,6 +118,7 @@ const BusAssistantModalCreate = (props) => {
   // const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [operatorId, setOperatorId] = useState('');
 
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -200,7 +201,7 @@ const BusAssistantModalCreate = (props) => {
 
   const onSubmit = async (e) => {
      e.preventDefault();
-    createBusAssistants(vehicleId, operatorInput, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
+    createBusAssistants(vehicleId, operatorInput, operatorId, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
     );
     assignVehicle(vehicleId, "1");
     setFormData({
@@ -269,6 +270,17 @@ const BusAssistantModalCreate = (props) => {
       getAreas()
     }
   }, [operatorInput]);
+
+  useEffect(()=> {
+    if(operators && operatorInput) {
+      operators.map(operator=> {
+        if(operator.name === operatorInput) {
+          setOperatorId(operator.id)
+        }
+      })
+    }
+  },[operators, operatorInput]);
+
 
 
   const toggle = () => {toggleBusAssistantsModalCreate()};

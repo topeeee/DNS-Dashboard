@@ -11,6 +11,7 @@ import {
 } from "../../../store/actions/driverAction";
 import axios from "axios";
 import api from "../../../environments/environment";
+import {admin, isAdmin} from "../../../environments/constants";
 
 const TripActionBtn = ({id}) => {
 
@@ -22,6 +23,8 @@ const TripActionBtn = ({id}) => {
     });
     setDropdown(newArray)
   }
+  const route = () =>
+    (isAdmin === admin) ? `/trips/${id}` : `/operator/trips/${id}`;
 
 
   return (
@@ -33,7 +36,7 @@ const TripActionBtn = ({id}) => {
         <DropdownToggle caret>
         </DropdownToggle>
         <DropdownMenu>
-          <Link to={`/trips/${id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
+          <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
           {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
         </DropdownMenu>
       </Dropdown>

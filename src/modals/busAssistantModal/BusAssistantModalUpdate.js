@@ -23,8 +23,8 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusAssistantsModalUpdate: () => dispatch(toggleBusAssistantsModalUpdate()),
-    updateBusAssistants: (id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
-      dispatch(updateBusAssistants(id, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
+    updateBusAssistants: (id, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) =>
+      dispatch(updateBusAssistants(id, operatorId, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus)),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
@@ -95,7 +95,7 @@ const BusAssistantModalUpdate = (props) => {
       getOperators();
       getVehicles();
       getAreas();
-      getBusAssistants()
+      getBusAssistants();
       getOperatorZone();
       getOperatorMode();
     }
@@ -111,17 +111,16 @@ const BusAssistantModalUpdate = (props) => {
   const [form4, setForm4] = useState(false);
   const [routeSelected, setRouteSelected] = useState([]);
   const [selected2, setSelected2] = useState([]);
-  const [regPin, setRegpin] = useState('');
   const [operatorInput, setOperatorInput] = useState('');
   const [vehicleInput, setVehicleInput] = useState('');
   const [plateInput, setPlateInput] = useState('');
   const [zoneInput, setZoneInput] = useState('');
   const [areaInput, setAreaInput] = useState('');
   const [routeInput, setRouteInput] = useState('');
-  const [modeInput, setModeInput] = useState('');
+  // const [modeInput, setModeInput] = useState('');
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
-
+  const [operatorId, setOperatorId] = useState('');
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -186,7 +185,7 @@ const BusAssistantModalUpdate = (props) => {
   };
   const onSubmit = async (e) => {
      e.preventDefault();
-    updateBusAssistants(UpdateBusAssistantId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
+    updateBusAssistants(UpdateBusAssistantId, operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
     );
     setFormData({
       firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
@@ -236,6 +235,16 @@ const BusAssistantModalUpdate = (props) => {
   useEffect(()=> {
     setDriver();
   },[UpdateBusAssistantId]);
+
+  useEffect(()=> {
+    if(operators && operatorInput) {
+      operators.map(operator=> {
+        if(operator.name === operatorInput) {
+          setOperatorId(operator.id)
+        }
+      })
+    }
+  },[operators, operatorInput]);
 
 
   const toggle = () => {toggleBusAssistantsModalUpdate()};

@@ -19,9 +19,9 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {admin} from "../../environments/constants";
+import {admin, isAdmin, OperatorId} from "../../environments/constants";
 
-const isAdmin = sessionStorage.getItem('isAdmin');
+
 
 
 export const getBusAssistants = () => async dispatch => {
@@ -29,7 +29,7 @@ export const getBusAssistants = () => async dispatch => {
   if(isAdmin === admin) {
     BusApi = `${api.busAssistant}/api/busassistants/`
   }else {
-    BusApi = `${api.busAssistant}/api/me/busassistants/`
+    BusApi = `${api.busAssistant}/api/busassistants/operator/?operatorid=${OperatorId}`;
   }
   try {
     dispatch(isLoading());
@@ -66,9 +66,9 @@ export const changeBusAssistants = (id, status) => async dispatch => {
 };
 
 
-export const createBusAssistants = (vehicleId, operatorInput, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+export const createBusAssistants = (vehicleId, operatorInput, operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
 ) => async dispatch => {
-  const body = { firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
   };
   try {
     const res = await axios.post(`${api.busAssistant}/api/me/busassistants/`, body);
@@ -94,8 +94,8 @@ export const createBusAssistants = (vehicleId, operatorInput, firstName, lastNam
   }
 };
 
-export const updateBusAssistants = (id,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea) => async dispatch => {
-  const body = { firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea};
+export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea};
   try {
     const res = await axios.put(`${api.busAssistant}/api/busassistants/${id}/`, body);
     dispatch({

@@ -11,6 +11,7 @@ import {
 } from "../../../store/actions/busAssistantAction";
 import axios from "axios";
 import api from "../../../environments/environment";
+import {admin, isAdmin} from "../../../environments/constants";
 
 
 
@@ -38,8 +39,11 @@ const BusAssistantActionBtn = (props) => {
     setDropdown(newArray)
  }
 
+  const route = () =>
+    (isAdmin === admin) ? `/busassisstants/${props.id}` : `/operator/busassisstants/${props.id}`;
 
-    return (
+
+  return (
       <div className="animated fadeIn">
 
         <Dropdown isOpen={dropdownOpen[0]} toggle={() => {
@@ -55,7 +59,7 @@ const BusAssistantActionBtn = (props) => {
             {(props.user.status === "") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');props.getBusAssistantsVehicleId2(props.id)}}>Approve</DropdownItem>}
             {(props.user.status === "") && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');props.getBusAssistantsVehicleId(props.id)}}>Deny</DropdownItem>}
 
-            <Link to={`/busassisstants/${props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
+            <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
             {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
