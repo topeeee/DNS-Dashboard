@@ -13,16 +13,15 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {admin, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 
-const isAdmin = sessionStorage.getItem('isAdmin');
 
 
 export const getVehicles = () => async dispatch => {
   let VehicleApi;
-  if(isAdmin === admin) {
+  if(isAdmin) {
     VehicleApi = `${api.vehicle}/api/vehicles/`
-  }else {
+  }else if(isOperator) {
     VehicleApi = `${api.vehicle}/api/operators/?operator=${OperatorName}`
   }
   try {

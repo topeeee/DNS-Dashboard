@@ -19,7 +19,8 @@
    operatorZone: "http://165.22.116.11:7052",
    operatorVehicleTypes: "http://165.22.116.11:7055",
    operatorMode: "http://165.22.116.11:7053",
-   driverVehicles: 'http://165.22.116.11:7054'
+   driverVehicles: 'http://165.22.116.11:7054',
+   admin: 'http://165.22.116.11:7059',
 };
 
 export default api

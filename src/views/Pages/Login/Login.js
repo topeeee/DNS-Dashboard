@@ -19,11 +19,11 @@ import {
 import zeno from "../../../assets/img/brand/zeno.png";
 import {AppNavbarBrand} from "@coreui/react";
 import {LogIn} from "../../../store/actions/authenticationAction";
-import {admin} from "../../../environments/constants";
 
 
 
-const Login  = ({LogIn, isAuthenticated, errors,}) => {
+
+const Login  = ({LogIn, isAuthenticated, errors, admin, operator}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,21 +35,24 @@ const Login  = ({LogIn, isAuthenticated, errors,}) => {
   };
 
   const isAdmin = sessionStorage.getItem('isAdmin');
+  const isOperator = sessionStorage.getItem('isOperator');
+  const token = sessionStorage.getItem("token");
 
 
-  if (isAuthenticated && isAdmin === admin) {
-    setTimeout(()=>{
-      window.location.reload();
+
+  if ((isAuthenticated && admin && !operator) || (isAdmin && token)) {
+    sessionStorage.setItem('isAdmin', admin);
+    setTimeout(()=> {
+      window.location.reload()
     },0);
     return <Redirect to="/" />;
-  } else if (isAuthenticated && isAdmin !== admin) {
-    setTimeout(()=>{
-      window.location.reload();
+  } else if ((isAuthenticated && !admin && operator) || (isOperator && token)) {
+    sessionStorage.setItem('isOperator', operator);
+    setTimeout(()=> {
+      window.location.reload()
     },0);
     return <Redirect to="/operator" />;
   }
-
-
 
   return (
       <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
@@ -66,7 +69,7 @@ const Login  = ({LogIn, isAuthenticated, errors,}) => {
                       {/*<h1>Login</h1>*/}
                       <p className="text-primary text-center">Sign In to your account</p>
                       <div className="d-flex justify-content-center align-items-center">
-                        {errors && <small className="text-danger text-center pb-1 font-italic">Incorrect Username or Password</small>}
+                        {(errors && !isAdmin && !isOperator) ? <small className="text-danger text-center pb-1 font-italic">Incorrect Username or Password</small>: null}
                       </div>
 
                       <InputGroup className="mb-3">
@@ -132,7 +135,8 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  isAdmin: state.auth.isAdmin,
+  admin: state.auth.admin,
+  operator: state.auth.operator,
   errors: state.auth.errors
 });
 

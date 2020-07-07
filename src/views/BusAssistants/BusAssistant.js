@@ -10,9 +10,9 @@ import {getBusAssistants} from "../../store/actions/busAssistantAction";
 const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  searchOperator, error, match, busAssistants})=> {
   // const [operator, setOperator] = useState([]);
   const [newOperator, setNewOperator] = useState({});
-  const [operatorVehicle, setOperatorVehicle] = useState([]);
-  const [operatorZone, setOperatorZone] = useState([]);
-  const [operatorMode, setOperatorMode] = useState([]);
+  // const [operatorVehicle, setOperatorVehicle] = useState([]);
+  // const [operatorZone, setOperatorZone] = useState([]);
+  // const [operatorMode, setOperatorMode] = useState([]);
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
   const [vehicle, setVehicle] = useState({});

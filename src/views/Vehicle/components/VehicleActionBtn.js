@@ -24,7 +24,7 @@ const VehicleActionBtn  = (props) => {
   const [dropdownOpen, setDropdown] = useState(new Array(6).fill(false));
 
   const route = () =>
-    (isAdmin === admin) ? `/vehicles/${props.id}` : `/operator/vehicles/${props.id}`;
+    (isAdmin) ? `/vehicles/${props.id}` : `/operator/vehicles/${props.id}`;
 
  function toggle(i) {
     const newArray = dropdownOpen.map((element, index) => {

@@ -19,15 +19,15 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {admin, OperatorId} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorId} from "../../environments/constants";
 
-const isAdmin = sessionStorage.getItem('isAdmin');
+
 
 export const getDrivers = () => async dispatch => {
   let driverApi;
-  if(isAdmin === admin) {
+  if(isAdmin) {
     driverApi = `${api.driver}/api/drivers/`
-  }else {
+  }else if(isOperator) {
     driverApi = `${api.driver}/api/drivers/operator/?operatorid=${OperatorId}`
   }
   try {

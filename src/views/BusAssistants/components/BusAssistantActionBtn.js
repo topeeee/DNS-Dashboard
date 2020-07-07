@@ -1,17 +1,12 @@
-
-
-
-import React, {Component, useEffect, useState} from 'react';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import React, {useState} from 'react';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
 import {Link} from "react-router-dom";
 import {
   changeBusAssistants, getBusAssistantsVehicleId, getBusAssistantsVehicleId2,
   toggleBusAssistantsModalUpdate
 } from "../../../store/actions/busAssistantAction";
-import axios from "axios";
-import api from "../../../environments/environment";
-import {admin, isAdmin} from "../../../environments/constants";
+import {isAdmin} from "../../../environments/constants";
 
 
 
@@ -40,7 +35,7 @@ const BusAssistantActionBtn = (props) => {
  }
 
   const route = () =>
-    (isAdmin === admin) ? `/busassisstants/${props.id}` : `/operator/busassisstants/${props.id}`;
+    (isAdmin) ? `/busassisstants/${props.id}` : `/operator/busassisstants/${props.id}`;
 
 
   return (
@@ -52,7 +47,6 @@ const BusAssistantActionBtn = (props) => {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            {/*<DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.toggleOperatorModalDelete(this.props.id)}>Delete</DropdownItem>*/}
             <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleBusAssistantsModalUpdate(props.id)}>Update</DropdownItem>
             {(props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');props.getBusAssistantsVehicleId(props.id)}}>Suspend</DropdownItem>}
             {(props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');props.getBusAssistantsVehicleId2(props.id)}}>Reactivate</DropdownItem>}
@@ -60,7 +54,6 @@ const BusAssistantActionBtn = (props) => {
             {(props.user.status === "") && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');props.getBusAssistantsVehicleId(props.id)}}>Deny</DropdownItem>}
 
             <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
-            {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
       </div>

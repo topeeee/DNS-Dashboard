@@ -19,16 +19,16 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {admin, isAdmin, OperatorId} from "../../environments/constants";
+import {admin, isAdmin, isOperator, OperatorId} from "../../environments/constants";
 
 
 
 
 export const getBusAssistants = () => async dispatch => {
   let BusApi;
-  if(isAdmin === admin) {
+  if(isAdmin) {
     BusApi = `${api.busAssistant}/api/busassistants/`
-  }else {
+  }else if(isOperator){
     BusApi = `${api.busAssistant}/api/busassistants/operator/?operatorid=${OperatorId}`;
   }
   try {

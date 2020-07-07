@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import axios from 'axios'
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {getModes, searchMode} from "../../store/actions/modeAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
 import {getStates} from "../../store/actions/stateAction";
-import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import ModeActionBtn from "./components/ModeActionBtn";
 
 
@@ -23,7 +23,7 @@ function UserRow(props) {
       <td>{user.mode}</td>
       <td>{user.modecode}</td>
       <td>{user.statecode}</td>
-      <td> <ModeActionBtn id={user.id} /> </td>
+      {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
     </tr>
   )
 }
@@ -96,7 +96,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <div className="w-25">
                 Modes
               </div>
-              {isAdmin === admin &&  <ModeHeader />}
+              {isAdmin &&  <ModeHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -112,14 +112,14 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                   <th scope="col">Mode</th>
                   <th scope="col">Mode Code</th>
                   <th scope="col">State</th>
-                  <th scope="col">Action</th>
+                  {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>
-                {(modes && isAdmin === admin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                {(modes && isAdmin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
-                {(modes && operatorMode && isAdmin !== admin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>
+                {(modes && operatorMode && isOperator) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
                 {mode &&

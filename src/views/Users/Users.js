@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {admin, OperatorId} from "../../environments/constants";
+import {admin, isOperator, OperatorId} from "../../environments/constants";
 import axios from "axios"
 import api from "../../environments/environment";
 
@@ -15,7 +15,7 @@ import api from "../../environments/environment";
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/trip/${user.TripID}`;
+
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -48,7 +48,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
 
   async function getUsersPin() {
     try {
-      const res = await axios.get(`${api.trip}/api/operator/passenger?operatorId=${OperatorId}`)
+      const res = await axios.get(`${api.trip}/api/operator/passenger?operatorId=${OperatorId}`);
       setUserPin(res.data.pins);
     }catch (e) {
 
@@ -62,10 +62,10 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
   },[formData]);
 
   useEffect(()=> {
-    if(isAdmin !== admin) {
+    if(isOperator) {
       getUsersPin()
     }
-  },[isAdmin]);
+  },[isOperator]);
 
   useEffect(()=> {
     if(userPin.length > 0 && users) {
@@ -119,7 +119,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                {isAdmin === admin ? 'Users': 'Passengers'}
+                {isAdmin ? 'Users': 'Passengers'}
               </div>
             </CardHeader>
             {isLoading && <Spinner />}
@@ -144,10 +144,10 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {(users && isAdmin === admin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(users && isAdmin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
-                {(operatorPassenger && isAdmin !== admin) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(operatorPassenger && isOperator) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
                 {user &&

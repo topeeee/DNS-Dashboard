@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import StateHeader from "./components/StateHeader";
-import {getStates, searchState, toggleStateModalDelete} from "../../store/actions/stateAction";
+import {getStates, searchState} from "../../store/actions/stateAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import axios from "axios"
-import StateActionBtn from "./components/StateActionBtn";
-import {admin, isAdmin, OperatorName} from "../../environments/constants";
+// import StateActionBtn from "./components/StateActionBtn";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import {ZoneUser} from "../../store/actions/zoneAction";
 
 
@@ -109,7 +109,7 @@ const States = ({getStates, states, state, isLoading,  searchState, error, zones
                 <div className="w-25">
                   States
                 </div>
-                {isAdmin === admin &&  <StateHeader />}
+                {isAdmin &&  <StateHeader />}
               </CardHeader>
               {isLoading && <Spinner />}
               {!isLoading &&
@@ -129,10 +129,10 @@ const States = ({getStates, states, state, isLoading,  searchState, error, zones
                   </tr>
                   </thead>
                   <tbody>
-                  {(states && isAdmin === admin) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                  {(states && isAdmin) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                     <UserRow key={index} user={user}/>
                   ): null}
-                  {(states && isState && isAdmin !== admin) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.xstate === isState).map((user, index) =>
+                  {(states && isState && isOperator) ? states.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.xstate === isState).map((user, index) =>
                     <UserRow key={index} user={user}/>
                   ): null}
                   {state &&

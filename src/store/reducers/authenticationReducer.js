@@ -1,8 +1,10 @@
-import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR, USER_AUTHORIZED} from "../actionTypes";
+import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR, USER_AUTHORIZED, ADMIN, OPERATOR} from "../actionTypes";
 
 const initialState = {
-  mmmm: null,
+  token: null,
   isAuthenticated: null,
+  admin: null,
+  operator: null,
   loading: false,
   errors: null,
 
@@ -14,9 +16,25 @@ function authenticationReducer(state = initialState, action) {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        ...payload,
-        mmmm: true,
+        token: payload,
         isAuthenticated: true,
+        loading: false
+      };
+    }
+    case ADMIN: {
+      return {
+        ...state,
+        ...payload,
+        admin: true,
+        loading: false
+      };
+    }
+
+    case OPERATOR: {
+      return {
+        ...state,
+        ...payload,
+        operator: true,
         loading: false
       };
     }

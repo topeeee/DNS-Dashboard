@@ -8,7 +8,7 @@ import RouteHeader from "./components/RouteHeader";
 import {getAreas} from "../../store/actions/areaAction";
 import Spinner from "../../spinner/Spinner";
 import axios from "axios";
-import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import RouteActionBtn from "./components/RouteActionBtn";
 
 
@@ -58,8 +58,6 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
     getOperatorZone()
   },[]);
 
-  const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
-
   return (
     <div className="animated fadeIn">
       <Row>
@@ -86,10 +84,10 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {(routes && isAdmin === admin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(routes && isAdmin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 ): null}
-                {(routes && area && isAdmin !== admin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.areacode === area).map((user, index) =>
+                {(routes && area && isOperator) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.areacode === area).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 ): null}
                 </tbody>

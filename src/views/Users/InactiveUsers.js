@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {admin, OperatorId} from "../../environments/constants";
+import {admin, isOperator, OperatorId} from "../../environments/constants";
 import axios from "axios";
 import api from "../../environments/environment";
 
@@ -55,7 +55,11 @@ const InactiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) =
     }
   }
 
-
+  useEffect(()=> {
+    if(isOperator) {
+      getUsersPin()
+    }
+  },[isOperator]);
 
   useEffect(()=>{
     if(formData === ''){
@@ -140,10 +144,10 @@ const InactiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) =
                 </tr>
                 </thead>
                 <tbody>
-                {(users && isAdmin === admin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "0")).map((user, index) =>
+                {(users && isAdmin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "0")).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
-                {(operatorPassenger && isAdmin !== admin) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "0")).map((user, index) =>
+                {(operatorPassenger && isOperator) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user =>(user.status === "0")).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
                 {user &&

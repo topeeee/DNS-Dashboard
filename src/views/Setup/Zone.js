@@ -6,7 +6,7 @@ import PrimaryHeader from "../components/PrimaryHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import ZoneHeader from "./components/ZoneHeader";
 import {getStates} from "../../store/actions/stateAction";
-import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import Spinner from "../../spinner/Spinner";
 import ZoneActionBtn from "./components/ZoneActionBtn";
 
@@ -58,7 +58,7 @@ const [operatorZone, setOperatorZone] = useState('');
               <div className="w-25">
                 Zones
               </div>
-              {isAdmin === admin &&  <ZoneHeader />}
+              {isAdmin &&  <ZoneHeader />}
             </CardHeader>
             <CardBody>
               {!zones && <Spinner />}
@@ -77,10 +77,10 @@ const [operatorZone, setOperatorZone] = useState('');
                 </tr>
                 </thead>
                 <tbody>
-                {(zones && isAdmin === admin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(zones && isAdmin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
                 ): null}
-                {(zones && operatorZone && isAdmin !== admin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>
+                {(zones && operatorZone && isOperator) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
                 ): null}
                 </tbody>

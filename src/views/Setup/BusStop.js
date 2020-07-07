@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import PrimaryHeader from "../components/PrimaryHeader";
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {BusStopUser, searchBusStop} from "../../store/actions/busStopAction";
 import BusStopHeader from "./components/BusStopHeader";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,7 +9,7 @@ import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
 import BusStopActionBtn from "./components/BusStopActionBtn";
 import axios from "axios";
-import {admin, isAdmin, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import {getAreas} from "../../store/actions/areaAction";
 
 
@@ -27,7 +25,7 @@ function UserRow(props) {
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
       <td>{user.direction}</td>
-      {isAdmin === admin ?  <td> <BusStopActionBtn id={user.id} /> </td>: null}
+      {isAdmin ?  <td> <BusStopActionBtn id={user.id} /> </td>: null}
     </tr>
   )
 }
@@ -111,7 +109,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
               <div className="w-25">
                 Bus Stops
               </div>
-              {isAdmin === admin && <BusStopHeader />}
+              {isAdmin && <BusStopHeader />}
             </CardHeader>
             <CardBody>
               {isLoading && <Spinner />}
@@ -127,14 +125,14 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
                   <th scope="col">Latitude</th>
                   <th scope="col">Longitude</th>
                   <th scope="col">Direction</th>
-                  {isAdmin === admin ? <th scope="col">Action</th>: null}
+                  {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>
-                {(busStops && isAdmin === admin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(busStops && isAdmin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 ): null}
-                {(busStops && route && isAdmin !== admin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>
+                {(busStops && route && isOperator) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 ): null}
                 </tbody>

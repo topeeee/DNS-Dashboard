@@ -1,13 +1,9 @@
-
-
-import React, {Component, useEffect, useState} from 'react';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import React, {useState} from 'react';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
 import {Link} from "react-router-dom";
-import axios from "axios";
-import api from "../../../environments/environment";
 import {changeUserStatus} from "../../../store/actions/userAction";
-import {admin, isAdmin} from "../../../environments/constants";
+import {isAdmin} from "../../../environments/constants";
 
 
 
@@ -30,7 +26,7 @@ const UserActionBtn = (props) => {
     setDropdown(newArray)
  }
   const route = () =>
-    (isAdmin === admin) ? `/users/${props.id}` : `/operator/passenger/${props.id}`;
+    (isAdmin) ? `/users/${props.id}` : `/operator/passenger/${props.id}`;
 
 
     return (
@@ -45,7 +41,6 @@ const UserActionBtn = (props) => {
             {(props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>props.changeUserStatus(props.id, '0')}>Suspend</DropdownItem>}
             {(props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>props.changeUserStatus(props.id, '1')}>Reactivate</DropdownItem>}
             <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
-            {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
       </div>

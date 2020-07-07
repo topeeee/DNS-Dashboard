@@ -1,15 +1,13 @@
-import React, {Component, useEffect, useState} from 'react';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import React, {useState} from 'react';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
-import {Link, Redirect, Route} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
   changeDriverStatus, getDriverVehicleId, getDriverVehicleId2,
   toggleDriverModalDelete,
   toggleDriverModalUpdate
 } from "../../../store/actions/driverAction";
-import axios from "axios";
-import api from "../../../environments/environment";
-import {admin, isAdmin} from "../../../environments/constants";
+import {isAdmin} from "../../../environments/constants";
 
 
 
@@ -31,7 +29,7 @@ const mapStateToProps = state => ({
 
 const DriverActionBtn = (props) => {
   const route = () =>
-    (isAdmin === admin) ? `/drivers/${props.id}` : `/operator/drivers/${props.id}`;
+    (isAdmin) ? `/drivers/${props.id}` : `/operator/drivers/${props.id}`;
 
       const [dropdownOpen, setDropdown] = useState(new Array(6).fill(false));
 
@@ -52,7 +50,6 @@ const DriverActionBtn = (props) => {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            {/*<DropdownItem className='bg-danger text-center p-0' onClick={()=>this.props.toggleOperatorModalDelete(this.props.id)}>Delete</DropdownItem>*/}
             <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleDriverModalUpdate(props.id)}>Update</DropdownItem>
             {(props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Suspend</DropdownItem>}
             {(props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '1'); props.getDriverVehicleId2(props.id)}}>Reactivate</DropdownItem>}
@@ -60,7 +57,6 @@ const DriverActionBtn = (props) => {
             {(props.user.status === "") && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Deny</DropdownItem>}
 
             <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
-            {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
       </div>
