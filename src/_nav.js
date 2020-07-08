@@ -44,6 +44,37 @@ export default {
          // class: "menu_drop",
 
         },
+
+        {
+          name: 'Partners',
+          children: [
+            {
+              name: 'All',
+              url: '/partners',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Active',
+              url: '/partners/active',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Inactive',
+              url: '/partners/inactive',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+          ]
+          // url: '/operators',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
         {
           name: 'States',
           url: '/states',

@@ -22,11 +22,15 @@ import OperatorModalCreate from "./operatorModal/OperatorModalCreate";
 import OperatorModalUpdate from "./operatorModal/OperatorModalUpdate";
 import VehicleModalUpdate from "./vehicleModal/VehicleModalUpdate";
 import DriverModalUpdate from "./driverModal/DriverModalUpdate";
+import PartnerModalCreate from "./partnerModal/PartnerModalCreate";
+import PartnerModalUpdate from "./partnerModal/PartnerModalUpdate";
 
 
 const CombineModal = () => {
   return (
     <div>
+      <PartnerModalUpdate />
+      <PartnerModalCreate />
       <DriverModalUpdate />
       <VehicleModalUpdate />
       <OperatorModalUpdate />

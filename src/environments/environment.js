@@ -21,6 +21,7 @@
    operatorMode: "http://165.22.116.11:7053",
    driverVehicles: 'http://165.22.116.11:7054',
    admin: 'http://165.22.116.11:7059',
+   partner: "http://165.22.116.11:7060",
 };
 
 export default api

@@ -3,10 +3,12 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
+import api from "../../environments/environment";
 
 
 const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, error, match, drivers})=> {
-  // const [operator, setOperator] = useState([]);
+  const [operatorId, setOperatorId] = useState('');
+  const [operatorName, setOperatorName] = useState('');
   const [newOperator, setNewOperator] = useState({});
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
@@ -25,7 +27,8 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     if (drivers){
       drivers.map(op=> {
         if(op.id == match.params.id){
-          setNewOperator(op)
+          setNewOperator(op);
+          setOperatorId(op.operatorid)
         }
       })
     }
@@ -44,6 +47,15 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       })
   }
 
+  async function getOperator(id) {
+    try {
+      const res = await axios.get(`${api.operator}/api/operators/${id}/`);
+      setOperatorName(res.data.name)
+    }catch (e) {
+
+    }
+  }
+
   useEffect(()=>{
     getDrivers();
     getDriverVehicle();
@@ -58,6 +70,12 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       getVehicle(vehicleId)
     }
   },[vehicleId]);
+
+  useEffect(()=> {
+    if(operatorId) {
+      getOperator(operatorId);
+    }
+  },[operatorId]);
 
   useEffect(()=> {
     if(match.params.id && driverVehicle){
@@ -146,6 +164,10 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                 <tr>
                   <td><strong>Zone</strong></td>
                   <td>{newOperator.zone}</td>
+                </tr>
+                <tr>
+                  <td><strong>Operator</strong></td>
+                  <td>{operatorName}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>

@@ -5,10 +5,11 @@ import * as usersData from "core-js";
 import {connect} from "react-redux";
 import axios from "axios"
 import {getBusAssistants} from "../../store/actions/busAssistantAction";
+import api from "../../environments/environment";
 
 
 const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  searchOperator, error, match, busAssistants})=> {
-  // const [operator, setOperator] = useState([]);
+  const [operatorId, setOperatorId] = useState('');
   const [newOperator, setNewOperator] = useState({});
   // const [operatorVehicle, setOperatorVehicle] = useState([]);
   // const [operatorZone, setOperatorZone] = useState([]);
@@ -16,6 +17,7 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
   const [vehicle, setVehicle] = useState({});
+  const [operatorName, setOperatorName] = useState('');
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -30,7 +32,8 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
     if (busAssistants){
       busAssistants.map(op=> {
         if(op.id == match.params.id){
-          setNewOperator(op)
+          setNewOperator(op);
+          setOperatorId(op.operatorid)
         }
       })
     }
@@ -50,6 +53,15 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
       })
   }
 
+  async function getOperator(id) {
+    try {
+      const res = await axios.get(`${api.operator}/api/operators/${id}/`);
+      setOperatorName(res.data.name)
+    }catch (e) {
+
+    }
+  }
+
   useEffect(()=>{
     getBusAssistants();
     getDriverVehicle();
@@ -64,6 +76,12 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
       getVehicle(vehicleId)
     }
   },[vehicleId]);
+
+  useEffect(()=> {
+    if(operatorId) {
+      getOperator(operatorId);
+    }
+  },[operatorId]);
 
   useEffect(()=> {
     if(match.params.id && driverVehicle){
@@ -159,6 +177,10 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                 <tr>
                   <td><strong>Zone</strong></td>
                   <td>{newOperator.zone}</td>
+                </tr>
+                <tr>
+                  <td><strong>Operator</strong></td>
+                  <td>{operatorName}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>

@@ -47,6 +47,9 @@ const InactiveVehicles = React.lazy(() => import('./views/Vehicle/InactiveVehicl
 const PendingVehicles = React.lazy(() => import('./views/Vehicle/PendingVehicles'));
 const Vehicle = React.lazy(() => import('./views/Vehicle/Vehicle'));
 const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
+const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
+const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
+const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
 
 
 
@@ -60,6 +63,9 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
   { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
+  { path: '/partners/active', exact: true, name: 'Active Partners', component: ActivePartners},
+  { path: '/partners/inactive', exact: true, name: 'Inactive Partners', component: InactivePartners},
+  { path: '/partners', exact: true, name: 'Partners', component: Partners},
   { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/areas', name: 'Areas', component: Area },
