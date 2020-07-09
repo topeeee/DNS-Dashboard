@@ -22,7 +22,7 @@ function UserRow(props) {
       <td>{user.xarea}</td>
       <td>{user.xareacode}</td>
       <td>{user.zonecode}</td>
-      <td> <AreaActionBtn id={user.id} /> </td>
+      {isAdmin ? <td> <AreaActionBtn id={user.id} /> </td>: null}
     </tr>
   )
 }
@@ -114,7 +114,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
                   <th scope="col">Area</th>
                   <th scope="col">Area code</th>
                   <th scope="col">Zone</th>
-                  <th scope="col">Action</th>
+                  {isAdmin? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>

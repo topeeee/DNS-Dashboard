@@ -20,7 +20,7 @@ function UserRow(props) {
       <td>{user.zone}</td>
       <td>{user.zonecode}</td>
       <td>{user.statecode}</td>
-      <td> <ZoneActionBtn id={user.id} /> </td>
+      {isAdmin?  <td> <ZoneActionBtn id={user.id} /> </td>:null}
     </tr>
   )
 }
@@ -66,14 +66,10 @@ const [operatorZone, setOperatorZone] = useState('');
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  {/*<th scope="col">Id</th>*/}
                   <th scope="col">Zone</th>
                   <th scope="col">Zone code</th>
                   <th scope="col">State</th>
-                  {/*<th scope="col">User Name</th>*/}
-
-                  {/*<th scope="col">Zone Code </th>*/}
-                  <th scope="col">Action</th>
+                  {isAdmin? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>
