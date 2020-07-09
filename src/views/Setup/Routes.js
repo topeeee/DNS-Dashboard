@@ -22,7 +22,7 @@ function UserRow(props) {
       <td>{user.route}</td>
       <td>{user.routecode}</td>
       <td>{user.areacode}</td>
-      <td> <RouteActionBtn id={user.id} /> </td>
+      {isAdmin?  <td> <RouteActionBtn id={user.id} /> </td>:null}
     </tr>
   )
 }
@@ -68,7 +68,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
               <div className="w-25">
                 Routes
               </div>
-              <RouteHeader />
+              {isAdmin? <RouteHeader />: null}
             </CardHeader>
             <CardBody>
               {isLoading && <Spinner />}
@@ -80,7 +80,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
                   <th scope="col">Route</th>
                   <th scope="col">Route code</th>
                   <th scope="col">Area</th>
-                  <th scope="col">Action</th>
+                  {isAdmin? <th scope="col">Action</th>:null}
                 </tr>
                 </thead>
                 <tbody>
