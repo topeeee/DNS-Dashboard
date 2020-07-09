@@ -7,6 +7,7 @@ import Spinner from "../../spinner/Spinner";
 import {admin, isAdmin} from "../../environments/constants";
 import axios from "axios";
 import store from "../../store";
+import PartnerLayout from "../../containers/DefaultLayout/PartnerLayout";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -33,6 +34,9 @@ const PrivateRoute = ({ isLoggedIn, isAdmin, stored, ...props }) =>
 const OperatorRoute = ({ isLoggedIn, isOperator, stored, ...props }) =>
   ((isLoggedIn && isOperator) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
 
+const PartnerRoute = ({ isLoggedIn, isPartner, stored, ...props }) =>
+  ((isLoggedIn && isPartner) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
+
 
 
 function mapDispatchToProps(dispatch) {
@@ -47,13 +51,16 @@ const mapStateToProps = (state) => ({
   operators: state.operator.operators,
   admin: state.auth.admin,
   operator: state.auth.operator,
+  partner: state.auth.partner,
   token: state.auth.token,
+
 });
 
-const Home = ({ isAuthenticated, operator, admin, token}) => {
+const Home = ({ isAuthenticated, operator, admin, token, partner}) => {
 
   const isAdmin = sessionStorage.getItem('isAdmin');
   const isOperator = sessionStorage.getItem('isOperator');
+  const isPartner = sessionStorage.getItem('isPartner');
 
 
   // async function getToken(token) {
@@ -83,6 +90,7 @@ const Home = ({ isAuthenticated, operator, admin, token}) => {
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
               <OperatorRoute isLoggedIn={isAuthenticated} isOperator={operator} stored={isOperator} path="/operator" name="Operator" render={props => <OperatorLayout {...props}/>} />
+              <PartnerRoute isLoggedIn={isAuthenticated} isPartner={partner} stored={isPartner} path="/partner" name="Operator" render={props => <PartnerLayout {...props}/>} />
               <PrivateRoute isLoggedIn={isAuthenticated} isAdmin={admin} stored={isAdmin}  path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />
               {/*<Route path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />*/}
             </Switch>

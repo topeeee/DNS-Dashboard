@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {admin, isOperator, OperatorId} from "../../environments/constants";
+import {isOperator, OperatorId} from "../../environments/constants";
 import axios from "axios"
 import api from "../../environments/environment";
 

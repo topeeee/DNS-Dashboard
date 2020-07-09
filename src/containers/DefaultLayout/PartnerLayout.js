@@ -2,7 +2,6 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
-
 import {
   AppAside,
   AppFooter,
@@ -15,17 +14,15 @@ import {
   AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
-// sidebar nav config
-import Operatornav from '../../Operatornav';
-// routes config
-import Operatorroutes from '../../Operatorroutes';
+import Partnernav from '../../Partnernav';
+import Partnerroutes from '../../Partnerroutes';
 import Spinner from "../../spinner/Spinner";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
-class OperatorLayout extends Component {
+class PartnerLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
@@ -48,17 +45,17 @@ class OperatorLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-              <AppSidebarNav navConfig={Operatornav} {...this.props} router={router}/>
+              <AppSidebarNav navConfig={Partnernav} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={Operatorroutes} router={router}/>
+            <AppBreadcrumb appRoutes={Partnerroutes} router={router}/>
             <Container fluid>
               <Suspense fallback={<Spinner />}>
                 <Switch>
-                  {Operatorroutes.map((route, idx) => {
+                  {Partnerroutes.map((route, idx) => {
                     return route.component ? (
                       <Route
                         key={idx}
@@ -70,7 +67,7 @@ class OperatorLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/operator" to="operator/dashboard" />
+                  <Redirect from="/partner" to="partner/dashboard" />
                 </Switch>
               </Suspense>
             </Container>
@@ -91,4 +88,4 @@ class OperatorLayout extends Component {
   }
 }
 
-export default OperatorLayout;
+export default PartnerLayout;

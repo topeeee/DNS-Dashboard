@@ -3,8 +3,9 @@ import {
   AUTH_ERROR,
   REMOVE_AUTH_ERROR,
   USER_AUTHORIZED,
-  OPERATOR_BY_USER,
-  OPERATOR_ERROR, ADMIN, OPERATOR
+  PARTNER,
+  ADMIN,
+  OPERATOR
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -16,8 +17,9 @@ export const LogIn = (username, password) => async dispatch => {
   const body = {username, password};
   // sessionStorage.setItem('isAdmin', username);
   try {
-   dispatch(getAdmin(username));
+      dispatch(getAdmin(username));
       dispatch(getOperator(username));
+      dispatch(getPartner(username));
 
     const res = await axios.post(`${api.login}/api/login/`, body);
     const token  = res.data.Authorized;
@@ -45,9 +47,35 @@ export function Authorized() {
   };
 }
 
+export const getAdmin = (username) => async dispatch => {
+  try {
+    const res = await axios.get(`${api.admin}/api/admins/?search=${username}`);
+    if(res.data.length > 0) {
+      dispatch({
+        type:  ADMIN,
+        payload: res.data
+      });
+
+    } else {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: "Unauthorized"
+      });
+      setTimeout(() => dispatch({
+        type: REMOVE_AUTH_ERROR
+      }), 5000)
+    }
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: "Unauthorized"
+    });
+
+  }
+};
+
 export const getOperator = (username) => async dispatch => {
   try {
-    // dispatch(isLoading());
     const res = await axios.get(`${api.operator}/api/operators/`);
     res.data.map(operator => {
       if(operator.email === username) {
@@ -57,7 +85,6 @@ export const getOperator = (username) => async dispatch => {
         });
         sessionStorage.setItem('OperatorName', operator.name);
         sessionStorage.setItem('OperatorId', operator.id);
-        // return <Redirect to="/operator" />;
       } else {
         dispatch({
           type: AUTH_ERROR,
@@ -78,15 +105,16 @@ export const getOperator = (username) => async dispatch => {
   }
 };
 
-export const getAdmin = (username) => async dispatch => {
+export const getPartner = (username) => async dispatch => {
   try {
-    // dispatch(isLoading());
-    const res = await axios.get(`${api.admin}/api/admins/?search=${username}`);
+    const res = await axios.get(`${api.partner}/api/email/?email=${username}`);
     if(res.data.length > 0) {
       dispatch({
-            type:  ADMIN,
-            payload: res.data
-          });
+        type:  PARTNER,
+        payload: res.data
+      });
+      sessionStorage.setItem('PartnerName', res.data[0].name);
+      sessionStorage.setItem('PartnerId', res.data[0].id);
 
     } else {
       dispatch({
@@ -99,7 +127,7 @@ export const getAdmin = (username) => async dispatch => {
     }
   } catch (err) {
     dispatch({
-      type: OPERATOR_ERROR,
+      type: AUTH_ERROR,
       payload: "Unauthorized"
     });
 

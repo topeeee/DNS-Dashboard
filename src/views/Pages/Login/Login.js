@@ -23,7 +23,7 @@ import {LogIn} from "../../../store/actions/authenticationAction";
 
 
 
-const Login  = ({LogIn, isAuthenticated, errors, admin, operator}) => {
+const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,22 +36,29 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator}) => {
 
   const isAdmin = sessionStorage.getItem('isAdmin');
   const isOperator = sessionStorage.getItem('isOperator');
+  const isPartner = sessionStorage.getItem('isPartner');
   const token = sessionStorage.getItem("token");
 
 
 
-  if ((isAuthenticated && admin && !operator) || (isAdmin && token)) {
+  if ((isAuthenticated && admin) || (isAdmin && token)) {
     sessionStorage.setItem('isAdmin', admin);
     setTimeout(()=> {
       window.location.reload()
     },0);
     return <Redirect to="/" />;
-  } else if ((isAuthenticated && !admin && operator) || (isOperator && token)) {
+  } else if ((isAuthenticated && operator) || (isOperator && token)) {
     sessionStorage.setItem('isOperator', operator);
     setTimeout(()=> {
       window.location.reload()
     },0);
     return <Redirect to="/operator" />;
+  } else if ((isAuthenticated && partner) || (isPartner && token)) {
+    sessionStorage.setItem('isPartner', partner);
+    setTimeout(()=> {
+      window.location.reload()
+    },0);
+    return <Redirect to="/partner" />;
   }
 
   return (
@@ -137,6 +144,7 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   admin: state.auth.admin,
   operator: state.auth.operator,
+  partner: state.auth.partner,
   errors: state.auth.errors
 });
 

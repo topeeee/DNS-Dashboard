@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {admin, isOperator, OperatorId} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorId} from "../../environments/constants";
 import axios from "axios";
 import api from "../../environments/environment";
 
@@ -44,7 +44,6 @@ const ActiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => 
   const [userPin, setUserPin] = useState([]);
   const [operatorPassenger, setOperatorPassenger] = useState([]);
 
-  const isAdmin = sessionStorage.getItem('isAdmin');
 
   async function getUsersPin() {
     try {
@@ -119,7 +118,7 @@ const ActiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) => 
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-              Active  {isAdmin === admin ? 'Users': 'Passengers'}
+              Active  {isAdmin? 'Users': 'Passengers'}
               </div>
             </CardHeader>
             {isLoading && <Spinner />}

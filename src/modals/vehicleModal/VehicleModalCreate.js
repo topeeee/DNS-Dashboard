@@ -3,7 +3,8 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Lab
 import { connect } from "react-redux";
 import {toggleVehicleModalCreate, createVehicle} from "../../store/actions/vehicleAction";
 import {getOperators} from "../../store/actions/operatorAction";
-import {admin} from "../../environments/constants";
+import {isOperator, OperatorName} from "../../environments/constants";
+
 
 
 const isAdmin = sessionStorage.getItem('isAdmin');
@@ -66,15 +67,10 @@ const VehicleModalCreate = (props) => {
   };
 
   useEffect(()=> {
-    if(operators && isAdmin !== admin){
-      operators.map(operator=> {
-        if(operator.email === isAdmin) {
-          setFormData({...formData, operator: operator.name })
-
-        }
-      })
-    }
-  }, [operators, isAdmin, operator]);
+   if(isOperator) {
+     setFormData({...formData, operator: OperatorName })
+   }
+   }, [isOperator]);
 
   const toggle = () => {toggleVehicleModalCreate()};
 
@@ -120,7 +116,7 @@ const VehicleModalCreate = (props) => {
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                {(operators && isAdmin === admin) &&<Input
+                {(operators && isAdmin) &&<Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operator"
@@ -129,7 +125,7 @@ const VehicleModalCreate = (props) => {
                   required
                 >
                   <option value="">Select Operator</option>
-                  {(operators && isAdmin === admin) && operators.map((operator, index) =>
+                  {(operators && isAdmin) && operators.map((operator, index) =>
                     <option value={operator.name} key={index}>{operator.name}</option>
                   )}
                   {/*{(operators && isAdmin !== admin) && operators.filter(user =>(user.email === isAdmin)).map((operator, index) =>*/}
@@ -138,7 +134,7 @@ const VehicleModalCreate = (props) => {
 
 
                 </Input>}
-                {(operators && isAdmin !== admin) && <Input type="text"  name="operator" readOnly={true} onChange={onChange} value={operator} required />}
+                {(operators && isOperator) && <Input type="text"  name="operator" readOnly={true} onChange={onChange} value={operator} required />}
               </Col>
             </FormGroup>
             <div className="d-flex justify-content-md-end">

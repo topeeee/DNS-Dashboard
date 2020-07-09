@@ -1,10 +1,6 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
-
 import {connect} from "react-redux";
-import axios from "axios"
-import {getDrivers} from "../../store/actions/driverAction";
 import {getUsers} from "../../store/actions/userAction";
 
 

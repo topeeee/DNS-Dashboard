@@ -10,13 +10,10 @@ import  axios from "axios";
 import {getOperators} from "../../store/actions/operatorAction";
 import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
-// import {BusStopUser} from "../../store/actions/busStopAction";
 import api from '../../environments/environment'
-import {admin} from "../../environments/constants";
-
+import {isOperator, OperatorName, isAdmin} from "../../environments/constants";
 const animatedComponents = makeAnimated();
 
-const isAdmin = sessionStorage.getItem('isAdmin');
 
 const options = [
   { value: 'Bus', label: 'Zone1' },
@@ -251,15 +248,10 @@ const DriverModalCreate = (props) => {
   }, [plateInput]);
 
   useEffect(()=> {
-    if(operators && isAdmin !== admin){
-      operators.map(operator=> {
-        if(operator.email === isAdmin) {
-          setOperatorInput(operator.name)
-
-        }
-      })
+    if(isOperator) {
+      setOperatorInput(OperatorName)
     }
-  }, [operators, isAdmin, operatorInput]);
+  }, [isOperator]);
 
   useEffect(()=>{
     if(isAuthenticated) {
@@ -317,7 +309,7 @@ const DriverModalCreate = (props) => {
             <FormGroup row>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                {(operators && isAdmin === admin) && <Input
+                {(operators && isAdmin) && <Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operatorInput"
@@ -331,7 +323,7 @@ const DriverModalCreate = (props) => {
                     <option value={operator.name} key={index}>{operator.name}</option>
                   )}
                 </Input>}
-                {(operators && isAdmin !== admin) &&
+                {(operators && isOperator) &&
                 <Input type="text"  name="operatorInput" onChange={onChange} value={operatorInput} readOnly={true} required />}
               </Col>
               <Col md="12">

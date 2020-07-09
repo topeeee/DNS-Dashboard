@@ -1,11 +1,8 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
-
 import {connect} from "react-redux";
-import axios from "axios"
 import {getVehicles} from "../../store/actions/vehicleAction";
-import {admin, isAdmin} from "../../environments/constants";
+import {isAdmin} from "../../environments/constants";
 
 
 const Operator = ({getVehicles, match, vehicles})=> {
@@ -70,7 +67,7 @@ const Operator = ({getVehicles, match, vehicles})=> {
                   <td><strong>Capacity</strong></td>
                   <td>{newOperator.capacity}</td>
                 </tr>
-                {isAdmin === admin ? <tr>
+                {isAdmin ? <tr>
                   <td><strong>Operator</strong></td>
                   <td>{newOperator.operator}</td>
                 </tr>: null}
