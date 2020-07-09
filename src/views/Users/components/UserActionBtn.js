@@ -26,7 +26,7 @@ const UserActionBtn = (props) => {
     setDropdown(newArray)
  }
   const route = () =>
-    (isAdmin) ? `/users/${props.id}` : `/operator/passenger/${props.id}`;
+    (isAdmin) ? `/users/${props.id}` : `/operator/passengers/${props.id}`;
 
 
     return (

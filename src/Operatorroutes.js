@@ -103,7 +103,7 @@ const routes = [
   { path: '/operator/passengers/active', name: 'Active Passengers', component: ActiveUsers },
   { path: '/operator/passengers/overview', name: 'Passengers Overview', component: UsersOverview },
   { path: '/operator/passengers/inactive', name: 'Inactive Passengers', component: InactiveUsers },
-  { path: '/operator/passenger/:id', exact: true, name: 'Passenger Details', component: User },
+  { path: '/operator/passengers/:id', exact: true, name: 'Passenger Details', component: User },
   { path: '/operator/passengers', exact: true,  name: 'Passengers', component: Users },
 
 ];
