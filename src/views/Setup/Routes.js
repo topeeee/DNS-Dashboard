@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
-import {connect} from "react-redux"
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
+import {connect} from "react-redux";
+import axios from "axios";
+import {Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import PrimaryHeader from "../components/PrimaryHeader";
 import {RouteUser} from "../../store/actions/routeAction";
 import RouteHeader from "./components/RouteHeader";
 import {getAreas} from "../../store/actions/areaAction";
 import Spinner from "../../spinner/Spinner";
-import axios from "axios";
 import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import RouteActionBtn from "./components/RouteActionBtn";
+import api from "../../environments/environment";
 
 
 
@@ -18,7 +18,6 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
       <td>{user.route}</td>
       <td>{user.routecode}</td>
       <td>{user.areacode}</td>
@@ -31,15 +30,17 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
   const [operatorZone, setOperatorZone] = useState('');
   const [area, setArea] = useState('');
 
-  function getOperatorZone() {
-    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
-      .then(res=> {
-        res.data.map(operatorZone => {
-          if(operatorZone.operatorName === OperatorName) {
-            setOperatorZone(operatorZone.zoneCode)
-          }
-        })
-      })
+ async function getOperatorZone() {
+    try {
+      const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+          res.data.map(operatorZone => {
+            if(operatorZone.operatorName === OperatorName) {
+              setOperatorZone(operatorZone.zoneCode)
+            }
+          })
+    }catch (e) {
+
+    }
   }
 
   useEffect(()=> {

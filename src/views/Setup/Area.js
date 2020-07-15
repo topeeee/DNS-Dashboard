@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import axios from "axios";
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {getAreas, searchArea} from "../../store/actions/areaAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import AreaHeader from "./components/AreaHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
-import axios from "axios";
-import {admin, isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import AreaActionBtn from "./components/AreaActionBtn";
+import api from "../../environments/environment";
 
 
 
@@ -33,7 +34,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
 
  async function getOperatorZone() {
     try {
-    const res = await  axios.get('http://165.22.116.11:7052/api/all/operatorzones/');
+    const res = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
           res.data.map(operatorZone => {
             if(operatorZone.operatorName === OperatorName) {
               setOperatorZone(operatorZone.zoneCode)

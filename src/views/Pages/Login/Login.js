@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import PropTypes from 'prop-types';
 import {Redirect} from 'react-router-dom';
@@ -25,20 +25,36 @@ import {LogIn} from "../../../store/actions/authenticationAction";
 
 const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const { username, password } = formData;
 
+  function  setError() {
+    if((!isAuthenticated || isAuthenticated) && !admin && !operator && !partner && errors) {
+      setIsLoading(false);
+      setIsError(true);
+      setTimeout(()=> {
+        setIsError(false)
+      },3000)
+    }
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault();
     LogIn(username, password);
+    setIsLoading(true);
   };
+
+useEffect(()=> {
+  setError();
+},[isAuthenticated, partner, operator, admin, errors]);
 
   const isAdmin = sessionStorage.getItem('isAdmin');
   const isOperator = sessionStorage.getItem('isOperator');
   const isPartner = sessionStorage.getItem('isPartner');
   const token = sessionStorage.getItem("token");
-
 
 
   if ((isAuthenticated && admin) || (isAdmin && token)) {
@@ -76,7 +92,7 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
                       {/*<h1>Login</h1>*/}
                       <p className="text-primary text-center">Sign In to your account</p>
                       <div className="d-flex justify-content-center align-items-center">
-                        {(errors && !isAdmin && !isOperator) ? <small className="text-danger text-center pb-1 font-italic">Incorrect Username or Password</small>: null}
+                        {isError ? <small className="text-danger text-center pb-1 font-italic">Incorrect Username or Password</small>: null}
                       </div>
 
                       <InputGroup className="mb-3">
@@ -112,7 +128,7 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
                       </InputGroup>
                       <Row>
                         <Col className="d-flex align-items-center justify-content-center">
-                          <Button color="primary" className="px-4 btn btn-ladda" data-style="expand-right" type="submit">Login</Button>
+                          <Button color="primary" className="px-4 btn btn-ladda" data-style="expand-right" type="submit">Login {isLoading && <i className="fa fa-spinner fa-spin"></i>}</Button>
                         </Col>
                       </Row>
                       <Row>

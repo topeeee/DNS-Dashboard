@@ -36,7 +36,6 @@ function UserRow(props) {
       })}
       {user.pickUp ? <td>{user.pickUp}</td>: <td>Not Available</td>}
       {user.dropOff ? <td>{user.dropOff}</td>: <td>Not Available</td>}
-      {/*<td>{user.dropOff}</td>*/}
       <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
       {newUser && newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
@@ -44,7 +43,6 @@ function UserRow(props) {
         }
       })}
       {(user.pickStatus === "1" && user.dropStatus === "0") && <td><Badge color={getBadge("Transit")}>Transit</Badge></td> }
-      {/*<td>Not available</td>*/}
       {(user.pickStatus === "1" && user.dropStatus === "1") && <td><Badge color={getBadge("Completed")}>Completed</Badge></td> }
       {(user.pickStatus === "0" && user.dropStatus === "0") && <td><Badge color={getBadge("Waiting")}>Waiting</Badge></td> }
       <td> <TripActionBtn id={user.id} /> </td>
@@ -135,12 +133,6 @@ const CompletedTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error, u
                   <th scope="col">Booking Date/time</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Status</th>
-                  {/*<th scope="col">Scheduled Pickup Time</th>*/}
-                  {/*<th scope="col">Driver Name</th>*/}
-                  {/*<th scope="col">Driver Phone no</th>*/}
-                  {/*<th scope="col">Vehicle Detail</th>*/}
-                  {/*<th scope="col">Distance</th>*/}
-                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>

@@ -7,7 +7,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
 import VehicleActionBtn from "./components/VehicleActionBtn";
-import {isAdmin} from "../../environments/constants";
+import {isAdmin, isOperator} from "../../environments/constants";
 
 
 
@@ -39,7 +39,7 @@ function UserRow(props) {
       {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
       {(user.status == "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
       {(user.status == "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
-      <td> <VehicleActionBtn id={user.id} user={user} /> </td>
+      {isAdmin || isOperator ?  <td> <VehicleActionBtn id={user.id} user={user} /> </td>: null}
     </tr>
   )
 }
@@ -115,7 +115,7 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
                   <th scope="col">Assigned To Driver</th>
                   <th scope="col">Assigned To BA</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  {isAdmin || isOperator?  <th scope="col">Actions</th>: null}
                 </tr>
                 </thead>
                 <tbody>

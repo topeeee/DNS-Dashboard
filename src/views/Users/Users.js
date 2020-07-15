@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux"
+import {connect} from "react-redux";
+import axios from "axios"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {getUsers, searchUser} from "../../store/actions/userAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -7,7 +8,6 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
 import {isOperator, OperatorId} from "../../environments/constants";
-import axios from "axios"
 import api from "../../environments/environment";
 
 
@@ -15,8 +15,6 @@ import api from "../../environments/environment";
 
 function UserRow(props) {
   const user = props.user;
-
-
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
@@ -26,7 +24,6 @@ function UserRow(props) {
   };
   return (
     <tr key={user.id}>
-      {/*<td>{user.id}</td>*/}
       <td>{user.pin}</td>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>

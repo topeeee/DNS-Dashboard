@@ -135,12 +135,6 @@ const WaitingTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error, use
                   <th scope="col">Booking Date/time</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Status</th>
-                  {/*<th scope="col">Scheduled Pickup Time</th>*/}
-                  {/*<th scope="col">Driver Name</th>*/}
-                  {/*<th scope="col">Driver Phone no</th>*/}
-                  {/*<th scope="col">Vehicle Detail</th>*/}
-                  {/*<th scope="col">Distance</th>*/}
-                  {/*<th scope="col">Cost</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>

@@ -16,6 +16,60 @@ export default {
       name: 'Setup',
       icon: 'icon-settings',
       children: [
+        {
+          name: 'Partners',
+          children: [
+            {
+              name: 'Request',
+              icon: 'icon-bell',
+              children: [
+                {
+                  name: 'All',
+                  url: '/operator/vehicles/requestall',
+                  // icon: 'icon-bell',
+                  class: "menu_drop",
+
+                },
+                {
+                  name: 'Personal',
+                  url: '/operator/vehicles/requestme',
+                  // icon: 'icon-puzzle',
+                  class: "menu_drop",
+
+                },
+              ]
+              // url: '/operators',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'All',
+              url: '/operator/partners',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Active',
+              url: '/operator/partners/active',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Inactive',
+              url: '/operator/partners/inactive',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+          ]
+          // url: '/operators',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
         // {
         //   name: 'Operators',
         //   children: [

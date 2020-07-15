@@ -12,7 +12,7 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, OperatorId} from "../../environments/constants";
+import {isAdmin, isOperator, isPartner, OperatorId, PartnerId} from "../../environments/constants";
 
 
 export const getTrips = () => async dispatch => {
@@ -21,6 +21,9 @@ export const getTrips = () => async dispatch => {
     tripApi = `${api.trip}/api/trips/`
   } else if(isOperator) {
     tripApi = `${api.trip}/api/operator/?operatorId=${OperatorId}`
+  } else if(isPartner) {
+    tripApi = `${api.trip}/api/partner/?partnerId=${PartnerId}`
+
   }
   try {
     dispatch(isLoading());
@@ -32,7 +35,7 @@ export const getTrips = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: TRIP_ERROR,
-      payload: "Opps! Something Went Wrong Try Again"
+      payload: "No trips available"
     });
 
   }

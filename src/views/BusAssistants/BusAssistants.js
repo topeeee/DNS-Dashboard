@@ -31,7 +31,6 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       <td>{user.residentialAddress}</td>
       <td>{user.email}</td>
-      {/*<td>{user.appstatus}</td>*/}
       <td>Not Available</td>
       <td>Not Available</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -140,13 +139,11 @@ useEffect(()=> {
                 Bus Assistants
               </div>
               <BusAssistantHeader />
-              {/*<BusAssistantHeader />*/}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {/*{isLoading && loading()}*/}
               {(busAssistants && busAssistants.length === 0) &&
               <div className="animated fadeIn pt-1 text-center">No Bus Assistant Available</div>}
               {((busAssistants && busAssistants.length > 0) || busAssistant) &&

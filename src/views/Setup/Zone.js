@@ -9,6 +9,7 @@ import {getStates} from "../../store/actions/stateAction";
 import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import Spinner from "../../spinner/Spinner";
 import ZoneActionBtn from "./components/ZoneActionBtn";
+import api from "../../environments/environment";
 
 
 
@@ -28,15 +29,17 @@ function UserRow(props) {
 const Zones = ({ZoneUser, zones, getStates, states}) => {
 const [operatorZone, setOperatorZone] = useState('');
 
-  function getOperatorZone() {
-   axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
-     .then(res=> {
-       res.data.map(operatorZone => {
-         if(operatorZone.operatorName === OperatorName) {
-           setOperatorZone(operatorZone.zoneCode)
-         }
-       })
-     })
+ async function getOperatorZone() {
+   try {
+     const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+         res.data.map(operatorZone => {
+           if(operatorZone.operatorName === OperatorName) {
+             setOperatorZone(operatorZone.zoneCode)
+           }
+         })
+   }catch (e) {
+
+   }
   }
 
   useEffect(()=>{

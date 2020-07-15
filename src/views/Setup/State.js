@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux"
+import {connect} from "react-redux";
+import axios from "axios"
 import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import StateHeader from "./components/StateHeader";
 import {getStates, searchState} from "../../store/actions/stateAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import axios from "axios"
-// import StateActionBtn from "./components/StateActionBtn";
 import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import {ZoneUser} from "../../store/actions/zoneAction";
+import api from "../../environments/environment";
 
 
 
@@ -33,15 +33,17 @@ const States = ({getStates, states, state, isLoading,  searchState, error, zones
   const [operatorZone, setOperatorZone] = useState('');
   const [isState, setIsState] = useState('');
 
-  function getOperatorZone() {
-    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
-      .then(res=> {
-        res.data.map(operatorZone => {
-          if(operatorZone.operatorName === OperatorName) {
-            setOperatorZone(operatorZone.zoneCode)
-          }
-        })
-      })
+ async function getOperatorZone() {
+    try {
+      const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+      res.data.map(operatorZone => {
+            if(operatorZone.operatorName === OperatorName) {
+              setOperatorZone(operatorZone.zoneCode)
+            }
+          })
+    }catch (e) {
+
+    }
   }
 
   useEffect(()=> {
@@ -74,11 +76,6 @@ const States = ({getStates, states, state, isLoading,  searchState, error, zones
     e.preventDefault();
     searchState(formData)
   };
-
-  // const myArr = [{vehicleType:"Mini", operatorId: 46, operatorName: "zeno"},
-  //   {vehicleType:"bus", operatorId: 46, operatorName: "zeno"},
-  //   {vehicleType:"car", operatorId: 46, operatorName: "zeno"}];
-
 
 
   return (

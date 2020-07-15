@@ -1,7 +1,7 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import axios from "axios";
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
-import axios from "axios"
 import {getBusAssistants} from "../../store/actions/busAssistantAction";
 import api from "../../environments/environment";
 
@@ -9,9 +9,6 @@ import api from "../../environments/environment";
 const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  searchOperator, error, match, busAssistants})=> {
   const [operatorId, setOperatorId] = useState('');
   const [newOperator, setNewOperator] = useState({});
-  // const [operatorVehicle, setOperatorVehicle] = useState([]);
-  // const [operatorZone, setOperatorZone] = useState([]);
-  // const [operatorMode, setOperatorMode] = useState([]);
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
   const [vehicle, setVehicle] = useState({});
@@ -37,18 +34,18 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
     }
   }
 
-  function getDriverVehicle() {
-    axios.get('http://165.22.116.11:7056/api/busassitantvehicles/')
-      .then(res=> {
-        setDriverVehicle(res.data)
-      })
+ async function getDriverVehicle() {
+    try {
+      const res = await axios.get(`${api.busAssistantsVehicles}/api/busassitantvehicles/`);
+      setDriverVehicle(res.data)
+    }catch (e) {}
   }
 
-  function getVehicle(id) {
-    axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
-      .then(res=> {
-        setVehicle(res.data)
-      })
+ async function getVehicle(id) {
+    try {
+      const res = await axios.get(`${api.vehicle}/api/vehicles/${id}/`);
+          setVehicle(res.data)
+    }catch (e) {}
   }
 
   async function getOperator(id) {
@@ -91,14 +88,6 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
     }
   },[match.params.id, driverVehicle]);
 
-  // useEffect(()=>{
-  //   if(newOperator.name) {
-  //     getOperatorMode()
-  //   }
-  // },[newOperator]);
-  // const user = operators.find( user => user.id === this.props.match.params.id);
-
-  // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
 
   return (
     <div className="animated fadeIn">
@@ -132,10 +121,6 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                   <td><strong>Address</strong></td>
                   <td>{newOperator.residentialAddress}</td>
                 </tr>
-                {/*<tr>*/}
-                {/*  <td><strong>App Status</strong></td>*/}
-                {/*  <td>{newOperator.appstatus}</td>*/}
-                {/*</tr>*/}
                 <tr>
                   <td><strong>Bank Name</strong></td>
                   <td>{newOperator.bankName}</td>

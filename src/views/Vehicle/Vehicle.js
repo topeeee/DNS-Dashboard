@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import {getVehicles} from "../../store/actions/vehicleAction";
@@ -87,34 +87,6 @@ const Operator = ({getVehicles, match, vehicles})=> {
                   {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
                   {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
                 </tr>
-                {/*<tr>*/}
-                {/*  <td><strong>Operator Email</strong></td>*/}
-                {/*  <td>{newOperator.email}</td>*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>Vehicle Type</strong></td>*/}
-                {/*  {operatorVehicle && operatorVehicle.map((vehicle, index) =>*/}
-                {/*    <td  key={index}>{vehicle.vehicleType}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>Mode</strong></td>*/}
-                {/*  {operatorMode && operatorMode.map((mode, index) =>*/}
-                {/*    <td  key={index}>{mode.modecode}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>Zone</strong></td>*/}
-                {/*  {operatorZone && operatorZone.map((zone, index) =>*/}
-                {/*    <td  key={index}>{zone.zoneCode}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
-                {/*<tr>*/}
-                {/*  <td><strong>State</strong></td>*/}
-                {/*  {states && states.map((state, index) =>*/}
-                {/*    <td  key={index}>{state.xstate}</td>*/}
-                {/*  )}*/}
-                {/*</tr>*/}
                 </tbody>
                 }
 
@@ -131,8 +103,6 @@ const Operator = ({getVehicles, match, vehicles})=> {
 function mapDispatchToProps(dispatch) {
   return {
     getVehicles: () => dispatch(getVehicles()),
-    // getOperators: () => dispatch(getOperators()),
-    // searchOperator: (id) => dispatch(searchOperator(id)),
   };
 }
 

@@ -44,6 +44,12 @@ const InactiveVehicles = React.lazy(() => import('./views/Vehicle/InactiveVehicl
 const PendingVehicles = React.lazy(() => import('./views/Vehicle/PendingVehicles'));
 const Vehicle = React.lazy(() => import('./views/Vehicle/Vehicle'));
 const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
+const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
+const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
+const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
+const AllRequestVehicles = React.lazy(() => import('./views/Vehicle/AllRequestVehicles'));
+const MeRequestVehicles = React.lazy(() => import('./views/Vehicle/MeRequestVehicles'));
+
 
 
 
@@ -55,11 +61,16 @@ const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 const routes = [
   { path: '/operator', exact: true, name: 'Home' },
   { path: '/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
+  { path: '/operator/partners/active', exact: true, name: 'Active Partners', component: ActivePartners},
+  { path: '/operator/partners/inactive', exact: true, name: 'Inactive Partners', component: InactivePartners},
+  { path: '/operator/partners', exact: true, name: 'Partners', component: Partners},
   { path: '/operator/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
   { path: '/operator/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/operator/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/operator/areas', name: 'Areas', component: Area },
   { path: '/operator/modes', name: 'Mode', component: Mode },
+  { path: '/operator/vehicles/requestall', name: 'Vehicles', component: AllRequestVehicles },
+  { path: '/operator/vehicles/requestme', name: 'Vehicles', component: MeRequestVehicles },
   { path: '/operator/vehicles/active', name: 'Active Vehicles', component: ActiveVehicles },
   { path: '/operator/vehicles/inactive', name: 'Inactive Vehicles', component: InactiveVehicles },
   { path: '/operator/vehicles/pending', name: 'Pending Vehicles', component: PendingVehicles },

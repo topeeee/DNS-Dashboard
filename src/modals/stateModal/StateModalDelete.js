@@ -26,7 +26,6 @@ const StateModalDelete = (props)=> {
     deleteState
   } = props;
 
-  console.log(id)
 
   const [formData, setFormData] = useState({stateCode: '', state: '', countryCode: ''});
 

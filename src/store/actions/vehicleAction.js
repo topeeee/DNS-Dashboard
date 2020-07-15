@@ -9,11 +9,15 @@ import {
   SEARCH_VEHICLE,
   CREATE_VEHICLE,
   REMOVE_VEHICLE_ERROR,
-  VEHICLE_STATUS, UPDATE_VEHICLE, VEHICLE_MODAL_UPDATE
+  VEHICLE_STATUS,
+  UPDATE_VEHICLE,
+  VEHICLE_MODAL_UPDATE,
+  VEHICLE_BY_ALL,
+  VEHICLE_BY_ME
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator, isPartner, OperatorName, PartnerId} from "../../environments/constants";
 
 
 
@@ -23,6 +27,8 @@ export const getVehicles = () => async dispatch => {
     VehicleApi = `${api.vehicle}/api/vehicles/`
   }else if(isOperator) {
     VehicleApi = `${api.vehicle}/api/operators/?operator=${OperatorName}`
+  } else if(isPartner) {
+    VehicleApi = `${api.vehicle}/api/partners/?partner_id=${PartnerId}`
   }
   try {
     dispatch(isLoading());
@@ -40,9 +46,46 @@ export const getVehicles = () => async dispatch => {
   }
 };
 
-export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) => async dispatch => {
+
+export const getVehiclesRequestAll = () => async dispatch => {
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.vehicle}/api/request/?operator=All`);
+    dispatch({
+      type: VEHICLE_BY_ALL,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+
+  }
+};
+
+export const getVehiclesRequestMe = () => async dispatch => {
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.vehicle}/api/request/?operator=${OperatorName}`);
+    dispatch({
+      type: VEHICLE_BY_ME,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+
+  }
+};
+
+
+
+export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id) => async dispatch => {
   const body = {
-    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator
+    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id
    };
 
 
@@ -52,6 +95,11 @@ export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_n
       type: CREATE_VEHICLE,
       payload: res.data
     });
+
+      if(res.data && (isAdmin || isOperator)) {
+        await axios.put(`${api.vehicle}/api/approve/${res.data.id}/`)
+      }
+
     dispatch(getVehicles());
     dispatch(toggleVehicleModalCreate());
   } catch (err) {
@@ -180,3 +228,58 @@ export function isLoading() {
     type: LOADING_VEHICLE,
   };
 }
+
+
+
+export const setRequestMe= (id) => async dispatch => {
+  try {
+  await axios.put(`${api.vehicle}/api/approve/${id}/`);
+
+    dispatch(getVehiclesRequestMe());
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    setTimeout(() => dispatch({
+      type: REMOVE_VEHICLE_ERROR
+    }), 5000)
+  }
+};
+
+export const rejectRequestMe= (id) => async dispatch => {
+  try {
+    await axios.put(`${api.vehicle}/api/operators/${id}/?operator=All`);
+
+    dispatch(getVehiclesRequestMe());
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    setTimeout(() => dispatch({
+      type: REMOVE_VEHICLE_ERROR
+    }), 5000)
+  }
+};
+
+
+export const RequestAll= (id) => async dispatch => {
+  try {
+    await axios.put(`${api.vehicle}/api/operators/${id}/?operator=${OperatorName}`);
+    await axios.put(`${api.vehicle}/api/approve/${id}/`);
+
+    dispatch(getVehiclesRequestAll());
+  } catch (err) {
+    dispatch({
+      type: VEHICLE_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+    setTimeout(() => dispatch({
+      type: REMOVE_VEHICLE_ERROR
+    }), 5000)
+  }
+};
+
+
+

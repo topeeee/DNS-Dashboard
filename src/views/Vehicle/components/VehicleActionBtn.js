@@ -5,8 +5,6 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom";
 
 import {changeVehicleStatus, toggleVehicleModalDelete, toggleVehicleUpdate} from "../../../store/actions/vehicleAction";
-import axios from "axios";
-import api from "../../../environments/environment";
 import {admin, isAdmin} from "../../../environments/constants";
 
 

@@ -17,10 +17,6 @@ export const LogIn = (username, password) => async dispatch => {
   const body = {username, password};
   // sessionStorage.setItem('isAdmin', username);
   try {
-      dispatch(getAdmin(username));
-      dispatch(getOperator(username));
-      dispatch(getPartner(username));
-
     const res = await axios.post(`${api.login}/api/login/`, body);
     const token  = res.data.Authorized;
     sessionStorage.setItem("token", token);
@@ -28,6 +24,11 @@ export const LogIn = (username, password) => async dispatch => {
       type: LOGIN_SUCCESS,
       payload: token
     });
+    if(res.data) {
+      dispatch(getAdmin(username));
+      dispatch(getOperator(username));
+      dispatch(getPartner(username));
+    }
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

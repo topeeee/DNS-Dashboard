@@ -31,7 +31,6 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       <td>{user.residentialAddress}</td>
       <td>{user.email}</td>
-      {/*<td>{user.appstatus}</td>*/}
       <td>Not Available</td>
       <td>Not Available</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -59,7 +58,7 @@ const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, i
   },[formData]);
 
   function getDriverVehicle() {
-    axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
+    axios.get(`${api.driverVehicles}/api/me/drivervehicles/`)
       .then(res=> {
         setDriverVehicle(res.data);
       })

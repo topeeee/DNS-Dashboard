@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
+import axios from 'axios'
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,8 @@ import Spinner from "../../../spinner/Spinner";
 import PartnerActionBtn from "./components/PartnerActionBtn";
 import {getPartners} from "../../../store/actions/partnerAction";
 import PartnerHeader from "./components/PartnerHeader";
+import {isAdmin, isOperator, OperatorName} from "../../../environments/constants";
+import api from "../../../environments/environment";
 
 
 
@@ -37,13 +40,43 @@ function UserRow(props) {
 
 const Partners = ({getPartners, partners, isLoading}) => {
   const [formData, setFormData] = useState('');
+  const [partnerId, setPartnerId] = useState([]);
+  const [operatorPartner, setOperatorPartner] = useState([]);
+
+
+  async function getPartnerId() {
+    try {
+      const res = await axios.get(`${api.vehicle}/api/operator/partners?operator=${OperatorName}`);
+      setPartnerId(res.data.partnerId)
+
+    }catch (e) {
+
+    }
+  }
 
   useEffect(()=>{
     getPartners()
   },[]);
 
+useEffect(()=> {
+  if(isOperator) {
+    getPartnerId();
+  }
+},[isOperator]);
 
-
+  useEffect(()=> {
+    if(partnerId.length > 0 && partners) {
+      let operatorPartner = [];
+      partnerId.forEach((id=> {
+        partners.map(partner=> {
+          if(partner.id == id) {
+            operatorPartner.push(partner)
+          }
+        })
+      }));
+      setOperatorPartner(operatorPartner)
+    }
+  },[partnerId, partners]);
 
   const onChange = (e) =>{
     e.preventDefault();
@@ -103,9 +136,12 @@ const Partners = ({getPartners, partners, isLoading}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {partners && partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((operator, index) =>
+                {(partners && isAdmin)? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((operator, index) =>
                   <UserRow key={index} user={operator} />
-                )}
+                ): null}
+                {(operatorPartner && isOperator)? operatorPartner.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((operator, index) =>
+                  <UserRow key={index} user={operator} />
+                ): null}
                 </tbody>
               </Table>
               }

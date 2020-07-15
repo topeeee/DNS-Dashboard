@@ -7,7 +7,8 @@ import {
   LOADING_VEHICLE,
   VEHICLE_ERROR,
   SEARCH_VEHICLE,
-  REMOVE_VEHICLE_ERROR, VEHICLE_MODAL_UPDATE
+  REMOVE_VEHICLE_ERROR,
+  VEHICLE_MODAL_UPDATE, VEHICLE_BY_ALL, VEHICLE_BY_ME
 } from "../actionTypes";
 
 const initialState = {
@@ -20,7 +21,9 @@ const initialState = {
   DeleteRes: null,
   isLoading: false,
   error: null,
-  vehicleId: null
+  vehicleId: null,
+  vehiclesAll: null,
+  vehiclesMe: null
 };
 
 function vehicleReducer(state = initialState, action) {
@@ -32,6 +35,28 @@ function vehicleReducer(state = initialState, action) {
         vehicle: null,
         error: null,
         vehicles: payload,
+        isLoading: false,
+        VehicleModalUpdate: false,
+      };
+    }
+
+    case VEHICLE_BY_ALL: {
+      return {
+        ...state,
+        vehicle: null,
+        error: null,
+        vehiclesAll: payload,
+        isLoading: false,
+        VehicleModalUpdate: false,
+      };
+    }
+
+    case VEHICLE_BY_ME: {
+      return {
+        ...state,
+        vehicle: null,
+        error: null,
+        vehiclesMe: payload,
         isLoading: false,
         VehicleModalUpdate: false,
       };

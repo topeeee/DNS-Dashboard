@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from "react-redux"
+import {connect} from "react-redux";
+import axios from "axios";
 import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {BusStopUser, searchBusStop} from "../../store/actions/busStopAction";
 import BusStopHeader from "./components/BusStopHeader";
@@ -8,9 +9,9 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
 import BusStopActionBtn from "./components/BusStopActionBtn";
-import axios from "axios";
 import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import {getAreas} from "../../store/actions/areaAction";
+import api from "../../environments/environment";
 
 
 
@@ -43,15 +44,16 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
     setFormData(e.target.value );
   };
 
-  function getOperatorZone() {
-    axios.get('http://165.22.116.11:7052/api/all/operatorzones/')
-      .then(res=> {
-        res.data.map(operatorZone => {
+ async function getOperatorZone() {
+   try {
+    const res = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+     res.data.map(operatorZone => {
           if(operatorZone.operatorName === OperatorName) {
             setOperatorZone(operatorZone.zoneCode)
           }
         })
-      })
+   }catch (e) {
+   }
   }
 
   useEffect(()=> {

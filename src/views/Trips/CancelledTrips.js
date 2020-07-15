@@ -12,7 +12,7 @@ import TripActionBtn from "./components/TripActionBtn";
 
 function UserRow(props) {
   const user = props.user;
-  const userLink = `/trip/${user.TripID}`;
+
 
   const getBadge = (status) => {
     return status === 'Successful' ? 'success' :
@@ -29,14 +29,9 @@ function UserRow(props) {
       <td>{user.tripid}</td>
       <td>{user.mode}</td>
       <td>{user.name}</td>
-      {/*<td>{user.phone}</td>*/}
       <td>{user.startbusstop}</td>
       <td>{user.endbusstop}</td>
       <td>{user.scheduledpickuptime}</td>
-      {/*<td>{user.drivername}</td>*/}
-      {/*<td>{user.driverphone}</td>*/}
-      {/*<td>{user.vehicledetail}</td>*/}
-      {/*<td>{user.distance}</td>*/}
       <td>{user.cost}</td>
       <td> <TripActionBtn id={user.id} /> </td>
     </tr>

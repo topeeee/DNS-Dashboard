@@ -1,25 +1,22 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
-import {getVehicles, searchVehicle} from "../../store/actions/vehicleAction";
+import {Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {getVehiclesRequestMe, searchVehicle} from "../../store/actions/vehicleAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import VehicleHeader from "./components/VehicleHeader";
-import VehicleActionBtn from "./components/VehicleActionBtn";
-import {isAdmin, isOperator} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {getPartners} from "../../store/actions/partnerAction";
+import MeRequestVehicleActionBtn from "./components/MeRequestVehicleActionBtn";
+
+
 
 
 
 function UserRow(props) {
   const user = props.user;
+  const partners = props.partners;
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-          status === 'Inactive' ? 'danger' :
-            status === 'Pending' ? 'warning' :
-            'primary'
-  };
   return (
 
     <tr key={user.id}>
@@ -28,26 +25,25 @@ function UserRow(props) {
       <td>{user.vehicle_model}</td>
       <td>{user.plate_number}</td>
       <td>{user.capacity}</td>
-      {isAdmin ?  <td>{user.operator}</td>: null}
+      {partners.map(partner=> {
+        if(partner.id == user.partner_id) {
+          return <td key={[partner.id]}>{partner.name}</td>
+        }
+      })}
+      {isAdmin?  <td>{user.operator}</td>: null}
       {/*<td>{user.assigned}</td>*/}
-      {(user.assigned_driver == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-      {((user.assigned_driver == null) ||(user.assigned_driver == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
-      {(user.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-      {((user.assigned_BA == null) ||(user.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
-      {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
-      {(user.status == "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
-      {(user.status == "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
-      {isAdmin || isOperator ?  <td> <VehicleActionBtn id={user.id} user={user} /> </td>: null}
+      <td> <MeRequestVehicleActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
 
-const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
+const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
     if(formData === ''){
-      getVehicles()
+      getVehiclesRequestMe();
+      getPartners();
     }
   },[formData]);
 
@@ -89,9 +85,8 @@ const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehic
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Active Vehicles
+                Vehicles
               </div>
-              <VehicleHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -109,16 +104,14 @@ const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehic
                   <th scope="col">Vehicle Model</th>
                   <th scope="col">Vehicle Plate number</th>
                   <th scope="col">Capacity</th>
+                  <th scope="col">Partner</th>
                   {isAdmin ?  <th scope="col">Operator</th>: null}
-                  <th scope="col">Assigned To Driver</th>
-                  <th scope="col">Assigned To BA</th>
-                  <th scope="col">Status</th>
                   {isAdmin || isOperator?  <th scope="col">Actions</th>: null}
                 </tr>
                 </thead>
                 <tbody>
-                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "1").map((vehicle, index) =>
-                  <UserRow key={index} user={vehicle}/>
+                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user=>user.approved_status === '0').map((vehicle, index) =>
+                  <UserRow key={index} user={vehicle} partners={partners}/>
                 )}
                 {vehicle &&
                 <UserRow user={vehicle}/>
@@ -135,17 +128,19 @@ const ActiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehic
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getVehicles: () => dispatch(getVehicles()),
-    searchVehicle: (id) => dispatch(searchVehicle(id))
+    getVehiclesRequestMe: (operatorName) => dispatch(getVehiclesRequestMe(operatorName)),
+    searchVehicle: (id) => dispatch(searchVehicle(id)),
+    getPartners: () => dispatch(getPartners()),
   };
 }
 
 const mapStateToProps = state => ({
-  vehicles: state.vehicle.vehicles,
+  vehicles: state.vehicle.vehiclesMe,
   vehicle: state.vehicle.vehicle,
   error: state.vehicle.error,
-  isLoading: state.vehicle.isLoading
+  isLoading: state.vehicle.isLoading,
+  partners: state.partners.partners,
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(ActiveVehicles);
+export default connect(mapStateToProps,mapDispatchToProps)(Vehicles);

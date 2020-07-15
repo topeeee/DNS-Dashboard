@@ -1,13 +1,13 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
 import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
 import {connect} from "react-redux";
 import axios from "axios"
+import api from "../../../environments/environment";
 
 
 const Operator = ({getOperators, operators, operator, isLoading,  searchOperator, error, match, states})=> {
-  // const [operator, setOperator] = useState([]);
+
   const [newOperator, setNewOperator] = useState({});
   const [operatorVehicle, setOperatorVehicle] = useState([]);
   const [operatorZone, setOperatorZone] = useState([]);
@@ -21,24 +21,29 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
             'primary'
   };
 
-  function getOperatorVehicle() {
-    axios.get(`http://165.22.116.11:7055/api/operators/?operatorId=${match.params.id}`)
-      .then(res=> {
-        setOperatorVehicle(res.data);
-      })
+ async function getOperatorVehicle() {
+   try {
+     const  res = await  axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${match.params.id}`)
+     setOperatorVehicle(res.data);
+   }catch (e) {
+   }
   }
-  function getOperatorMode() {
-    axios.get(`http://165.22.116.11:7053/api/mode/?operator_name=${newOperator.name}`)
-      .then(res=> {
-        setOperatorMode(res.data);
-      })
+ async function getOperatorMode() {
+    try {
+    const res = await  axios.get(`${api.operatorMode}/api/mode/?operator_name=${newOperator.name}`);
+      setOperatorMode(res.data);
+    }catch (e) {
+
+    }
   }
 
-  function getOperatorZone() {
-    axios.get(`http://165.22.116.11:7052/api/operators/?operatorId=${match.params.id}`)
-      .then(res=> {
-        setOperatorZone(res.data);
-      })
+ async function getOperatorZone() {
+    try {
+      const res = await axios.get(`${api.operatorZone}/api/operators/?operatorId=${match.params.id}`)
+      setOperatorZone(res.data);
+    }catch (e) {
+
+    }
   }
 
   function setOperator() {
@@ -65,9 +70,7 @@ useEffect(()=>{
     getOperatorMode()
   }
   },[newOperator]);
-  // const user = operators.find( user => user.id === this.props.match.params.id);
 
-    // const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
 
     return (
       <div className="animated fadeIn">
