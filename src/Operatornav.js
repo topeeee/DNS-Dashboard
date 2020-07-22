@@ -108,8 +108,8 @@ export default {
 
         },
         {
-          name: 'Mode',
-          url: '/operator/modes',
+          name: 'Services',
+          url: '/operator/services',
           // icon: 'icon-puzzle',
           class: "menu_drop",
 

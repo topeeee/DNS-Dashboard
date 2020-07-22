@@ -22,8 +22,8 @@ export const RouteUser = () => async dispatch => {
 };
 
 
-export const createRoute = (routecode, route, areacode) => async dispatch => {
-  const body = {routecode, route, areacode};
+export const createRoute = (routecode, route, areacode, price) => async dispatch => {
+  const body = {routecode, route, areacode, price};
   try {
     const res = await axios.post(`${api.route}/api/me/routes/`, body);
     dispatch({
@@ -41,8 +41,8 @@ export const createRoute = (routecode, route, areacode) => async dispatch => {
   }
 };
 
-export const updateRoute = (id, routecode, route, areacode) => async dispatch => {
-  const body = {routecode, route, areacode};
+export const updateRoute = (id, routecode, route, areacode, price) => async dispatch => {
+  const body = {routecode, route, areacode, price};
   try {
     const res = await axios.put(`${api.route}/api/routes/${id}/`, body);
     dispatch({

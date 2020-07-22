@@ -30,7 +30,7 @@ function UserRow(props) {
       <td>{user.phoneNumber}</td>
       <td>{user.email}</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
-      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
+      {(user.status === "0" || user.status === null) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
       <td> <UserActionBtn id={user.id} user={user} /> </td>
     </tr>
   )

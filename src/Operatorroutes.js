@@ -68,7 +68,7 @@ const routes = [
   { path: '/operator/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/operator/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/operator/areas', name: 'Areas', component: Area },
-  { path: '/operator/modes', name: 'Mode', component: Mode },
+  { path: '/operator/services', name: 'Services', component: Mode },
   { path: '/operator/vehicles/requestall', name: 'Vehicles', component: AllRequestVehicles },
   { path: '/operator/vehicles/requestme', name: 'Vehicles', component: MeRequestVehicles },
   { path: '/operator/vehicles/active', name: 'Active Vehicles', component: ActiveVehicles },

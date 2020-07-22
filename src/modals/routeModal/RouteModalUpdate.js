@@ -7,7 +7,7 @@ import {toggleRouteModalUpdate, updateRoute} from "../../store/actions/routeActi
 function mapDispatchToProps(dispatch) {
   return {
     toggleRouteModalUpdate: () => dispatch(toggleRouteModalUpdate()),
-    updateRoute: (id, routeCode, route, areaCode) => dispatch(updateRoute(id, routeCode, route, areaCode))
+    updateRoute: (id, routeCode, route, areaCode, price) => dispatch(updateRoute(id, routeCode, route, areaCode, price))
   };
 }
 
@@ -30,16 +30,16 @@ const RouteModalUpdate = (props)=> {
     routes
   } = props;
 
-  const [formData, setFormData] = useState({routeCode: '', route: '', areaCode: ''});
+  const [formData, setFormData] = useState({routeCode: '', route: '', areaCode: '', price: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const { routeCode, route, areaCode } = formData;
+  const { routeCode, route, areaCode, price } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    updateRoute(id, routeCode, route, areaCode);
-    setFormData({routeCode: '', route: '', areaCode: ''})
+    updateRoute(id, routeCode, route, areaCode, price);
+    setFormData({routeCode: '', route: '', areaCode: '', price: ''})
 
   };
 
@@ -47,7 +47,7 @@ const RouteModalUpdate = (props)=> {
     if(routes && id) {
       routes.map(route=> {
         if(route.id === id) {
-          setFormData({routeCode: route.routecode, route: route.route, areaCode: route.areacode})
+          setFormData({routeCode: route.routecode, route: route.route, areaCode: route.areacode, price: route.price})
         }
       })
     }
@@ -78,6 +78,15 @@ const RouteModalUpdate = (props)=> {
                 name="route"
                 // placeholder="Route"
                 value={route}
+                onChange={onChange}
+                required
+              />
+              <Label for="state" className="font-weight-bold mb-0 mt-1">Price (₦)</Label>
+              <Input
+                type="number"
+                name="price"
+                // placeholder="Route"
+                value={price}
                 onChange={onChange}
                 required
               />

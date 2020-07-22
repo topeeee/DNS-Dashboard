@@ -28,7 +28,7 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.id}</td>
       <td>{user.passengerPin}</td>
-      {newUser ? newUser.map((newuser, index) =>{
+      {newUser.length > 0 ? newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>
         }
@@ -38,7 +38,7 @@ function UserRow(props) {
       {user.dropOff ? <td>{user.dropOff}</td>: <td>Not Available</td>}
       {/*<td>{user.dropOff}</td>*/}
       <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
-      {newUser ? newUser.map((newuser, index) =>{
+      {newUser.length> 0 ? newUser.map((newuser, index) =>{
         if(newuser.pin === user.passengerPin){
           return  <td key={index}>{newuser.phoneNumber}</td>
         }

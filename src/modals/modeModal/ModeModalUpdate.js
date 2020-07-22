@@ -58,13 +58,13 @@ const ModeModalUpdate = (props)=> {
   return (
     <div>
       <Modal isOpen={ModeModalUpdate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Update Mode</ModalHeader>
+        <ModalHeader toggle={toggle} className="text-center">Update Service</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="name" className="font-weight-bold mb-0 text-info">Mode Code</Label>
+              <Label for="name" className="font-weight-bold mb-0 text-info">Service Code</Label>
               <Input type="text"  name="modecode" onChange={onChange} value={modecode} required/>
-              <Label for="name" className="font-weight-bold mb-0 text-info"> Mode</Label>
+              <Label for="name" className="font-weight-bold mb-0 text-info"> Service</Label>
               <Input type="text"  name="mode" onChange={onChange} value={mode} required />
               <Label for="name" className="font-weight-bold mb-0 text-info">State Code</Label>
               <Input

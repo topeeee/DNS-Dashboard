@@ -9,7 +9,7 @@ import {getAreas} from "../../store/actions/areaAction";
 function mapDispatchToProps(dispatch) {
   return {
     toggleRouteModalCreate: () => dispatch(toggleRouteModalCreate()),
-    createRoute: (routeCode, route, areaCode) => dispatch(createRoute(routeCode, route, areaCode)),
+    createRoute: (routeCode, route, areaCode, price) => dispatch(createRoute(routeCode, route, areaCode, price)),
     getAreas: () => dispatch(getAreas()),
 
   };
@@ -39,16 +39,16 @@ const RouteModalCreate = (props) => {
     }
   }, []);
 
-  const [formData, setFormData] = useState({routeCode: '', route: '', areaCode: ''});
+  const [formData, setFormData] = useState({routeCode: '', route: '', areaCode: '', price: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const { routeCode, route, areaCode } = formData;
+  const { routeCode, route, areaCode, price } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createRoute(routeCode, route, areaCode);
-    setFormData({routeCode: '', route: '', areaCode: ''})
+    createRoute(routeCode, route, areaCode, price);
+    setFormData({routeCode: '', route: '', areaCode: '', price: ''})
 
   };
 
@@ -76,6 +76,15 @@ const RouteModalCreate = (props) => {
                 name="route"
                 // placeholder="Route"
                 value={route}
+                onChange={onChange}
+                required
+              />
+              <Label for="state" className="font-weight-bold mb-0 mt-1">Price (₦)</Label>
+              <Input
+                type="number"
+                name="price"
+                // placeholder="Route"
+                value={price}
                 onChange={onChange}
                 required
               />

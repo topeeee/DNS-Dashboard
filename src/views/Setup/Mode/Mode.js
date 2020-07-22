@@ -2,71 +2,72 @@ import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
 import axios from 'axios'
 import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
-import {getModes, searchMode} from "../../store/actions/modeAction";
+// import {getModes, searchMode} from "../../store/actions/modeAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import Spinner from "../../spinner/Spinner";
+// import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
-import {getStates} from "../../store/actions/stateAction";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+// import {getStates} from "../../store/actions/stateAction";
+// import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import ModeActionBtn from "./components/ModeActionBtn";
+import {isAdmin} from "../../../environments/constants";
 
 
 
 
-function UserRow(props) {
-  const user = props.user;
-
-  return (
-
-    <tr key={user.id}>
-      <td>{user.mode}</td>
-      <td>{user.modecode}</td>
-      <td>{user.statecode}</td>
-      {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
-    </tr>
-  )
-}
+// function UserRow(props) {
+//   const user = props.user;
+//
+//   return (
+//
+//     <tr key={user.id}>
+//       <td>{user.mode}</td>
+//       <td>{user.modecode}</td>
+//       <td>{user.statecode}</td>
+//       {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
+//     </tr>
+//   )
+// }
 
 const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, states}) => {
   const [formData, setFormData] = useState('');
   const [operatorMode, setOperatorMode] = useState('');
 
 
-  function getOperatorMode() {
-    axios.get('http://165.22.116.11:7053/api/operatormodes/')
-      .then(res=> {
-        res.data.map(operatorMode=> {
-          if(operatorMode.operator_name === OperatorName) {
-            setOperatorMode(operatorMode.modecode)
-          }
-        })
-      })
-  }
-
-  useEffect(()=>{
-    if(formData === ''){
-      getModes();
-      getStates();
-    }
-  },[formData]);
-
-  useEffect(()=> {
-    getOperatorMode()
-  },[]);
-
-
-
-  const onChange = (e) =>{
-    e.preventDefault();
-    setFormData(e.target.value );
-  };
+  // function getOperatorMode() {
+  //   axios.get('http://165.22.116.11:7053/api/operatormodes/')
+  //     .then(res=> {
+  //       res.data.map(operatorMode=> {
+  //         if(operatorMode.operator_name === OperatorName) {
+  //           setOperatorMode(operatorMode.modecode)
+  //         }
+  //       })
+  //     })
+  // }
+  //
+  // useEffect(()=>{
+  //   if(formData === ''){
+  //     getModes();
+  //     getStates();
+  //   }
+  // },[formData]);
+  //
+  // useEffect(()=> {
+  //   getOperatorMode()
+  // },[]);
+  //
 
 
-  const onSearch = e => {
-    e.preventDefault();
-    searchMode(formData)
-  };
+  // const onChange = (e) =>{
+  //   e.preventDefault();
+  //   setFormData(e.target.value );
+  // };
+  //
+  //
+  // const onSearch = e => {
+  //   e.preventDefault();
+  //   searchMode(formData)
+  // };
 
   return (
     <div className="animated fadeIn">
@@ -75,13 +76,13 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
           <Card>
             <CardHeader className="bg-secondary d-flex">
               <div className="w-75 d-flex align-items-center ">
-                <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
+                <form className="w-100 d-flex align-items-center">
                   <Input type="text"
                          // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
-                         value={formData}
-                         onChange={onChange}
+                         // value={formData}
+                         // onChange={onChange}
                   />
                   <button className="btn btn-success" type="submit">Search</button>
                 </form>
@@ -94,65 +95,102 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Services
+                Modes
               </div>
               {isAdmin &&  <ModeHeader />}
             </CardHeader>
-            {isLoading && <Spinner />}
-            {!isLoading &&
+            {/*{isLoading && <Spinner />}*/}
+            {/*{!isLoading &&*/}
             <CardBody>
-              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
+              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
               {/*{isLoading && loading()}*/}
-              {(modes && modes.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Modes Available</div>}
-              {((modes && modes.length > 0) || mode) &&
+              {/*{(modes && modes.length === 0) &&*/}
+              {/*<div className="animated fadeIn pt-1 text-center">No Modes Available</div>}*/}
+              {/*{((modes && modes.length > 0) || mode) &&*/}
               <Table responsive hover>
                 <thead className="bg-dark">
                 <tr>
-                  <th scope="col">Service</th>
-                  <th scope="col">Service Code</th>
+                  <th scope="col">Mode</th>
+                  <th scope="col">Mode Code</th>
                   <th scope="col">State</th>
                   {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
                 <tbody>
-                {(modes && isAdmin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
-                  <UserRow key={index} user={mode}/>
-                ): null}
-                {(modes && operatorMode && isOperator) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>
-                  <UserRow key={index} user={mode}/>
-                ): null}
-                {mode &&
-                <UserRow user={mode}/>
-                }
+                <tr>
+                  <td>Train</td>
+                  <td>TRN</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                <tr>
+                  <td>Ferry</td>
+                  <td>FRY</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                <tr>
+                  <td>Large Bus</td>
+                  <td>LAB</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                <tr>
+                  <td>Mini Bus</td>
+                  <td>MIB</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                <tr>
+                  <td>Car</td>
+                  <td>CAR</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                <tr>
+                  <td>Bike</td>
+                  <td>BIk</td>
+                  <td>Lagos</td>
+                  {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
+                </tr>
+                {/*{(modes && isAdmin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>*/}
+                {/*  <UserRow key={index} user={mode}/>*/}
+                {/*): null}*/}
+                {/*{(modes && operatorMode && isOperator) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>*/}
+                {/*  <UserRow key={index} user={mode}/>*/}
+                {/*): null}*/}
+                {/*{mode &&*/}
+                {/*<UserRow user={mode}/>*/}
+                {/*}*/}
                 </tbody>
-              </Table>}
+              </Table>
+              {/*}*/}
             </CardBody>
-            }
+            {/*}*/}
           </Card>
         </Col>
       </Row>
     </div>
   )
 };
-function mapDispatchToProps(dispatch) {
-  return {
-    getModes: () => dispatch(getModes()),
-    searchMode: (id) => dispatch(searchMode(id)),
-    getStates: () => dispatch(getStates()),
-  };
-}
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     getModes: () => dispatch(getModes()),
+//     searchMode: (id) => dispatch(searchMode(id)),
+//     getStates: () => dispatch(getStates()),
+//   };
+// }
 
-const mapStateToProps = state => ({
-  modes: state.mode.modes,
-  mode: state.mode.mode,
-  error: state.mode.error,
-  isLoading: state.mode.isLoading,
-  states: state.state.states,
+// const mapStateToProps = state => ({
+//   modes: state.mode.modes,
+//   mode: state.mode.mode,
+//   error: state.mode.error,
+//   isLoading: state.mode.isLoading,
+//   states: state.state.states,
+//
+// });
 
-});
-
-export default connect(mapStateToProps,mapDispatchToProps)(Mode);
+export default Mode;
 
 
 

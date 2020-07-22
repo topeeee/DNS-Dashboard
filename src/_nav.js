@@ -83,7 +83,14 @@ export default {
 
         },
         {
-          name: 'Mode',
+          name: 'Services',
+          url: '/services',
+          // icon: 'icon-puzzle',
+          class: "menu_drop",
+
+        },
+        {
+          name: 'Modes',
           url: '/modes',
           // icon: 'icon-puzzle',
           class: "menu_drop",

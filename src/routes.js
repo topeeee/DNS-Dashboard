@@ -50,7 +50,7 @@ const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
 const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
-
+const Mode2 =  React.lazy(() => import('./views/Setup/Mode/Mode'));
 
 
 
@@ -69,7 +69,8 @@ const routes = [
   { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/areas', name: 'Areas', component: Area },
-  { path: '/modes', name: 'Mode', component: Mode },
+  { path: '/services', name: 'Services', component: Mode },
+  { path: '/modes', name: 'Modes', component: Mode2 },
   { path: '/operators/active', name: 'Active Operators', component: ActiveOperators },
   { path: '/operators/inactive', name: 'Inactive Operators', component: InactiveOperators },
   { path: '/operators/:id', exact: true, name: 'Operator Details', component: Operator },

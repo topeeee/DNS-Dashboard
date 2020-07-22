@@ -104,7 +104,7 @@ const VehicleModalCreate = (props) => {
                 <Input type="text"  name="vehicle_model" onChange={onChange} value={vehicle_model} required />
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Type</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"
@@ -113,10 +113,14 @@ const VehicleModalCreate = (props) => {
                   onChange={onChange}
                   required
                 >
-                  <option value="">Select Vehicle Type</option>
-                  <option value="Bus">Bus</option>
+                  <option value="">Select Mode</option>
+                  <option value="Mini Bus">Mini Bus</option>
+                  <option value="Large Bus">Large Bus</option>
                   <option value="Car">Car</option>
-                  <option value="MiniVan">MiniVan</option>
+                  <option value="Train">Train</option>
+                  <option value="Ferry">Ferry</option>
+                  <option value="Bike">Bike</option>
+
                 </Input>
               </Col>
               <Col md="6">

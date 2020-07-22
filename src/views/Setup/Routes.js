@@ -20,6 +20,7 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.route}</td>
       <td>{user.routecode}</td>
+      <td>₦{user.price}</td>
       <td>{user.areacode}</td>
       {isAdmin?  <td> <RouteActionBtn id={user.id} /> </td>:null}
     </tr>
@@ -80,6 +81,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
                 <tr>
                   <th scope="col">Route</th>
                   <th scope="col">Route code</th>
+                  <th scope="col">Price</th>
                   <th scope="col">Area</th>
                   {isAdmin? <th scope="col">Action</th>:null}
                 </tr>
