@@ -117,7 +117,7 @@ export const updateOperator = (id, name, email, phoneNo, officeAddress, numberOf
 
   }
 };
-// http://165.22.116.11:7046/api/status/41/?status=1
+
 
 export const changeOperatorStatus = (id, status) => async dispatch => {
   try {

@@ -7,8 +7,7 @@ import {getOperators, searchOperator} from "../../../store/actions/operatorActio
 import OperatorHeader from "./components/OperatorHeader";
 import Spinner from "../../../spinner/Spinner";
 import OperatorActionBtn from "./components/OperatorActionBtn";
-import {Link} from "react-router-dom";
-import usersData from "../../Users/UsersData";
+
 
 
 
@@ -47,10 +46,6 @@ const InactiveOperators = ({getOperators, operators, operator, isLoading,  searc
     }
   },[formData]);
 
-  // useEffect(()=>{
-  //   ZoneUser();
-  //
-  // }, []);
 
 
   const onChange = (e) =>{

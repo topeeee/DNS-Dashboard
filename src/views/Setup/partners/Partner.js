@@ -1,9 +1,9 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
 import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
 import {connect} from "react-redux";
 import axios from "axios"
+import api from "../../../environments/environment";
 
 
 const Operator = ({getOperators, operators, operator, isLoading,  searchOperator, error, match, states})=> {
@@ -22,20 +22,20 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
   };
 
   function getOperatorVehicle() {
-    axios.get(`http://165.22.116.11:7055/api/operators/?operatorId=${match.params.id}`)
+    axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${match.params.id}`)
       .then(res=> {
         setOperatorVehicle(res.data);
       })
   }
   function getOperatorMode() {
-    axios.get(`http://165.22.116.11:7053/api/mode/?operator_name=${newOperator.name}`)
+    axios.get(`${api.operatorMode}/api/mode/?operator_name=${newOperator.name}`)
       .then(res=> {
         setOperatorMode(res.data);
       })
   }
 
   function getOperatorZone() {
-    axios.get(`http://165.22.116.11:7052/api/operators/?operatorId=${match.params.id}`)
+    axios.get(`${api.operatorZone}/api/operators/?operatorId=${match.params.id}`)
       .then(res=> {
         setOperatorZone(res.data);
       })

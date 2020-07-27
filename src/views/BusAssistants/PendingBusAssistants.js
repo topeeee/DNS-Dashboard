@@ -59,7 +59,7 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
   },[formData]);
 
   function getDriverVehicle() {
-    axios.get("http://165.22.116.11:7054/api/me/drivervehicles/")
+    axios.get(`${api.driverVehicles}/api/me/drivervehicles/`)
       .then(res=> {
         setDriverVehicle(res.data);
       })

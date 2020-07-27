@@ -57,7 +57,7 @@ const VehicleModalCreate = (props) => {
   }, []);
 
 
-  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "", partner_id: ''});
+  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: isOperator ? OperatorName: '', partner_id: isPartner ? PartnerId: ""});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -72,17 +72,19 @@ const VehicleModalCreate = (props) => {
 
   };
 
-  useEffect(()=> {
-   if(isOperator) {
-     setFormData({...formData, operator: OperatorName })
-   }
-   }, [isOperator]);
+  // useEffect(()=> {
+  //  if(isOperator) {
+  //    setFormData({...formData, operator: OperatorName })
+  //  }
+  //  }, [isOperator]);
 
-  useEffect(()=> {
-    if(isPartner) {
-      setFormData({...formData, partner_id: PartnerId })
-    }
-  }, []);
+  // useEffect(()=> {
+  //   if(isPartner) {
+  //     setFormData({...formData, partner_id: PartnerId })
+  //   }
+  // }, []);
+
+
 
   const toggle = () => {toggleVehicleModalCreate()};
 
@@ -170,10 +172,10 @@ const VehicleModalCreate = (props) => {
                 </Input>}
               </Col>
             </FormGroup>
-            <div className="d-flex justify-content-md-end">
+            <di className="d-flex justify-content-md-end">
               <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}
               <Button color="secondary" onClick={toggle}>Cancel</Button>
-            </div>
+            </di>
           </Form>
         </ModalBody>
       </Modal>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
-import {Link} from "react-router-dom";
 import {changePartnerStatus, togglePartnerModalUpdate} from "../../../../store/actions/partnerAction";
 
 

@@ -19,7 +19,7 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {admin, isAdmin, isOperator, OperatorId} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorId} from "../../environments/constants";
 
 
 
@@ -77,7 +77,7 @@ export const createBusAssistants = (vehicleId, operatorInput, operatorid, firstN
       payload: res.data
     });
     if(res.data) {
-      await axios.post("http://165.22.116.11:7056/api/me/busassitantvehicles/", {vehicleId: vehicleId, busassitantId: res.data.id, operatorId: operatorInput})
+      await axios.post(`${api.busAssistantsVehicles}/api/me/busassitantvehicles/`, {vehicleId: vehicleId, busassitantId: res.data.id, operatorId: operatorInput})
     }
     dispatch(getBusAssistants());
     dispatch(toggleBusAssistantsModalCreate());

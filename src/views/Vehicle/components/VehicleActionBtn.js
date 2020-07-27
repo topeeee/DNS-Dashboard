@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import {Badge, Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
-
 import {Link} from "react-router-dom";
-
 import {changeVehicleStatus, toggleVehicleModalDelete, toggleVehicleUpdate} from "../../../store/actions/vehicleAction";
-import {admin, isAdmin} from "../../../environments/constants";
+import {isAdmin} from "../../../environments/constants";
 
 
 

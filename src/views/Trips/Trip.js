@@ -1,11 +1,10 @@
 import React, {Component, useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
-import * as usersData from "core-js";
-
 import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
 import Spinner from "../../spinner/Spinner";
+import api from "../../environments/environment";
 
 
 const Trip = ({match, getDrivers, drivers})=> {
@@ -29,7 +28,7 @@ const Trip = ({match, getDrivers, drivers})=> {
 
 
   function  getTrip(id) {
-axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
+axios.get(`${api.trip}/api/trips/${id}/`)
   .then(res=> {
     setTrip(res.data);
     setPasPin(res.data.passengerPin);
@@ -38,14 +37,14 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
  }
 
  function getUser(id) {
-   axios.get(`http://165.22.116.11:7200/api/check/?pin=${id}`)
+   axios.get(`${api.user}/api/check/?pin=${id}`)
      .then(res=> {
        setUserDetails(res.data)
      })
  }
 
  function getDriverVehicle(id) {
-   axios.get('http://165.22.116.11:7054/api/me/drivervehicles/')
+   axios.get(`${api.driverVehicles}/api/me/drivervehicles/`)
      .then(res=> {
        res.data.map(driverVehicle=> {
          if(driverVehicle.driverId == id){
@@ -56,14 +55,14 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
  }
 
  function getVehicle(id) {
-   axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
+   axios.get(`${api.vehicle}/api/vehicles/${id}/`)
      .then(res=> {
        setVehicle(res.data)
      })
  }
 
  function getZone() {
-    axios.get('http://165.22.116.11:7005/api/zones/')
+    axios.get(`${api.zone}/api/zones/`)
       .then(res=> {
         res.data.map(zone=> {
           if(zone.zone === driverDetails.zone) {
@@ -83,7 +82,7 @@ axios.get(`http://165.22.116.11:7500/api/trips/${id}/`)
    if(driverDetails.zone) {
      getZone()
    }
- },[driverDetails])
+ },[driverDetails]);
 
  useEffect(()=> {
    if(driverVehicleDetails.vehicleId){

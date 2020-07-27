@@ -23,7 +23,7 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
 
  async function getOperatorVehicle() {
    try {
-     const  res = await  axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${match.params.id}`)
+     const  res = await  axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${match.params.id}`);
      setOperatorVehicle(res.data);
    }catch (e) {
    }

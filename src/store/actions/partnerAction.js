@@ -41,6 +41,7 @@ export const registerPartner = (username, password, name, email, phoneNo, office
     if(res) {
       dispatch(createPartner(res.data.id, name, email, phoneNo, officeAddress, status, numberOfVehicle))
     }
+    dispatch(getPartners())
   } catch (err) {
     dispatch({
       type: PARTNER_ERROR,

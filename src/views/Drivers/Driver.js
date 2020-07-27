@@ -34,14 +34,14 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     }
   }
   function getDriverVehicle() {
-    axios.get('http://165.22.116.11:7054/api/drivervehicles/')
+    axios.get(`${api.driverVehicles}/api/drivervehicles/`)
       .then(res=> {
         setDriverVehicle(res.data)
       })
   }
 
   function getVehicle(id) {
-    axios.get(`http://165.22.116.11:7050/api/vehicles/${id}/`)
+    axios.get(`${api.vehicle}/api/vehicles/${id}/`)
       .then(res=> {
         setVehicle(res.data)
       })

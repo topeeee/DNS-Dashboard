@@ -113,7 +113,7 @@ useEffect(()=> {
       },[]);
 
   function getDriverVehicle() {
-    axios.get("http://165.22.116.11:7054/api/drivervehicles/")
+    axios.get(`${api.driverVehicles}/api/drivervehicles/`)
       .then(res=> {
         setDriverVehicle(res.data);
       })

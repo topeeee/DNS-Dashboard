@@ -54,7 +54,7 @@ export const createBusStop = (busstopcode,busstop,routecode, direction, speed, a
 export const updateBusStop = (id,busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
   const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
   try {
-    const res = await axios.put(`http://165.22.116.11:7108/api/busstops/${id}/`, body);
+    const res = await axios.put(`${api.busStop}/api/busstops/${id}/`, body);
     dispatch({
       type: UPDATE_BUS_STOP,
       payload: res.data

@@ -1,8 +1,7 @@
-import React, {Component, useEffect, useState} from 'react';
-import { Bar, Doughnut, Line, Pie, Polar, Radar } from 'react-chartjs-2';
-import { Card, CardBody, CardColumns, CardHeader } from 'reactstrap';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import {getUsers, searchUser} from "../../store/actions/userAction";
+import React, {useEffect, useState} from 'react';
+import {Doughnut} from 'react-chartjs-2';
+import { Card, CardBody} from 'reactstrap';
+import {getUsers} from "../../store/actions/userAction";
 import Spinner from "../../spinner/Spinner";
 import {connect} from "react-redux";
 

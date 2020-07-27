@@ -1,7 +1,7 @@
 import {ROUTE_BY_USER, ROUTE_MODAL_CREATE, ROUTE_MODAL_UPDATE, UPDATE_ROUTE, CREATE_ROUTE, CLOSE_MODAL_DELETE, LOADING} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import setAuthToken from "../../utils/setAuthToken";
+
 
 
 export const RouteUser = () => async dispatch => {
