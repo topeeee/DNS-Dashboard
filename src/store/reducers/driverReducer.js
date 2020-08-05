@@ -12,7 +12,7 @@ import {
   DRIVER_STATUS,
   DRIVER_VEHICLE_ID,
   DRIVER_VEHICLE_ID2,
-  CLEAR_DRIVER_VEHICLE_ID
+  CLEAR_DRIVER_VEHICLE_ID, DRIVER_ME, DRIVER_ALL
 } from "../actionTypes";
 
 const initialState = {
@@ -35,6 +35,24 @@ function driverReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case DRIVER_BY_USER: {
+      return {
+        ...state,
+        driver: null,
+        error: null,
+        drivers: payload,
+        isLoading: false,
+      };
+    }
+    case DRIVER_ME: {
+      return {
+        ...state,
+        driver: null,
+        error: null,
+        drivers: payload,
+        isLoading: false,
+      };
+    }
+    case DRIVER_ALL: {
       return {
         ...state,
         driver: null,

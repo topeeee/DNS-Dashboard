@@ -49,13 +49,10 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
 
   async function getOperator(id) {
     try {
-      const res = await axios.get(`${api.operator}/api/operators/${id}/`);
-      setOperatorName(res.data.name)
-    }catch (e) {
-
-    }
+      const res = await axios.get(`${api.operator}/api/operators/?search=${id}`);
+      setOperatorName(res.data[0].name)
+    }catch (e) {}
   }
-
   useEffect(()=>{
     getDrivers();
     getDriverVehicle();
@@ -150,7 +147,7 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                   <td>{vehicle.vehicle_model}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Type</strong></td>
+                  <td><strong>Vehicle Mode</strong></td>
                   <td>{vehicle.vehicle_type}</td>
                 </tr>
                 <tr>

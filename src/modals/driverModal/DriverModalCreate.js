@@ -15,11 +15,7 @@ import {isOperator, OperatorName, isAdmin} from "../../environments/constants";
 const animatedComponents = makeAnimated();
 
 
-const options = [
-  { value: 'Bus', label: 'Zone1' },
-  { value: 'Car', label: 'Zone2' },
-  { value: 'MiniVan', label: 'Zone3' }
-];
+
 
 
 
@@ -309,7 +305,7 @@ const DriverModalCreate = (props) => {
             <FormGroup row>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                {(operators && isAdmin) && <Input
+                {(isAdmin) && <Input
                   style={{cursor: 'pointer'}}
                   type="select"
                   name="operatorInput"
@@ -327,7 +323,7 @@ const DriverModalCreate = (props) => {
                 <Input type="text"  name="operatorInput" onChange={onChange} value={operatorInput} readOnly={true} required />}
               </Col>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle type</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Mode</Label>
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"
@@ -336,7 +332,7 @@ const DriverModalCreate = (props) => {
                   onChange={e=>setVehicleInput(e.target.value)}
                   // required
                 >
-                  <option value="">Select Vehicle type</option>
+                  <option value="">Select Vehicle Mode</option>
                   {(vehicles && operatorInput) && vehicles.filter((user) => user.operator === operatorInput).map((vehicle, index) =>
                     <option value={vehicle.vehicle_type} key={index}>{vehicle.vehicle_type}</option>
                   )}

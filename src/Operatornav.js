@@ -13,63 +13,9 @@ export default {
       class: 'text-center, text-warning'             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Setup',
+      name: 'Profile',
       icon: 'icon-settings',
       children: [
-        {
-          name: 'Partners',
-          children: [
-            {
-              name: 'Request',
-              icon: 'icon-bell',
-              children: [
-                {
-                  name: 'All',
-                  url: '/operator/vehicles/requestall',
-                  // icon: 'icon-bell',
-                  class: "menu_drop",
-
-                },
-                {
-                  name: 'Personal',
-                  url: '/operator/vehicles/requestme',
-                  // icon: 'icon-puzzle',
-                  class: "menu_drop",
-
-                },
-              ]
-              // url: '/operators',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-
-            },
-            {
-              name: 'All',
-              url: '/operator/partners',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-
-            },
-            {
-              name: 'Active',
-              url: '/operator/partners/active',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-
-            },
-            {
-              name: 'Inactive',
-              url: '/operator/partners/inactive',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-
-            },
-          ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
-        },
         // {
         //   name: 'Operators',
         //   children: [
@@ -100,13 +46,13 @@ export default {
         //  // class: "menu_drop",
         //
         // },
-        {
-          name: 'States',
-          url: '/operator/states',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-
-        },
+        // {
+        //   name: 'States',
+        //   url: '/operator/states',
+        //   // icon: 'icon-puzzle',
+        //   class: "menu_drop",
+        //
+        // },
         {
           name: 'Services',
           url: '/operator/services',
@@ -147,6 +93,61 @@ export default {
       ],
     },
     {
+      name: 'Partners',
+      icon: 'icon-puzzle',
+      children: [
+        {
+          name: 'Request',
+          icon: 'icon-bell',
+          children: [
+            {
+              name: 'All Request',
+              url: '/operator/vehicles/requestall',
+              // icon: 'icon-bell',
+              class: "menu_drop",
+
+            },
+            {
+              name: 'Personal Request',
+              url: '/operator/vehicles/requestme',
+              // icon: 'icon-puzzle',
+              class: "menu_drop",
+
+            },
+          ]
+          // url: '/operators',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        {
+          name: 'All Partners',
+          url: '/operator/partners',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        {
+          name: 'Active',
+          url: '/operator/partners/active',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        {
+          name: 'Inactive',
+          url: '/operator/partners/inactive',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+      ]
+      // url: '/operators',
+      // icon: 'icon-puzzle',
+      // class: "menu_drop",
+
+    },
+    {
       name: 'Analytics',
       icon: 'icon-user',
       children: [
@@ -174,26 +175,26 @@ export default {
       name: 'Passengers',
       icon: 'icon-people',
       children: [
-        {
-          name: 'Overview',
-          url: '/operator/passengers/overview',
-          class: "menu_drop",
-        },
+        // {
+        //   name: 'Overview',
+        //   url: '/operator/passengers/overview',
+        //   class: "menu_drop",
+        // },
         {
           name: 'All',
           url: '/operator/passengers',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
-        {
-          name: 'Active',
-          url: '/operator/passengers/active',
-          class: "menu_drop",
-        },
-        {
-          name: 'Inactive',
-          url: '/operator/passengers/inactive',
-          class: "menu_drop",
-        },
+        // {
+        //   name: 'Active',
+        //   url: '/operator/passengers/active',
+        //   class: "menu_drop",
+        // },
+        // {
+        //   name: 'Inactive',
+        //   url: '/operator/passengers/inactive',
+        //   class: "menu_drop",
+        // },
       ],
     },
     {
@@ -201,28 +202,58 @@ export default {
       icon: 'icon-user',
       children: [
         {
-          name: 'All',
+          name: 'Request',
+          icon: 'icon-bell',
+          children: [
+            {
+              name: 'All Request',
+              url: '/operator/drivers/requestall',
+              // icon: 'icon-bell',
+              // class: "menu_drop",
+
+            },
+            {
+              name: 'Personal Request',
+              url: '/operator/drivers/requestme',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+
+            },
+          ]
+          // url: '/operators',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        // {
+        //   name: 'Flagged Drivers',
+        //   url: '/operator/drivers/requestall',
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
+        {
+          name: 'All Drivers',
           url: '/operator/drivers',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/operator/drivers/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/operator/drivers/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
-          name: 'Pending',
+          name: 'Flagged',
           url: '/operator/drivers/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },

@@ -255,7 +255,7 @@ const DriverModalUpdate = (props) => {
   return (
     <div>
       <Modal isOpen={driverModalUpdate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Create Driver</ModalHeader>
+        <ModalHeader toggle={toggle} className="text-center">Update Driver</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             {form1 &&

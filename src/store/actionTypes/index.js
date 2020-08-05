@@ -179,3 +179,5 @@ export const  PARTNER_MODAL_UPDATE = "PARTNER_MODAL_UPDATE";
 export const PARTNER = "PARTNER";
 export const VEHICLE_BY_ALL = "VEHICLE_BY_ALL";
 export const VEHICLE_BY_ME = "VEHICLE_BY_ME";
+export const DRIVER_ME = "DRIVER_ME";
+export const DRIVER_ALL = "DRIVER_ALL";

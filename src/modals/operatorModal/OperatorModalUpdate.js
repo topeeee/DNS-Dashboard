@@ -290,9 +290,11 @@ const OperatorModalUpdate = (props) => {
   }, [modes]);
 
   const options = [
-    { value: 'Bus', label: 'Bus' },
-    { value: 'Car', label: 'Car' },
-    { value: 'MiniVan', label: 'MiniVan' }
+    { value: 'Train', label: 'Train' },
+    { value: 'Ferry', label: 'Ferry' },
+    { value: 'Large Bus', label: 'Large Bus' },
+    { value: 'Mini Bus', label: 'Mini Bus' },
+    { value: 'Car', label: 'Mini Car' }
   ];
 
   return (
@@ -337,7 +339,7 @@ const OperatorModalUpdate = (props) => {
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Types</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Modes</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}
@@ -363,7 +365,7 @@ const OperatorModalUpdate = (props) => {
 
               </Col>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Services</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}

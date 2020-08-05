@@ -1,20 +1,20 @@
 import {
+  CLOSE_MODAL_DELETE_OPERATOR,
+  CREATE_OPERATOR,
+  DELETE_OPERATOR,
+  LOADING_OPERATOR,
   OPERATOR_BY_USER,
+  OPERATOR_ERROR,
   OPERATOR_MODAL_CREATE,
   OPERATOR_MODAL_DELETE,
-  DELETE_OPERATOR,
-  CLOSE_MODAL_DELETE_OPERATOR,
-  LOADING_OPERATOR,
-  OPERATOR_ERROR,
-  SEARCH_OPERATOR,
-  CREATE_OPERATOR,
-  REMOVE_OPERATOR_ERROR,
-  REGISTER_OPERATOR,
+  OPERATOR_MODAL_UPDATE,
   OPERATOR_STATUS,
-  UPDATE_OPERATOR,
-  OPERATOR_MODAL_UPDATE
+  REGISTER_OPERATOR,
+  REMOVE_OPERATOR_ERROR,
+  SEARCH_OPERATOR,
+  UPDATE_OPERATOR
 } from "../actionTypes"
-import  axios from 'axios'
+import axios from 'axios'
 import api from "../../environments/environment";
 
 // async function getVariables() {
@@ -60,7 +60,7 @@ export const registerOperator = (username, password, name, email, phoneNo, offic
       payload: res.data
     });
     if(res) {
-      dispatch(createOperator(res.data.id, name, email, phoneNo, officeAddress, status, numberOfVehicle))
+      dispatch(createOperator(res.data.id, name, name, email, phoneNo, officeAddress, status, numberOfVehicle))
     }
   } catch (err) {
     dispatch({
@@ -73,8 +73,8 @@ export const registerOperator = (username, password, name, email, phoneNo, offic
 
 
 
-export const createOperator = (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle) => async dispatch => {
-  const body = {pin, name, email, phoneNo, officeAddress, status, numberOfVehicle};
+export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle) => async dispatch => {
+  const body = {pin, name, usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle};
   try {
     const res = await axios.post(`${api.operator}/api/me/operators/`, body);
     dispatch({

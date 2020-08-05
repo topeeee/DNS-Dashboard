@@ -143,10 +143,10 @@ useEffect(()=> {
                   <td><strong>Passenger Pin</strong></td>
                   <td>{trip.passengerPin}</td>
                 </tr>
-                <tr className="w-100">
-                  <td><strong>Full Name</strong></td>
-                  <td>{userDetails.firstName} {userDetails.lastName}</td>
-                </tr>
+                {/*<tr className="w-100">*/}
+                {/*  <td><strong>Full Name</strong></td>*/}
+                {/*  <td>{userDetails.firstName} {userDetails.lastName}</td>*/}
+                {/*</tr>*/}
                 <tr className="w-100">
                   <td><strong>Pick Up</strong></td>
                   <td>{trip.pickUp}</td>
@@ -160,10 +160,10 @@ useEffect(()=> {
                   {trip.bookingTimestamp ? <td>{new Date(trip.bookingTimestamp).toLocaleString()}</td>: null}
                   {/*<td>{new Date(trip.bookingTimestamp).toLocaleString()}</td>*/}
                 </tr>
-                <tr>
-                  <td><strong>Passenger Phone</strong></td>
-                  <td>{userDetails.phoneNumber}</td>
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Passenger Phone</strong></td>*/}
+                {/*  <td>{userDetails.phoneNumber}</td>*/}
+                {/*</tr>*/}
                 <tr>
                   <td><strong> Distance</strong></td>
                   <td>{trip.distance}</td>

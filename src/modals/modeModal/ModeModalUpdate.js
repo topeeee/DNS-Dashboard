@@ -30,7 +30,7 @@ const ModeModalUpdate = (props)=> {
     modes
   } = props;
 
-  const [formData, setFormData] = useState({modecode: "", mode: "", statecode: "" });
+  const [formData, setFormData] = useState({modecode: "", mode: "", statecode: "Lagos" });
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -66,20 +66,20 @@ const ModeModalUpdate = (props)=> {
               <Input type="text"  name="modecode" onChange={onChange} value={modecode} required/>
               <Label for="name" className="font-weight-bold mb-0 text-info"> Service</Label>
               <Input type="text"  name="mode" onChange={onChange} value={mode} required />
-              <Label for="name" className="font-weight-bold mb-0 text-info">State Code</Label>
-              <Input
-                style={{cursor: 'pointer'}}
-                type="select"
-                name="statecode"
-                value={statecode}
-                onChange={onChange}
-                required
-              >
-                <option value="">Select State</option>
-                {states && states.map((state, index) =>
-                  <option value={state.xstate} key={index}>{state.xstate}</option>
-                )}
-              </Input>
+              {/*<Label for="name" className="font-weight-bold mb-0 text-info">State Code</Label>*/}
+              {/*<Input*/}
+              {/*  style={{cursor: 'pointer'}}*/}
+              {/*  type="select"*/}
+              {/*  name="statecode"*/}
+              {/*  value={statecode}*/}
+              {/*  onChange={onChange}*/}
+              {/*  required*/}
+              {/*>*/}
+              {/*  <option value="">Select State</option>*/}
+              {/*  {states && states.map((state, index) =>*/}
+              {/*    <option value={state.xstate} key={index}>{state.xstate}</option>*/}
+              {/*  )}*/}
+              {/*</Input>*/}
             </FormGroup>
             <div className="d-flex justify-content-md-end">
               <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}

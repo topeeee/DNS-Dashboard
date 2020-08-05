@@ -28,20 +28,20 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.id}</td>
       <td>{user.passengerPin}</td>
-      {newUser && newUser.map((newuser, index) =>{
-        if(newuser.pin === user.passengerPin){
-          return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>
-        }
+      {/*{newUser && newUser.map((newuser, index) =>{*/}
+      {/*  if(newuser.pin === user.passengerPin){*/}
+      {/*    return  <td key={index}>{newuser.firstName} {newuser.lastName}</td>*/}
+      {/*  }*/}
 
-      })}
+      {/*})}*/}
       {user.pickUp ? <td>{user.pickUp}</td>: <td>Not Available</td>}
       {user.dropOff ? <td>{user.dropOff}</td>: <td>Not Available</td>}
       <td>{new Date(user.bookingTimestamp).toLocaleString()}</td>
-      {newUser && newUser.map((newuser, index) =>{
-        if(newuser.pin === user.passengerPin){
-          return  <td key={index}>{newuser.phoneNumber}</td>
-        }
-      })}
+      {/*{newUser && newUser.map((newuser, index) =>{*/}
+      {/*  if(newuser.pin === user.passengerPin){*/}
+      {/*    return  <td key={index}>{newuser.phoneNumber}</td>*/}
+      {/*  }*/}
+      {/*})}*/}
       {(user.pickStatus === "1" && user.dropStatus === "0") && <td><Badge color={getBadge("Transit")}>Transit</Badge></td> }
       {(user.pickStatus === "1" && user.dropStatus === "1") && <td><Badge color={getBadge("Completed")}>Completed</Badge></td> }
       {(user.pickStatus === "0" && user.dropStatus === "0") && <td><Badge color={getBadge("Waiting")}>Waiting</Badge></td> }
@@ -127,11 +127,11 @@ const CompletedTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error, u
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">PIN</th>
-                  <th scope="col"> Full Name</th>
+                  {/*<th scope="col"> Full Name</th>*/}
                   <th scope="col">Pick Up</th>
                   <th scope="col">Drop Off</th>
                   <th scope="col">Booking Date/time</th>
-                  <th scope="col">Phone</th>
+                  {/*<th scope="col">Phone</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>

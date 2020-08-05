@@ -22,7 +22,7 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.mode}</td>
       <td>{user.modecode}</td>
-      <td>{user.statecode}</td>
+      {/*<td>{user.statecode}</td>*/}
       {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
     </tr>
   )
@@ -111,7 +111,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 <tr>
                   <th scope="col">Service</th>
                   <th scope="col">Service Code</th>
-                  <th scope="col">State</th>
+                  {/*<th scope="col">State</th>*/}
                   {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>

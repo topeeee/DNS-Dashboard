@@ -109,13 +109,13 @@ useEffect(()=>{
                     <td>{newOperator.email}</td>
                   </tr>
                   <tr>
-                    <td><strong>Vehicle Type</strong></td>
+                    <td><strong>Vehicle Modes</strong></td>
                     {operatorVehicle && operatorVehicle.map((vehicle, index) =>
                       <td  key={index}>{vehicle.vehicleType}</td>
                     )}
                   </tr>
                   <tr>
-                    <td><strong>Mode</strong></td>
+                    <td><strong>Service</strong></td>
                     {operatorMode && operatorMode.map((mode, index) =>
                       <td  key={index}>{mode.modecode}</td>
                     )}
@@ -126,12 +126,12 @@ useEffect(()=>{
                       <td  key={index}>{zone.zoneCode}</td>
                     )}
                   </tr>
-                  <tr>
-                    <td><strong>State</strong></td>
-                    {states && states.map((state, index) =>
-                      <td  key={index}>{state.xstate}</td>
-                    )}
-                  </tr>
+                  {/*<tr>*/}
+                  {/*  <td><strong>State</strong></td>*/}
+                  {/*  {states && states.map((state, index) =>*/}
+                  {/*    <td  key={index}>{state.xstate}</td>*/}
+                  {/*  )}*/}
+                  {/*</tr>*/}
                   <tr>
                     <td><strong>Status</strong></td>
                     {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }

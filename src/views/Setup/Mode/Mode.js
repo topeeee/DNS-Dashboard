@@ -112,7 +112,6 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 <tr>
                   <th scope="col">Mode</th>
                   <th scope="col">Mode Code</th>
-                  <th scope="col">State</th>
                   {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>
@@ -120,37 +119,31 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 <tr>
                   <td>Train</td>
                   <td>TRN</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 <tr>
                   <td>Ferry</td>
                   <td>FRY</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 <tr>
                   <td>Large Bus</td>
                   <td>LAB</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 <tr>
                   <td>Mini Bus</td>
                   <td>MIB</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 <tr>
                   <td>Car</td>
                   <td>CAR</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 <tr>
                   <td>Bike</td>
                   <td>BIk</td>
-                  <td>Lagos</td>
                   {isAdmin ? <td> <ModeActionBtn  /> </td>: null}
                 </tr>
                 {/*{(modes && isAdmin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>*/}

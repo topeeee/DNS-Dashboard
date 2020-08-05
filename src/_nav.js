@@ -15,6 +15,20 @@ export default {
       icon: 'icon-settings',
       children: [
         {
+          name: 'Services',
+          url: '/services',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        {
+          name: 'Modes',
+          url: '/modes',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        {
           name: 'Operators',
           children: [
             {
@@ -75,57 +89,53 @@ export default {
           // class: "menu_drop",
 
         },
-        {
-          name: 'States',
-          url: '/states',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
+        // {
+        //   name: 'States',
+        //   url: '/states',
+        //   // icon: 'icon-puzzle',
+        //   class: "menu_drop",
+        //
+        // },
 
-        },
-        {
-          name: 'Services',
-          url: '/services',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-
-        },
-        {
-          name: 'Modes',
-          url: '/modes',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-
-        },
         {
           name: 'Zones',
-          url: '/zones',
+          // url: '/zones',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
+          children: [
+            {
+              name: 'Zones',
+              url: '/zones',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Areas',
+              url: '/areas',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Routes',
+              url: '/routes',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Bus Stop',
+              url: '/busstops',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Geo Fences',
+              // url: '/base/jumbotrons',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+          ]
         },
-        {
-          name: 'Areas',
-          url: '/areas',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Routes',
-          url: '/routes',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Bus Stop',
-          url: '/busstops',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
-        {
-          name: 'Geo Fences',
-          // url: '/base/jumbotrons',
-          // icon: 'icon-puzzle',
-          class: "menu_drop",
-        },
+
       ],
     },
     {
@@ -136,19 +146,19 @@ export default {
           name: 'Modal',
           // url: '/base/breadcrumbs',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Revenue',
           // url: '/base/cards',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Operator',
           // url: '/base/carousels',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },
@@ -159,22 +169,22 @@ export default {
         {
           name: 'Overview',
           url: '/users/overview',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'All',
           url: '/users',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/users/active',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/users/inactive',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },
@@ -186,25 +196,25 @@ export default {
           name: 'All',
           url: '/drivers',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/drivers/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/drivers/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Pending',
           url: '/drivers/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         // {
         //   name: 'Driver Loggings',
@@ -234,31 +244,31 @@ export default {
     // },
     {
       name: 'Vehicles',
-      icon: 'icon-people',
+      icon: 'icon-puzzle',
       children: [
         {
           name: 'All',
           url: '/vehicles',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/vehicles/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/vehicles/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Pending',
           url: '/vehicles/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ]
     },
@@ -270,25 +280,25 @@ export default {
           name: 'All',
           url: '/busassisstants',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Active',
           url: '/busassisstants/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Inactive',
           url: '/busassisstants/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Pending',
           url: '/busassisstants/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },
@@ -301,38 +311,38 @@ export default {
           name: 'Overview',
           url: '/trips/overview',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'All',
           url: '/trips',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
 
         {
           name: 'Waiting',
           url: '/trips/waiting',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Transit',
           url: '/trips/transit',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Completed',
           url: '/trips/completed',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Canceled',
           url: '/trips/cancelled',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },
@@ -344,44 +354,44 @@ export default {
           name: 'All',
           url: '/payments',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
 
         {
           name: 'Successful',
           url: '/payments/successful',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Unsuccessful',
           url: '/payments/unsuccessful',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Refunds',
           url: '/payments/refunds',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Pending Refunds',
           url: '/payments/refunds/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Completed Refunds',
           url: '/payments/refunds/completed',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Promo',
           url: '/payments/promo',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
       ],
     },
@@ -393,13 +403,13 @@ export default {
           name: 'Driver',
           url: '/ratings/driver',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         },
         {
           name: 'Bus',
           url: '/ratings/bus',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          // class: "menu_drop",
         }
       ],
     },

@@ -172,10 +172,10 @@ const VehicleModalCreate = (props) => {
                 </Input>}
               </Col>
             </FormGroup>
-            <di className="d-flex justify-content-md-end">
+            <div className="d-flex justify-content-md-end">
               <Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}
               <Button color="secondary" onClick={toggle}>Cancel</Button>
-            </di>
+            </div>
           </Form>
         </ModalBody>
       </Modal>

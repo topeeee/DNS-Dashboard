@@ -49,6 +49,8 @@ const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePa
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
 const AllRequestVehicles = React.lazy(() => import('./views/Vehicle/AllRequestVehicles'));
 const MeRequestVehicles = React.lazy(() => import('./views/Vehicle/MeRequestVehicles'));
+const AllRequestDrivers = React.lazy(() => import('./views/Drivers/AllRequestDrivers'));
+const MeRequestDrivers = React.lazy(() => import('./views/Drivers/MeRequestDrivers'));
 
 
 
@@ -64,6 +66,8 @@ const routes = [
   { path: '/operator/partners/active', exact: true, name: 'Active Partners', component: ActivePartners},
   { path: '/operator/partners/inactive', exact: true, name: 'Inactive Partners', component: InactivePartners},
   { path: '/operator/partners', exact: true, name: 'Partners', component: Partners},
+  { path: '/operator/drivers/requestme', exact: true, name: 'Personal Request', component: MeRequestDrivers},
+  { path: '/operator/drivers/requestall', exact: true, name: 'All Request', component: AllRequestDrivers},
   { path: '/operator/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
   { path: '/operator/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/operator/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },

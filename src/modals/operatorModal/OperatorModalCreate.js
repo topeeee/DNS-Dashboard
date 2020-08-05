@@ -98,7 +98,7 @@ const OperatorModalCreate = (props) => {
   const setOperatorVehicleTypes = async () => {
     try {
     await  selected.forEach((res)=> {
-        const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name};
+        const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name, partnerId:operatorCreated.id};
         axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
       })
     }catch (e) {
@@ -181,9 +181,11 @@ const OperatorModalCreate = (props) => {
   }, [modes]);
 
   const options = [
-    { value: 'Bus', label: 'Bus' },
-    { value: 'Car', label: 'Car' },
-    { value: 'MiniVan', label: 'MiniVan' }
+    { value: 'Train', label: 'Train' },
+    { value: 'Ferry', label: 'Ferry' },
+    { value: 'Large Bus', label: 'Large Bus' },
+    { value: 'Mini Bus', label: 'Mini Bus' },
+    { value: 'Car', label: 'Mini Car' }
   ];
 
 
@@ -221,7 +223,7 @@ const OperatorModalCreate = (props) => {
               <div className="d-flex justify-content-md-end">
               {form1 &&
 
-              <Button color="primary" type="type" className="mr-1 float-right">Continue</Button>
+              <Button color="primary" type="submit" className="mr-1 float-right">Continue</Button>
               }
               </div>
             </Form>}
@@ -229,7 +231,7 @@ const OperatorModalCreate = (props) => {
             <Form onSubmit={onSubmit}>
             <FormGroup>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Types</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Modes</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}
@@ -254,7 +256,7 @@ const OperatorModalCreate = (props) => {
 
               </Col>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Services</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}

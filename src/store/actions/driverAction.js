@@ -15,11 +15,13 @@ import {
   UPDATE_DRIVER,
   DRIVER_VEHICLE_ID,
   DRIVER_VEHICLE_ID2,
-  CLEAR_DRIVER_VEHICLE_ID
+  CLEAR_DRIVER_VEHICLE_ID,
+  DRIVER_ME,
+  DRIVER_ALL
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, OperatorId} from "../../environments/constants";
+import {isAdmin, isOperator, OperatorId, OperatorName} from "../../environments/constants";
 
 
 
@@ -28,7 +30,7 @@ export const getDrivers = () => async dispatch => {
   if(isAdmin) {
     driverApi = `${api.driver}/api/drivers/`
   }else if(isOperator) {
-    driverApi = `${api.driver}/api/drivers/operator/?operatorid=${OperatorId}`
+    driverApi = `${api.driver}/api/drivers/operator/?operatorid=${OperatorName}`
   }
   try {
     dispatch(isLoading());
@@ -66,10 +68,11 @@ export const changeDriverStatus = (id, status) => async dispatch => {
 
 
 export const createDriver = (vehicleId, operatorInput, operatorid, firstname, lastname, residentialaddress, email, phoneno, status, pin, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus) => async dispatch => {
-  const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, operatorid, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
+  const body = {firstname, lastname, residentialaddress, email, phoneno, status, pin, operatorid: operatorInput, bankname, accountname, accountnumber, zone, area, route, geofencedarea, appstatus};
   try {
     const res = await axios.post(`${api.driver}/api/me/drivers/`, body);
     await axios.post(`${api.driverVehicles}/api/me/drivervehicles/`, {vehicleId: vehicleId, driverId: res.data.id, operatorId: operatorInput});
+    dispatch(setDriversRequest(res.data.id, 1, operatorInput))
     dispatch({
       type: CREATE_DRIVER,
       payload: res.data
@@ -165,6 +168,51 @@ export const approveDriver = (id) => async dispatch => {
     });
   }
 };
+
+export const getMeRequestDrivers = () => async dispatch => {
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.driver}/api/request/?operatorid=${OperatorName}`);
+    dispatch({
+      type: DRIVER_ME,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: DRIVER_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+  }
+};
+export const getAllRequestDrivers = () => async dispatch => {
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.driver}/api/request/?operatorid=All`);
+    dispatch({
+      type: DRIVER_ALL,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: DRIVER_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+  }
+};
+
+export const setDriversRequest = (id, status, operator) => async dispatch => {
+  try {
+    await axios.put(`${api.driver}/api/driver/operator/${id}/?status=${status}&operatorid=${operator}`)
+    dispatch(getAllRequestDrivers())
+    dispatch(getMeRequestDrivers())
+  } catch (err) {
+    dispatch({
+      type: DRIVER_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+  }
+};
+
 
 
 export function toggleDriverModalCreate() {
