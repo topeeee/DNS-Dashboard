@@ -23,7 +23,7 @@ import {LogIn} from "../../../store/actions/authenticationAction";
 
 
 
-const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
+const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner, lamata}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
   const { username, password } = formData;
 
   function  setError() {
-    if((!isAuthenticated || isAuthenticated) && !admin && !operator && !partner && errors) {
+    if(!isAuthenticated  && !admin && !operator && !partner && errors && !lamata) {
       setIsLoading(false);
       setIsError(true);
       setTimeout(()=> {
@@ -49,9 +49,10 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
 
 useEffect(()=> {
   setError();
-},[isAuthenticated, partner, operator, admin, errors]);
+},[isAuthenticated, partner, operator, admin, errors, lamata]);
 
   const isAdmin = sessionStorage.getItem('isAdmin');
+  const isLamata = sessionStorage.getItem('isLamata');
   const isOperator = sessionStorage.getItem('isOperator');
   const isPartner = sessionStorage.getItem('isPartner');
   const token = sessionStorage.getItem("token");
@@ -75,7 +76,14 @@ useEffect(()=> {
       window.location.reload()
     },0);
     return <Redirect to="/partner" />;
+  } else if ((isAuthenticated && lamata) || (isLamata && token)) {
+    sessionStorage.setItem('isLamata', lamata);
+    setTimeout(()=> {
+      window.location.reload()
+    },0);
+    return <Redirect to="/lamata" />;
   }
+
 
   return (
       <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
@@ -159,6 +167,7 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   admin: state.auth.admin,
+  lamata: state.auth.lamata,
   operator: state.auth.operator,
   partner: state.auth.partner,
   errors: state.auth.errors

@@ -12,6 +12,7 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {createUser} from "./userAction";
 
 export const getPartners = () => async dispatch => {
   try {
@@ -39,7 +40,9 @@ export const registerPartner = (username, password, name, email, phoneNo, office
       payload: res.data
     });
     if(res) {
-      dispatch(createPartner(res.data.id, name, email, phoneNo, officeAddress, status, numberOfVehicle))
+      dispatch(createPartner(res.data.id, name, email, phoneNo, officeAddress, status, numberOfVehicle, email))
+      dispatch(createUser(name, name, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+
     }
     dispatch(getPartners())
   } catch (err) {
@@ -52,8 +55,8 @@ export const registerPartner = (username, password, name, email, phoneNo, office
 };
 
 
-export const createPartner = (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle) => async dispatch => {
-  const body = {pin, name, email, phoneNo, officeAddress, status, numberOfVehicle};
+export const createPartner = (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, usernameMain) => async dispatch => {
+  const body = {pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, usernameMain};
   try {
     const res = await axios.post(`${api.partner}/api/me/partners/`, body);
     dispatch({

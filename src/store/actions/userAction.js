@@ -34,27 +34,11 @@ export const getUsers = () => async dispatch => {
   }
 };
 
-export const createUser = (first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method) => async dispatch => {
-  const body = {first_name, last_name, email, date_of_birth, pax_code, home_location, home_pickup_time, status, payment_method};
+export const createUser = (firstName, lastName, usernameMain, email, dateOfBirth, phoneNumber, pin) => async dispatch => {
+  const body = {firstName, lastName, usernameMain, email, dateOfBirth, phoneNumber, pin};
   try {
-    const res = await axios.post(`${api.user}/api/me/userdetails/`, body);
-    dispatch({
-      type: CREATE_USER,
-      payload: res.data
-    });
-    dispatch(getUsers());
-    dispatch(toggleUserModalCreate());
-  } catch (err) {
-    dispatch({
-      type: USER_ERROR,
-      payload: "Opps! Something Went Wrong Try Again"
-    });
-    dispatch(toggleUserModalCreate());
-    setTimeout(() => dispatch({
-      type: REMOVE_USER_ERROR
-    }), 5000)
-
-  }
+    await axios.post(`${api.user}/api/me/userdetails/`, body);
+  } catch (err) {}
 };
 
 export const changeUserStatus = (id, status) => async dispatch => {

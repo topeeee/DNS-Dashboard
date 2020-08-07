@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import  {connect} from 'react-redux'
 import CombineModal from "../../modals";
-import {Authorized, LogIn} from "../../store/actions/authenticationAction";
+import {LogIn} from "../../store/actions/authenticationAction";
 import Spinner from "../../spinner/Spinner";
-import {admin, isAdmin} from "../../environments/constants";
-import axios from "axios";
-import store from "../../store";
-import PartnerLayout from "../../containers/DefaultLayout/PartnerLayout";
+import {isAdmin} from "../../environments/constants";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -19,6 +16,8 @@ const loading = () => <div className="animated fadeIn pt-1 text-center">Loading.
 // Containers
 const DefaultLayout = React.lazy(() => import('../../containers/DefaultLayout'));
 const OperatorLayout = React.lazy(() => import('../../containers/DefaultLayout/OperatorLayout'));
+const PartnerLayout = React.lazy(() => import('../../containers/DefaultLayout/PartnerLayout'));
+const LamataLayout = React.lazy(() => import('../../containers/DefaultLayout/LamataLayout'));
 
 // Pages
 const Login = React.lazy(() => import('../Pages/Login'));
@@ -37,6 +36,9 @@ const OperatorRoute = ({ isLoggedIn, isOperator, stored, ...props }) =>
 const PartnerRoute = ({ isLoggedIn, isPartner, stored, ...props }) =>
   ((isLoggedIn && isPartner) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
 
+const LamataRoute = ({ isLoggedIn, isLamata, stored, ...props }) =>
+  ((isLoggedIn && isLamata) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
+
 
 
 function mapDispatchToProps(dispatch) {
@@ -50,35 +52,20 @@ const mapStateToProps = (state) => ({
   loading: state.auth.loading,
   operators: state.operator.operators,
   admin: state.auth.admin,
+  lamata: state.auth.lamata,
   operator: state.auth.operator,
   partner: state.auth.partner,
   token: state.auth.token,
 
 });
 
-const Home = ({ isAuthenticated, operator, admin, token, partner}) => {
+const Home = ({ isAuthenticated, operator, admin, token, partner, lamata}) => {
 
   const isAdmin = sessionStorage.getItem('isAdmin');
   const isOperator = sessionStorage.getItem('isOperator');
   const isPartner = sessionStorage.getItem('isPartner');
+  const isLamata = sessionStorage.getItem('isLamata');
 
-
-  // async function getToken(token) {
-  //   try {
-  //     if (token) {
-  //       axios.defaults.headers.common['Authorization'] = token;
-  //       store.dispatch(Authorized());
-  //     } else {
-  //       axios.defaults.headers.common['Authorization'] = null;
-  //     }
-  //   }catch (e) {
-  //
-  //   }
-  // }
-  //
-  // useEffect(()=> {
-  //   getToken(token)
-  // },[token]);
 
   return (
     <BrowserRouter>
@@ -89,10 +76,10 @@ const Home = ({ isAuthenticated, operator, admin, token, partner}) => {
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
+              <LamataRoute isLoggedIn={isAuthenticated} isLamata={lamata} stored={isLamata} path="/lamata" name="Lamata" render={props => <LamataLayout {...props}/>} />
               <OperatorRoute isLoggedIn={isAuthenticated} isOperator={operator} stored={isOperator} path="/operator" name="Operator" render={props => <OperatorLayout {...props}/>} />
-              <PartnerRoute isLoggedIn={isAuthenticated} isPartner={partner} stored={isPartner} path="/partner" name="Operator" render={props => <PartnerLayout {...props}/>} />
+              <PartnerRoute isLoggedIn={isAuthenticated} isPartner={partner} stored={isPartner} path="/partner" name="Partner" render={props => <PartnerLayout {...props}/>} />
               <PrivateRoute isLoggedIn={isAuthenticated} isAdmin={admin} stored={isAdmin}  path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />
-              {/*<Route path="/" name="Admin" render={props => <DefaultLayout {...props}/>} />*/}
             </Switch>
           </React.Suspense>
           </BrowserRouter>

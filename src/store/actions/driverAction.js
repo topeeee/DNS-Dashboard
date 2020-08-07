@@ -22,6 +22,7 @@ import {
 import  axios from 'axios'
 import api from "../../environments/environment";
 import {isAdmin, isOperator, OperatorId, OperatorName} from "../../environments/constants";
+import {createUser} from "./userAction";
 
 
 
@@ -42,7 +43,7 @@ export const getDrivers = () => async dispatch => {
   } catch (err) {
     dispatch({
       type: DRIVER_ERROR,
-      payload: "Opps! Something Went Wrong Try Again"
+      payload: "No Drivers available"
     });
 
   }
@@ -73,6 +74,10 @@ export const createDriver = (vehicleId, operatorInput, operatorid, firstname, la
     const res = await axios.post(`${api.driver}/api/me/drivers/`, body);
     await axios.post(`${api.driverVehicles}/api/me/drivervehicles/`, {vehicleId: vehicleId, driverId: res.data.id, operatorId: operatorInput});
     dispatch(setDriversRequest(res.data.id, 1, operatorInput))
+    if(res.data) {
+      dispatch(createUser(firstname, lastname, email, email, 'not available', '+234' + phoneno.substr(1), res.data.id))
+
+    }
     dispatch({
       type: CREATE_DRIVER,
       payload: res.data

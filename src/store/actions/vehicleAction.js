@@ -17,13 +17,13 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, isPartner, OperatorName, PartnerId} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, isPartner, OperatorName, PartnerId} from "../../environments/constants";
 
 
 
 export const getVehicles = () => async dispatch => {
   let VehicleApi;
-  if(isAdmin) {
+  if(isAdmin || isLamata) {
     VehicleApi = `${api.vehicle}/api/vehicles/`
   }else if(isOperator) {
     VehicleApi = `${api.vehicle}/api/operators/?operator=${OperatorName}`

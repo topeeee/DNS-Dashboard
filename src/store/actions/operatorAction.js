@@ -16,22 +16,7 @@ import {
 } from "../actionTypes"
 import axios from 'axios'
 import api from "../../environments/environment";
-
-// async function getVariables() {
-//   try {
-//     const devices = await getDevices();
-//     console.log(devices);
-//
-//     const promises = [];
-//     devices.forEach((device) => {
-//       promises.push(getForOneDevice(device.id));
-//     })
-//
-//     const allResults = Promise.all(promises);
-//   } catch (e) {
-//     console.error(e)
-//   }
-// }
+import {createUser} from "./userAction";
 
 
 export const getOperators = () => async dispatch => {
@@ -61,6 +46,7 @@ export const registerOperator = (username, password, name, email, phoneNo, offic
     });
     if(res) {
       dispatch(createOperator(res.data.id, name, name, email, phoneNo, officeAddress, status, numberOfVehicle))
+      dispatch(createUser(name, name, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
     }
   } catch (err) {
     dispatch({

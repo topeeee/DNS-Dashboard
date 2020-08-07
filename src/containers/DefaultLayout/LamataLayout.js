@@ -2,6 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
+
 import {
   AppAside,
   AppFooter,
@@ -14,27 +15,32 @@ import {
   AppBreadcrumb2 as AppBreadcrumb,
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
-import Partnernav from '../../Partnernav';
-import Partnerroutes from '../../Partnerroutes';
+// sidebar nav config
+import Lamatanavigation from '../../Lamatanav';
+// routes config
+import Lamataroutes from '../../Lamataroutes';
 import Spinner from "../../spinner/Spinner";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
-const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+const LamataHeader = React.lazy(() => import('./LamataHeader'));
 
-class PartnerLayout extends Component {
+class LamataLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
 
-
+  signOut(e) {
+    e.preventDefault();
+    this.props.history.push('/login')
+  }
 
   render() {
     return (
       <div className="app">
         <AppHeader fixed className="bg-dark" style={{border: "none"}}>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader/>
+            <LamataHeader onLogout={e=>this.signOut(e)}/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
@@ -42,17 +48,17 @@ class PartnerLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-              <AppSidebarNav navConfig={Partnernav} {...this.props} router={router}/>
+              <AppSidebarNav navConfig={Lamatanavigation} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={Partnerroutes} router={router}/>
+            <AppBreadcrumb appRoutes={Lamataroutes} router={router}/>
             <Container fluid>
               <Suspense fallback={<Spinner />}>
                 <Switch>
-                  {Partnerroutes.map((route, idx) => {
+                  {Lamataroutes.map((route, idx) => {
                     return route.component ? (
                       <Route
                         key={idx}
@@ -64,7 +70,7 @@ class PartnerLayout extends Component {
                         )} />
                     ) : (null);
                   })}
-                  <Redirect from="/partner" to="partner/dashboard" />
+                  <Redirect from="/lamata" to="lamata/dashboard" />
                 </Switch>
               </Suspense>
             </Container>
@@ -85,6 +91,4 @@ class PartnerLayout extends Component {
   }
 }
 
-
-
-export default PartnerLayout;
+export default LamataLayout;

@@ -72,7 +72,7 @@ useEffect(()=> {
                 </tr>
                 <tr>
                   <td><strong>Phone Number</strong></td>
-                  <td>{newUser.phoneNumber}</td>
+                  {newUser.phoneNumber?<td>{'0' + newUser.phoneNumber.substr(4)}</td>: null}
                 </tr>
                 <tr>
                   <td><strong>Pin</strong></td>
@@ -102,11 +102,11 @@ useEffect(()=> {
                   <td><strong>Signup Date</strong></td>
                   {newDate ?( <td>{newDate}</td>): null}
                 </tr>
-                <tr>
-                  <td><strong>Status</strong></td>
-                  {(newUser.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-                  {(newUser.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Status</strong></td>*/}
+                {/*  {(newUser.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }*/}
+                {/*  {(newUser.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }*/}
+                {/*</tr>*/}
                 </tbody>
                 }
 

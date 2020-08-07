@@ -1,5 +1,6 @@
 export  const token = sessionStorage.getItem("token");
 export const isAdmin = sessionStorage.getItem('isAdmin');
+export const isLamata = sessionStorage.getItem('isLamata');
 export const OperatorName = sessionStorage.getItem('OperatorName');
 export const OperatorId = sessionStorage.getItem('OperatorId');
 export const isOperator = sessionStorage.getItem('isOperator');

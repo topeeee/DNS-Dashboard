@@ -94,6 +94,7 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
 
 useEffect(()=> {
   if(formData && drivers){
+    setCurrentPage(1)
     const search = drivers.filter(post => {
       return post.firstname.toLowerCase().includes(formData.toLowerCase())
     });
@@ -162,6 +163,7 @@ useEffect(()=> {
 
   const onSearch = e => {
     e.preventDefault();
+    // setCurrentPage(1)
     searchDriver(formData)
   };
 
@@ -227,16 +229,7 @@ useEffect(()=> {
                 }
                 </tbody>
               </Table>}
-              <div className="d-flex justify-content-end align-items-center">
-                <Pagination
-                  activePage={currentPage}
-                  itemClass="page-item"
-                  linkClass="page-link"
-                  itemsCountPerPage={postsPerPage}
-                  totalItemsCount={posts.length}
-                  onChange={paginate}
-                />
-              </div>
+
               {/*<Pagination*/}
               {/*  postsPerPage={postsPerPage}*/}
               {/*  totalPosts={posts.length}*/}
@@ -247,6 +240,16 @@ useEffect(()=> {
           </Card>
         </Col>
       </Row>
+      <div className="d-flex justify-content-end align-items-center">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
     </div>
   )
 };

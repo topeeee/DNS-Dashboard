@@ -5,7 +5,9 @@ import {
   USER_AUTHORIZED,
   PARTNER,
   ADMIN,
-  OPERATOR
+  OPERATOR,
+  LOGOUT,
+  LAMATA
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -26,6 +28,7 @@ export const LogIn = (username, password) => async dispatch => {
     });
     if(res.data) {
       dispatch(getAdmin(username));
+      dispatch(getLamata(username));
       dispatch(getOperator(username));
       dispatch(getPartner(username));
     }
@@ -40,6 +43,13 @@ export const LogIn = (username, password) => async dispatch => {
       }), 5000)
   }
 };
+
+export function LogOut() {
+  return {
+    type: LOGOUT,
+
+  };
+}
 
 export function Authorized() {
   return {
@@ -74,6 +84,34 @@ export const getAdmin = (username) => async dispatch => {
 
   }
 };
+
+
+  export const getLamata = (username) => async dispatch => {
+    try {
+      const res = await axios.get(`${api.lamata}/api/lamatas/?search=${username}`);
+      if(res.data.length > 0) {
+        dispatch({
+          type:  LAMATA,
+          payload: res.data
+        });
+        sessionStorage.setItem('LamataName', res.data[0].name);
+      } else {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: "Unauthorized"
+        });
+        setTimeout(() => dispatch({
+          type: REMOVE_AUTH_ERROR
+        }), 5000)
+      }
+    } catch (err) {
+      dispatch({
+        type: AUTH_ERROR,
+        payload: "Unauthorized"
+      });
+
+    }
+  };
 
 export const getOperator = (username) => async dispatch => {
   try {

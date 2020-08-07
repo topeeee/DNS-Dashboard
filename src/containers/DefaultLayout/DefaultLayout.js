@@ -21,6 +21,7 @@ import navigation from '../../_nav';
 import routes from '../../routes';
 import Spinner from "../../spinner/Spinner";
 
+
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
@@ -30,17 +31,14 @@ class DefaultLayout extends Component {
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
 
-  signOut(e) {
-    e.preventDefault();
-    this.props.history.push('/login')
-  }
+
 
   render() {
     return (
       <div className="app">
         <AppHeader fixed className="bg-dark" style={{border: "none"}}>
           <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+            <DefaultHeader/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
@@ -90,5 +88,9 @@ class DefaultLayout extends Component {
     );
   }
 }
+
+
+
+
 
 export default DefaultLayout;

@@ -181,3 +181,5 @@ export const VEHICLE_BY_ALL = "VEHICLE_BY_ALL";
 export const VEHICLE_BY_ME = "VEHICLE_BY_ME";
 export const DRIVER_ME = "DRIVER_ME";
 export const DRIVER_ALL = "DRIVER_ALL";
+export const LOGOUT = "LOGOUT";
+export const LAMATA = "LAMATA";

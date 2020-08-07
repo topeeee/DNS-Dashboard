@@ -3,20 +3,20 @@ export default {
 
     {
       title: true,
-      name: 'Admin Dashboard',
+      name: 'Lamata Dashboard',
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center, text-primary'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-center, text-info'             // optional class names space delimited list for title item ex: "text-center"
     },
     {
-      name: 'Setup',
+      name: 'Profile',
       icon: 'icon-settings',
       children: [
         {
           name: 'Services',
-          url: '/services',
+          url: '/lamata/services',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
           attributes: { className: "bg-white", style: { color: "black" }}
@@ -24,7 +24,7 @@ export default {
         },
         {
           name: 'Modes',
-          url: '/modes',
+          url: '/lamata/modes',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
           attributes: { className: "bg-white", style: { color: "black" }}
@@ -35,7 +35,7 @@ export default {
           children: [
             {
               name: 'All',
-              url: '/operators',
+              url: '/lamata/operators',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
               attributes: { className: "bg-white", style: { color: "black" }}
@@ -43,7 +43,7 @@ export default {
             },
             {
               name: 'Active',
-              url: '/operators/active',
+              url: '/lamata/operators/active',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
               attributes: { className: "bg-white", style: { color: "black" }}
@@ -52,7 +52,7 @@ export default {
             },
             {
               name: 'Inactive',
-              url: '/operators/inactive',
+              url: '/lamata/operators/inactive',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
               attributes: { className: "bg-white", style: { color: "black" }}
@@ -69,7 +69,7 @@ export default {
           children: [
             {
               name: 'All',
-              url: '/partners',
+              url: '/lamata/partners',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
@@ -77,7 +77,7 @@ export default {
             },
             {
               name: 'Active',
-              url: '/partners/active',
+              url: '/lamata/partners/active',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
@@ -85,7 +85,7 @@ export default {
             },
             {
               name: 'Inactive',
-              url: '/partners/inactive',
+              url: '/lamata/partners/inactive',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
@@ -113,28 +113,28 @@ export default {
           children: [
             {
               name: 'Zones',
-              url: '/zones',
+              url: '/lamata/zones',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
             },
             {
               name: 'Areas',
-              url: '/areas',
+              url: '/lamata/areas',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
             },
             {
               name: 'Routes',
-              url: '/routes',
+              url: '/lamata/routes',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
             },
             {
               name: 'Bus Stop',
-              url: '/busstops',
+              url: '/lamata/busstops',
               attributes: { className: "bg-white", style: { color: "black" }}
               // icon: 'icon-puzzle',
               // class: "menu_drop",
@@ -163,13 +163,6 @@ export default {
           // class: "menu_drop",
         },
         {
-          name: 'Revenue',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // url: '/base/cards',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
           name: 'Operator',
           attributes: { className: "bg-white", style: { color: "black" }}
           // url: '/base/carousels',
@@ -182,30 +175,12 @@ export default {
       name: 'Users',
       icon: 'icon-people',
       children: [
-        // {
-        //   name: 'Overview',
-        //   url: '/users/overview',
-        //   attributes: { className: "bg-white", style: { color: "black" }}
-        //   // class: "menu_drop",
-        // },
         {
           name: 'All',
-          url: '/users',
+          url: '/lamata/users',
           attributes: { className: "bg-white", style: { color: "black" }}
           // class: "menu_drop",
         },
-        // {
-        //   name: 'Active',
-        //   url: '/users/active',
-        //   attributes: { className: "bg-white", style: { color: "black" }}
-        //   // class: "menu_drop",
-        // },
-        // {
-        //   name: 'Inactive',
-        //   url: '/users/inactive',
-        //   attributes: { className: "bg-white", style: { color: "black" }}
-        //   // class: "menu_drop",
-        // },
       ],
     },
     {
@@ -214,28 +189,28 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/drivers',
+          url: '/lamata/drivers',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/drivers/active',
+          url: '/lamata/drivers/active',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/drivers/inactive',
+          url: '/lamata/drivers/inactive',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/drivers/pending',
+          url: '/lamata/drivers/pending',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -272,28 +247,28 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/vehicles',
+          url: '/lamata/vehicles',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/vehicles/active',
+          url: '/lamata/vehicles/active',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/vehicles/inactive',
+          url: '/lamata/vehicles/inactive',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/vehicles/pending',
+          url: '/lamata/vehicles/pending',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -306,28 +281,28 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/busassisstants',
+          url: '/lamata/busassisstants',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/busassisstants/active',
+          url: '/lamata/busassisstants/active',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/busassisstants/inactive',
+          url: '/lamata/busassisstants/inactive',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/busassisstants/pending',
+          url: '/lamata/busassisstants/pending',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -341,14 +316,14 @@ export default {
       children: [
         {
           name: 'Overview',
-          url: '/trips/overview',
+          url: '/lamata/trips/overview',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'All',
-          url: '/trips',
+          url: '/lamata/trips',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -356,84 +331,28 @@ export default {
 
         {
           name: 'Waiting',
-          url: '/trips/waiting',
+          url: '/lamata/trips/waiting',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Transit',
-          url: '/trips/transit',
+          url: '/lamata/trips/transit',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Completed',
-          url: '/trips/completed',
+          url: '/lamata/trips/completed',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Canceled',
-          url: '/trips/cancelled',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-      ],
-    },
-    {
-      name: 'Payments',
-      icon: 'icon-user',
-      children: [
-        {
-          name: 'All',
-          url: '/payments',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-
-        {
-          name: 'Successful',
-          url: '/payments/successful',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Unsuccessful',
-          url: '/payments/unsuccessful',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Refunds',
-          url: '/payments/refunds',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Pending Refunds',
-          url: '/payments/refunds/pending',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Completed Refunds',
-          url: '/payments/refunds/completed',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Promo',
-          url: '/payments/promo',
+          url: '/lamata/trips/cancelled',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -446,14 +365,14 @@ export default {
       children: [
         {
           name: 'Driver',
-          url: '/ratings/driver',
+          url: '/lamata/ratings/driver',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Bus',
-          url: '/ratings/bus',
+          url: '/lamata/ratings/bus',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",

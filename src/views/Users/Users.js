@@ -27,10 +27,10 @@ function UserRow(props) {
       <td>{user.pin}</td>
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
-      <td>{user.phoneNumber}</td>
+      {user.phoneNumber?<td>{'0' + user.phoneNumber.substr(4)}</td>: null}
       <td>{user.email}</td>
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
-      {(user.status === "0" || user.status === null) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
+      {/*{(user.status === "0" || user.status === null) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}*/}
       <td> <UserActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
@@ -131,12 +131,12 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
                 <thead className="bg-dark">
                 <tr>
                   {/*<th scope="col">ID</th>*/}
-                  <th scope="col">PIN</th>
+                  <th scope="col">Zeno PIN</th>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col">Phone Number</th>
                   <th scope="col">Email</th>
-                  <th scope="col">Status</th>
+                  {/*<th scope="col">Status</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>

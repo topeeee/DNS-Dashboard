@@ -1,9 +1,19 @@
-import {LOGIN_SUCCESS, AUTH_ERROR, REMOVE_AUTH_ERROR, USER_AUTHORIZED, ADMIN, OPERATOR, PARTNER} from "../actionTypes";
+import {
+  LOGIN_SUCCESS,
+  AUTH_ERROR,
+  REMOVE_AUTH_ERROR,
+  USER_AUTHORIZED,
+  ADMIN,
+  OPERATOR,
+  PARTNER,
+  LOGOUT, LAMATA
+} from "../actionTypes";
 
 const initialState = {
   token: null,
   isAuthenticated: null,
   admin: null,
+  lamata: null,
   operator: null,
   partner: null,
   loading: false,
@@ -22,11 +32,26 @@ function authenticationReducer(state = initialState, action) {
         loading: false
       };
     }
+    case LOGOUT: {
+      return {
+        isAuthenticated: false,
+        loading: false
+      };
+    }
     case ADMIN: {
       return {
         ...state,
         ...payload,
         admin: true,
+        loading: false
+      };
+    }
+
+    case LAMATA: {
+      return {
+        ...state,
+        ...payload,
+        lamata: true,
         loading: false
       };
     }

@@ -16,79 +16,42 @@ export default {
       name: 'Profile',
       icon: 'icon-settings',
       children: [
-        // {
-        //   name: 'Operators',
-        //   children: [
-        //     {
-        //       name: 'All',
-        //       url: '/operators',
-        //       // icon: 'icon-puzzle',
-        //       // class: "menu_drop",
-        //
-        //     },
-        //     {
-        //       name: 'Active',
-        //       url: '/operators/active',
-        //       // icon: 'icon-puzzle',
-        //       // class: "menu_drop",
-        //
-        //     },
-        //     {
-        //       name: 'Inactive',
-        //       url: '/operators/inactive',
-        //       // icon: 'icon-puzzle',
-        //       // class: "menu_drop",
-        //
-        //     },
-        //   ]
-        //   // url: '/operators',
-        //   // icon: 'icon-puzzle',
-        //  // class: "menu_drop",
-        //
-        // },
-        // {
-        //   name: 'States',
-        //   url: '/operator/states',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        //
-        // },
         {
           name: 'Services',
           url: '/operator/services',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
 
         },
         {
           name: 'Zones',
           url: '/operator/zones',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Areas',
           url: '/operator/areas',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Routes',
           url: '/operator/routes',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Bus Stop',
           url: '/operator/busstops',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Geo Fences',
           // url: '/base/jumbotrons',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ],
     },
@@ -97,21 +60,42 @@ export default {
       icon: 'icon-puzzle',
       children: [
         {
-          name: 'Request',
+          name: 'All',
+          url: '/operator/partners',
+          // icon: 'icon-puzzle',
+          attributes: { className: "bg-white", style: { color: "black" }}
+
+        },
+        {
+          name: 'Active',
+          url: '/operator/partners/active',
+          // icon: 'icon-puzzle',
+          attributes: { className: "bg-white", style: { color: "black" }}
+
+        },
+        {
+          name: 'Inactive',
+          url: '/operator/partners/inactive',
+          // icon: 'icon-puzzle',
+          attributes: { className: "bg-white", style: { color: "black" }}
+
+        },
+        {
+          name: 'Partners Request',
           icon: 'icon-bell',
           children: [
             {
               name: 'All Request',
               url: '/operator/vehicles/requestall',
               // icon: 'icon-bell',
-              class: "menu_drop",
+              attributes: { className: "bg-white", style: { color: "black" }}
 
             },
             {
               name: 'Personal Request',
               url: '/operator/vehicles/requestme',
               // icon: 'icon-puzzle',
-              class: "menu_drop",
+              attributes: { className: "bg-white", style: { color: "black" }}
 
             },
           ]
@@ -120,31 +104,7 @@ export default {
           // class: "menu_drop",
 
         },
-        {
-          name: 'All Partners',
-          url: '/operator/partners',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
-        },
-        {
-          name: 'Active',
-          url: '/operator/partners/active',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
-        },
-        {
-          name: 'Inactive',
-          url: '/operator/partners/inactive',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
-        },
       ]
-      // url: '/operators',
-      // icon: 'icon-puzzle',
-      // class: "menu_drop",
 
     },
     {
@@ -155,19 +115,19 @@ export default {
           name: 'Modal',
           // url: '/base/breadcrumbs',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Revenue',
           // url: '/base/cards',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Operator',
           // url: '/base/carousels',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ],
     },
@@ -183,7 +143,7 @@ export default {
         {
           name: 'All',
           url: '/operator/passengers',
-          // class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         // {
         //   name: 'Active',
@@ -201,30 +161,6 @@ export default {
       name: 'Drivers',
       icon: 'icon-user',
       children: [
-        {
-          name: 'Request',
-          icon: 'icon-bell',
-          children: [
-            {
-              name: 'All Request',
-              url: '/operator/drivers/requestall',
-              // icon: 'icon-bell',
-              // class: "menu_drop",
-
-            },
-            {
-              name: 'Personal Request',
-              url: '/operator/drivers/requestme',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-
-            },
-          ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
-        },
         // {
         //   name: 'Flagged Drivers',
         //   url: '/operator/drivers/requestall',
@@ -235,55 +171,79 @@ export default {
           name: 'All Drivers',
           url: '/operator/drivers',
           // icon: 'icon-puzzle',
-          // class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Active',
           url: '/operator/drivers/active',
           // icon: 'icon-puzzle',
-          // class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Inactive',
           url: '/operator/drivers/inactive',
           // icon: 'icon-puzzle',
-          // class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Flagged',
           url: '/operator/drivers/pending',
           // icon: 'icon-puzzle',
+          attributes: { className: "bg-white", style: { color: "black" }}
+        },
+        {
+          name: 'Drivers Request',
+          icon: 'icon-bell',
+          children: [
+            {
+              name: 'All Request',
+              url: '/operator/drivers/requestall',
+              // icon: 'icon-bell',
+              attributes: { className: "bg-white", style: { color: "black" }}
+
+            },
+            {
+              name: 'Personal Request',
+              url: '/operator/drivers/requestme',
+              // icon: 'icon-puzzle',
+              attributes: { className: "bg-white", style: { color: "black" }}
+
+            },
+          ]
+          // url: '/operators',
+          // icon: 'icon-puzzle',
           // class: "menu_drop",
+
         },
       ],
     },
     {
-      name: 'Bus Assistants',
+      name: 'Operator Assistants',
       icon: 'icon-user',
       children: [
         {
           name: 'All',
           url: '/operator/busassisstants',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Active',
           url: '/operator/busassisstants/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Inactive',
           url: '/operator/busassisstants/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Pending',
           url: '/operator/busassisstants/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ],
     },
@@ -301,25 +261,25 @@ export default {
           name: 'All',
           url: '/operator/vehicles',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Active',
           url: '/operator/vehicles/active',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Inactive',
           url: '/operator/vehicles/inactive',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Pending',
           url: '/operator/vehicles/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ]
     },
@@ -332,38 +292,38 @@ export default {
           name: 'Overview',
           url: '/operator/trips/overview',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'All',
           url: '/operator/trips',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
 
         {
           name: 'Waiting',
           url: '/operator/trips/waiting',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Transit',
           url: '/operator/trips/transit',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Completed',
           url: '/operator/trips/completed',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Canceled',
           url: '/operator/trips/cancelled',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ],
     },
@@ -375,44 +335,44 @@ export default {
           name: 'All',
           url: '/operator/payments',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
 
         {
           name: 'Successful',
           url: '/operator/payments/successful',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Unsuccessful',
           url: '/operator/payments/unsuccessful',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Refunds',
           url: '/operator/payments/refunds',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Pending Refunds',
           url: '/operator/payments/refunds/pending',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Completed Refunds',
           url: '/operator/payments/refunds/completed',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Promo',
           url: '/operator/payments/promo',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
       ],
     },
@@ -424,13 +384,13 @@ export default {
           name: 'Driver',
           url: '/operator/ratings/driver',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Bus',
           url: '/operator/ratings/bus',
           // icon: 'icon-puzzle',
-          class: "menu_drop",
+          attributes: { className: "bg-white", style: { color: "black" }}
         }
       ],
     },
