@@ -11,6 +11,7 @@ import axios from "axios";
 import api from "../../environments/environment";
 // import Pagination from "../../pagination/Pagination";
 import Pagination from "react-js-pagination";
+import {isLamata} from "../../environments/constants";
 
 
 
@@ -37,9 +38,9 @@ function UserRow(props) {
       {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
       {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
       {/*<td>Not available</td>*/}
-      <td>Not Available</td>
-      <td>Not Available</td>
-      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
+      {/*<td>Not Available</td>*/}
+      {/*<td>Not Available</td>*/}
+      {(user.status === "1" || user.status === "3") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
       <td> <DriverActionBtn id={user.id} user={user} /> </td>
@@ -206,7 +207,7 @@ useEffect(()=> {
               <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
               {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
@@ -214,8 +215,8 @@ useEffect(()=> {
                   <th scope="col">Residential Address</th>
                   <th scope="col">Email Address</th>
                   <th scope="col">App status</th>
-                  <th scope="col">Rating</th>
-                  <th scope="col">Review</th>
+                  {/*<th scope="col">Rating</th>*/}
+                  {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>

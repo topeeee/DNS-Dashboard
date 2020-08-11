@@ -3,46 +3,55 @@ import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
-import OperatorHeader from "./components/OperatorHeader";
-import Spinner from "../../../spinner/Spinner";
-import OperatorActionBtn from "./components/OperatorActionBtn";
-import {isLamata} from "../../../environments/constants";
+import Spinner from "../../spinner/Spinner";
+import DriverHeader from "./components/DriverHeader";
+import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
+import {isLamata} from "../../environments/constants";
+import FlaggedDriverActionBtn from "./components/FlaggedDriverActionBtn";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const zone = props.zone;
-
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'danger' :
+      status === 'Refunds' ? 'secondary' :
         status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
+          status === 'Inactive' ? 'danger' :
             'primary'
   };
+
   return (
     <tr key={user.id}>
-      <td>{user.name}</td>
-      <td>{user.phoneNo}</td>
+      <td>{user.firstname}</td>
+      <td>{user.lastname}</td>
+      <td>{user.phoneno}</td>
+      <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      <td>{user.officeAddress}</td>
-      <td>{user.numberOfVehicle}</td>
-      {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-      {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-      <td> <OperatorActionBtn id={user.id} user={user} /> </td>
+      {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
+      {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
+      {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+      {/*<td>Not Available</td>*/}
+      {/*<td>Not Available</td>*/}
+      {(user.status === "3") && <td><Badge color={getBadge("Pending")}>Flagged</Badge></td> }
+      <td> <FlaggedDriverActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
 }
 
-const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchOperator, error}) => {
+const FlaggedDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
   const [formData, setFormData] = useState('');
+
+
+
+
+
 
   useEffect(()=>{
     if(formData === ''){
-      getOperators()
+      getDrivers();
+
     }
   },[formData]);
 
@@ -57,7 +66,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
 
   const onSearch = e => {
     e.preventDefault();
-    searchOperator(formData)
+    searchDriver(formData)
   };
 
   return (
@@ -86,42 +95,42 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-               Active Operators
+                Drivers
               </div>
-              <OperatorHeader />
+              <DriverHeader />
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
-              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
+              {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
               {/*{isLoading && loading()}*/}
-              {(operators && operators.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
-              {((operators && operators.length > 0) || operator) &&
+              {(drivers && drivers.length === 0) &&
+              <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
+              {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
-                  {/*<th scope="col">Id</th>*/}
-                  {/*<th scope="col">Area Code</th>*/}
-                  <th scope="col">Company Name</th>
-                  <th scope="col">Company Phone</th>
-                  <th scope="col">Company Email</th>
-                  <th scope="col">Office Address</th>
-                  <th scope="col">Number of Vehicles</th>
+                  <th scope="col">First Name</th>
+                  <th scope="col">Last Name</th>
+                  <th scope="col"> Phone No</th>
+                  <th scope="col">Residential Address</th>
+                  <th scope="col">Email Address</th>
+                  <th scope="col">App status</th>
+                  {/*<th scope="col">Rating</th>*/}
+                  {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {operators &&  operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
-                  <UserRow key={index} user={operator} />
+                {drivers && drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "3").map((user, index) =>
+                  <UserRow key={index} user={user} approved={approveDriver}/>
                 )}
-                {operator &&
-                <UserRow user={operator}/>
+                {driver &&
+                <UserRow user={driver} approved={approveDriver}/>
                 }
                 </tbody>
-              </Table>
-              }
+              </Table>}
             </CardBody>
             }
           </Card>
@@ -132,25 +141,18 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getOperators: () => dispatch(getOperators()),
-    searchOperator: (id) => dispatch(searchOperator(id)),
+    getDrivers: () => dispatch(getDrivers()),
+    searchDriver: (id) => dispatch(searchDriver(id)),
+    approveDriver: (id) =>dispatch(approveDriver(id))
   };
 }
 
 const mapStateToProps = state => ({
-  operators: state.operator.operators,
-  operator: state.operator.operator,
-  error: state.operator.error,
-  isLoading: state.operator.isLoading,
-
+  drivers: state.driver.drivers,
+  driver: state.driver.driver,
+  error: state.driver.error,
+  isLoading: state.driver.isLoading
 
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(ActiveOperators);
-
-
-
-
-
-
-
+export default connect(mapStateToProps,mapDispatchToProps)(FlaggedDrivers);

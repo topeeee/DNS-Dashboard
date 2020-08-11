@@ -74,10 +74,10 @@ useEffect(()=> {
                   <td><strong>Phone Number</strong></td>
                   {newUser.phoneNumber?<td>{'0' + newUser.phoneNumber.substr(4)}</td>: null}
                 </tr>
-                <tr>
-                  <td><strong>Pin</strong></td>
-                  <td>{newUser.pin}</td>
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Pin</strong></td>*/}
+                {/*  <td>{newUser.pin}</td>*/}
+                {/*</tr>*/}
                 <tr>
                   <td><strong>Home Location</strong></td>
                   <td>{newUser.homeLocation}</td>
@@ -93,10 +93,6 @@ useEffect(()=> {
                 <tr>
                   <td><strong>Work PickupTime</strong></td>
                   <td>{newUser.workPickupTime}</td>
-                </tr>
-                <tr>
-                  <td><strong>Payment Method</strong></td>
-                  <td>{newUser.paymentMethod}</td>
                 </tr>
                 <tr>
                   <td><strong>Signup Date</strong></td>

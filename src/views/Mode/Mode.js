@@ -8,7 +8,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import ModeHeader from "./components/ModeHeader";
 import {getStates} from "../../store/actions/stateAction";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import ModeActionBtn from "./components/ModeActionBtn";
 
 
@@ -107,7 +107,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <div className="animated fadeIn pt-1 text-center">No Modes Available</div>}
               {((modes && modes.length > 0) || mode) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Service</th>
                   <th scope="col">Service Code</th>
@@ -116,7 +116,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 </tr>
                 </thead>
                 <tbody>
-                {(modes && isAdmin) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                {(modes && (isAdmin || isLamata)) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
                 {(modes && operatorMode && isOperator) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>

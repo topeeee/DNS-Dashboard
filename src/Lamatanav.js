@@ -8,30 +8,71 @@ export default {
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center, text-info'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-center, text-dark'             // optional class names space delimited list for title item ex: "text-center"
     },
-    {
-      name: 'Profile',
-      icon: 'icon-settings',
-      children: [
+    // {
+    //   name: 'Profile',
+    //   icon: 'icon-settings',
+    //   class: 'text-dark',
+    //   // attributes: { className: "bg-instagram", style: { color: "black" }},
+    //   children: [
         {
           name: 'Services',
           url: '/lamata/services',
+          // class: 'text-dark',
+          icon: 'icon-puzzle',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
-          attributes: { className: "bg-white", style: { color: "black" }}
+          attributes: { style: { color: "black" }},
 
         },
         {
           name: 'Modes',
           url: '/lamata/modes',
+          class: 'text-dark',
+          icon: 'icon-puzzle',
+          attributes: { style: { color: "black" }},
+        },
+    {
+      name: 'Zones',
+      class: 'text-dark',
+      icon: 'icon-puzzle',
+      // class: "menu_drop",
+      children: [
+        {
+          name: 'Zones',
+          url: '/lamata/zones',
+          attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
-          attributes: { className: "bg-white", style: { color: "black" }}
-
         },
         {
+          name: 'Areas',
+          url: '/lamata/areas',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Routes',
+          url: '/lamata/routes',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Geo Fences',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // url: '/base/jumbotrons',
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+      ]
+    },
+        {
           name: 'Operators',
+          class: 'text-dark',
+          icon: 'icon-people',
           children: [
             {
               name: 'All',
@@ -66,6 +107,8 @@ export default {
 
         {
           name: 'Partners',
+          class: 'text-dark',
+          icon: 'icon-people',
           children: [
             {
               name: 'All',
@@ -105,55 +148,12 @@ export default {
         //
         // },
 
-        {
-          name: 'Zones',
-          // url: '/zones',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-          children: [
-            {
-              name: 'Zones',
-              url: '/lamata/zones',
-              attributes: { className: "bg-white", style: { color: "black" }}
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-            },
-            {
-              name: 'Areas',
-              url: '/lamata/areas',
-              attributes: { className: "bg-white", style: { color: "black" }}
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-            },
-            {
-              name: 'Routes',
-              url: '/lamata/routes',
-              attributes: { className: "bg-white", style: { color: "black" }}
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-            },
-            {
-              name: 'Bus Stop',
-              url: '/lamata/busstops',
-              attributes: { className: "bg-white", style: { color: "black" }}
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-            },
-            {
-              name: 'Geo Fences',
-              attributes: { className: "bg-white", style: { color: "black" }}
-              // url: '/base/jumbotrons',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-            },
-          ]
-        },
-
-      ],
-    },
+      // ],
+    // },
     {
       name: 'Analytics',
       icon: 'icon-user',
+      class: 'text-dark',
       children: [
         {
           name: 'Modal',
@@ -174,6 +174,7 @@ export default {
     {
       name: 'Users',
       icon: 'icon-people',
+      class: 'text-dark',
       children: [
         {
           name: 'All',
@@ -186,7 +187,15 @@ export default {
     {
       name: 'Drivers',
       icon: 'icon-user',
+      class: 'text-dark',
       children: [
+        // {
+        //   name: 'Applications',
+        //   url: '/lamata/drivers/applications',
+        //   attributes: { className: "bg-white", style: { color: "black" }}
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
         {
           name: 'All',
           url: '/lamata/drivers',
@@ -209,12 +218,19 @@ export default {
           // class: "menu_drop",
         },
         {
-          name: 'Pending',
-          url: '/lamata/drivers/pending',
+          name: 'Flagged',
+          url: '/lamata/drivers/flagged',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
+        // {
+        //   name: 'Pending',
+        //   url: '/lamata/drivers/pending',
+        //   attributes: { className: "bg-white", style: { color: "black" }}
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
         // {
         //   name: 'Driver Loggings',
         //   url: '/drivers/driverloggings',
@@ -244,6 +260,7 @@ export default {
     {
       name: 'Vehicles',
       icon: 'icon-puzzle',
+      class: 'text-dark',
       children: [
         {
           name: 'All',
@@ -266,18 +283,19 @@ export default {
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
-        {
-          name: 'Pending',
-          url: '/lamata/vehicles/pending',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
+        // {
+        //   name: 'Request',
+        //   url: '/lamata/vehicles/pending',
+        //   attributes: { className: "bg-white", style: { color: "black" }}
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
       ]
     },
     {
-      name: 'Operator Assistants',
+      name: 'Operation Assistants',
       icon: 'icon-user',
+      class: 'text-dark',
       children: [
         {
           name: 'All',
@@ -310,9 +328,37 @@ export default {
       ],
     },
     {
+      name: 'Stations',
+      icon: 'icon-people',
+      class: 'text-dark',
+      children: [
+        {
+          name: 'Train',
+          url: '/lamata/busstops',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Ferry',
+          url: '/lamata/busstops',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Bus Stop',
+          url: '/lamata/busstops',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+      ],
+    },
+    {
       name: 'Trips',
       icon: 'icon-speedometer',
-      url: '/trips',
+      class: 'text-dark',
       children: [
         {
           name: 'Overview',
@@ -362,6 +408,7 @@ export default {
     {
       name: 'Ratings',
       icon: 'icon-user',
+      class: 'text-dark',
       children: [
         {
           name: 'Driver',

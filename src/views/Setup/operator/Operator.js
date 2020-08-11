@@ -12,6 +12,8 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
   const [operatorVehicle, setOperatorVehicle] = useState([]);
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [suspension, setSuspension] = useState('');
+  const [penalty, setPenalty] = useState('')
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -46,6 +48,14 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
     }
   }
 
+  async function getComment() {
+    try {
+      const res = await axios.get(`${api.comment}/api/query/comments?role=Operator&userId=${match.params.id}`)
+      setSuspension(res.data[0].comment)
+      setPenalty(res.data[0].commentType)
+    }catch (e) {}
+  }
+
   function setOperator() {
     if (operators){
       operators.map(op=> {
@@ -58,7 +68,8 @@ const Operator = ({getOperators, operators, operator, isLoading,  searchOperator
   useEffect(()=>{
     getOperators();
     getOperatorVehicle();
-    getOperatorZone()
+    getOperatorZone();
+    getComment();
   },[]);
 
 useEffect(()=>{
@@ -85,15 +96,15 @@ useEffect(()=>{
                   {newOperator &&
                   <tbody>
                   <tr>
-                    <td><strong>Operator Name</strong></td>
+                    <td><strong>Company Name</strong></td>
                     <td>{newOperator.name}</td>
                   </tr>
                   <tr className="w-100">
-                    <td><strong>Operator Phone</strong></td>
+                    <td><strong>Company Phone</strong></td>
                     <td>{newOperator.phoneNo}</td>
                   </tr>
                   <tr>
-                    <td><strong>Operator Email</strong></td>
+                    <td><strong>Company Email</strong></td>
                     <td>{newOperator.email}</td>
                   </tr>
                   <tr>
@@ -105,14 +116,8 @@ useEffect(()=>{
                     <td>{newOperator.numberOfVehicle}</td>
                   </tr>
                   <tr>
-                    <td><strong>Operator Email</strong></td>
+                    <td><strong>Company Email</strong></td>
                     <td>{newOperator.email}</td>
-                  </tr>
-                  <tr>
-                    <td><strong>Vehicle Modes</strong></td>
-                    {operatorVehicle && operatorVehicle.map((vehicle, index) =>
-                      <td  key={index}>{vehicle.vehicleType}</td>
-                    )}
                   </tr>
                   <tr>
                     <td><strong>Service</strong></td>
@@ -132,7 +137,20 @@ useEffect(()=>{
                   {/*    <td  key={index}>{state.xstate}</td>*/}
                   {/*  )}*/}
                   {/*</tr>*/}
-                  <tr>
+                  {newOperator.status === "0"?
+                    <tr>
+                      <td><strong>Reason for Suspension</strong></td>
+                      <td>{suspension}</td>
+                    </tr>
+                  : null}
+
+                  {newOperator.status === "0"?
+                    <tr>
+                      <td><strong>Penalty</strong></td>
+                      <td>{penalty}</td>
+                    </tr>
+                    : null}
+                    <tr>
                     <td><strong>Status</strong></td>
                     {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
                     {(newOperator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }

@@ -29,29 +29,23 @@ class LamataLayout extends Component {
 
   loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
 
-
-  signOut(e) {
-    e.preventDefault();
-    this.props.history.push('/login')
-  }
-
   render() {
     return (
       <div className="app">
-        <AppHeader fixed className="bg-dark" style={{border: "none"}}>
+        <AppHeader fixed className="bg-twitter" style={{border: "none"}}>
           <Suspense  fallback={this.loading()}>
-            <LamataHeader onLogout={e=>this.signOut(e)}/>
+            <LamataHeader/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
+          <AppSidebar fixed display="lg" className="bg-twitter" >
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
               <AppSidebarNav navConfig={Lamatanavigation} {...this.props} router={router}/>
             </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
+            <AppSidebarFooter/>
+            <AppSidebarMinimizer/>
           </AppSidebar>
           <main className="main">
             <AppBreadcrumb appRoutes={Lamataroutes} router={router}/>
@@ -81,7 +75,7 @@ class LamataLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter className="bg-dark">
+        <AppFooter className="bg-twitter">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

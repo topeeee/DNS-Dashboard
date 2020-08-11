@@ -4,10 +4,10 @@ import {connect} from "react-redux"
 import {Link} from "react-router-dom";
 import {
   changeDriverStatus, getDriverVehicleId, getDriverVehicleId2,
-  toggleDriverModalDelete,
+  toggleDriverModalDelete, toggleDriverModalFlag,
   toggleDriverModalUpdate
 } from "../../../store/actions/driverAction";
-import {isAdmin} from "../../../environments/constants";
+import {isAdmin, isLamata, isOperator} from "../../../environments/constants";
 
 
 
@@ -18,6 +18,7 @@ function mapDispatchToProps(dispatch) {
     changeDriverStatus: (id, status) => dispatch(changeDriverStatus(id, status)),
     getDriverVehicleId: (id) => dispatch(getDriverVehicleId(id)),
     getDriverVehicleId2: (id) => dispatch(getDriverVehicleId2(id)),
+    toggleDriverModalFlag: (id) => dispatch(toggleDriverModalFlag(id)),
   };
 }
 
@@ -28,8 +29,6 @@ const mapStateToProps = state => ({
 
 
 const DriverActionBtn = (props) => {
-  const route = () =>
-    (isAdmin) ? `/drivers/${props.id}` : `/operator/drivers/${props.id}`;
 
       const [dropdownOpen, setDropdown] = useState(new Array(6).fill(false));
 
@@ -50,13 +49,15 @@ const DriverActionBtn = (props) => {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleDriverModalUpdate(props.id)}>Update</DropdownItem>
+            {(isAdmin || isOperator) && <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleDriverModalUpdate(props.id)}>Update</DropdownItem>}
             {(props.user.status === "1" && isAdmin) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Suspend</DropdownItem>}
+            {((props.user.status === "1" || props.user.status === "3") && isLamata) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.toggleDriverModalFlag(props.id)}}>Flag</DropdownItem>}
             {(props.user.status === "0" && isAdmin) && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '1'); props.getDriverVehicleId2(props.id)}}>Reactivate</DropdownItem>}
             {(props.user.status === "" && isAdmin) && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '1');props.getDriverVehicleId2(props.id)}}>Approve</DropdownItem>}
             {(props.user.status === "" && isAdmin) && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Deny</DropdownItem>}
-
-            <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
+            {isAdmin? <Link to={`/drivers/${props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link> :null}
+            {isLamata? <Link to={`/lamata/drivers/${props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link> :null}
+            {isOperator? <Link to={`/operator/drivers/${props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link> :null}
           </DropdownMenu>
         </Dropdown>
       </div>

@@ -1,12 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import DriverHeader from "./components/DriverHeader";
-import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
-import DriverActionBtn from "./components/DriverActionBtn";
+import {
+  searchDriver,
+  approveDriver,
+  clearDriverVehicleId,
+  getAllApplicationDrivers
+} from "../../store/actions/driverAction";
+import Pagination from "react-js-pagination";
+import ApplicationDriverActionBtn from "./components/ApplicationDriverActionBtn";
 import {isLamata} from "../../environments/constants";
 
 
@@ -14,6 +19,7 @@ import {isLamata} from "../../environments/constants";
 
 function UserRow(props) {
   const user = props.user;
+
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
       status === 'Refunds' ? 'secondary' :
@@ -27,35 +33,63 @@ function UserRow(props) {
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
       <td>{user.phoneno}</td>
-      <td>{user.residentialaddress}</td>
-      <td>{user.email}</td>
-      {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
-      {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
-      {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+      {/*<td>{user.residentialaddress}</td>*/}
+      {/*<td>{user.email}</td>*/}
+      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
+      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
+      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
+      {/*/!*<td>Not available</td>*!/*/}
       {/*<td>Not Available</td>*/}
       {/*<td>Not Available</td>*/}
-      {(user.status === "1"|| user.status === "3") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-      {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
-      <td> <DriverActionBtn id={user.id} user={user} /> </td>
+      {/*{(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }*/}
+      {/*{(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }*/}
+      {/*{(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }*/}
+      <td> <ApplicationDriverActionBtn user={user} /> </td>
     </tr>
   )
 }
 
-const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
+const AllApplicationDrivers = ({getAllApplicationDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver}) => {
+
   const [formData, setFormData] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
 
 
 
 
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.acceptstatus === "0");
+
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+  };
+
+
+useEffect(()=> {
+  if(formData && drivers){
+    const search = drivers.filter(post => {
+      return post.firstname.toLowerCase().includes(formData.toLowerCase())
+    });
+    setPosts(search)
+  }
+},[formData]);
+
+useEffect(()=> {
+  if(drivers && !formData) {
+    setPosts(drivers)
+  }
+},[drivers, formData]);
 
 
   useEffect(()=>{
-    if(formData === ''){
-      getDrivers();
+    getAllApplicationDrivers();
+      },[]);
 
-    }
-  },[formData]);
 
 
 
@@ -99,7 +133,7 @@ const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, e
               <div className="w-25">
                 Drivers
               </div>
-              <DriverHeader />
+              {/*<DriverHeader />*/}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -115,24 +149,34 @@ const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, e
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  <th scope="col">Residential Address</th>
-                  <th scope="col">Email Address</th>
-                  <th scope="col">App status</th>
+                  {/*<th scope="col">Residential Address</th>*/}
+                  {/*<th scope="col">Email Address</th>*/}
+                  {/*<th scope="col">App status</th>*/}
                   {/*<th scope="col">Rating</th>*/}
                   {/*<th scope="col">Review</th>*/}
-                  <th scope="col">Status</th>
+                  {/*<th scope="col">Status</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {drivers && drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "1" || user.status === "3").map((user, index) =>
-                  <UserRow key={index} user={user} approved={approveDriver}/>
+                {posts && currentPosts.map((user, index) =>
+                  <UserRow key={index} user={user} />
                 )}
                 {driver &&
                 <UserRow user={driver} approved={approveDriver}/>
                 }
                 </tbody>
               </Table>}
+              <div className="d-flex justify-content-end align-items-center">
+                <Pagination
+                  activePage={currentPage}
+                  itemClass="page-item"
+                  linkClass="page-link"
+                  itemsCountPerPage={postsPerPage}
+                  totalItemsCount={posts.length}
+                  onChange={paginate}
+                />
+              </div>
             </CardBody>
             }
           </Card>
@@ -143,9 +187,10 @@ const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, e
 };
 function mapDispatchToProps(dispatch) {
   return {
-    getDrivers: () => dispatch(getDrivers()),
+    getAllApplicationDrivers: () => dispatch(getAllApplicationDrivers()),
     searchDriver: (id) => dispatch(searchDriver(id)),
-    approveDriver: (id) =>dispatch(approveDriver(id))
+    approveDriver: (id) =>dispatch(approveDriver(id)),
+    clearDriverVehicleId: () =>dispatch(clearDriverVehicleId())
   };
 }
 
@@ -153,8 +198,10 @@ const mapStateToProps = state => ({
   drivers: state.driver.drivers,
   driver: state.driver.driver,
   error: state.driver.error,
-  isLoading: state.driver.isLoading
-
+  isLoading: state.driver.isLoading,
+  approveId: state.driver.approveId,
+  getDriverVehicleId: state.driver.getDriverVehicleId,
+  getDriverVehicleId2: state.driver.getDriverVehicleId2
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(ActiveDrivers);
+export default connect(mapStateToProps,mapDispatchToProps)(AllApplicationDrivers);

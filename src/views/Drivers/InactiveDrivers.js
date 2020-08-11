@@ -7,6 +7,7 @@ import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
 import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
 import DriverActionBtn from "./components/DriverActionBtn";
+import {isLamata} from "../../environments/constants";
 
 
 
@@ -32,8 +33,8 @@ function UserRow(props) {
       {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
       {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
       {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
-      <td>Not Available</td>
-      <td>Not Available</td>
+      {/*<td>Not Available</td>*/}
+      {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -110,7 +111,7 @@ const InactiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver,
               <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
               {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
@@ -118,8 +119,8 @@ const InactiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver,
                   <th scope="col">Residential Address</th>
                   <th scope="col">Email Address</th>
                   <th scope="col">App status</th>
-                  <th scope="col">Rating</th>
-                  <th scope="col">Review</th>
+                  {/*<th scope="col">Rating</th>*/}
+                  {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>

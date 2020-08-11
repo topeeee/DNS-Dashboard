@@ -6,7 +6,7 @@ import PrimaryHeader from "../components/PrimaryHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import ZoneHeader from "./components/ZoneHeader";
 import {getStates} from "../../store/actions/stateAction";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import Spinner from "../../spinner/Spinner";
 import ZoneActionBtn from "./components/ZoneActionBtn";
 import api from "../../environments/environment";
@@ -67,7 +67,7 @@ const [operatorZone, setOperatorZone] = useState('');
               {!zones && <Spinner />}
               {zones &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Zone</th>
                   <th scope="col">Zone code</th>
@@ -76,7 +76,7 @@ const [operatorZone, setOperatorZone] = useState('');
                 </tr>
                 </thead>
                 <tbody>
-                {(zones && isAdmin) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(zones && (isAdmin || isLamata)) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
                 ): null}
                 {(zones && operatorZone && isOperator) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>

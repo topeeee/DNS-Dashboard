@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import DriverHeader from "./components/DriverHeader";
 import {
   searchDriver,
   approveDriver,
   clearDriverVehicleId,
   getAllRequestDrivers
 } from "../../store/actions/driverAction";
-import DriverActionBtn from "./components/DriverActionBtn";
+
 import axios from "axios";
 import api from "../../environments/environment";
 // import Pagination from "../../pagination/Pagination";
@@ -43,8 +42,8 @@ function UserRow(props) {
       {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
       {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
       {/*<td>Not available</td>*/}
-      <td>Not Available</td>
-      <td>Not Available</td>
+      {/*<td>Not Available</td>*/}
+      {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -219,8 +218,8 @@ useEffect(()=> {
                   <th scope="col">Residential Address</th>
                   <th scope="col">Email Address</th>
                   <th scope="col">App status</th>
-                  <th scope="col">Rating</th>
-                  <th scope="col">Review</th>
+                  {/*<th scope="col">Rating</th>*/}
+                  {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>

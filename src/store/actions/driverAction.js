@@ -17,18 +17,21 @@ import {
   DRIVER_VEHICLE_ID2,
   CLEAR_DRIVER_VEHICLE_ID,
   DRIVER_ME,
-  DRIVER_ALL
+  DRIVER_ALL,
+  DRIVER_APPLICATION,
+  DRIVER_MODAL_FLAG,
+  DRIVER_MODAL_FLAG_DETAILS
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, OperatorId, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorId, OperatorName} from "../../environments/constants";
 import {createUser} from "./userAction";
 
 
 
 export const getDrivers = () => async dispatch => {
   let driverApi;
-  if(isAdmin) {
+  if(isAdmin || isLamata) {
     driverApi = `${api.driver}/api/drivers/`
   }else if(isOperator) {
     driverApi = `${api.driver}/api/drivers/operator/?operatorid=${OperatorName}`
@@ -57,13 +60,7 @@ export const changeDriverStatus = (id, status) => async dispatch => {
     });
     dispatch(getDrivers());
   } catch (err) {
-    // dispatch({
-    //   type: OPERATOR_ERROR,
-    //   payload: "Opps! Something Went Wrong Try Again"
-    // });
-    // setTimeout(() => dispatch({
-    //   type: REMOVE_OPERATOR_ERROR
-    // }), 5000)
+
   }
 };
 
@@ -205,11 +202,28 @@ export const getAllRequestDrivers = () => async dispatch => {
   }
 };
 
+export const getAllApplicationDrivers = () => async dispatch => {
+  try {
+    dispatch(isLoading());
+    const res = await axios.get(`${api.driver}/api/request/`);
+    dispatch({
+      type: DRIVER_APPLICATION,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: DRIVER_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+  }
+};
+
 export const setDriversRequest = (id, status, operator) => async dispatch => {
   try {
     await axios.put(`${api.driver}/api/driver/operator/${id}/?status=${status}&operatorid=${operator}`)
     dispatch(getAllRequestDrivers())
     dispatch(getMeRequestDrivers())
+    dispatch(getAllApplicationDrivers())
   } catch (err) {
     dispatch({
       type: DRIVER_ERROR,
@@ -229,6 +243,20 @@ export function toggleDriverModalCreate() {
 export function toggleDriverModalUpdate(id) {
   return {
     type: DRIVER_MODAL_UPDATE,
+    payload: id
+  };
+}
+
+export function toggleDriverModalFlag(id) {
+  return {
+    type: DRIVER_MODAL_FLAG,
+    payload: id
+  };
+}
+
+export function toggleDriverModalFlagDetails(id) {
+  return {
+    type: DRIVER_MODAL_FLAG_DETAILS,
     payload: id
   };
 }

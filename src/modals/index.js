@@ -24,6 +24,10 @@ import VehicleModalUpdate from "./vehicleModal/VehicleModalUpdate";
 import DriverModalUpdate from "./driverModal/DriverModalUpdate";
 import PartnerModalCreate from "./partnerModal/PartnerModalCreate";
 import PartnerModalUpdate from "./partnerModal/PartnerModalUpdate";
+import OperatorModalSuspend from "./operatorModal/OperatorModalSuspend";
+import OperatorModalReactivate from "./operatorModal/OperatorModalReactivate";
+import DriveModalFlag from "./driverModal/DriverModalFlag";
+import DriverModalFlagDetails from "./driverModal/DriverModalFlagDetails";
 
 
 const CombineModal = () => {
@@ -54,6 +58,10 @@ const CombineModal = () => {
       <BusAssistantModalUpdate />
       <BusAssistantModalCreate />
      <DriverModalCreate />
+     <OperatorModalSuspend />
+     <OperatorModalReactivate />
+     <DriveModalFlag />
+     <DriverModalFlagDetails />
     </div>
   );
 };

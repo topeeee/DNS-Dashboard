@@ -5,7 +5,7 @@ import {getVehiclesRequestMe, searchVehicle} from "../../store/actions/vehicleAc
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import {getPartners} from "../../store/actions/partnerAction";
 import MeRequestVehicleActionBtn from "./components/MeRequestVehicleActionBtn";
 
@@ -97,7 +97,7 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
               <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
               {((vehicles && vehicles.length > 0) || vehicle) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Vehicle Type</th>
                   <th scope="col">Vehicle Make</th>

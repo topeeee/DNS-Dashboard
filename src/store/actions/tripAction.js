@@ -12,12 +12,12 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isOperator, isPartner, OperatorId, PartnerId} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, isPartner, OperatorId, PartnerId} from "../../environments/constants";
 
 
 export const getTrips = () => async dispatch => {
   let tripApi;
-  if(isAdmin) {
+  if(isAdmin || isLamata) {
     tripApi = `${api.trip}/api/trips/`
   } else if(isOperator) {
     tripApi = `${api.trip}/api/operator/?operatorId=${OperatorId}`

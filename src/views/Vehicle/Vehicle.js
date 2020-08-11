@@ -76,11 +76,11 @@ const Operator = ({getVehicles, match, vehicles})=> {
                   {(newOperator.assigned_driver == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
                   {((newOperator.assigned_driver == null) || (newOperator.assigned_driver == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
                 </tr>
-                <tr>
-                  <td><strong>Assigned To Bus Assistant</strong></td>
-                  {(newOperator.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-                  {((newOperator.assigned_BA == null) || (newOperator.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Assigned To Bus Assistant</strong></td>*/}
+                {/*  {(newOperator.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}*/}
+                {/*  {((newOperator.assigned_BA == null) || (newOperator.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}*/}
+                {/*</tr>*/}
                 <tr>
                   <td><strong>Status</strong></td>
                   {(newOperator.status === null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}

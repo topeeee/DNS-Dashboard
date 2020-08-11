@@ -7,6 +7,7 @@ const Area = React.lazy(() => import('./views/Setup/Area'));
 const ActiveUsers = React.lazy(() => import('./views/Users/ActiveUsers'));
 const InactiveUsers = React.lazy(() => import('./views/Users/InactiveUsers'));
 const Drivers = React.lazy(() => import('./views/Drivers/Drivers'));
+const AllApplicationDrivers = React.lazy(() => import('./views/Drivers/AllApplicationDrivers'));
 const Driver = React.lazy(() => import('./views/Drivers/Driver'));
 const InactiveBusAssistants = React.lazy(() => import('./views/BusAssistants/InactiveBusAssistants'));
 const ActiveBusAssistants = React.lazy(() => import('./views/BusAssistants/ActiveBusAssistants'));
@@ -40,6 +41,7 @@ const ActiveOperators =  React.lazy(() => import('./views/Setup/operator/ActiveO
 const InactiveOperators =  React.lazy(() => import('./views/Setup/operator/InactiveOperator'));
 const ActiveDrivers = React.lazy(() => import('./views/Drivers/ActiveDrivers'));
 const InactiveDrivers = React.lazy(() => import('./views/Drivers/InactiveDrivers'));
+const FlaggedDrivers= React.lazy(() => import('./views/Drivers/FlaggedDrivers'));
 const PendingDrivers = React.lazy(() => import('./views/Drivers/PendingDrivers'));
 const Operator =  React.lazy(() => import('./views/Setup/operator/Operator'));
 const ActiveVehicles = React.lazy(() => import('./views/Vehicle/ActiveVehicles'));
@@ -62,7 +64,9 @@ const routes = [
   { path: '/lamata', exact: true, name: 'Home' },
   { path: '/lamata/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/lamata/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
+  { path: '/lamata/drivers/applications', exact: true, name: 'Applications Drivers', component: AllApplicationDrivers},
   { path: '/lamata/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
+  { path: '/lamata/drivers/flagged', exact: true, name: 'Flagged Drivers', component: FlaggedDrivers},
   { path: '/lamata/partners/active', exact: true, name: 'Active Partners', component: ActivePartners},
   { path: '/lamata/partners/inactive', exact: true, name: 'Inactive Partners', component: InactivePartners},
   { path: '/lamata/partners', exact: true, name: 'Partners', component: Partners},

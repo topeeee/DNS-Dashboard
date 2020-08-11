@@ -12,7 +12,8 @@ import {
   REGISTER_OPERATOR,
   REMOVE_OPERATOR_ERROR,
   SEARCH_OPERATOR,
-  UPDATE_OPERATOR
+  UPDATE_OPERATOR,
+  OPERATOR_MODAL_SUSPEND, OPERATOR_MODAL_REACTIVATE
 } from "../actionTypes"
 import axios from 'axios'
 import api from "../../environments/environment";
@@ -112,6 +113,7 @@ export const changeOperatorStatus = (id, status) => async dispatch => {
       payload: res.data,
       type: OPERATOR_STATUS,
     });
+    dispatch(closeOperatorModalDelete())
     dispatch(getOperators());
   } catch (err) {
     dispatch({
@@ -171,6 +173,20 @@ export function toggleOperatorModalCreate() {
 export function toggleOperatorModalUpdate(id) {
   return {
     type: OPERATOR_MODAL_UPDATE,
+    payload: id
+  };
+}
+
+export function toggleOperatorModalSuspend(id) {
+  return {
+    type: OPERATOR_MODAL_SUSPEND,
+    payload: id
+  };
+}
+
+export function toggleOperatorModalReactivate(id) {
+  return {
+    type: OPERATOR_MODAL_REACTIVATE,
     payload: id
   };
 }

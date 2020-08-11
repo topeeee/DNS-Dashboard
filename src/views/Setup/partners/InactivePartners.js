@@ -9,7 +9,7 @@ import {getPartners} from "../../../store/actions/partnerAction";
 import PartnerHeader from "./components/PartnerHeader";
 import axios from "axios";
 import api from "../../../environments/environment";
-import {isAdmin, isOperator, OperatorName} from "../../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../../environments/constants";
 
 
 
@@ -33,7 +33,7 @@ function UserRow(props) {
       <td>{user.numberOfVehicle}</td>
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
-      <td> <PartnerActionBtn id={user.id} user={user} /> </td>
+      {(isAdmin || isOperator) &&  <td> <PartnerActionBtn id={user.id} user={user} /> </td>}
     </tr>
   )
 }
@@ -113,7 +113,7 @@ const InActivePartners = ({getPartners, partners, isLoading}) => {
               <div className="w-25">
               Inactive  Partners
               </div>
-              <PartnerHeader />
+              {(isAdmin || isOperator) && <PartnerHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -124,7 +124,7 @@ const InActivePartners = ({getPartners, partners, isLoading}) => {
               <div className="animated fadeIn pt-1 text-center">No Partners Available</div>}
               {((partners && partners.length > 0)) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
@@ -134,11 +134,11 @@ const InActivePartners = ({getPartners, partners, isLoading}) => {
                   <th scope="col">Office Address</th>
                   <th scope="col">Number of Vehicles</th>
                   <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  {(isAdmin || isOperator) && <th scope="col">Actions</th>}
                 </tr>
                 </thead>
                 <tbody>
-                {(partners && isAdmin)? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
+                {(partners && (isAdmin || isLamata))? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
                   <UserRow key={index} user={operator} />
                 ):null}
                 {(operatorPartner && isOperator)? operatorPartner.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>

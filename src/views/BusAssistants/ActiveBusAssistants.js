@@ -9,6 +9,7 @@ import axios from "axios";
 import api from "../../environments/environment";
 import BusAssistantHeader from "./components/BusAssistantHeader";
 import BusAssistantActionBtn from "./components/BusAssistantActionBtn";
+import {isLamata} from "../../environments/constants";
 
 
 
@@ -151,7 +152,7 @@ const ActiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isL
               <div className="animated fadeIn pt-1 text-center">No Bus Assistants Available</div>}
               {((busAssistants && busAssistants.length > 0) || busAssistant) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>

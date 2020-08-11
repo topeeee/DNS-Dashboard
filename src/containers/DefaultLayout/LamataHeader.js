@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Badge, UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
+import {NavLink, Redirect} from 'react-router-dom';
+import {UncontrolledDropdown, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 
-import { AppAsideToggler, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-import logo from '../../assets/img/brand/logo.svg'
-import sygnet from '../../assets/img/brand/sygnet.svg'
+import {AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import zeno from '../../assets/img/brand/zeno.png'
-import lamata from '../../assets/img/brand/lamata2.jpeg'
+import lamata from '../../assets/img/brand/lamata2.png'
+import {LogOut} from "../../store/actions/authenticationAction";
+import {connect} from "react-redux";
 
 const propTypes = {
   children: PropTypes.node,
@@ -16,6 +16,12 @@ const propTypes = {
 const defaultProps = {};
 
 class LamataHeader extends Component {
+  signOut(e) {
+    e.preventDefault();
+    this.props.LogOut()
+    sessionStorage.clear()
+    return <Redirect to="/login" />
+  }
   render() {
 
     // eslint-disable-next-line
@@ -23,20 +29,21 @@ class LamataHeader extends Component {
 
     return (
       <React.Fragment>
-        <AppSidebarToggler className="d-lg-none" display="md" mobile />
+        <AppSidebarToggler className="d-lg-none text-dark" display="md" mobile />
+        {/*<AppNavbarBrand*/}
+        {/*  full={{src:zeno,  width: 89, height: 25, alt: 'Zeno Logo' }}*/}
+        {/*  minimized={{src:zeno, width: 30, height: 30, alt: 'Zeno Logo' }}*/}
+        {/*/>*/}
         <AppNavbarBrand
-          full={{src:zeno,  width: 89, height: 25, alt: 'Zeno Logo' }}
-          minimized={{src:zeno, width: 30, height: 30, alt: 'Zeno Logo' }}
-        />
-        <AppNavbarBrand
-          full={{src:lamata,  width: 50, height: 25, alt: 'lamata Logo' }}
+          full={{src:lamata,  width: 70, height: 50, alt: 'lamata Logo' }}
           minimized={{src:lamata, width: 30, height: 30, alt: 'lamata Logo' }}
+          className="mt-1"
         />
-        <AppSidebarToggler className="d-md-down-none" display="lg" />
+        <AppSidebarToggler className="d-md-down-none text-dark" display="lg" />
 
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
-            <NavLink to="/dashboard" className="nav-link" >Dashboard</NavLink>
+            <NavLink to="/dashboard" className="nav-link text-dark" >Dashboard</NavLink>
           </NavItem>
           {/*<NavItem className="px-3">*/}
           {/*  <Link to="/users" className="nav-link">Users</Link>*/}
@@ -57,7 +64,7 @@ class LamataHeader extends Component {
           {/*</NavItem>*/}
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
-              <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src={'../../assets/img/avatars/avatar.webp'} className="img-avatar bg-white" alt="avatar" />
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
@@ -72,7 +79,7 @@ class LamataHeader extends Component {
               {/*<DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>*/}
               {/*<DropdownItem divider />*/}
               {/*<DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>*/}
-              <DropdownItem onClick={e => this.props.onLogout(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
+              <DropdownItem onClick={e => this.signOut(e)}><i className="fa fa-lock"></i> Logout</DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
         </Nav>
@@ -86,4 +93,10 @@ class LamataHeader extends Component {
 LamataHeader.propTypes = propTypes;
 LamataHeader.defaultProps = defaultProps;
 
-export default LamataHeader;
+function mapDispatchToProps(dispatch) {
+  return {
+    LogOut: () => dispatch(LogOut())
+  };
+}
+
+export default connect(null, mapDispatchToProps)(LamataHeader);

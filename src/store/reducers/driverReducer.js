@@ -12,7 +12,7 @@ import {
   DRIVER_STATUS,
   DRIVER_VEHICLE_ID,
   DRIVER_VEHICLE_ID2,
-  CLEAR_DRIVER_VEHICLE_ID, DRIVER_ME, DRIVER_ALL
+  CLEAR_DRIVER_VEHICLE_ID, DRIVER_ME, DRIVER_ALL, DRIVER_APPLICATION, DRIVER_MODAL_FLAG, DRIVER_MODAL_FLAG_DETAILS
 } from "../actionTypes";
 
 const initialState = {
@@ -21,6 +21,8 @@ const initialState = {
   DriverModalCreate: false,
   DriverModalDelete: false,
   DriverModalUpdate: false,
+  DriverModalFlag: false,
+  DriverModalFlagDetails: false,
   DeleteID: null,
   DeleteRes: null,
   isLoading: false,
@@ -28,7 +30,9 @@ const initialState = {
   UpdateDriverId: null,
   approveId: null,
   getDriverVehicleId: null,
-  getDriverVehicleId2: null
+  getDriverVehicleId2: null,
+  flaggedDriverId: '',
+  flaggedDetailsDriverId: '',
 };
 
 function driverReducer(state = initialState, action) {
@@ -61,6 +65,16 @@ function driverReducer(state = initialState, action) {
         isLoading: false,
       };
     }
+
+    case DRIVER_APPLICATION: {
+      return {
+        ...state,
+        driver: null,
+        error: null,
+        drivers: payload,
+        isLoading: false,
+      };
+    }
     case SEARCH_DRIVER: {
       return {
         ...state,
@@ -85,6 +99,22 @@ function driverReducer(state = initialState, action) {
         UpdateDriverId: payload
       };
     }
+    case  DRIVER_MODAL_FLAG: {
+      return {
+        ...state,
+        DriverModalFlag: !state.DriverModalFlag,
+        flaggedDriverId: payload
+      };
+    }
+
+    case  DRIVER_MODAL_FLAG_DETAILS: {
+      return {
+        ...state,
+        DriverModalFlagDetails: !state.DriverModalFlagDetails,
+        flaggedDetailsDriverId: payload
+      };
+    }
+
     case  DRIVER_MODAL_DELETE: {
       return {
         ...state,

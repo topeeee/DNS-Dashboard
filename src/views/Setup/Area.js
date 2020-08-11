@@ -8,7 +8,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import AreaHeader from "./components/AreaHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import AreaActionBtn from "./components/AreaActionBtn";
 import api from "../../environments/environment";
 
@@ -108,7 +108,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
               <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
               {((areas && areas.length > 0) || area) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
@@ -119,7 +119,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
                 </tr>
                 </thead>
                 <tbody>
-                {(areas && isAdmin) ? areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                {(areas && (isAdmin || isLamata)) ? areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode} zone={zones}/>
                 ): null}
                 {(areas && operatorZone && isOperator) ? areas.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zonecode === operatorZone).map((mode, index) =>

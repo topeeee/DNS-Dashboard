@@ -9,7 +9,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
 import BusStopActionBtn from "./components/BusStopActionBtn";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import {getAreas} from "../../store/actions/areaAction";
 import api from "../../environments/environment";
 
@@ -118,7 +118,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
               {(busStops && busStops.length === 0) && <div className="animated fadeIn pt-1 text-center">No Bus Stops Available</div>}
               {(busStops && busStops.length > 0 && !isLoading) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   <th scope="col"> Bus Stop</th>
@@ -131,7 +131,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
                 </tr>
                 </thead>
                 <tbody>
-                {(busStops && isAdmin) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(busStops && (isAdmin || isLamata)) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 ): null}
                 {(busStops && route && isOperator) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>

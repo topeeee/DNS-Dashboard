@@ -10,7 +10,7 @@ import ModeHeader from "./components/ModeHeader";
 // import {getStates} from "../../store/actions/stateAction";
 // import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
 import ModeActionBtn from "./components/ModeActionBtn";
-import {isAdmin} from "../../../environments/constants";
+import {isAdmin, isLamata} from "../../../environments/constants";
 
 
 
@@ -108,7 +108,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               {/*<div className="animated fadeIn pt-1 text-center">No Modes Available</div>}*/}
               {/*{((modes && modes.length > 0) || mode) &&*/}
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Mode</th>
                   <th scope="col">Mode Code</th>

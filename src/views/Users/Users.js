@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {isOperator, OperatorId} from "../../environments/constants";
+import {isLamata, isOperator, OperatorId} from "../../environments/constants";
 import api from "../../environments/environment";
 
 
@@ -24,12 +24,12 @@ function UserRow(props) {
   };
   return (
     <tr key={user.id}>
-      <td>{user.pin}</td>
+      {/*<td>{user.pin}</td>*/}
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
-      {user.phoneNumber?<td>{'0' + user.phoneNumber.substr(4)}</td>: null}
-      <td>{user.email}</td>
-      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
+      {/*{user.phoneNumber?<td>{'0' + user.phoneNumber.substr(4)}</td>: null}*/}
+      {/*<td>{user.email}</td>*/}
+      {/*{(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}*/}
       {/*{(user.status === "0" || user.status === null) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}*/}
       <td> <UserActionBtn id={user.id} user={user} /> </td>
     </tr>
@@ -116,7 +116,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                {isAdmin ? 'Users': 'Passengers'}
+                {(isAdmin || isLamata) ? 'Users': 'Passengers'}
               </div>
             </CardHeader>
             {isLoading && <Spinner />}
@@ -128,20 +128,20 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
               <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
               {((users && users.length > 0) || user) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">ID</th>*/}
-                  <th scope="col">Zeno PIN</th>
+                  {/*<th scope="col">Zeno PIN</th>*/}
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
-                  <th scope="col">Phone Number</th>
-                  <th scope="col">Email</th>
+                  {/*<th scope="col">Phone Number</th>*/}
+                  {/*<th scope="col">Email</th>*/}
                   {/*<th scope="col">Status</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {(users && isAdmin) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(users && (isAdmin || isLamata) ) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
                 {(operatorPassenger && isOperator) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {isLamata} from "../../environments/constants";
 
 const propTypes = {
   children: PropTypes.node,
@@ -15,7 +16,7 @@ class DefaultFooter extends Component {
 
     return (
       <React.Fragment>
-        <span><a href="#">Zeno Digital Limited</a> &copy; 2020.</span>
+        <span><a href="#" className={isLamata? 'text-dark': ''}>Zeno Digital Limited</a> &copy; 2020.</span>
         {/*<span className="ml-auto">Powered by <a href="https://coreui.io/react">CoreUI for React</a></span>*/}
       </React.Fragment>
     );

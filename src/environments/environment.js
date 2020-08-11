@@ -24,6 +24,7 @@
    lamata: "http://165.22.116.11:7064",
    partner: "http://165.22.116.11:7060",
    busAssistantsVehicles: "http://165.22.116.11:7056",
+   comment: "http://165.22.116.11:7065"
 };
 
 export default api

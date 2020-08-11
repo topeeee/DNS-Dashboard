@@ -200,25 +200,25 @@ const OperatorModalCreate = (props) => {
             <Form onSubmit={onClickContinue1}>
             <FormGroup row>
               <Col md="6">
-                <Label for="name" className="font-weight-bolder mb-0 text-info">Operator Name</Label>
+                <Label for="name" className="font-weight-bolder mb-0 text-info">Company Name</Label>
                 <Input type="text"  name="name" onChange={onChange}  value={name}  required/>
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info"> Operator Phone</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Company Phone</Label>
                 <Input type="text"  name="phoneNo" onChange={onChange} value={phoneNo}  required />
               </Col>
               <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Operator Email</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Company Email</Label>
                 <Input type="email"  name="email" onChange={onChange}  value={email} required/>
               </Col>
               <Col md="6">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Office Address</Label>
                 <Input type="text"  name="officeAddress" onChange={onChange}  value={officeAddress} required />
               </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>
-                <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />
-              </Col>
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>*/}
+              {/*  <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />*/}
+              {/*</Col>*/}
             </FormGroup>
               <div className="d-flex justify-content-md-end">
               {form1 &&
@@ -230,31 +230,31 @@ const OperatorModalCreate = (props) => {
             {form2 &&
             <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Modes</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options}
-                  value={selected}
-                  onChange={handleChange}
-                  required
-                />
+              {/*<Col md="12">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Modes</Label>*/}
+              {/*  <Select*/}
+              {/*    closeMenuOnSelect={false}*/}
+              {/*    components={animatedComponents}*/}
+              {/*    isMulti*/}
+              {/*    options={options}*/}
+              {/*    value={selected}*/}
+              {/*    onChange={handleChange}*/}
+              {/*    required*/}
+              {/*  />*/}
 
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">State</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={stateSelected}
+              {/*</Col>*/}
+              {/*<Col md="12">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">State</Label>*/}
+              {/*  <Select*/}
+              {/*    closeMenuOnSelect={false}*/}
+              {/*    components={animatedComponents}*/}
+              {/*    isMulti*/}
+              {/*    options={stateSelected}*/}
 
 
-                />
+              {/*  />*/}
 
-              </Col>
+              {/*</Col>*/}
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Services</Label>
                 <Select

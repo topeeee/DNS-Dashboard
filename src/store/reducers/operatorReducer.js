@@ -8,13 +8,15 @@ import {
   OPERATOR_ERROR,
   SEARCH_OPERATOR,
   REMOVE_OPERATOR_ERROR,
-  REGISTER_OPERATOR, OPERATOR_MODAL_UPDATE, CREATE_OPERATOR
+  REGISTER_OPERATOR, OPERATOR_MODAL_UPDATE, CREATE_OPERATOR, OPERATOR_MODAL_SUSPEND, OPERATOR_MODAL_REACTIVATE
 } from "../actionTypes";
 
 const initialState = {
   operators: null,
   operator: null,
   OperatorModalCreate: false,
+  OperatorModalSuspend: false,
+  OperatorModalReactivate: false,
   OperatorModalUpdate: false,
   OperatorModalDelete: false,
   DeleteID: null,
@@ -23,6 +25,8 @@ const initialState = {
   error: null,
   operatorId: null,
   operatorUpdateId: null,
+  operatorSuspendId: "",
+  operatorReactivateId: "",
   operatorCreated: null
 };
 
@@ -37,6 +41,7 @@ function operatorReducer(state = initialState, action) {
         operators: payload,
         isLoading: false,
         OperatorModalCreate: false,
+
       };
     }
     case REGISTER_OPERATOR: {
@@ -78,6 +83,23 @@ function operatorReducer(state = initialState, action) {
         operatorUpdateId: payload
       };
     }
+    case  OPERATOR_MODAL_SUSPEND: {
+      return {
+        ...state,
+        OperatorModalSuspend: !state.OperatorModalSuspend,
+        operatorSuspendId: payload
+      };
+    }
+
+    case  OPERATOR_MODAL_REACTIVATE: {
+      return {
+        ...state,
+        OperatorModalReactivate: !state.OperatorModalReactivate,
+        operatorReactivateId: payload
+      };
+    }
+
+
     case  OPERATOR_MODAL_DELETE: {
       return {
         ...state,
@@ -94,7 +116,10 @@ function operatorReducer(state = initialState, action) {
     case   CLOSE_MODAL_DELETE_OPERATOR: {
       return {
         ...state,
-        OperatorModalDelete: false
+        OperatorModalSuspend: false,
+        OperatorModalReactivate: false,
+        operatorSuspendId: "",
+        operatorReactivateId: "",
       };
     }
     case LOADING_OPERATOR: {

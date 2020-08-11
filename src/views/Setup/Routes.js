@@ -7,7 +7,7 @@ import {RouteUser} from "../../store/actions/routeAction";
 import RouteHeader from "./components/RouteHeader";
 import {getAreas} from "../../store/actions/areaAction";
 import Spinner from "../../spinner/Spinner";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import RouteActionBtn from "./components/RouteActionBtn";
 import api from "../../environments/environment";
 
@@ -77,7 +77,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
               {(routes && routes.length === 0 && !isLoading) && <div className="animated fadeIn pt-1 text-center">No Routes Available</div>}
               {(routes && routes.length > 0 && !isLoading) &&
               <Table responsive hover>
-                <thead  className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Route</th>
                   <th scope="col">Route code</th>
@@ -87,7 +87,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {(routes && isAdmin) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(routes && (isAdmin || isLamata)) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user}/>
                 ): null}
                 {(routes && area && isOperator) ? routes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.areacode === area).map((user, index) =>

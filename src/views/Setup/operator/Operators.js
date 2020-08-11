@@ -8,6 +8,7 @@ import OperatorHeader from "./components/OperatorHeader";
 import Spinner from "../../../spinner/Spinner";
 import OperatorActionBtn from "./components/OperatorActionBtn";
 import {Link} from "react-router-dom";
+import {isLamata} from "../../../environments/constants";
 
 
 
@@ -102,13 +103,13 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
               <div className="animated fadeIn pt-1 text-center">No Operator Available</div>}
               {((operators && operators.length > 0) || operator) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
-                  <th scope="col">Operator Name</th>
-                  <th scope="col">Operator Phone</th>
-                  <th scope="col">Operator Email</th>
+                  <th scope="col">Company Name</th>
+                  <th scope="col">Company Phone</th>
+                  <th scope="col">Company Email</th>
                   <th scope="col">Office Address</th>
                   <th scope="col">Number of Vehicles</th>
                   <th scope="col">Status</th>
