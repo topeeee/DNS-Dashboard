@@ -4,9 +4,7 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {getBusAssistants, searchBusAssistants, approveBusAssistants, clearBusAssistantsVehicleId} from "../../store/actions/busAssistantAction";
-import axios from "axios";
-import api from "../../environments/environment";
+import {getBusAssistants, searchBusAssistants} from "../../store/actions/busAssistantAction";
 import BusAssistantHeader from "./components/BusAssistantHeader";
 import BusAssistantActionBtn from "./components/BusAssistantActionBtn";
 import {isLamata} from "../../environments/constants";
@@ -42,9 +40,8 @@ function UserRow(props) {
   )
 }
 
-const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error,  approveBusAssistants, approveId, getBusAssistantVehicleId, getBusAssistantVehicleId2, clearBusAssistantsVehicleId}) => {
+const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error}) => {
   const [formData, setFormData] = useState('');
-  const [driverVehicle, setDriverVehicle] = useState([]);
 
 
 
@@ -57,47 +54,6 @@ const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, i
 
     }
   },[formData]);
-
-  function getDriverVehicle() {
-    axios.get(`${api.driverVehicles}/api/me/drivervehicles/`)
-      .then(res=> {
-        setDriverVehicle(res.data);
-      })
-  }
-
-  function changeDriverVehicleStatus(id, status) {
-    driverVehicle.map(DV=> {
-      if(DV.driverId == id) {
-        assignVehicle(DV.vehicleId, status)
-      }
-    })
-  }
-
-  function assignVehicle(id, status) {
-    axios.put(`${api.vehicle}/api/assign/${id}/?assign=${status}`)
-      .then(res=> {
-        if(res) {
-          clearBusAssistantsVehicleId()
-        }
-      })
-  }
-
-  useEffect(()=> {
-    getDriverVehicle();
-  },[]);
-
-  useEffect(()=> {
-    if(getBusAssistantVehicleId) {
-      changeDriverVehicleStatus(getBusAssistantVehicleId, "null")
-    }
-  },[getBusAssistantVehicleId]);
-
-  useEffect(()=> {
-    if(getBusAssistantVehicleId2) {
-      changeDriverVehicleStatus(getBusAssistantVehicleId2, "1")
-    }
-  },[getBusAssistantVehicleId2]);
-
 
 
   const onChange = (e) =>{
@@ -137,7 +93,7 @@ const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, i
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Inactive Bus Assistants
+                Inactive Operation Assistants
               </div>
               <BusAssistantHeader />
               {/*<BusAssistantHeader />*/}
@@ -167,10 +123,10 @@ const InactiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, i
                 </thead>
                 <tbody>
                 {busAssistants && busAssistants.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "0").map((user, index) =>
-                  <UserRow key={index} user={user} approved={approveBusAssistants} driverVehicle={driverVehicle}/>
+                  <UserRow key={index} user={user}/>
                 )}
                 {busAssistant &&
-                <UserRow user={busAssistant} approved={approveBusAssistants}/>
+                <UserRow user={busAssistant}/>
                 }
                 </tbody>
               </Table>}
@@ -186,8 +142,6 @@ function mapDispatchToProps(dispatch) {
   return {
     getBusAssistants: () => dispatch(getBusAssistants()),
     searchBusAssistants: (id) => dispatch(searchBusAssistants(id)),
-    approveBusAssistants: (id) =>dispatch(approveBusAssistants(id)),
-    clearBusAssistantsVehicleId: () =>dispatch(clearBusAssistantsVehicleId())
   };
 }
 
@@ -196,9 +150,6 @@ const mapStateToProps = state => ({
   busAssistant: state.busAssistants.busAssistant,
   error: state.busAssistants.error,
   isLoading: state.busAssistants.isLoading,
-  approveId: state.busAssistants.approveId,
-  getBusAssistantVehicleId: state.busAssistants.getBusAssistantVehicleId,
-  getBusAssistantVehicleId2: state.busAssistants.getBusAssistantVehicleId2,
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(InactiveBusAssistants);

@@ -33,8 +33,8 @@ export const getModes = () => async dispatch => {
 };
 
 
-export const createMode = (modecode, mode, statecode) => async dispatch => {
-  const body = {modecode, mode, statecode};
+export const createMode = (modecode, mode, statecode, service, servicecode) => async dispatch => {
+  const body = {modecode, mode, statecode, service, servicecode};
 
 
   try {
@@ -58,8 +58,8 @@ export const createMode = (modecode, mode, statecode) => async dispatch => {
   }
 };
 
-export const updateMode = (id, modecode, mode, statecode) => async dispatch => {
-  const body = {modecode, mode, statecode};
+export const updateMode = (id, modecode, mode, statecode, service, servicecode) => async dispatch => {
+  const body = {modecode, mode, statecode, service, servicecode};
 
 
   try {

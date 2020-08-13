@@ -1,21 +1,14 @@
 import {
   BUS_ASSISTANT_BY_USER,
   BUS_ASSISTANT_MODAL_CREATE,
-  BUS_ASSISTANT_MODAL_DELETE,
-  DELETE_BUS_ASSISTANT,
-  CLOSE_MODAL_DELETE_BUS_ASSISTANT,
   LOADING_BUS_ASSISTANT,
   BUS_ASSISTANT_ERROR,
   SEARCH_BUS_ASSISTANT,
   CREATE_BUS_ASSISTANT,
   REMOVE_BUS_ASSISTANT_ERROR,
-  APPROVE_BUS_ASSISTANT,
   BUS_ASSISTANT_STATUS,
   BUS_ASSISTANT_MODAL_UPDATE,
-  UPDATE_BUS_ASSISTANT,
-  BUS_ASSISTANT_VEHICLE_ID,
-  BUS_ASSISTANT_VEHICLE_ID2,
-  CLEAR_BUS_ASSISTANT_VEHICLE_ID
+  UPDATE_BUS_ASSISTANT
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -27,9 +20,9 @@ import {isAdmin, isLamata, isOperator, OperatorId} from "../../environments/cons
 export const getBusAssistants = () => async dispatch => {
   let BusApi;
   if(isAdmin || isLamata) {
-    BusApi = `${api.busAssistant}/api/busassistants/`
+    BusApi = `${api.operationAssistant}/api/operationassistants/`
   }else if(isOperator){
-    BusApi = `${api.busAssistant}/api/busassistants/operator/?operatorid=${OperatorId}`;
+    BusApi = `${api.operationAssistant}/api/operationassistants/operator/?operatorid=${OperatorId}`;
   }
   try {
     dispatch(isLoading());
@@ -48,7 +41,7 @@ export const getBusAssistants = () => async dispatch => {
 };
 export const changeBusAssistants = (id, status) => async dispatch => {
   try {
-    await axios.put(`${api.busAssistant}/api/status/${id}/`, {status});
+    await axios.put(`${api.operationAssistant}/api/status/${id}/`, {status});
     dispatch({
       payload: id,
       type: BUS_ASSISTANT_STATUS,
@@ -66,19 +59,15 @@ export const changeBusAssistants = (id, status) => async dispatch => {
 };
 
 
-export const createBusAssistants = (vehicleId, operatorInput, operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
-) => async dispatch => {
-  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+export const createBusAssistants = (operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role
   };
   try {
-    const res = await axios.post(`${api.busAssistant}/api/me/busassistants/`, body);
+    const res = await axios.post(`${api.operationAssistant}/api/me/operationassistants/`, body);
     dispatch({
       type: CREATE_BUS_ASSISTANT,
       payload: res.data
     });
-    if(res.data) {
-      await axios.post(`${api.busAssistantsVehicles}/api/me/busassitantvehicles/`, {vehicleId: vehicleId, busassitantId: res.data.id, operatorId: operatorInput})
-    }
     dispatch(getBusAssistants());
     dispatch(toggleBusAssistantsModalCreate());
   } catch (err) {
@@ -94,10 +83,10 @@ export const createBusAssistants = (vehicleId, operatorInput, operatorid, firstN
   }
 };
 
-export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea) => async dispatch => {
-  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea};
+export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role};
   try {
-    const res = await axios.put(`${api.busAssistant}/api/busassistants/${id}/`, body);
+    const res = await axios.put(`${api.operationAssistant}/api/operationassistants/${id}/`, body);
     dispatch({
       type: UPDATE_BUS_ASSISTANT,
       payload: res.data
@@ -116,32 +105,12 @@ export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, r
 
   }
 };
-export const deleteBusAssistants = (id) => async dispatch => {
 
-  try {
-    const res = await axios.delete(`${api.busAssistant}/admin/busassistants/${id}/`);
-    dispatch({
-      type: DELETE_BUS_ASSISTANT,
-      payload: res.data
-    });
-    dispatch(getBusAssistants());
-    dispatch(closeBusAssistantsModalDelete());
-  } catch (err) {
-    dispatch({
-      type: BUS_ASSISTANT_ERROR,
-      payload: "Opps! Something Went Wrong Try Again"
-    });
-    dispatch(closeBusAssistantsModalDelete());
-    setTimeout(() => dispatch({
-      type: REMOVE_BUS_ASSISTANT_ERROR
-    }), 5000)
-  }
-};
 
 export const searchBusAssistants = (id) => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.busAssistant}/api/busassistants/${id}/`);
+    const res = await axios.get(`${api.operationAssistant}/api/operationassistants/${id}/`);
     dispatch({
       type: SEARCH_BUS_ASSISTANT,
       payload: res.data
@@ -154,22 +123,6 @@ export const searchBusAssistants = (id) => async dispatch => {
   }
 };
 
-export const approveBusAssistants = (id) => async dispatch => {
-  try {
-    dispatch(isLoading());
-    const res = await axios.put(`${api.busAssistant}/api/approve/${id}/`);
-    dispatch({
-      type: APPROVE_BUS_ASSISTANT,
-      payload: res.data
-    });
-    dispatch(getBusAssistants());
-  } catch (err) {
-    dispatch({
-      type: BUS_ASSISTANT_ERROR,
-      payload: "Opps! Something Went Wrong Try Again"
-    });
-  }
-};
 
 
 export function toggleBusAssistantsModalCreate() {
@@ -185,39 +138,7 @@ export function toggleBusAssistantsModalUpdate(id) {
   };
 }
 
-export function getBusAssistantsVehicleId(id) {
-  return {
-    type: BUS_ASSISTANT_VEHICLE_ID,
-    payload: id
-  };
-}
 
-export function getBusAssistantsVehicleId2(id) {
-  return {
-    type: BUS_ASSISTANT_VEHICLE_ID2,
-    payload: id
-  };
-}
-
-export function clearBusAssistantsVehicleId() {
-  return {
-    type: CLEAR_BUS_ASSISTANT_VEHICLE_ID,
-
-  };
-}
-
-export function toggleBusAssistantsModalDelete(id) {
-  return {
-    type: BUS_ASSISTANT_MODAL_DELETE,
-    payload: id
-  };
-}
-
-export function closeBusAssistantsModalDelete() {
-  return {
-    type: CLOSE_MODAL_DELETE_BUS_ASSISTANT,
-  };
-}
 
 export function isLoading() {
   return {

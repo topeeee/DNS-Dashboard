@@ -10,6 +10,7 @@ import PartnerHeader from "./components/PartnerHeader";
 import axios from "axios";
 import api from "../../../environments/environment";
 import {isAdmin, isLamata, isOperator, OperatorName} from "../../../environments/constants";
+import {getVehicles} from "../../../store/actions/vehicleAction";
 
 
 
@@ -17,6 +18,8 @@ import {isAdmin, isLamata, isOperator, OperatorName} from "../../../environments
 
 function UserRow(props) {
   const user = props.user;
+  const vehicles = props.vehicles;
+
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
       status === 'Inactive' ? 'danger' :
@@ -30,7 +33,9 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       <td>{user.email}</td>
       <td>{user.officeAddress}</td>
-      <td>{user.numberOfVehicle}</td>
+      {/*<td>{user.numberOfVehicle}</td>*/}
+      {vehicles ? <td>{vehicles.filter(vehicle => vehicle.partner_id === user.id).length}</td>
+        :<td>0</td>}
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(isAdmin || isOperator) &&  <td> <PartnerActionBtn id={user.id} user={user} /> </td>}
@@ -38,7 +43,7 @@ function UserRow(props) {
   )
 }
 
-const ActivePartners = ({getPartners, partners, isLoading}) => {
+const ActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
   const [partnerId, setPartnerId] = useState([]);
   const [operatorPartner, setOperatorPartner] = useState([]);
@@ -54,7 +59,8 @@ const ActivePartners = ({getPartners, partners, isLoading}) => {
   }
 
   useEffect(()=>{
-    getPartners()
+    getPartners();
+    getVehicles();
   },[]);
 
   useEffect(()=> {
@@ -139,10 +145,10 @@ const ActivePartners = ({getPartners, partners, isLoading}) => {
                 </thead>
                 <tbody>
                 {(partners && (isAdmin || isLamata))? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
-                  <UserRow key={index} user={operator} />
+                  <UserRow key={index} user={operator} vehicles={vehicles}/>
                 ):null}
                 {(operatorPartner && isOperator)? operatorPartner.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
-                  <UserRow key={index} user={operator} />
+                  <UserRow key={index} user={operator} vehicles={vehicles}/>
                 ):null}
                 </tbody>
               </Table>
@@ -158,6 +164,7 @@ const ActivePartners = ({getPartners, partners, isLoading}) => {
 function mapDispatchToProps(dispatch) {
   return {
     getPartners: () => dispatch(getPartners()),
+    getVehicles: () => dispatch(getVehicles()),
   };
 }
 
@@ -165,6 +172,7 @@ const mapStateToProps = state => ({
   partners: state.partners.partners,
   error: state.partners.error,
   isLoading: state.partners.isLoading,
+  vehicles: state.vehicle.vehicles,
 
 
 });

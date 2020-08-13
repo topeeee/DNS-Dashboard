@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Input, Row, Table} from 'reactstrap';
 import {getVehicles, searchVehicle} from "../../store/actions/vehicleAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
 import VehicleActionBtn from "./components/VehicleActionBtn";
-import {isAdmin, isLamata, isOperator} from "../../environments/constants";
-
-
-
+import {isAdmin, isLamata, isOperator, isPartner} from "../../environments/constants";
+import {getDrivers, getDriverVehicles} from "../../store/actions/driverAction";
 
 
 function UserRow(props) {
   const user = props.user;
+  const drivers = props.drivers;
+  const driverVehicles = props.driverVehicles
+
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -26,14 +27,24 @@ function UserRow(props) {
 
     <tr key={user.id}>
       <td>{user.vehicle_type}</td>
-      {(isAdmin || isOperator) &&<td>{user.vehicle_make}</td>}
-      {(isAdmin || isOperator) && <td>{user.vehicle_model}</td>}
-      {(isAdmin || isOperator) &&<td>{user.plate_number}</td>}
+      {(isAdmin || isOperator|| isPartner) &&<td>{user.vehicle_make}</td>}
+      {(isAdmin || isOperator|| isPartner) && <td>{user.vehicle_model}</td>}
+      {(isAdmin || isOperator|| isPartner) &&<td>{user.plate_number}</td>}
       <td>{user.capacity}</td>
+
+      {/*{(driverVehicles && drivers) ? driverVehicles.map(driverVehicle=> {*/}
+      {/*  if(driverVehicle.vehicleId == user.id) {*/}
+      {/*    return drivers.map(driver => {*/}
+      {/*      if (driver.id == driverVehicle.driverId) {*/}
+      {/*        return <td>{driver.firstname} {driver.lastname}</td>*/}
+      {/*      }*/}
+      {/*    })*/}
+      {/*  }*/}
+      {/*}): null}*/}
       {(isAdmin || isLamata)?  <td>{user.operator}</td>: null}
       {/*<td>{user.assigned}</td>*/}
-      {(((user.assigned_driver == "1") && (isAdmin || isOperator))) && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-      {(((user.assigned_driver == null) && (isAdmin || isOperator)) ||((user.assigned_driver == "null") && (isAdmin || isOperator))) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
+      {(((user.assigned_driver == "1") && (isAdmin || isOperator|| isPartner))) && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {(((user.assigned_driver == null) && (isAdmin || isOperator|| isPartner)) ||((user.assigned_driver == "null") && (isAdmin || isOperator)|| isPartner)) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
       {/*{(user.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}*/}
       {/*{((user.assigned_BA == null) ||(user.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}*/}
       {(user.status == null ) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
@@ -44,7 +55,7 @@ function UserRow(props) {
   )
 }
 
-const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
+const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, error, driverVehicles, getDriverVehicles, getDrivers, drivers}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
@@ -64,6 +75,13 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
     e.preventDefault();
     searchVehicle(formData)
   };
+
+  useEffect(()=> {
+    getDriverVehicles();
+    getDrivers();
+  },[])
+
+
 
   return (
     <div className="animated fadeIn">
@@ -93,7 +111,7 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
               <div className="w-25">
                 Vehicles
               </div>
-              {(isAdmin || isOperator) && <VehicleHeader />}
+              {(isAdmin || isOperator || isPartner) && <VehicleHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -107,12 +125,13 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Mode</th>
-                  {(isAdmin || isOperator) &&  <th scope="col">Vehicle Make</th>}
-                  {(isAdmin || isOperator) &&<th scope="col">Vehicle Model</th>}
-                  {(isAdmin || isOperator) && <th scope="col">Vehicle Plate number</th>}
+                  {(isAdmin || isOperator || isPartner) &&  <th scope="col">Vehicle Make</th>}
+                  {(isAdmin || isOperator || isPartner) &&<th scope="col">Vehicle Model</th>}
+                  {(isAdmin || isOperator || isPartner) && <th scope="col">Vehicle Plate number</th>}
                    <th scope="col">Capacity</th>
+                  {/*<th scope="col">Driver Name</th>*/}
                   {(isAdmin || isLamata) ?  <th scope="col">Operator</th>: null}
-                  {(isAdmin || isOperator) &&<th scope="col">Assigned To Driver</th>}
+                  {(isAdmin || isOperator || isPartner) &&<th scope="col">Assigned To Driver</th>}
                   {/*<th scope="col">Assigned To BA</th>*/}
                   <th scope="col">Status</th>
                   {isAdmin || isOperator?  <th scope="col">Actions</th>: null}
@@ -120,7 +139,7 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
                 </thead>
                 <tbody>
                 {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((vehicle, index) =>
-                  <UserRow key={index} user={vehicle}/>
+                  <UserRow key={index} user={vehicle} drivers={drivers} driverVehicles={driverVehicles}/>
                 )}
                 {vehicle &&
                 <UserRow user={vehicle}/>
@@ -138,7 +157,9 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
 function mapDispatchToProps(dispatch) {
   return {
     getVehicles: () => dispatch(getVehicles()),
-    searchVehicle: (id) => dispatch(searchVehicle(id))
+    searchVehicle: (id) => dispatch(searchVehicle(id)),
+    getDriverVehicles: () => dispatch(getDriverVehicles()),
+    getDrivers: () => dispatch(getDrivers())
   };
 }
 
@@ -146,7 +167,9 @@ const mapStateToProps = state => ({
   vehicles: state.vehicle.vehicles,
   vehicle: state.vehicle.vehicle,
   error: state.vehicle.error,
-  isLoading: state.vehicle.isLoading
+  isLoading: state.vehicle.isLoading,
+  driverVehicles: state.driver.driverVehicles,
+  drivers: state.driver.drivers
 
 });
 

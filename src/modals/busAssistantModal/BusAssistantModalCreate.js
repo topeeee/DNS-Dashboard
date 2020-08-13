@@ -13,6 +13,7 @@ import {getAreas} from "../../store/actions/areaAction";
 
 import api from '../../environments/environment'
 import {isAdmin, OperatorName, isOperator} from "../../environments/constants";
+import {getModes} from "../../store/actions/modeAction";
 
 const animatedComponents = makeAnimated();
 
@@ -24,15 +25,16 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusAssistantsModalCreate: () => dispatch(toggleBusAssistantsModalCreate()),
-    createBusAssistants: (vehicleId, operatorInput, operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+    createBusAssistants: (operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role
     ) =>
-      dispatch(createBusAssistants(vehicleId, operatorInput, operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+      dispatch(createBusAssistants(operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role
       )),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
     getVehicles: () => dispatch(getVehicles()),
     getAreas: () => dispatch(getAreas()),
+    getModes: () => dispatch(getModes())
 
   };
 }
@@ -42,6 +44,7 @@ const mapStateToProps = state => ({
   BusAssistantModalCreate: state.busAssistants.BusAssistantModalCreate,
   zones: state.zone.zones,
   routes: state.route.routes,
+  modes: state.mode.modes,
   isAuthenticated: state.auth.isAuthenticated,
   operators: state.operator.operators,
   vehicles: state.vehicle.vehicles,
@@ -66,7 +69,8 @@ const BusAssistantModalCreate = (props) => {
     vehicles,
     getVehicles,
     getAreas,
-    areas
+    areas,
+    modes
   } = props;
 
  async function getOperatorZone() {
@@ -92,13 +96,14 @@ const BusAssistantModalCreate = (props) => {
    if(isAuthenticated) {
      getOperatorZone();
      getOperatorMode();
+     getModes();
    }
   },[]);
 
 
 
   const [formData, setFormData] = useState({
-    firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
+    firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: "", role: ""
 
   });
   const [form1, setForm1] = useState(true);
@@ -173,7 +178,7 @@ const BusAssistantModalCreate = (props) => {
   // }, [areas]);
 
   const {
-    firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+    firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role
   } = formData;
 
  async function register() {
@@ -185,13 +190,7 @@ const BusAssistantModalCreate = (props) => {
     }
   }
 
- async function assignVehicle(id, status) {
-   try {
-    await axios.put(`${api.vehicle}/api/assign/busassitant/${id}/?assign=${status}`)
-   }catch (e) {
 
-   }
-  }
 
 
   const handleChange3 = (selected2) => {
@@ -201,11 +200,10 @@ const BusAssistantModalCreate = (props) => {
 
   const onSubmit = async (e) => {
      e.preventDefault();
-    createBusAssistants(vehicleId, operatorInput, operatorId, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
+    createBusAssistants(operatorId, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea, role
     );
-    assignVehicle(vehicleId, "1");
     setFormData({
-      firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
+      firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: "", role: ""
 
     });
     setForm1(true);
@@ -312,72 +310,24 @@ const BusAssistantModalCreate = (props) => {
             {form2 &&
             <FormGroup row>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Operator</Label>
-                {(operators && isAdmin) && <Input
-                  style={{cursor: 'pointer'}}
-                  type="select"
-                  name="operatorInput"
-                  value={operatorInput}
-                  onChange={e=>setOperatorInput(e.target.value)}
-                  // required
-                >
-                  <option value="">Select Operator</option>
-
-                  {operators && operators.map((operator, index) =>
-                    <option value={operator.name} key={index}>{operator.name}</option>
-                  )}
-                </Input>}
-                {(operators && isOperator) &&
-                <Input type="text"  name="operatorInput" onChange={onChange} value={operatorInput} readOnly={true} required />}
-                {/*<Input*/}
-                {/*  style={{cursor: 'pointer'}}*/}
-                {/*  type="select"*/}
-                {/*  name="operatorInput"*/}
-                {/*  value={operatorInput}*/}
-                {/*  onChange={e=>setOperatorInput(e.target.value)}*/}
-                {/*  // required*/}
-                {/*>*/}
-                {/*  <option value="">Select Operator</option>*/}
-
-                {/*  {operators && operators.map((operator, index) =>*/}
-                {/*    <option value={operator.name} key={index}>{operator.name}</option>*/}
-                {/*  )}*/}
-                {/*</Input>*/}
+                <Label for="name" className="font-weight-bold mb-0 text-info">Role</Label>
+                <Input type="text"  name="role" onChange={onChange} value={role} required />
               </Col>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle type</Label>
-                <Input
-                  style={{cursor: 'pointer'}}
-                  type="select"
-                  name="vehicleInput"
-                  value={vehicleInput}
-                  onChange={e=>setVehicleInput(e.target.value)}
-                  // required
-                >
-                  <option value="">Select Vehicle type</option>
-                  {(vehicles && operatorInput) && vehicles.filter((user) => user.operator === operatorInput).map((vehicle, index) =>
-                    <option value={vehicle.vehicle_type} key={index}>{vehicle.vehicle_type}</option>
-                  )}
-                </Input>
-              </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Plate no</Label>
-                <Input
-                  style={{cursor: 'pointer'}}
-                  type="select"
-                  name="plateInput"
-                  value={plateInput}
-                  onChange={e=>setPlateInput(e.target.value)}
-                  // required
-                >
-                  <option value="">Select Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned_BA === null || user.assigned_BA === "null") && (user.status === "1")).map((vehicle, index) =>
-                    <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
-                  )}
-                  {/*{routes && routes.map((route, index) =>*/}
-                  {/*  <option value={route.routecode} key={index}>{route.routecode}</option>*/}
-                  {/*)}*/}
-                </Input>
+              <Label for="name" className="font-weight-bold mb-0 text-info">Modes</Label>
+              <Input
+                style={{cursor: 'pointer'}}
+                type="select"
+                name="assignedMode"
+                value={assignedMode}
+                onChange={onChange}
+                required
+              >
+                <option value="">Select Mode</option>
+                {modes && modes.map((mode, index) =>
+                  <option value={mode.mode} key={index}>{mode.mode}</option>
+                )}
+              </Input>
               </Col>
             </FormGroup>}
             {form3 &&
@@ -409,7 +359,7 @@ const BusAssistantModalCreate = (props) => {
                   // required
                 >
                   <option value="">select Zone</option>
-                  {(operatorZone && operatorInput) && operatorZone.filter((user) => user.operatorName === operatorInput).map((zone, index) =>
+                  {(operatorZone) && operatorZone.map((zone, index) =>
                     <option value={zone.zoneCode} key={index}>{zone.zoneCode}</option>
                   )}
                 </Input>

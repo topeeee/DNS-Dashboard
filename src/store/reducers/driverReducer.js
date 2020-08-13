@@ -12,11 +12,17 @@ import {
   DRIVER_STATUS,
   DRIVER_VEHICLE_ID,
   DRIVER_VEHICLE_ID2,
-  CLEAR_DRIVER_VEHICLE_ID, DRIVER_ME, DRIVER_ALL, DRIVER_APPLICATION, DRIVER_MODAL_FLAG, DRIVER_MODAL_FLAG_DETAILS
+  CLEAR_DRIVER_VEHICLE_ID,
+  DRIVER_ME,
+  DRIVER_ALL,
+  DRIVER_APPLICATION,
+  DRIVER_MODAL_FLAG,
+  DRIVER_MODAL_FLAG_DETAILS,
+  DRIVER_VEHICLE
 } from "../actionTypes";
 
 const initialState = {
-  drivers: null,
+  drivers: [],
   driver: null,
   DriverModalCreate: false,
   DriverModalDelete: false,
@@ -33,6 +39,7 @@ const initialState = {
   getDriverVehicleId2: null,
   flaggedDriverId: '',
   flaggedDetailsDriverId: '',
+  driverVehicles: [],
 };
 
 function driverReducer(state = initialState, action) {
@@ -45,6 +52,12 @@ function driverReducer(state = initialState, action) {
         error: null,
         drivers: payload,
         isLoading: false,
+      };
+    }
+    case DRIVER_VEHICLE: {
+      return {
+        ...state,
+       driverVehicles: payload
       };
     }
     case DRIVER_ME: {

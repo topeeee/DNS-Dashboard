@@ -15,7 +15,7 @@
    driverRoute: "http://165.22.116.11:7048",
    operator: "http://165.22.116.11:7046",
    register: "http://165.22.116.11:8001",
-   busAssistant: "http://165.22.116.11:7051",
+   operationAssistant: "http://165.22.116.11:7051",
    operatorZone: "http://165.22.116.11:7052",
    operatorVehicleTypes: "http://165.22.116.11:7055",
    operatorMode: "http://165.22.116.11:7053",
@@ -24,7 +24,8 @@
    lamata: "http://165.22.116.11:7064",
    partner: "http://165.22.116.11:7060",
    busAssistantsVehicles: "http://165.22.116.11:7056",
-   comment: "http://165.22.116.11:7065"
+   comment: "http://165.22.116.11:7065",
+   service: "http://165.22.116.11:7063"
 };
 
 export default api

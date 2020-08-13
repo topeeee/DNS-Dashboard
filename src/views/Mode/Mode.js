@@ -21,8 +21,8 @@ function UserRow(props) {
 
     <tr key={user.id}>
       <td>{user.mode}</td>
-      <td>{user.modecode}</td>
-      {/*<td>{user.statecode}</td>*/}
+      {/*<td>{user.modecode}</td>*/}
+      <td>{user.service}</td>
       {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
     </tr>
   )
@@ -94,7 +94,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Services
+                Modes
               </div>
               {isAdmin &&  <ModeHeader />}
             </CardHeader>
@@ -109,9 +109,9 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
+                  <th scope="col">Mode</th>
+                  {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Service</th>
-                  <th scope="col">Service Code</th>
-                  {/*<th scope="col">State</th>*/}
                   {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>

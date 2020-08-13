@@ -17,6 +17,7 @@ import areaReducer from "./areaReducer";
 import driverRouteReducer from "./driverRouteReducer";
 import operatorReducer from "./operatorReducer";
 import partnerReducer from "./partnerReducer";
+import serviceReducer from "./serviceReducer";
 
 
 export default combineReducers({
@@ -37,5 +38,6 @@ export default combineReducers({
   area: areaReducer,
   driverRoute: driverRouteReducer,
   operator: operatorReducer,
-  partners: partnerReducer
+  partners: partnerReducer,
+  service: serviceReducer
 });

@@ -52,7 +52,7 @@ const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
 const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
-const Mode2 =  React.lazy(() => import('./views/Setup/Mode/Mode'));
+const Service = React.lazy(() => import('./views/Setup/Service'));
 
 
 
@@ -73,8 +73,8 @@ const routes = [
   { path: '/lamata/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/lamata/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/lamata/areas', name: 'Areas', component: Area },
-  { path: '/lamata/services', name: 'Services', component: Mode },
-  { path: '/lamata/modes', name: 'Modes', component: Mode2 },
+  { path: '/lamata/services', name: 'Services', component: Service },
+  { path: '/lamata/modes', name: 'Modes', component: Mode },
   { path: '/lamata/operators/active', name: 'Active Operators', component: ActiveOperators },
   { path: '/lamata/operators/inactive', name: 'Inactive Operators', component: InactiveOperators },
   { path: '/lamata/operators/:id', exact: true, name: 'Operator Details', component: Operator },

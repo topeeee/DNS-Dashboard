@@ -7,7 +7,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
 import VehicleActionBtn from "./components/VehicleActionBtn";
-import {isAdmin, isLamata, isOperator} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, isPartner} from "../../environments/constants";
 
 
 function UserRow(props) {
@@ -23,14 +23,14 @@ function UserRow(props) {
 
     <tr key={user.id}>
       <td>{user.vehicle_type}</td>
-      {(isAdmin || isOperator) &&<td>{user.vehicle_make}</td>}
-      {(isAdmin || isOperator) && <td>{user.vehicle_model}</td>}
-      {(isAdmin || isOperator) &&<td>{user.plate_number}</td>}
+      {(isAdmin || isOperator || isPartner) &&<td>{user.vehicle_make}</td>}
+      {(isAdmin || isOperator || isPartner) && <td>{user.vehicle_model}</td>}
+      {(isAdmin || isOperator || isPartner) &&<td>{user.plate_number}</td>}
       <td>{user.capacity}</td>
       {(isAdmin || isLamata)?  <td>{user.operator}</td>: null}
       {/*<td>{user.assigned}</td>*/}
-      {(((user.assigned_driver == "1") && (isAdmin || isOperator))) && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
-      {(((user.assigned_driver == null) && (isAdmin || isOperator)) ||((user.assigned_driver == "null") && (isAdmin || isOperator))) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
+      {(((user.assigned_driver == "1") && (isAdmin || isOperator || isPartner))) && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
+      {(((user.assigned_driver == null) && (isAdmin || isOperator || isPartner)) ||((user.assigned_driver == "null") && (isAdmin || isOperator || isPartner))) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
       {/*{(user.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}*/}
       {/*{((user.assigned_BA == null) ||(user.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}*/}
       {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
@@ -90,7 +90,7 @@ const InactiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVeh
               <div className="w-25">
                 Inactive Vehicles
               </div>
-              {(isAdmin || isOperator) && <VehicleHeader />}
+              {(isAdmin || isOperator || isPartner) && <VehicleHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -104,12 +104,12 @@ const InactiveVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVeh
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Mode</th>
-                  {(isAdmin || isOperator) &&  <th scope="col">Vehicle Make</th>}
-                  {(isAdmin || isOperator) &&<th scope="col">Vehicle Model</th>}
-                  {(isAdmin || isOperator) && <th scope="col">Vehicle Plate number</th>}
+                  {(isAdmin || isOperator || isPartner) &&  <th scope="col">Vehicle Make</th>}
+                  {(isAdmin || isOperator || isPartner) &&<th scope="col">Vehicle Model</th>}
+                  {(isAdmin || isOperator || isPartner) && <th scope="col">Vehicle Plate number</th>}
                   <th scope="col">Capacity</th>
                   {(isAdmin || isLamata) ?  <th scope="col">Operator</th>: null}
-                  {(isAdmin || isOperator) &&<th scope="col">Assigned To Driver</th>}
+                  {(isAdmin || isOperator || isPartner) &&<th scope="col">Assigned To Driver</th>}
                   {/*<th scope="col">Assigned To BA</th>*/}
                   <th scope="col">Status</th>
                   {isAdmin || isOperator?  <th scope="col">Actions</th>: null}

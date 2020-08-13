@@ -23,7 +23,7 @@ export default {
 
         },
         {
-          name: 'Modes',
+          name: 'Mode',
           url: '/modes',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -306,28 +306,28 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/busassisstants',
+          url: '/operationassisstants',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/busassisstants/active',
+          url: '/operationassisstants/active',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/busassisstants/inactive',
+          url: '/operationassisstants/inactive',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/busassisstants/pending',
+          url: '/operationassisstants/pending',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",

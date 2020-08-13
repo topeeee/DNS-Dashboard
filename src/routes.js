@@ -50,7 +50,7 @@ const UsersOverview =  React.lazy(() => import('./views/Users/UsersOverView'));
 const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
 const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
-const Mode2 =  React.lazy(() => import('./views/Setup/Mode/Mode'));
+const Service = React.lazy(() => import('./views/Setup/Service'));
 
 
 
@@ -69,8 +69,8 @@ const routes = [
   { path: '/drivers/inactive', exact: true, name: 'Inactive Drivers', component: InactiveDrivers},
   { path: '/drivers/pending', exact: true, name: 'Pending Drivers', component: PendingDrivers },
   { path: '/areas', name: 'Areas', component: Area },
-  { path: '/services', name: 'Services', component: Mode },
-  { path: '/modes', name: 'Modes', component: Mode2 },
+  { path: '/modes', name: 'Mode', component: Mode },
+  { path: '/services', name: 'Services', component: Service },
   { path: '/operators/active', name: 'Active Operators', component: ActiveOperators },
   { path: '/operators/inactive', name: 'Inactive Operators', component: InactiveOperators },
   { path: '/operators/:id', exact: true, name: 'Operator Details', component: Operator },
@@ -100,11 +100,11 @@ const routes = [
   { path: '/trips/waiting', name: 'Waiting Trips', component: WaitingTrips },
   { path: '/trips/:id', name: 'Trip Details', component: Trip },
   { path: '/trips', name: 'Trips', component: Trips },
-  { path: '/busassisstants/active', exact: true, name: 'Active Bus Assistants', component: ActiveBusAssistants },
-  { path: '/busassisstants/inactive', exact: true, name: 'Inactive Bus Assistants', component: InactiveBusAssistants },
-  { path: '/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
-  { path: '/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
-  { path: '/busassisstants/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
+  { path: '/operationassisstants/active', exact: true, name: 'Active Operation Assistants', component: ActiveBusAssistants },
+  { path: '/operationassisstants/inactive', exact: true, name: 'Inactive Operation Assistants', component: InactiveBusAssistants },
+  { path: '/operationassisstants/pending', exact: true, name: 'Pending Operation Assistants', component: PendingBusAssistant },
+  { path: '/operationassisstants', exact: true, name: 'Operation Assistants', component: BusAssistants },
+  { path: '/operationassisstants/:id', exact: true, name: 'Operation Assistant Details', component: BusAssistant },
   { path: '/drivers/:id', name: 'Driver Details', component: Driver },
   { path: '/drivers', exact: true, name: 'Drivers', component: Drivers },
   { path: '/users/active', name: 'Active Users', component: ActiveUsers },

@@ -11,7 +11,6 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
   const [newOperator, setNewOperator] = useState({});
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
-  const [vehicle, setVehicle] = useState({});
   const [operatorName, setOperatorName] = useState('');
 
   const getBadge = (status) => {
@@ -34,19 +33,8 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
     }
   }
 
- async function getDriverVehicle() {
-    try {
-      const res = await axios.get(`${api.busAssistantsVehicles}/api/busassitantvehicles/`);
-      setDriverVehicle(res.data)
-    }catch (e) {}
-  }
 
- async function getVehicle(id) {
-    try {
-      const res = await axios.get(`${api.vehicle}/api/vehicles/${id}/`);
-          setVehicle(res.data)
-    }catch (e) {}
-  }
+
 
   async function getOperator(id) {
     try {
@@ -59,18 +47,13 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
 
   useEffect(()=>{
     getBusAssistants();
-    getDriverVehicle();
   },[]);
 
   useEffect(()=>{
     setBusAssistant();
   },[busAssistants]);
 
-  useEffect(()=> {
-    if(vehicleId) {
-      getVehicle(vehicleId)
-    }
-  },[vehicleId]);
+
 
   useEffect(()=> {
     if(operatorId) {
@@ -134,22 +117,6 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                   <td>{newOperator.accountNumber}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Plate No</strong></td>
-                  <td>{vehicle.plate_number}</td>
-                </tr>
-                <tr>
-                  <td><strong>Vehicle Make</strong></td>
-                  <td>{vehicle.vehicle_make}</td>
-                </tr>
-                <tr>
-                  <td><strong>Vehicle Model</strong></td>
-                  <td>{vehicle.vehicle_model}</td>
-                </tr>
-                <tr>
-                  <td><strong>Vehicle Type</strong></td>
-                  <td>{vehicle.vehicle_type}</td>
-                </tr>
-                <tr>
                   <td><strong>Route</strong></td>
                   <td>{newOperator.route}</td>
                 </tr>
@@ -161,10 +128,10 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                   <td><strong>Zone</strong></td>
                   <td>{newOperator.zone}</td>
                 </tr>
-                <tr>
-                  <td><strong>Operator</strong></td>
-                  <td>{operatorName}</td>
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Operator</strong></td>*/}
+                {/*  <td>{operatorName}</td>*/}
+                {/*</tr>*/}
                 <tr>
                   <td><strong>Status</strong></td>
                   {(newOperator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }

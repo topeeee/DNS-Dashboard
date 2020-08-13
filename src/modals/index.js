@@ -28,6 +28,8 @@ import OperatorModalSuspend from "./operatorModal/OperatorModalSuspend";
 import OperatorModalReactivate from "./operatorModal/OperatorModalReactivate";
 import DriveModalFlag from "./driverModal/DriverModalFlag";
 import DriverModalFlagDetails from "./driverModal/DriverModalFlagDetails";
+import ServiceModalUpdate from "./serviceModal/ServiceModalUpdate";
+import ServiceModalCreate from "./serviceModal/ServiceModalCreate";
 
 
 const CombineModal = () => {
@@ -62,6 +64,8 @@ const CombineModal = () => {
      <OperatorModalReactivate />
      <DriveModalFlag />
      <DriverModalFlagDetails />
+     <ServiceModalUpdate />
+     <ServiceModalCreate />
     </div>
   );
 };

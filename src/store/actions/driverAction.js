@@ -20,11 +20,12 @@ import {
   DRIVER_ALL,
   DRIVER_APPLICATION,
   DRIVER_MODAL_FLAG,
-  DRIVER_MODAL_FLAG_DETAILS
+  DRIVER_MODAL_FLAG_DETAILS,
+  DRIVER_VEHICLE
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import {isAdmin, isLamata, isOperator, OperatorId, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import {createUser} from "./userAction";
 
 
@@ -300,3 +301,14 @@ export function isLoading() {
     type: LOADING_DRIVER,
   };
 }
+
+export const getDriverVehicles = () => async dispatch => {
+  try {
+    const res = await axios.get(`${api.driverVehicles}/api/drivervehicles/`);
+    dispatch({
+      type: DRIVER_VEHICLE,
+      payload: res.data
+    });
+  } catch (err) {}
+};
+

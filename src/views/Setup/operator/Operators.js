@@ -9,13 +9,14 @@ import Spinner from "../../../spinner/Spinner";
 import OperatorActionBtn from "./components/OperatorActionBtn";
 import {Link} from "react-router-dom";
 import {isLamata} from "../../../environments/constants";
+import {getVehicles} from "../../../store/actions/vehicleAction";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const zone = props.zone;
+  const vehicles = props.vehicles;
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -30,7 +31,9 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       <td>{user.email}</td>
       <td>{user.officeAddress}</td>
-      <td>{user.numberOfVehicle}</td>
+      {/*<td>{user.numberOfVehicle}</td>*/}
+      {vehicles ? <td>{vehicles.filter(vehicle => vehicle.operator === user.name).length}</td>
+       :<td>0</td>}
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       <td> <OperatorActionBtn id={user.id} user={user} /> </td>
@@ -38,7 +41,7 @@ function UserRow(props) {
   )
 }
 
-const Operators = ({getOperators, operators, operator, isLoading,  searchOperator, error}) => {
+const Operators = ({getOperators, operators, operator, isLoading,  searchOperator, error, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
@@ -47,10 +50,9 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
     }
   },[formData]);
 
-  // useEffect(()=>{
-  //   ZoneUser();
-  //
-  // }, []);
+  useEffect(()=>{
+    getVehicles();
+    },[]);
 
 
   const onChange = (e) =>{
@@ -63,6 +65,7 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
     e.preventDefault();
     searchOperator(formData)
   };
+
 
   return (
     <div className="animated fadeIn">
@@ -118,7 +121,7 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
                 </thead>
                 <tbody>
                 {operators && operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((operator, index) =>
-                  <UserRow key={index} user={operator} />
+                  <UserRow key={index} user={operator} vehicles={vehicles}/>
                 )}
                 {operator &&
                 <UserRow user={operator}/>
@@ -138,6 +141,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getOperators: () => dispatch(getOperators()),
     searchOperator: (id) => dispatch(searchOperator(id)),
+    getVehicles: () => dispatch(getVehicles()),
   };
 }
 
@@ -146,6 +150,7 @@ const mapStateToProps = state => ({
   operator: state.operator.operator,
   error: state.operator.error,
   isLoading: state.operator.isLoading,
+  vehicles: state.vehicle.vehicles,
 
 
 });

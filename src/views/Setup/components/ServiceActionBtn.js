@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
 import {connect} from "react-redux"
-// import {toggleModeModalUpdate} from "../../../store/actions/modeAction";
+import {toggleModeModalUpdate} from "../../../store/actions/modeAction";
+import {toggleServiceModalUpdate} from "../../../store/actions/serviceAction";
 
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     toggleModeModalUpdate: (id) => dispatch(toggleModeModalUpdate(id))
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    toggleServiceModalUpdate: (id) => dispatch(toggleServiceModalUpdate(id))
+  };
+}
 
-class ModeActionBtn extends Component {
+class ServiceActionBtn extends Component {
   constructor(props) {
     super(props);
 
@@ -40,7 +41,7 @@ class ModeActionBtn extends Component {
           </DropdownToggle>
           <DropdownMenu>
             {/*<DropdownItem className='bg-danger text-center' onClick={()=>this.props.toggleModeModalUpdate(this.props.id)}>Delete</DropdownItem>*/}
-            <DropdownItem className='bg-info text-center p-0'>Update</DropdownItem>
+            <DropdownItem className='bg-info text-center p-0' onClick={()=>this.props.toggleServiceModalUpdate(this.props.id)}>Update</DropdownItem>
             {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>
         </Dropdown>
@@ -49,4 +50,4 @@ class ModeActionBtn extends Component {
   }
 }
 
-export default ModeActionBtn;
+export default connect(null, mapDispatchToProps)(ServiceActionBtn);

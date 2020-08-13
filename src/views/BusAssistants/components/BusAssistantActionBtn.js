@@ -3,7 +3,7 @@ import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
 import {Link} from "react-router-dom";
 import {
-  changeBusAssistants, getBusAssistantsVehicleId, getBusAssistantsVehicleId2,
+  changeBusAssistants,
   toggleBusAssistantsModalUpdate
 } from "../../../store/actions/busAssistantAction";
 import {isAdmin} from "../../../environments/constants";
@@ -14,8 +14,6 @@ function mapDispatchToProps(dispatch) {
   return {
     toggleBusAssistantsModalUpdate: (id) => dispatch(toggleBusAssistantsModalUpdate(id)),
     changeBusAssistants: (id, status) => dispatch(changeBusAssistants(id, status)),
-    getBusAssistantsVehicleId: (id) => dispatch(getBusAssistantsVehicleId(id)),
-    getBusAssistantsVehicleId2: (id) => dispatch(getBusAssistantsVehicleId2(id)),
   };
 }
 
@@ -35,7 +33,7 @@ const BusAssistantActionBtn = (props) => {
  }
 
   const route = () =>
-    (isAdmin) ? `/busassisstants/${props.id}` : `/operator/busassisstants/${props.id}`;
+    (isAdmin) ? `/operationassisstants/${props.id}` : `/operator/busassisstants/${props.id}`;
 
 
   return (
@@ -48,10 +46,10 @@ const BusAssistantActionBtn = (props) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleBusAssistantsModalUpdate(props.id)}>Update</DropdownItem>
-            {(props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');props.getBusAssistantsVehicleId(props.id)}}>Suspend</DropdownItem>}
-            {(props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');props.getBusAssistantsVehicleId2(props.id)}}>Reactivate</DropdownItem>}
-            {(props.user.status === "") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');props.getBusAssistantsVehicleId2(props.id)}}>Approve</DropdownItem>}
-            {(props.user.status === "") && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');props.getBusAssistantsVehicleId(props.id)}}>Deny</DropdownItem>}
+            {(props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');}}>Suspend</DropdownItem>}
+            {(props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');}}>Reactivate</DropdownItem>}
+            {(props.user.status === "") && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '1');}}>Approve</DropdownItem>}
+            {(props.user.status === "") && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeBusAssistants(props.id, '0');}}>Deny</DropdownItem>}
 
             <Link to={route} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
           </DropdownMenu>
