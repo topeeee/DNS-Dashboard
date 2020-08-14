@@ -18,6 +18,7 @@ import driverRouteReducer from "./driverRouteReducer";
 import operatorReducer from "./operatorReducer";
 import partnerReducer from "./partnerReducer";
 import serviceReducer from "./serviceReducer";
+import trainLineReducer from "./trainLineReducer";
 
 
 export default combineReducers({
@@ -39,5 +40,6 @@ export default combineReducers({
   driverRoute: driverRouteReducer,
   operator: operatorReducer,
   partners: partnerReducer,
-  service: serviceReducer
+  service: serviceReducer,
+  trainLine: trainLineReducer,
 });

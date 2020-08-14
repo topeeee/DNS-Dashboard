@@ -83,7 +83,7 @@ export const searchService = (id) => async dispatch => {
 
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.state}/api/services/${id}/`);
+    const res = await axios.get(`${api.service}/api/services/${id}/`);
     dispatch({
       type: SEARCH_SERVICE,
       payload: res.data

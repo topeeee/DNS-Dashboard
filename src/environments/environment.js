@@ -25,7 +25,8 @@
    partner: "http://165.22.116.11:7060",
    busAssistantsVehicles: "http://165.22.116.11:7056",
    comment: "http://165.22.116.11:7065",
-   service: "http://165.22.116.11:7063"
+   service: "http://165.22.116.11:7063",
+   trainLine: "http://165.22.116.11:7067"
 };
 
 export default api

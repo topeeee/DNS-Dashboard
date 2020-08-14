@@ -225,7 +225,7 @@ const BusAssistantModalUpdate = (props) => {
   return (
     <div>
       <Modal isOpen={busAssistantModalUpdate} toggle={toggle} className={className}>
-        <ModalHeader toggle={toggle} className="text-center">Update Bus Assistant</ModalHeader>
+        <ModalHeader toggle={toggle} className="text-center">Update Operation Assistant</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             {form1 &&

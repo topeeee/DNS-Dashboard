@@ -30,6 +30,8 @@ import DriveModalFlag from "./driverModal/DriverModalFlag";
 import DriverModalFlagDetails from "./driverModal/DriverModalFlagDetails";
 import ServiceModalUpdate from "./serviceModal/ServiceModalUpdate";
 import ServiceModalCreate from "./serviceModal/ServiceModalCreate";
+import TrainLineModalCreate from "./trainLineModal/TrainLineModalCreate";
+import TrainLineModalUpdate from "./trainLineModal/TrainLineModalUpdate";
 
 
 const CombineModal = () => {
@@ -66,6 +68,8 @@ const CombineModal = () => {
      <DriverModalFlagDetails />
      <ServiceModalUpdate />
      <ServiceModalCreate />
+     <TrainLineModalCreate />
+     <TrainLineModalUpdate />
     </div>
   );
 };

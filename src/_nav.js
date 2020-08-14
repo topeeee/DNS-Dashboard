@@ -63,7 +63,6 @@ export default {
          // class: "menu_drop",
 
         },
-
         {
           name: 'Partners',
           children: [
@@ -150,6 +149,36 @@ export default {
         },
 
       ],
+    },
+    {
+      name: 'Stations',
+      icon: 'icon-settings',
+      children: [
+        {
+          name: 'Train Stations',
+          children: [
+            {
+              name: 'Train Lines',
+              url: '/trainlines',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
+
+            },
+          ]
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+
+        },
+        // {
+        //   name: 'Train Lines',
+        //   url: '/trainlines',
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        //   attributes: {className: "bg-white", style: {color: "black"}}
+        //
+        // },
+      ]
     },
     {
       name: 'Analytics',
@@ -301,7 +330,7 @@ export default {
       ]
     },
     {
-      name: 'Operator Assistants',
+      name: 'Operation Assistants',
       icon: 'icon-user',
       children: [
         {
