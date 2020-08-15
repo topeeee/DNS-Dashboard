@@ -26,7 +26,7 @@ function UserRow(props) {
   )
 }
 
-const Zones = ({ZoneUser, zones, getStates, states}) => {
+const Zones = ({ZoneUser, zones, getStates, states, isLoading}) => {
 const [operatorZone, setOperatorZone] = useState('');
 
  async function getOperatorZone() {
@@ -48,9 +48,6 @@ const [operatorZone, setOperatorZone] = useState('');
     getOperatorZone()
   },[]);
 
-
-  const loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>;
-
   return (
     <div className="animated fadeIn">
       <Row>
@@ -64,8 +61,8 @@ const [operatorZone, setOperatorZone] = useState('');
               {isAdmin &&  <ZoneHeader />}
             </CardHeader>
             <CardBody>
-              {!zones && <Spinner />}
-              {zones &&
+              {isLoading && <Spinner />}
+              {(zones && !isLoading) &&
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
@@ -100,6 +97,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = state => ({
   zones: state.zone.zones,
+  isLoading: state.zone.isLoading,
   states: state.state.states,
 
 });

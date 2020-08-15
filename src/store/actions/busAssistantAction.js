@@ -13,6 +13,7 @@ import {
 import  axios from 'axios'
 import api from "../../environments/environment";
 import {isAdmin, isLamata, isOperator, OperatorId} from "../../environments/constants";
+import {createUser} from "./userAction";
 
 
 
@@ -68,6 +69,9 @@ export const createBusAssistants = (operatorid, firstName, lastName, pin, reside
       type: CREATE_BUS_ASSISTANT,
       payload: res.data
     });
+    if(res.data) {
+      dispatch(createUser(firstName, lastName, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+    }
     dispatch(getBusAssistants());
     dispatch(toggleBusAssistantsModalCreate());
   } catch (err) {

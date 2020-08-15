@@ -32,6 +32,10 @@ import ServiceModalUpdate from "./serviceModal/ServiceModalUpdate";
 import ServiceModalCreate from "./serviceModal/ServiceModalCreate";
 import TrainLineModalCreate from "./trainLineModal/TrainLineModalCreate";
 import TrainLineModalUpdate from "./trainLineModal/TrainLineModalUpdate";
+import TrainStopModalUpdate from "./trainStopModal/TrainStopModalUpdate";
+import TrainStopModalCreate from "./trainStopModal/TrainStopModalCreate";
+import FerryStopModalUpdate from "./ferryStopModal/FerryStopModalUpdate";
+import FerryStopModalCreate from "./ferryStopModal/FerryStopModalCreate";
 
 
 const CombineModal = () => {
@@ -70,6 +74,10 @@ const CombineModal = () => {
      <ServiceModalCreate />
      <TrainLineModalCreate />
      <TrainLineModalUpdate />
+     <TrainStopModalUpdate />
+     <TrainStopModalCreate />
+     <FerryStopModalUpdate />
+     <FerryStopModalCreate />
     </div>
   );
 };

@@ -1,23 +1,25 @@
-import {ZONE_BY_USER, ZONE_MODAL_CREATE, ZONE_MODAL_UPDATE, DELETE_ZONE, CREATE_ZONE, UPDATE_ZONE} from "../actionTypes"
+import {
+  ZONE_BY_USER,
+  ZONE_MODAL_CREATE,
+  ZONE_MODAL_UPDATE,
+  CREATE_ZONE,
+  UPDATE_ZONE,
+  LOADING_ZONE
+} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
-import setAuthToken from "../../utils/setAuthToken";
+
 
 
 export const ZoneUser = () => async dispatch => {
   try {
+    dispatch(isLoading());
     const res = await axios.get(`${api.zone}/api/zones/`);
     dispatch({
       type: ZONE_BY_USER,
       payload: res.data
     });
-  } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
-
-  }
+  } catch (err) {}
 };
 
 export const createZone = (zonecode, zone, statecode) => async dispatch => {
@@ -30,13 +32,7 @@ export const createZone = (zonecode, zone, statecode) => async dispatch => {
     });
     dispatch(ZoneUser());
     dispatch(toggleZoneModalCreate());
-  } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
-
-  }
+  } catch (err) {}
 };
 
 
@@ -50,13 +46,7 @@ export const updateZone = (id, zonecode, zone, statecode) => async dispatch => {
     });
     dispatch(ZoneUser());
     dispatch(toggleZoneModalUpdate());
-  } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
-
-  }
+  } catch (err) {}
 };
 
 
@@ -70,5 +60,11 @@ export function toggleZoneModalUpdate(id) {
   return {
     type: ZONE_MODAL_UPDATE,
     payload: id
+  };
+}
+
+export function isLoading() {
+  return {
+    type: LOADING_ZONE,
   };
 }

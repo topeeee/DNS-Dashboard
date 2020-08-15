@@ -53,6 +53,10 @@ const Partners =  React.lazy(() => import('./views/Setup/partners/Partners'));
 const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePartners'));
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
 const Service = React.lazy(() => import('./views/Setup/Service'));
+const TrainLine = React.lazy(() => import('./views/TrainLine/TrainLine'));
+const TrainStop = React.lazy(() => import('./views/TrainLine/TrainStop'));
+const FerryStop = React.lazy(() => import('./views/Ferry/FerryStop'));
+
 
 
 
@@ -64,6 +68,9 @@ const routes = [
   { path: '/lamata', exact: true, name: 'Home' },
   { path: '/lamata/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/lamata/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
+  { path: '/lamata/trainlines', exact: true, name: 'Train Lines', component: TrainLine},
+  { path: '/lamata/trainstops', exact: true, name: 'Train Stops', component: TrainStop},
+  { path: '/lamata/ferrystops', exact: true, name: 'Ferry Stops', component: FerryStop},
   { path: '/lamata/drivers/applications', exact: true, name: 'Applications Drivers', component: AllApplicationDrivers},
   { path: '/lamata/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
   { path: '/lamata/drivers/flagged', exact: true, name: 'Flagged Drivers', component: FlaggedDrivers},
@@ -104,11 +111,11 @@ const routes = [
   { path: '/lamata/trips/waiting', name: 'Waiting Trips', component: WaitingTrips },
   { path: '/lamata/trips/:id', name: 'Trip Details', component: Trip },
   { path: '/lamata/trips', name: 'Trips', component: Trips },
-  { path: '/lamata/busassisstants/active', exact: true, name: 'Active Bus Assistants', component: ActiveBusAssistants },
-  { path: '/lamata/busassisstants/inactive', exact: true, name: 'Inactive Bus Assistants', component: InactiveBusAssistants },
-  { path: '/lamata/busassisstants/pending', exact: true, name: 'Pending Bus Assistants', component: PendingBusAssistant },
-  { path: '/lamata/busassisstants', exact: true, name: 'Bus Assistants', component: BusAssistants },
-  { path: '/lamata/busassisstants/:id', exact: true, name: 'Bus Assistant Details', component: BusAssistant },
+  { path: '/lamata/operationassisstants/active', exact: true, name: 'Active Operation Assistants', component: ActiveBusAssistants },
+  { path: '/lamata/operationassisstants/inactive', exact: true, name: 'Inactive Operation Assistants', component: InactiveBusAssistants },
+  { path: '/lamata/operationassisstants/pending', exact: true, name: 'Pending Operation Assistants', component: PendingBusAssistant },
+  { path: '/lamata/operationassisstants', exact: true, name: 'Operation Assistants', component: BusAssistants },
+  { path: '/lamata/operationassisstants/:id', exact: true, name: 'Operation Assistant Details', component: BusAssistant },
   { path: '/lamata/drivers/:id', name: 'Driver Details', component: Driver },
   { path: '/lamata/drivers', exact: true, name: 'Drivers', component: Drivers },
   { path: '/lamata/users/active', name: 'Active Users', component: ActiveUsers },

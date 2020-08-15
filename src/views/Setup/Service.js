@@ -76,7 +76,7 @@ const Service = ({getService, services, service, isLoading,  searchService, erro
               </CardHeader>
               <CardHeader className="d-flex align-items-center">
                 <div className="w-25">
-                  States
+                  Services
                 </div>
                 {isAdmin &&  <ServiceHeader />}
               </CardHeader>

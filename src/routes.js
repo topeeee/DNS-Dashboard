@@ -52,6 +52,8 @@ const ActivePartners =  React.lazy(() => import('./views/Setup/partners/ActivePa
 const InactivePartners =  React.lazy(() => import('./views/Setup/partners/InactivePartners'));
 const Service = React.lazy(() => import('./views/Setup/Service'));
 const TrainLine = React.lazy(() => import('./views/TrainLine/TrainLine'));
+const TrainStop = React.lazy(() => import('./views/TrainLine/TrainStop'));
+const FerryStop = React.lazy(() => import('./views/Ferry/FerryStop'));
 
 
 
@@ -64,6 +66,8 @@ const routes = [
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { path: '/operator/dashboard', name: 'Dashboard', component: OperatorDashboard },
   { path: '/trainlines', exact: true, name: 'Train Lines', component: TrainLine},
+  { path: '/trainstops', exact: true, name: 'Train Stops', component: TrainStop},
+  { path: '/ferrystops', exact: true, name: 'Ferry Stops', component: FerryStop},
   { path: '/drivers/active', exact: true, name: 'Active Drivers', component: ActiveDrivers},
   { path: '/partners/active', exact: true, name: 'Active Partners', component: ActivePartners},
   { path: '/partners/inactive', exact: true, name: 'Inactive Partners', component: InactivePartners},

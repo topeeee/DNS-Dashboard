@@ -58,10 +58,6 @@ export default {
               attributes: { className: "bg-white", style: { color: "black" }}
               },
           ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-         // class: "menu_drop",
-
         },
         {
           name: 'Partners',
@@ -91,21 +87,15 @@ export default {
 
             },
           ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-
         },
-        // {
-        //   name: 'States',
-        //   url: '/states',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        //
-        // },
-
+      ],
+    },
+    {
+      name: 'Stations',
+      icon: 'icon-settings',
+      children: [
         {
-          name: 'Zones',
+          name: 'FMLM',
           // url: '/zones',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -147,13 +137,6 @@ export default {
             },
           ]
         },
-
-      ],
-    },
-    {
-      name: 'Stations',
-      icon: 'icon-settings',
-      children: [
         {
           name: 'Train Stations',
           children: [
@@ -165,19 +148,29 @@ export default {
               attributes: {className: "bg-white", style: {color: "black"}}
 
             },
-          ]
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
+            {
+              name: 'Train Stops',
+              url: '/trainstops',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
 
+            },
+          ]
         },
-        // {
-        //   name: 'Train Lines',
-        //   url: '/trainlines',
-        //   // icon: 'icon-puzzle',
-        //   // class: "menu_drop",
-        //   attributes: {className: "bg-white", style: {color: "black"}}
-        //
-        // },
+        {
+          name: 'Ferry Stations',
+          children: [
+            {
+              name: 'Ferry Stops',
+              url: '/ferrystops',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
+
+            }
+          ]
+        },
       ]
     },
     {

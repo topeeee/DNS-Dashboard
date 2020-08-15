@@ -19,6 +19,8 @@ import operatorReducer from "./operatorReducer";
 import partnerReducer from "./partnerReducer";
 import serviceReducer from "./serviceReducer";
 import trainLineReducer from "./trainLineReducer";
+import trainStopReducer from "./trainStopReducer";
+import ferryStopReducer from "./ferryStopReducer";
 
 
 export default combineReducers({
@@ -42,4 +44,6 @@ export default combineReducers({
   partners: partnerReducer,
   service: serviceReducer,
   trainLine: trainLineReducer,
+  trainStop: trainStopReducer,
+  ferryStop: ferryStopReducer,
 });

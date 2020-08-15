@@ -34,38 +34,79 @@ export default {
           attributes: { style: { color: "black" }},
         },
     {
-      name: 'Zones',
-      class: 'text-dark',
-      icon: 'icon-puzzle',
-      // class: "menu_drop",
+      name: 'Stations',
+      icon: 'icon-settings',
+      attributes: { style: { color: "black" }},
       children: [
         {
-          name: 'Zones',
-          url: '/lamata/zones',
-          attributes: { className: "bg-white", style: { color: "black" }}
+          name: 'FMLM',
+          // url: '/zones',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
+          children: [
+            {
+              name: 'Zones',
+              url: '/lamata/zones',
+              attributes: { className: "bg-white", style: { color: "black" }}
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Areas',
+              url: '/lamata/areas',
+              attributes: { className: "bg-white", style: { color: "black" }}
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Routes',
+              url: '/lamata/routes',
+              attributes: { className: "bg-white", style: { color: "black" }}
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+            {
+              name: 'Bus Stop',
+              url: '/lamata/busstops',
+              attributes: { className: "bg-white", style: { color: "black" }}
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+            },
+          ]
         },
         {
-          name: 'Areas',
-          url: '/lamata/areas',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
+          name: 'Train Stations',
+          children: [
+            {
+              name: 'Train Lines',
+              url: '/lamata/trainlines',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
+
+            },
+            {
+              name: 'Train Stops',
+              url: '/lamata/trainstops',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
+
+            },
+          ]
         },
         {
-          name: 'Routes',
-          url: '/lamata/routes',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Geo Fences',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // url: '/base/jumbotrons',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
+          name: 'Ferry Stations',
+          children: [
+            {
+              name: 'Ferry Stops',
+              url: '/lamata/ferrystops',
+              // icon: 'icon-puzzle',
+              // class: "menu_drop",
+              attributes: {className: "bg-white", style: {color: "black"}}
+
+            }
+          ]
         },
       ]
     },
@@ -99,9 +140,7 @@ export default {
               attributes: { className: "bg-white", style: { color: "black" }}
               },
           ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-         // class: "menu_drop",
+
 
         },
 
@@ -135,21 +174,8 @@ export default {
 
             },
           ]
-          // url: '/operators',
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
 
         },
-        // {
-        //   name: 'States',
-        //   url: '/states',
-        //   // icon: 'icon-puzzle',
-        //   class: "menu_drop",
-        //
-        // },
-
-      // ],
-    // },
     {
       name: 'Analytics',
       icon: 'icon-user',
@@ -189,13 +215,6 @@ export default {
       icon: 'icon-user',
       class: 'text-dark',
       children: [
-        // {
-        //   name: 'Applications',
-        //   url: '/lamata/drivers/applications',
-        //   attributes: { className: "bg-white", style: { color: "black" }}
-        //   // icon: 'icon-puzzle',
-        //   // class: "menu_drop",
-        // },
         {
           name: 'All',
           url: '/lamata/drivers',
@@ -299,56 +318,28 @@ export default {
       children: [
         {
           name: 'All',
-          url: '/lamata/busassisstants',
+          url: '/lamata/operationassisstants',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Active',
-          url: '/lamata/busassisstants/active',
+          url: '/lamata/operationassisstants/active',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Inactive',
-          url: '/lamata/busassisstants/inactive',
+          url: '/lamata/operationassisstants/inactive',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Pending',
-          url: '/lamata/busassisstants/pending',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-      ],
-    },
-    {
-      name: 'Stations',
-      icon: 'icon-people',
-      class: 'text-dark',
-      children: [
-        {
-          name: 'Train',
-          url: '/lamata/busstops',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Ferry',
-          url: '/lamata/busstops',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // icon: 'icon-puzzle',
-          // class: "menu_drop",
-        },
-        {
-          name: 'Bus Stop',
-          url: '/lamata/busstops',
+          url: '/lamata/operationassisstants/pending',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
