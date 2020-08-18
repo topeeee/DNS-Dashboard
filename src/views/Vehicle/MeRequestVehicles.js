@@ -20,7 +20,7 @@ function UserRow(props) {
   return (
 
     <tr key={user.id}>
-      <td>{user.vehicle_type}</td>
+      <td>{user.mode}</td>
       <td>{user.vehicle_make}</td>
       <td>{user.vehicle_model}</td>
       <td>{user.plate_number}</td>

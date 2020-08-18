@@ -22,7 +22,7 @@ function UserRow(props) {
   return (
 
     <tr key={user.id}>
-      <td>{user.vehicle_type}</td>
+      <td>{user.mode}</td>
       {(isAdmin || isOperator || isPartner) &&<td>{user.vehicle_make}</td>}
       {(isAdmin || isOperator || isPartner) && <td>{user.vehicle_model}</td>}
       {(isAdmin || isOperator || isPartner) &&<td>{user.plate_number}</td>}

@@ -6,6 +6,7 @@ import {
   toggleVehicleUpdate, getVehicles
 } from "../../store/actions/vehicleAction";
 import {getOperators} from "../../store/actions/operatorAction";
+import {getModes} from "../../store/actions/modeAction";
 
 
 
@@ -13,10 +14,10 @@ import {getOperators} from "../../store/actions/operatorAction";
 function mapDispatchToProps(dispatch) {
   return {
     toggleVehicleModalUpdate: () => dispatch(toggleVehicleUpdate()),
-    updateVehicle: (vehicleId, vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) =>
-      dispatch(updateVehicle(vehicleId, vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator)),
+    updateVehicle: (vehicleId, vehicle_make, vehicle_model, mode, plate_number, capacity, operator) =>
+      dispatch(updateVehicle(vehicleId, vehicle_make, vehicle_model, mode, plate_number, capacity, operator)),
     getOperators: () => dispatch(getOperators()),
-    getVehicles: () => dispatch(getVehicles()),
+    getModes: () => dispatch(getModes()),
 
   };
 }
@@ -27,6 +28,7 @@ const mapStateToProps = state => ({
   vehicleId: state.vehicle.vehicleId,
   vehicles: state.vehicle.vehicles,
   isAuthenticated: state.auth.isAuthenticated,
+  modes: state.mode.modes,
 });
 
 const VehicleModalUpdate = (props) => {
@@ -39,9 +41,10 @@ const VehicleModalUpdate = (props) => {
     operators,
     getOperators,
     vehicleId,
-    getVehicles,
     vehicles,
-    isAuthenticated
+    isAuthenticated,
+    modes,
+    getModes
   } = props;
 
 
@@ -50,47 +53,41 @@ const VehicleModalUpdate = (props) => {
   useEffect(()=> {
     if(isAuthenticated) {
       getOperators();
-      getVehicles()
+      getModes();
     }
   }, []);
 
-  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" });
-  const [newOperator, setNewOperator] = useState([]);
+  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", mode: "", plate_number: "", capacity: "", operator: "" });
+
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const {
-    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator
+    vehicle_make, vehicle_model, mode, plate_number, capacity, operator
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    updateVehicle(vehicleId,vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator);
-    setFormData({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "" })
+    updateVehicle(vehicleId,vehicle_make, vehicle_model, mode, plate_number, capacity, operator);
+    setFormData({vehicle_make: "", vehicle_model: "", mode: "", plate_number: "", capacity: "", operator: "" })
 
   };
 
-  function getNewVehicle() {
-    if(newOperator){
-      newOperator.map(operator => {
-        if(operator.id === vehicleId) {
-          setFormData({vehicle_make: operator.vehicle_make, vehicle_model: operator.vehicle_model, vehicle_type: operator.vehicle_type, plate_number: operator.plate_number, capacity: operator.capacity, operator: operator.operator})
+  function getVehicle() {
+      vehicles.map(vehicle => {
+        if(vehicle.id === vehicleId) {
+          setFormData({vehicle_make: vehicle.vehicle_make, vehicle_model: vehicle.vehicle_model, mode: vehicle.mode, plate_number: vehicle.plate_number, capacity: vehicle.capacity, operator: vehicle.operator})
         }
       });
     }
-  };
+
 
   useEffect(()=> {
-    if(vehicleId) {
-      getNewVehicle()
+    if(vehicleId && vehicles) {
+      getVehicle();
     }
-  },[vehicleId]);
+  },[vehicleId, vehicles]);
 
-  useEffect(()=> {
-    if(vehicles) {
-      setNewOperator(vehicles)
-    }
-  },[vehicles]);
 
 
 
@@ -117,18 +114,15 @@ const VehicleModalUpdate = (props) => {
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"
-                  name="vehicle_type"
-                  value={vehicle_type}
+                  name="mode"
+                  value={mode}
                   onChange={onChange}
                   required
                 >
                   <option value="">Select Mode</option>
-                  <option value="Mini Bus">Mini Bus</option>
-                  <option value="Large Bus">Large Bus</option>
-                  <option value="Car">Car</option>
-                  <option value="Train">Train</option>
-                  <option value="Ferry">Ferry</option>
-                  <option value="Bike">Bike</option>
+                  {modes && modes.map((mode, index)=>
+                    <option value={mode.mode} key={index}>{mode.mode}</option>
+                  )}
                 </Input>
               </Col>
               <Col md="6">

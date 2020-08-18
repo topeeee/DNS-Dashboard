@@ -95,7 +95,7 @@ export default {
       icon: 'icon-settings',
       children: [
         {
-          name: 'FMLM',
+          name: 'FMLM Station',
           // url: '/zones',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -137,40 +137,40 @@ export default {
             },
           ]
         },
-        {
-          name: 'Train Stations',
-          children: [
+        // {
+          // name: 'Train Stations',
+          // children: [
+          //   {
+          //     name: 'Train Lines',
+          //     url: '/trainlines',
+          //     // icon: 'icon-puzzle',
+          //     // class: "menu_drop",
+          //     attributes: {className: "bg-white", style: {color: "black"}}
+          //
+          //   },
             {
-              name: 'Train Lines',
-              url: '/trainlines',
-              // icon: 'icon-puzzle',
-              // class: "menu_drop",
-              attributes: {className: "bg-white", style: {color: "black"}}
-
-            },
-            {
-              name: 'Train Stops',
+              name: 'Train Station',
               url: '/trainstops',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
-              attributes: {className: "bg-white", style: {color: "black"}}
+              attributes: {className: "bg-dark", style: {color: "white"}}
 
             },
-          ]
-        },
-        {
-          name: 'Ferry Stations',
-          children: [
+          // ]
+        // },
+        // {
+        //   name: 'Ferry Stations',
+        //   children: [
             {
-              name: 'Ferry Stops',
+              name: 'Ferry Station',
               url: '/ferrystops',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
-              attributes: {className: "bg-white", style: {color: "black"}}
+              attributes: {className: "bg-dark", style: {color: "white"}}
 
             }
-          ]
-        },
+          // ]
+        // },
       ]
     },
     {

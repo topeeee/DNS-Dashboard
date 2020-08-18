@@ -117,17 +117,17 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                   <td>{newOperator.accountNumber}</td>
                 </tr>
                 <tr>
-                  <td><strong>Route</strong></td>
-                  <td>{newOperator.route}</td>
+                  <td><strong>Role</strong></td>
+                  <td>{newOperator.role}</td>
                 </tr>
-                <tr>
-                  <td><strong>Area</strong></td>
-                  <td>{newOperator.area}</td>
-                </tr>
-                <tr>
-                  <td><strong>Zone</strong></td>
-                  <td>{newOperator.zone}</td>
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Area</strong></td>*/}
+                {/*  <td>{newOperator.area}</td>*/}
+                {/*</tr>*/}
+                {/*<tr>*/}
+                {/*  <td><strong>Zone</strong></td>*/}
+                {/*  <td>{newOperator.zone}</td>*/}
+                {/*</tr>*/}
                 {/*<tr>*/}
                 {/*  <td><strong>Operator</strong></td>*/}
                 {/*  <td>{operatorName}</td>*/}

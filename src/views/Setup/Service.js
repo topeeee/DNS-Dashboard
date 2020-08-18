@@ -4,7 +4,7 @@ import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {isAdmin, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import {getService, searchService} from "../../store/actions/serviceAction";
 import ServiceActionBtn from "./components/ServiceActionBtn";
 import ServiceHeader from "./components/ServiceHeader";
@@ -21,7 +21,7 @@ function UserRow(props) {
       <td>{user.service}</td>
       <td>{user.servicecode}</td>
       {/*<td>{user.statecode}</td>*/}
-      <td> <ServiceActionBtn id={user.id} /> </td>
+      {isAdmin && <td> <ServiceActionBtn id={user.id} /> </td>}
     </tr>
   )
 }
@@ -88,13 +88,13 @@ const Service = ({getService, services, service, isLoading,  searchService, erro
                 <div className="animated fadeIn pt-1 text-center">No States Available</div> }
                 {((services && services.length > 0) || service ) &&
                 <Table responsive hover>
-                  <thead className="bg-dark">
+                  <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                   <tr>
                     <th scope="col">Service</th>
                     <th scope="col">Service Code</th>
                     {/*<th scope="col">State</th>*/}
                     {/*<th scope="col">State Code</th>*/}
-                    <th scope="col">Action</th>
+                    {isAdmin && <th scope="col">Action</th>}
                   </tr>
                   </thead>
                   <tbody>

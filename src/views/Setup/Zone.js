@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import axios from 'axios'
-import { Badge, Card, CardBody, CardHeader, Col, Row, Table, Button } from 'reactstrap';
+import { Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import PrimaryHeader from "../components/PrimaryHeader";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import ZoneHeader from "./components/ZoneHeader";

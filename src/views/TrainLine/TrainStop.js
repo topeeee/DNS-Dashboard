@@ -19,11 +19,11 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.trainstop}</td>
       <td>{user.trainstopcode}</td>
-      <td>{user.trainline}</td>
-      <td>{user.trainlinecode}</td>
+      {/*<td>{user.trainline}</td>*/}
+      {/*<td>{user.trainlinecode}</td>*/}
       <td>{user.service}</td>
-      <td>{user.latitude}</td>
-      <td>{user.longitude}</td>
+      {/*<td>{user.latitude}</td>*/}
+      {/*<td>{user.longitude}</td>*/}
       {isAdmin ?  <td> <TrainStopActionBtn id={user.id} /> </td>: null}
     </tr>
   )
@@ -68,25 +68,25 @@ const TrainStops = ({getTrainStops, trainStops, isLoading}) => {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Train Stops
+                Train Station
               </div>
               {isAdmin && <TrainStopHeader />}
             </CardHeader>
             <CardBody>
               {isLoading && <Spinner />}
-              {(trainStops && trainStops.length === 0) && <div className="animated fadeIn pt-1 text-center">No Train Stops Available</div>}
+              {(trainStops && trainStops.length === 0 && !isLoading) && <div className="animated fadeIn pt-1 text-center">No Train Stops Available</div>}
               {(trainStops && trainStops.length > 0 && !isLoading) &&
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
-                  <th scope="col">Train Stop</th>
-                  <th scope="col"> Train Stop Code</th>
-                  <th scope="col">Train Line</th>
-                  <th scope="col">Train Line code</th>
+                  <th scope="col">Station Name</th>
+                  <th scope="col">Station Code</th>
+                  {/*<th scope="col">Train Line</th>*/}
+                  {/*<th scope="col">Train Line code</th>*/}
                   <th scope="col">Service</th>
-                  <th scope="col">Latitude</th>
-                  <th scope="col">Longitude</th>
+                  {/*<th scope="col">Latitude</th>*/}
+                  {/*<th scope="col">Longitude</th>*/}
                   {isAdmin ? <th scope="col">Action</th>: null}
                 </tr>
                 </thead>

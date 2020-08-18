@@ -48,8 +48,8 @@ const Operator = ({getVehicles, match, vehicles})=> {
                 {newOperator &&
                 <tbody>
                 <tr>
-                  <td><strong>Vehicle Type</strong></td>
-                  <td>{newOperator.vehicle_type}</td>
+                  <td><strong>Mode</strong></td>
+                  <td>{newOperator.mode}</td>
                 </tr>
                   <tr className="w-100">
                     <td><strong>Vehicle Make</strong></td>

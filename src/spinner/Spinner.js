@@ -12,6 +12,6 @@ export default () => (
         <div className="sk-chase-dot" />
         <div className="sk-chase-dot" />
       </div>
-    </div>;
+    </div>
   </Fragment>
 );

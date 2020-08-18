@@ -37,7 +37,7 @@ export const getOperators = () => async dispatch => {
   }
 };
 
-export const registerOperator = (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle) => async dispatch => {
+export const registerOperator = (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
   const body = {username, password};
   try {
     const res = await axios.post(`${api.register}/admin/users/`, body);
@@ -46,7 +46,7 @@ export const registerOperator = (username, password, name, email, phoneNo, offic
       payload: res.data
     });
     if(res) {
-      dispatch(createOperator(res.data.id, name, name, email, phoneNo, officeAddress, status, numberOfVehicle))
+      dispatch(createOperator(res.data.id, name, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail))
       dispatch(createUser(name, name, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
     }
   } catch (err) {
@@ -60,16 +60,14 @@ export const registerOperator = (username, password, name, email, phoneNo, offic
 
 
 
-export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle) => async dispatch => {
-  const body = {pin, name, usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle};
+export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
+  const body = {pin, name, usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail};
   try {
     const res = await axios.post(`${api.operator}/api/me/operators/`, body);
     dispatch({
       type: CREATE_OPERATOR,
       payload: res.data
     });
-    // dispatch(getOperators());
-    // dispatch(toggleOperatorModalCreate());
   } catch (err) {
     dispatch({
       type:  OPERATOR_ERROR,
@@ -83,8 +81,8 @@ export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAdd
   }
 };
 
-export const updateOperator = (id, name, email, phoneNo, officeAddress, numberOfVehicle) => async dispatch => {
-  const body = {name, email, phoneNo, officeAddress, numberOfVehicle};
+export const updateOperator = (id, name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
+  const body = {name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail};
   try {
     const res = await axios.put(`${api.operator}/api/operators/${id}/`, body);
     dispatch({

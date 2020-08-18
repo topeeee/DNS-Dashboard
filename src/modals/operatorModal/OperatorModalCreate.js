@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader} from 'reactstrap';
 import {connect} from "react-redux";
 import {
-  createOperator,
   getOperators,
   registerOperator,
   toggleOperatorModalCreate
@@ -24,8 +23,8 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleOperatorModalCreate: () => dispatch(toggleOperatorModalCreate()),
-    createOperator: (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle) => dispatch(createOperator(pin, name, email, phoneNo, officeAddress, status, numberOfVehicle)),
-    registerOperator: (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle) => dispatch(registerOperator(username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle)),
+    // createOperator: (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(createOperator(pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
+    registerOperator: (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(registerOperator(username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
     getStates: () => dispatch(getStates()),
     ZoneUser: () => dispatch(ZoneUser()),
     getModes: () => dispatch(getModes()),
@@ -61,8 +60,7 @@ const OperatorModalCreate = (props) => {
     getOperators
   } = props;
 
-  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: ""});
-  // const [pin, setPin] = useState({});
+  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: ""});
   const [selected, setSelected] = useState([]);
   const [selected1, setSelected1] = useState([]);
   const [selected2, setSelected2] = useState([]);
@@ -73,7 +71,7 @@ const OperatorModalCreate = (props) => {
   const [form2, setForm2] = useState(false);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const { name, email, phoneNo, officeAddress, status, numberOfVehicle } = formData;
+  const { name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -133,7 +131,7 @@ const OperatorModalCreate = (props) => {
 
   const onClickContinue1 = async (e) => {
     e.preventDefault();
-    registerOperator(email, "password",  name, email, phoneNo, officeAddress, status, numberOfVehicle);
+    registerOperator(email, "password",  name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail);
     setForm1(false);
     setForm2(true);
   };
@@ -180,13 +178,13 @@ const OperatorModalCreate = (props) => {
     }
   }, [modes]);
 
-  const options = [
-    { value: 'Train', label: 'Train' },
-    { value: 'Ferry', label: 'Ferry' },
-    { value: 'Large Bus', label: 'Large Bus' },
-    { value: 'Mini Bus', label: 'Mini Bus' },
-    { value: 'Car', label: 'Mini Car' }
-  ];
+  // const options = [
+  //   { value: 'Train', label: 'Train' },
+  //   { value: 'Ferry', label: 'Ferry' },
+  //   { value: 'Large Bus', label: 'Large Bus' },
+  //   { value: 'Mini Bus', label: 'Mini Bus' },
+  //   { value: 'Car', label: 'Mini Car' }
+  // ];
 
 
   return (
@@ -215,10 +213,18 @@ const OperatorModalCreate = (props) => {
                 <Label for="name" className="font-weight-bold mb-0 text-info">Office Address</Label>
                 <Input type="text"  name="officeAddress" onChange={onChange}  value={officeAddress} required />
               </Col>
-              {/*<Col md="6">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>*/}
-              {/*  <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />*/}
-              {/*</Col>*/}
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Name</Label>
+                <Input type="text"  name="contactName" onChange={onChange} value={contactName} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Phone</Label>
+                <Input type="text"  name="contactPhoneNo" onChange={onChange} value={contactPhoneNo} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Email</Label>
+                <Input type="text"  name="contactEmail" onChange={onChange} value={contactEmail} required />
+              </Col>
             </FormGroup>
               <div className="d-flex justify-content-md-end">
               {form1 &&
@@ -256,7 +262,7 @@ const OperatorModalCreate = (props) => {
 
               {/*</Col>*/}
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Services</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Mode(s)</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}
@@ -278,14 +284,14 @@ const OperatorModalCreate = (props) => {
                 />
 
               </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
+              {/*<Col md="12">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>*/}
+              {/*  <Select*/}
+              {/*    closeMenuOnSelect={false}*/}
+              {/*    components={animatedComponents}*/}
+              {/*    isMulti*/}
+              {/*    options={options} />*/}
+              {/*</Col>*/}
             </FormGroup>
               <div className="d-flex justify-content-md-end">
                 {form2  &&

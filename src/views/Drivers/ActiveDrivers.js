@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
 import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
 import DriverActionBtn from "./components/DriverActionBtn";
-import {isLamata} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator} from "../../environments/constants";
 
 
 
@@ -99,7 +99,7 @@ const ActiveDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, e
               <div className="w-25">
                 Drivers
               </div>
-              <DriverHeader />
+              {(isAdmin || isOperator) && <DriverHeader/>}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&

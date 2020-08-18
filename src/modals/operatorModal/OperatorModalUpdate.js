@@ -23,7 +23,7 @@ function mapDispatchToProps(dispatch) {
     ZoneUser: () => dispatch(ZoneUser()),
     getModes: () => dispatch(getModes()),
     getOperators: () => dispatch(getOperators()),
-    updateOperator: (id, name, email, phoneNo, officeAddress,  numberOfVehicle) => dispatch(updateOperator(id, name, email, phoneNo, officeAddress, numberOfVehicle)),
+    updateOperator: (id, name, email, phoneNo, officeAddress,  numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(updateOperator(id, name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
 
 
   };
@@ -59,7 +59,7 @@ const OperatorModalUpdate = (props) => {
     isAuthenticated
   } = props;
 
-  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: ""});
+  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: ""});
   // const [pin, setPin] = useState({});
   const [selected, setSelected] = useState([]);
   const [selected1, setSelected1] = useState([]);
@@ -77,11 +77,11 @@ const OperatorModalUpdate = (props) => {
   const [operatorMode, setOperatorMode] = useState([]);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const { name, email, phoneNo, officeAddress, numberOfVehicle } = formData;
+  const { name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    updateOperator(operatorUpdateId, name, email, phoneNo, officeAddress,  numberOfVehicle);
+    updateOperator(operatorUpdateId, name, email, phoneNo, officeAddress,  numberOfVehicle, contactName, contactPhoneNo, contactEmail);
     await setOperatorVehicleTypes();
     await setOperatorZones();
     await setOperatorModes();
@@ -137,7 +137,7 @@ const OperatorModalUpdate = (props) => {
         newOperator.map(operator => {
           if(operator.id === operatorUpdateId) {
             setOperatorName(operator.name);
-            setFormData({name: operator.name, email: operator.email, phoneNo: operator.phoneNo, officeAddress: operator.officeAddress,  numberOfVehicle: operator.numberOfVehicle})
+            setFormData({name: operator.name, email: operator.email, phoneNo: operator.phoneNo, officeAddress: operator.officeAddress,  numberOfVehicle: operator.numberOfVehicle, contactName: operator.contactName, contactPhoneNo: operator.contactPhoneNo, contactEmail: operator.contactEmail})
           }
         });
       }
@@ -323,10 +323,18 @@ const OperatorModalUpdate = (props) => {
                 <Label for="name" className="font-weight-bold mb-0 text-info">Office Address</Label>
                 <Input type="text"  name="officeAddress" onChange={onChange}  value={officeAddress} required />
               </Col>
-              {/*<Col md="6">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>*/}
-              {/*  <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />*/}
-              {/*</Col>*/}
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Name</Label>
+                <Input type="text"  name="contactName" onChange={onChange} value={contactName} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Phone</Label>
+                <Input type="text"  name="contactPhoneNo" onChange={onChange} value={contactPhoneNo} required />
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Contact Person Email</Label>
+                <Input type="text"  name="contactEmail" onChange={onChange} value={contactEmail} required />
+              </Col>
             </FormGroup>
             <div className="d-flex justify-content-md-end">
               {form1 &&
@@ -365,7 +373,7 @@ const OperatorModalUpdate = (props) => {
 
               {/*</Col>*/}
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Services</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Mode(s)</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}
@@ -387,14 +395,14 @@ const OperatorModalUpdate = (props) => {
                 />
 
               </Col>
-              <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>
-                <Select
-                  closeMenuOnSelect={false}
-                  components={animatedComponents}
-                  isMulti
-                  options={options} />
-              </Col>
+              {/*<Col md="12">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Geo-fenced area</Label>*/}
+              {/*  <Select*/}
+              {/*    closeMenuOnSelect={false}*/}
+              {/*    components={animatedComponents}*/}
+              {/*    isMulti*/}
+              {/*    options={options} />*/}
+              {/*</Col>*/}
             </FormGroup>
             <div className="d-flex justify-content-md-end">
               {form2  &&

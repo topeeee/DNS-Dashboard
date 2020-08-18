@@ -6,7 +6,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import DriverHeader from "./components/DriverHeader";
 import {getDrivers, searchDriver, approveDriver} from "../../store/actions/driverAction";
-import {isLamata} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator} from "../../environments/constants";
 import FlaggedDriverActionBtn from "./components/FlaggedDriverActionBtn";
 
 
@@ -97,7 +97,7 @@ const FlaggedDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
               <div className="w-25">
                 Drivers
               </div>
-              <DriverHeader />
+              {(isAdmin || isOperator) && <DriverHeader/>}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&

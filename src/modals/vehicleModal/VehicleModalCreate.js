@@ -5,6 +5,7 @@ import {toggleVehicleModalCreate, createVehicle} from "../../store/actions/vehic
 import {getOperators} from "../../store/actions/operatorAction";
 import {isOperator, isPartner, OperatorName, PartnerId, PartnerName} from "../../environments/constants";
 import {getPartners} from "../../store/actions/partnerAction";
+import {getModes} from "../../store/actions/modeAction";
 
 
 
@@ -13,10 +14,11 @@ const isAdmin = sessionStorage.getItem('isAdmin');
 function mapDispatchToProps(dispatch) {
   return {
     toggleVehicleModalCreate: () => dispatch(toggleVehicleModalCreate()),
-    createVehicle: (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id) =>
-      dispatch(createVehicle(vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id)),
+    createVehicle: (vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id) =>
+      dispatch(createVehicle(vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id)),
     getOperators: () => dispatch(getOperators()),
     getPartners: () => dispatch(getPartners()),
+    getModes: () => dispatch(getModes()),
 
   };
 }
@@ -26,6 +28,7 @@ const mapStateToProps = state => ({
   operators: state.operator.operators,
   isAuthenticated: state.auth.isAuthenticated,
   partners: state.partners.partners,
+  modes: state.mode.modes,
 
 
 
@@ -43,7 +46,9 @@ const VehicleModalCreate = (props) => {
     getOperators,
     isAuthenticated,
     partners,
-    getPartners
+    getPartners,
+    modes,
+    getModes
   } = props;
 
 
@@ -53,22 +58,23 @@ const VehicleModalCreate = (props) => {
     if(isAuthenticated){
       getOperators();
       getPartners();
+      getModes();
     }
   }, []);
 
 
-  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: isOperator ? OperatorName: '', partner_id: isPartner ? PartnerId: ""});
+  const [formData, setFormData] = useState({vehicle_make: "", vehicle_model: "", mode: "", plate_number: "", capacity: "", operator: isOperator ? OperatorName: '', partner_id: isPartner ? PartnerId: ""});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const {
-    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id
+    vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createVehicle(vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id);
-    setFormData( {...formData, vehicle_make: "", vehicle_model: "", vehicle_type: "", plate_number: "", capacity: "", operator: "", partner_id: "" })
+    createVehicle(vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id);
+    setFormData( {...formData, vehicle_make: "", vehicle_model: "", mode: "", plate_number: "", capacity: "", operator: "", partner_id: "" })
 
   };
 
@@ -110,19 +116,15 @@ const VehicleModalCreate = (props) => {
                 <Input
                   style={{cursor: 'pointer'}}
                   type="select"
-                  name="vehicle_type"
-                  value={vehicle_type}
+                  name="mode"
+                  value={mode}
                   onChange={onChange}
                   required
                 >
                   <option value="">Select Mode</option>
-                  <option value="Mini Bus">Mini Bus</option>
-                  <option value="Large Bus">Large Bus</option>
-                  <option value="Car">Car</option>
-                  <option value="Train">Train</option>
-                  <option value="Ferry">Ferry</option>
-                  <option value="Bike">Bike</option>
-
+                  {modes && modes.map((mode, index)=>
+                    <option value={mode.mode} key={index}>{mode.mode}</option>
+                  )}
                 </Input>
               </Col>
               <Col md="6">

@@ -91,7 +91,7 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
                 <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
               </div>
             </CardHeader>
-            <CardHeader className="d-flex align-items-center">
+            <CardHeader className="d-flex align-items-center" >
               <div className="w-25">
                 Operators
               </div>

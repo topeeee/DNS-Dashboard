@@ -82,13 +82,10 @@ export const getVehiclesRequestMe = () => async dispatch => {
 };
 
 
-
-export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id) => async dispatch => {
+export const createVehicle = (vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id) => async dispatch => {
   const body = {
-    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator, partner_id
+    vehicle_make, vehicle_model, mode, plate_number, capacity, operator, partner_id
    };
-
-
   try {
     const res = await axios.post(`${api.vehicle}/api/me/vehicles/`, body);
     dispatch({
@@ -115,12 +112,10 @@ export const createVehicle = (vehicle_make, vehicle_model, vehicle_type, plate_n
   }
 };
 
-export const updateVehicle = (id,vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator) => async dispatch => {
+export const updateVehicle = (id,vehicle_make, vehicle_model, mode, plate_number, capacity, operator) => async dispatch => {
   const body = {
-    vehicle_make, vehicle_model, vehicle_type, plate_number, capacity, operator
+    vehicle_make, vehicle_model, mode, plate_number, capacity, operator
   };
-
-
   try {
     const res = await axios.put(`${api.vehicle}/api/vehicles/${id}/`, body);
     dispatch({

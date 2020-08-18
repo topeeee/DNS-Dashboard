@@ -32,13 +32,13 @@ class LamataLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed className="bg-twitter" style={{border: "none"}}>
+        <AppHeader fixed  style={{border: 'none', backgroundColor: "#00BFFF"}}>
           <Suspense  fallback={this.loading()}>
             <LamataHeader/>
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg" className="bg-twitter" >
+          <AppSidebar fixed display="lg" style={{backgroundColor: "#00BFFF"}}>
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
@@ -48,7 +48,7 @@ class LamataLayout extends Component {
             <AppSidebarMinimizer/>
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={Lamataroutes} router={router}/>
+            <AppBreadcrumb appRoutes={Lamataroutes} router={router} />
             <Container fluid>
               <Suspense fallback={<Spinner />}>
                 <Switch>

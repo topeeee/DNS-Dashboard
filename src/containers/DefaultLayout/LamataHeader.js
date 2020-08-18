@@ -35,7 +35,7 @@ class LamataHeader extends Component {
         {/*  minimized={{src:zeno, width: 30, height: 30, alt: 'Zeno Logo' }}*/}
         {/*/>*/}
         <AppNavbarBrand
-          full={{src:lamata,  width: 70, height: 50, alt: 'lamata Logo' }}
+          full={{src:lamata,  width: 89, height: 40, alt: 'lamata Logo' }}
           minimized={{src:lamata, width: 30, height: 30, alt: 'lamata Logo' }}
           className="mt-1"
         />

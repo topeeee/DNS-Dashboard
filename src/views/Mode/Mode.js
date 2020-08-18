@@ -10,6 +10,7 @@ import ModeHeader from "./components/ModeHeader";
 import {getStates} from "../../store/actions/stateAction";
 import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import ModeActionBtn from "./components/ModeActionBtn";
+import api from "../../environments/environment";
 
 
 
@@ -23,25 +24,32 @@ function UserRow(props) {
       <td>{user.mode}</td>
       {/*<td>{user.modecode}</td>*/}
       <td>{user.service}</td>
-      {isAdmin ? <td> <ModeActionBtn id={user.id} /> </td>: null}
+      {isAdmin && <td> <ModeActionBtn id={user.id} /> </td>}
     </tr>
   )
 }
 
 const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, states}) => {
   const [formData, setFormData] = useState('');
-  const [operatorMode, setOperatorMode] = useState('');
+  const [operatorMode, setOperatorMode] = useState([]);
 
 
-  function getOperatorMode() {
-    axios.get('http://165.22.116.11:7053/api/operatormodes/')
-      .then(res=> {
-        res.data.map(operatorMode=> {
-          if(operatorMode.operator_name === OperatorName) {
-            setOperatorMode(operatorMode.modecode)
-          }
-        })
-      })
+ async function getOperatorMode() {
+   let newOperatorMode = []
+    try {
+    const res =  await axios.get(`${api.operatorMode}/api/mode/?operator_name=${OperatorName}`)
+       res.data.forEach(operatorMode => {
+         modes.forEach(mode=> {
+           if(mode.mode === operatorMode.modecode) {
+             newOperatorMode.push(mode)
+           }
+           setOperatorMode(newOperatorMode)
+         })
+       })
+      setOperatorMode(newOperatorMode)
+    }catch (e) {
+
+    }
   }
 
   useEffect(()=>{
@@ -112,14 +120,14 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                   <th scope="col">Mode</th>
                   {/*<th scope="col">Mode Code</th>*/}
                   <th scope="col">Service</th>
-                  {isAdmin ? <th scope="col">Action</th>: null}
+                  {isAdmin && <th scope="col">Action</th>}
                 </tr>
                 </thead>
                 <tbody>
                 {(modes && (isAdmin || isLamata)) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
-                {(modes && operatorMode && isOperator) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.mode === operatorMode).map((mode, index) =>
+                {(modes && operatorMode && isOperator) ? operatorMode.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
                 {mode &&
