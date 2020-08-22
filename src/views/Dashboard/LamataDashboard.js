@@ -1453,7 +1453,7 @@ class LamataDashboard extends Component {
                 {/*  </ButtonDropdown>*/}
                 {/*</ButtonGroup>*/}
                 <div className="text-value" style={{color: "black"}}>{this.props.busAssistants? this.props.busAssistants.length: 0}</div>
-                <div style={{color: "black"}}>Bus Assistants</div>
+                <div style={{color: "black"}}>Operation Assistants</div>
               </CardBody>
               <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
                 {/*<Line data={cardChartData4} options={cardChartOpts4} height={70} />*/}
