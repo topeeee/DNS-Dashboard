@@ -52,6 +52,7 @@ function driverReducer(state = initialState, action) {
         error: null,
         drivers: payload,
         isLoading: false,
+        DriverModalFlag: false,
       };
     }
     case DRIVER_VEHICLE: {

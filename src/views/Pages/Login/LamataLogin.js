@@ -16,14 +16,14 @@ import {
   InputGroupText,
   Row
 } from 'reactstrap';
-import zeno from "../../../assets/img/brand/zeno.png";
+import zeno from "../../../assets/img/brand/mini-New-Logo-RGB.png";
 import {AppNavbarBrand} from "@coreui/react";
-import {LogIn} from "../../../store/actions/authenticationAction";
+import {LamataLogIn} from "../../../store/actions/authenticationAction";
 
 
 
 
-const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
+const LamataLogin  = ({LogIn, isAuthenticated, errors, admin, operator, partner, lamata}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
   const { username, password } = formData;
 
   function  setError() {
-    if((!admin && errors) || (!operator && errors) && (!partner && errors)) {
+    if( !lamata && errors ) {
       setIsLoading(false);
       setIsError(true);
       setTimeout(()=> {
@@ -49,33 +49,22 @@ const Login  = ({LogIn, isAuthenticated, errors, admin, operator, partner}) => {
 
 useEffect(()=> {
   setError();
-},[isAuthenticated, partner, operator, admin, errors]);
+},[lamata, errors]);
 
-  const isAdmin = sessionStorage.getItem('isAdmin');
-  const isOperator = sessionStorage.getItem('isOperator');
-  const isPartner = sessionStorage.getItem('isPartner');
+
+  const isLamata = sessionStorage.getItem('isLamata');
+
   const token = sessionStorage.getItem("token");
+console.log(lamata, errors)
 
-
-  if ((isAuthenticated && admin) || (isAdmin && token)) {
-    sessionStorage.setItem('isAdmin', admin);
+  if ((isAuthenticated && lamata) || (isLamata && token)) {
+    sessionStorage.setItem('isLamata', lamata);
     setTimeout(()=> {
       window.location.reload()
     },0);
-    return <Redirect to="/" />;
-  } else if ((isAuthenticated && operator) || (isOperator && token)) {
-    sessionStorage.setItem('isOperator', operator);
-    setTimeout(()=> {
-      window.location.reload()
-    },0);
-    return <Redirect to="/operator" />;
-  } else if ((isAuthenticated && partner) || (isPartner && token)) {
-    sessionStorage.setItem('isPartner', partner);
-    setTimeout(()=> {
-      window.location.reload()
-    },0);
-    return <Redirect to="/partner" />;
+    return <Redirect to="/lamata" />;
   }
+
 
   return (
       <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
@@ -83,11 +72,11 @@ useEffect(()=> {
           <Row className="justify-content-center">
             <Col md="5">
               <CardGroup>
-                <Card className="px-4 bg-dark">
+                <Card className="px-4 bg-white">
                   <CardBody>
                     <Form onSubmit={onSubmit}>
                       <AppNavbarBrand className="d-flex align-items-center justify-content-center mb-1"
-                        full={{src:zeno,  width: 89, height: 25, alt: 'Zeno Logo' }}
+                        full={{src:zeno,  width: 80, height: 80, alt: 'Zeno Logo' }}
                       />
                       {/*<h1>Login</h1>*/}
                       <p className="text-primary text-center">Sign In to your account</p>
@@ -144,7 +133,7 @@ useEffect(()=> {
     );
   };
 
-Login.propTypes = {
+LamataLogin.propTypes = {
   LogIn: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
@@ -152,7 +141,7 @@ Login.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    LogIn: (username, password) => dispatch(LogIn(username,  password))
+    LogIn: (username, password) => dispatch(LamataLogIn(username,  password))
   };
 }
 
@@ -165,4 +154,4 @@ const mapStateToProps = (state) => ({
   errors: state.auth.errors
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(LamataLogin);

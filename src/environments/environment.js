@@ -29,6 +29,7 @@
    trainLine: "http://165.22.116.11:7067",
    trainStop: "http://165.22.116.11:7068",
    ferryStop: "http://165.22.116.11:7069",
+   message: "http://165.22.116.11:7058",
 };
 
 export default api

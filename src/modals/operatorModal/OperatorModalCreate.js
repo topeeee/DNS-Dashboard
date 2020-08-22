@@ -75,7 +75,7 @@ const OperatorModalCreate = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await setOperatorVehicleTypes();
+    // await setOperatorVehicleTypes();
     await setOperatorZones();
     await setOperatorModes();
     getOperators();
@@ -93,16 +93,16 @@ const OperatorModalCreate = (props) => {
 
   };
 
-  const setOperatorVehicleTypes = async () => {
-    try {
-    await  selected.forEach((res)=> {
-        const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name, partnerId:operatorCreated.id};
-        axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
-      })
-    }catch (e) {
-
-    }
-  };
+  // const setOperatorVehicleTypes = async () => {
+  //   try {
+  //   await  selected.forEach((res)=> {
+  //       const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name, partnerId:operatorCreated.id};
+  //       axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
+  //     })
+  //   }catch (e) {
+  //
+  //   }
+  // };
 
   const setOperatorModes = async () => {
     try {
@@ -178,13 +178,13 @@ const OperatorModalCreate = (props) => {
     }
   }, [modes]);
 
-  // const options = [
-  //   { value: 'Train', label: 'Train' },
-  //   { value: 'Ferry', label: 'Ferry' },
-  //   { value: 'Large Bus', label: 'Large Bus' },
-  //   { value: 'Mini Bus', label: 'Mini Bus' },
-  //   { value: 'Car', label: 'Mini Car' }
-  // ];
+  const options = [
+    { value: 'First Mile Last Mile', label: 'First Mile Last Mile' },
+    { value: 'Ferry', label: 'Ferry' },
+    { value: 'Large Bus', label: 'Large Bus' },
+    { value: 'Mini Bus', label: 'Mini Bus' },
+    { value: 'Car', label: 'Mini Car' }
+  ];
 
 
   return (
@@ -236,31 +236,16 @@ const OperatorModalCreate = (props) => {
             {form2 &&
             <Form onSubmit={onSubmit}>
             <FormGroup>
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Vehicle Modes</Label>*/}
-              {/*  <Select*/}
-              {/*    closeMenuOnSelect={false}*/}
-              {/*    components={animatedComponents}*/}
-              {/*    isMulti*/}
-              {/*    options={options}*/}
-              {/*    value={selected}*/}
-              {/*    onChange={handleChange}*/}
-              {/*    required*/}
-              {/*  />*/}
-
-              {/*</Col>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">State</Label>*/}
-              {/*  <Select*/}
-              {/*    closeMenuOnSelect={false}*/}
-              {/*    components={animatedComponents}*/}
-              {/*    isMulti*/}
-              {/*    options={stateSelected}*/}
-
-
-              {/*  />*/}
-
-              {/*</Col>*/}
+              <Col md="12">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Service(s)</Label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={options}
+                  value={selected}
+                  onChange={handleChange}/>
+              </Col>
               <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Mode(s)</Label>
                 <Select

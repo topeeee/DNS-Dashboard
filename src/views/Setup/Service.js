@@ -78,7 +78,7 @@ const Service = ({getService, services, service, isLoading,  searchService, erro
                 <div className="w-25">
                   Services
                 </div>
-                {isAdmin &&  <ServiceHeader />}
+                {(isAdmin || isLamata) &&  <ServiceHeader />}
               </CardHeader>
               {isLoading && <Spinner />}
               {!isLoading &&

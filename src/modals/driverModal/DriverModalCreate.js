@@ -334,7 +334,7 @@ const DriverModalCreate = (props) => {
                 >
                   <option value="">Select Vehicle Mode</option>
                   {(vehicles && operatorInput) && vehicles.filter((user) => user.operator === operatorInput).map((vehicle, index) =>
-                    <option value={vehicle.vehicle_type} key={index}>{vehicle.vehicle_type}</option>
+                    <option value={vehicle.mode} key={index}>{vehicle.mode}</option>
                   )}
                 </Input>
               </Col>
@@ -349,7 +349,7 @@ const DriverModalCreate = (props) => {
                   // required
                 >
                   <option value="">Select Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.vehicle_type === vehicleInput) && (user.operator === operatorInput) && (user.assigned_driver === null || user.assigned_driver === "null") && (user.status === "1")).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => (user.mode === vehicleInput) && (user.operator === operatorInput) && (user.assigned_driver === null || user.assigned_driver === "null") && (user.status === "1")).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}

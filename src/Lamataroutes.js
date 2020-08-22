@@ -1,5 +1,5 @@
 import React from 'react';
-const Dashboard = React.lazy(() => import('./views/Dashboard'));
+const Dashboard = React.lazy(() => import('./views/Dashboard/LamataDashboard'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const OperatorDashboard = React.lazy(() => import('./views/Dashboard/OperatorDashboard'));

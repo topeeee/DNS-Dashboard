@@ -312,7 +312,7 @@ const DriverModalUpdate = (props) => {
                 >
                   <option value="">Vehicle type</option>
                   {(vehicles && operatorInput) && vehicles.filter((user) => user.operator === operatorInput).map((vehicle, index) =>
-                    <option value={vehicle.vehicle_type} key={index}>{vehicle.vehicle_type}</option>
+                    <option value={vehicle.mode} key={index}>{vehicle.mode}</option>
                   )}
                 </Input>
               </Col>
@@ -327,7 +327,7 @@ const DriverModalUpdate = (props) => {
                   // required
                 >
                   <option value="">Vehicle Plate no</option>
-                  {(vehicles && vehicleInput) && vehicles.filter((user) => user.vehicle_type === vehicleInput).map((vehicle, index) =>
+                  {(vehicles && vehicleInput) && vehicles.filter((user) => user.mode === vehicleInput).map((vehicle, index) =>
                     <option value={vehicle.plate_number} key={index}>{vehicle.plate_number}</option>
                   )}
                   {/*{routes && routes.map((route, index) =>*/}

@@ -31,26 +31,26 @@ function UserRow(props) {
 
 const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, states}) => {
   const [formData, setFormData] = useState('');
-  const [operatorMode, setOperatorMode] = useState([]);
+  // const [operatorMode, setOperatorMode] = useState([]);
 
 
- async function getOperatorMode() {
-   let newOperatorMode = []
-    try {
-    const res =  await axios.get(`${api.operatorMode}/api/mode/?operator_name=${OperatorName}`)
-       res.data.forEach(operatorMode => {
-         modes.forEach(mode=> {
-           if(mode.mode === operatorMode.modecode) {
-             newOperatorMode.push(mode)
-           }
-           setOperatorMode(newOperatorMode)
-         })
-       })
-      setOperatorMode(newOperatorMode)
-    }catch (e) {
-
-    }
-  }
+ // async function getOperatorMode() {
+ //   let newOperatorMode = []
+ //    try {
+ //    const res =  await axios.get(`${api.operatorMode}/api/mode/?operator_name=${OperatorName}`)
+ //       res.data.forEach(operatorMode => {
+ //         modes.forEach(mode=> {
+ //           if(mode.mode === operatorMode.modecode) {
+ //             newOperatorMode.push(mode)
+ //           }
+ //           setOperatorMode(newOperatorMode)
+ //         })
+ //       })
+ //      setOperatorMode(newOperatorMode)
+ //    }catch (e) {
+ //
+ //    }
+ //  }
 
   useEffect(()=>{
     if(formData === ''){
@@ -59,11 +59,13 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
     }
   },[formData]);
 
-  useEffect(()=> {
-    getOperatorMode()
-  },[]);
+  // useEffect(()=> {
+  //   if(modes) {
+  //     getOperatorMode()
+  //   }
+  // },[modes]);
 
-
+// console.log(operatorMode, 'ffffffffff')
 
   const onChange = (e) =>{
     e.preventDefault();
@@ -104,7 +106,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
               <div className="w-25">
                 Modes
               </div>
-              {isAdmin &&  <ModeHeader />}
+              {(isAdmin || isLamata) &&  <ModeHeader />}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
@@ -124,12 +126,12 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
                 </tr>
                 </thead>
                 <tbody>
-                {(modes && (isAdmin || isLamata)) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
+                {(modes && (isAdmin || isLamata || isOperator)) ? modes.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
                   <UserRow key={index} user={mode}/>
                 ): null}
-                {(modes && operatorMode && isOperator) ? operatorMode.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>
-                  <UserRow key={index} user={mode}/>
-                ): null}
+                {/*{(operatorMode && isOperator) ? operatorMode.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((mode, index) =>*/}
+                {/*  <UserRow key={index} user={mode}/>*/}
+                {/*): null}*/}
                 {mode &&
                 <UserRow user={mode}/>
                 }

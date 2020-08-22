@@ -66,7 +66,6 @@ const Operators = ({getOperators, operators, operator, isLoading,  searchOperato
     searchOperator(formData)
   };
 
-
   return (
     <div className="animated fadeIn">
       <Row>

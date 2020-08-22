@@ -28,7 +28,6 @@ export const LogIn = (username, password) => async dispatch => {
     });
     if(res.data) {
       dispatch(getAdmin(username));
-      dispatch(getLamata(username));
       dispatch(getOperator(username));
       dispatch(getPartner(username));
     }
@@ -43,6 +42,33 @@ export const LogIn = (username, password) => async dispatch => {
       }), 5000)
   }
 };
+
+export const LamataLogIn = (username, password) => async dispatch => {
+  const body = {username, password};
+  // sessionStorage.setItem('isAdmin', username);
+  try {
+    const res = await axios.post(`${api.login}/api/login/`, body);
+    const token  = res.data.Authorized;
+    sessionStorage.setItem("token", token);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: token
+    });
+    if(res.data) {
+      dispatch(getLamata(username));
+    }
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err.response
+    });
+
+    setTimeout(() => dispatch({
+      type: REMOVE_AUTH_ERROR
+    }), 5000)
+  }
+};
+
 
 export function LogOut() {
   return {

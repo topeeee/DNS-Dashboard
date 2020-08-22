@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import {AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import zeno from '../../assets/img/brand/zeno.png'
-import lamata from '../../assets/img/brand/lamata2.png'
+import lamata from '../../assets/img/brand/mini-New-Logo-RGB.png'
 import {LogOut} from "../../store/actions/authenticationAction";
 import {connect} from "react-redux";
 
@@ -20,7 +20,7 @@ class LamataHeader extends Component {
     e.preventDefault();
     this.props.LogOut()
     sessionStorage.clear()
-    return <Redirect to="/login" />
+    return <Redirect to="/lamata/login" />
   }
   render() {
 
@@ -35,7 +35,7 @@ class LamataHeader extends Component {
         {/*  minimized={{src:zeno, width: 30, height: 30, alt: 'Zeno Logo' }}*/}
         {/*/>*/}
         <AppNavbarBrand
-          full={{src:lamata,  width: 89, height: 40, alt: 'lamata Logo' }}
+          full={{src:lamata,  width: 50, height: 50, alt: 'lamata Logo' }}
           minimized={{src:lamata, width: 30, height: 30, alt: 'lamata Logo' }}
           className="mt-1"
         />

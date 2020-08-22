@@ -8,7 +8,7 @@ export default {
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center, text-dark'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-white, font-weight-bold'             // optional class names space delimited list for title item ex: "text-center"
     },
     // {
     //   name: 'Profile',
@@ -22,25 +22,27 @@ export default {
           // class: 'text-dark',
           icon: 'icon-puzzle',
           // icon: 'icon-puzzle',
-          // class: "menu_drop",
-          attributes: { style: { color: "#696969" }},
+          class: "font-weight-bold",
+          attributes: { style: { color: "white" }},
 
         },
         {
           name: 'Modes',
           url: '/lamata/modes',
-          class: 'text-dark',
+          class: "font-weight-bold",
           icon: 'icon-puzzle',
-          attributes: {style: { color: "#696969" }},
+          attributes: {style: { color: "white" }},
         },
     {
       name: 'Stations',
       icon: 'icon-settings',
-      attributes: { style: { color: "#696969" }},
+      class: "font-weight-bold",
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'FMLM Station',
-          attributes: {style: {color: "#696969"}},
+          // class: "font-weight-bold",
+          attributes: {style: {color: "white"}},
           // url: '/zones',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
@@ -91,7 +93,7 @@ export default {
               url: '/lamata/trainstops',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
-              attributes: {style: {color: "#696969"}}
+              attributes: {style: {color: "white"}}
 
             },
           // ]
@@ -104,7 +106,7 @@ export default {
               url: '/lamata/ferrystops',
               // icon: 'icon-puzzle',
               // class: "menu_drop",
-              attributes: { style: {color: "#696969"}}
+              attributes: { style: {color: "white"}}
 
             }
           // ]
@@ -113,9 +115,9 @@ export default {
     },
         {
           name: 'Operators',
-          // class: 'text-dark',
+          class: "font-weight-bold",
           icon: 'icon-people',
-          attributes: {style: { color: "#696969" }},
+          attributes: {style: { color: "white" }},
           children: [
             {
               name: 'All',
@@ -148,8 +150,8 @@ export default {
 
         {
           name: 'Partners',
-          // class: 'text-dark',
-          attributes: { style: { color: "#696969" }},
+          class: "font-weight-bold",
+          attributes: { style: { color: "white" }},
           icon: 'icon-people',
           children: [
             {
@@ -182,8 +184,9 @@ export default {
     {
       name: 'Analytics',
       icon: 'icon-user',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'Modal',
@@ -204,8 +207,9 @@ export default {
     {
       name: 'Users',
       icon: 'icon-people',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'All',
@@ -218,8 +222,9 @@ export default {
     {
       name: 'Drivers',
       icon: 'icon-user',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'All',
@@ -285,8 +290,9 @@ export default {
     {
       name: 'Vehicles',
       icon: 'icon-puzzle',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'All',
@@ -319,9 +325,10 @@ export default {
       ]
     },
     {
-      name: 'Operation Assistants',
+      name: 'OperationAssistants',
       icon: 'icon-user',
-      attributes: { style: { color: "#696969" }},
+      class: "font-weight-bold",
+      attributes: { style: { color: "white" }},
       // class: 'text-dark',
       children: [
         {
@@ -357,8 +364,9 @@ export default {
     {
       name: 'Trips',
       icon: 'icon-speedometer',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
 
       children: [
         {
@@ -409,8 +417,9 @@ export default {
     {
       name: 'Ratings',
       icon: 'icon-user',
+      class: "font-weight-bold",
       // class: 'text-dark',
-      attributes: { style: { color: "#696969" }},
+      attributes: { style: { color: "white" }},
       children: [
         {
           name: 'Driver',

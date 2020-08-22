@@ -8,20 +8,33 @@ import {
   MODE_ERROR,
   SEARCH_MODE,
   CREATE_MODE,
-  REMOVE_MODE_ERROR
+  REMOVE_MODE_ERROR,
+  LAMATA_MODE_MODAL_CREATE
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {isAdmin, isLamata, isOperator, isPartner, OperatorName} from "../../environments/constants";
 
 
 
 export const getModes = () => async dispatch => {
   try {
+    let newOperatorMode = []
     dispatch(isLoading());
     const res = await axios.get(`${api.mode}/api/modes/`);
+      if(isOperator) {
+        const res1 =  await axios.get(`${api.operatorMode}/api/mode/?operator_name=${OperatorName}`)
+        res1.data.forEach(operatorMode => {
+          res.data.forEach(mode=> {
+            if(mode.mode === operatorMode.modecode) {
+              newOperatorMode.push(mode)
+            }
+          })
+        })
+      }
     dispatch({
       type: MODE_BY_USER,
-      payload: res.data
+      payload: (isAdmin || isLamata || isPartner) ? res.data: newOperatorMode
     });
   } catch (err) {
     dispatch({
@@ -104,6 +117,12 @@ export const searchMode = (id) => async dispatch => {
 export function toggleModeModalCreate() {
   return {
     type: MODE_MODAL_CREATE
+  };
+}
+
+export function toggleLamataModeModalCreate() {
+  return {
+    type: LAMATA_MODE_MODAL_CREATE
   };
 }
 

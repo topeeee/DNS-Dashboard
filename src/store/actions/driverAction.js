@@ -222,9 +222,9 @@ export const getAllApplicationDrivers = () => async dispatch => {
 export const setDriversRequest = (id, status, operator) => async dispatch => {
   try {
     await axios.put(`${api.driver}/api/driver/operator/${id}/?status=${status}&operatorid=${operator}`)
-    dispatch(getAllRequestDrivers())
-    dispatch(getMeRequestDrivers())
-    dispatch(getAllApplicationDrivers())
+    // dispatch(getAllRequestDrivers())
+    // dispatch(getMeRequestDrivers())
+    // dispatch(getAllApplicationDrivers())
   } catch (err) {
     dispatch({
       type: DRIVER_ERROR,

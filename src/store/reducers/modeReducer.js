@@ -6,13 +6,14 @@ import {
   LOADING_MODE,
   MODE_ERROR,
   SEARCH_MODE,
-  REMOVE_MODE_ERROR
+  REMOVE_MODE_ERROR, LAMATA_MODE_MODAL_CREATE
 } from "../actionTypes";
 
 const initialState = {
   modes: null,
   mode: null,
   ModeModalCreate: false,
+  LamataModeModalCreate: false,
   ModeModalUpdate: false,
   updateID: null,
   DeleteRes: null,
@@ -46,6 +47,12 @@ function modeReducer(state = initialState, action) {
       return {
         ...state,
         ModeModalCreate: !state.ModeModalCreate
+      };
+    }
+    case  LAMATA_MODE_MODAL_CREATE: {
+      return {
+        ...state,
+        LamataModeModalCreate: !state.LamataModeModalCreate
       };
     }
     case  MODE_MODAL_UPDATE: {

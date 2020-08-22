@@ -8,6 +8,7 @@ import {
   REMOVE_SERVICE_ERROR,
   LOADING_SERVICE,
   SEARCH_SERVICE,
+  LAMATA_SERVICE_MODAL_CREATE
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -107,6 +108,13 @@ export function toggleServiceModalUpdate(id) {
   return {
     type: SERVICE_MODAL_UPDATE,
     payload: id
+  };
+}
+
+
+export function toggleLamataServiceModalCreate() {
+  return {
+    type: LAMATA_SERVICE_MODAL_CREATE,
   };
 }
 

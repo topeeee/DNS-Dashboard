@@ -1,4 +1,5 @@
 import {
+  LAMATA_SERVICE_MODAL_CREATE,
   LOADING_SERVICE, REMOVE_SERVICE_ERROR,
   SEARCH_SERVICE,
   SERVICE, SERVICE_ERROR, SERVICE_MODAL_CREATE, SERVICE_MODAL_UPDATE,
@@ -10,6 +11,7 @@ const initialState = {
   service: null,
   ServiceModalCreate: false,
   ServiceModalUpdate: false,
+  LamataServiceModalCreate: false,
   updateId: null,
   DeleteRes: null,
   isLoading: false,
@@ -42,6 +44,13 @@ function serviceReducer(state = initialState, action) {
       return {
         ...state,
         ServiceModalCreate: !state.ServiceModalCreate
+      };
+    }
+
+    case  LAMATA_SERVICE_MODAL_CREATE: {
+      return {
+        ...state,
+        LamataServiceModalCreate: !state.LamataServiceModalCreate
       };
     }
     case  SERVICE_MODAL_UPDATE: {

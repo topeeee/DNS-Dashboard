@@ -147,8 +147,8 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                   <td>{vehicle.vehicle_model}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Mode</strong></td>
-                  <td>{vehicle.vehicle_type}</td>
+                  <td><strong>Mode</strong></td>
+                  <td>{vehicle.mode}</td>
                 </tr>
                 <tr>
                   <td><strong>Route</strong></td>
