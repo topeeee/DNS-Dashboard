@@ -21,7 +21,7 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <td>{user.busstop}</td>
+      <td>{user.station}</td>
       <td>{user.routecode}</td>
       <td>{user.latitude}</td>
       <td>{user.longitude}</td>
@@ -131,7 +131,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
                 </tr>
                 </thead>
                 <tbody>
-                {(busStops && (isAdmin || isLamata)) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(busStops && (isAdmin || isLamata)) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user => user.service === 'First mile - Last mile').map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 ): null}
                 {(busStops && route && isOperator) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>

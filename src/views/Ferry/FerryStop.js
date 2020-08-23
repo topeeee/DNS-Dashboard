@@ -17,8 +17,8 @@ function UserRow(props) {
 
   return (
     <tr key={user.id}>
-      <td>{user.ferrystop}</td>
-      <td>{user.ferrystopcode}</td>
+      <td>{user.station}</td>
+      <td>{user.stationcode}</td>
       <td>{user.service}</td>
       {/*<td>{user.latitude}</td>*/}
       {/*<td>{user.longitude}</td>*/}
@@ -86,7 +86,7 @@ const FerryStops = ({getFerryStops, ferryStops, isLoading}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {(ferryStops && (isAdmin || isLamata)) ? ferryStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {(ferryStops && (isAdmin || isLamata)) ? ferryStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user => user.service === 'Ferry Service').map((user, index) =>
                   <UserRow key={index} user={user} />
                 ): null}
                 </tbody>

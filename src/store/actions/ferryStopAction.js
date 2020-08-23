@@ -14,7 +14,7 @@ import api from "../../environments/environment";
 export const getFerryStops = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.ferryStop}/api/ferrystops/`);
+    const res = await axios.get(`${api.busStop}/api/stations/`);
     dispatch({
       type: FERRY_STOP,
       payload: res.data
@@ -25,10 +25,11 @@ export const getFerryStops = () => async dispatch => {
 
 
 
-export const createFerryStop = (ferrystopcode,ferrystop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) => async dispatch => {
-  const body = {ferrystopcode,ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude};
+export const createFerryStop = (stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
+
   try {
-    const res = await axios.post(`${api.ferryStop}/api/me/ferrystops/`, body);
+    const res = await axios.post(`${api.busStop}/api/me/stations/`, body);
     dispatch({
       type: CREATE_FERRY_STOP,
       payload: res.data
@@ -45,10 +46,10 @@ export const createFerryStop = (ferrystopcode,ferrystop, service, speed, accurac
 };
 
 
-export const updateFerryStop = (id, ferrystopcode,ferrystop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) => async dispatch => {
-  const body = {ferrystopcode,ferrystop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude};
+export const updateFerryStop = (id, stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
   try {
-    const res = await axios.put(`${api.ferryStop}/api/ferrystops/${id}/`, body);
+    const res = await axios.put(`${api.busStop}/api/stations/${id}/`, body);
     dispatch({
       type: UPDATE_FERRY_STOP,
       payload: res.data

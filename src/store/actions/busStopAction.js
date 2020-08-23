@@ -14,7 +14,7 @@ import api from "../../environments/environment";
 export const BusStopUser = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.busStop}/api/busstops/`);
+    const res = await axios.get(`${api.busStop}/api/stations/`);
     dispatch({
       type: BUS_STOP_BY_USER,
       payload: res.data
@@ -31,10 +31,10 @@ export const BusStopUser = () => async dispatch => {
 
 
 
-export const createBusStop = (busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
-  const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
+export const createBusStop = (stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
   try {
-    const res = await axios.post(`${api.busStop}/api/me/busstops/`, body);
+    const res = await axios.post(`${api.busStop}/api/me/stations/`, body);
     dispatch({
       type: CREATE_BUS_STOP,
       payload: res.data
@@ -51,10 +51,10 @@ export const createBusStop = (busstopcode,busstop,routecode, direction, speed, a
 };
 
 
-export const updateBusStop = (id,busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) => async dispatch => {
-  const body = {busstopcode,busstop,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude};
+export const updateBusStop = (id,stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
   try {
-    const res = await axios.put(`${api.busStop}/api/busstops/${id}/`, body);
+    const res = await axios.put(`${api.busStop}/api/stations/${id}/`, body);
     dispatch({
       type: UPDATE_BUS_STOP,
       payload: res.data

@@ -9,8 +9,8 @@ import {RouteUser} from "../../store/actions/routeAction";
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusStopModalCreate: () => dispatch(toggleBusStopModalCreate()),
-    createBusStop: (busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) =>
-      dispatch(createBusStop(busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude)),
+    createBusStop: (busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) =>
+      dispatch(createBusStop(busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service)),
     RouteUser: () => dispatch(RouteUser()),
 
   };
@@ -19,7 +19,8 @@ function mapDispatchToProps(dispatch) {
 const mapStateToProps = state => ({
   busStopModalCreate: state.busStop.BusStopModalCreate,
  routes: state.route.routes,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  services: state.service.services,
 
 });
 
@@ -34,7 +35,8 @@ const BusStopModalCreate = (props) => {
     createBusStop,
     routes,
     RouteUser,
-    isAuthenticated
+    isAuthenticated,
+    services
   } = props;
 
   useEffect(()=>{
@@ -43,7 +45,7 @@ const BusStopModalCreate = (props) => {
     }
   },[]);
 
-  const [formData, setFormData] = useState({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: ''});
+  const [formData, setFormData] = useState({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: '', service: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -57,12 +59,13 @@ const BusStopModalCreate = (props) => {
     altitudeaccuracy,
     altitude,
     longitude,
-    latitude
+    latitude,
+    service
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createBusStop(busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude);
+    createBusStop(busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service);
     setFormData({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: ''})
 
   };
@@ -100,6 +103,22 @@ const BusStopModalCreate = (props) => {
                   )}
                 </Input>
                 {/*<Input type="text" placeholder="Route code" name="routecode" onChange={onChange}  value={routecode} />*/}
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 ">Service</Label>
+                <Input
+                  style={{cursor: 'pointer'}}
+                  type="select"
+                  name="service"
+                  value={service}
+                  onChange={onChange}
+                  required
+                >
+                  <option value="">Select Service</option>
+                  {services && services.map((service, index) =>
+                    <option value={service.service} key={index}>{service.service}</option>
+                  )}
+                </Input>
               </Col>
               <Col md="6">
               <Label for="name" className="font-weight-bold mb-0 ">Direction</Label>

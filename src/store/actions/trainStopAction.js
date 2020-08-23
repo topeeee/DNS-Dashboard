@@ -14,7 +14,7 @@ import api from "../../environments/environment";
 export const getTrainStops = () => async dispatch => {
   try {
     dispatch(isLoading());
-    const res = await axios.get(`${api.trainStop}/api/trainstops/`);
+    const res = await axios.get(`${api.busStop}/api/stations/`);
     dispatch({
       type: TRAIN_STOP,
       payload: res.data
@@ -25,10 +25,11 @@ export const getTrainStops = () => async dispatch => {
 
 
 
-export const createTrainStop = (trainstopcode,trainstop,trainlinecode, trainline,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) => async dispatch => {
-  const body = {trainstopcode,trainstop,trainlinecode, trainline,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude};
+export const createTrainStop = ( stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
+
   try {
-    const res = await axios.post(`${api.trainStop}/api/me/trainstops/`, body);
+    const res = await axios.post(`${api.busStop}/api/me/stations/`, body);
     dispatch({
       type: CREATE_TRAIN_STOP,
       payload: res.data
@@ -45,10 +46,11 @@ export const createTrainStop = (trainstopcode,trainstop,trainlinecode, trainline
 };
 
 
-export const updateTrainStop = (id, trainstopcode,trainstop,trainlinecode, trainline,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) => async dispatch => {
-  const body = {trainstopcode,trainstop,trainlinecode, trainline,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude};
+export const updateTrainStop = (id, stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) => async dispatch => {
+  const body = {stationcode,station,routecode, direction, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service};
   try {
-    const res = await axios.put(`${api.trainStop}/api/trainstops/${id}/`, body);
+    const res = await axios.put(`${api.busStop}/api/stations/${id}/`, body);
+
     dispatch({
       type: UPDATE_TRAIN_STOP,
       payload: res.data

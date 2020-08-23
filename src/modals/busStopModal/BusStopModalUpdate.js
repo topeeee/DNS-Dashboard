@@ -4,14 +4,16 @@ import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeade
 import { connect } from "react-redux";
 import {toggleBusStopModalUpdate, updateBusStop} from "../../store/actions/busStopAction";
 import {RouteUser} from "../../store/actions/routeAction";
+import {getService} from "../../store/actions/serviceAction";
 
 
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusStopModalUpdate: () => dispatch(toggleBusStopModalUpdate()),
-    updateBusStop: (id,busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude) =>
-      dispatch(updateBusStop(id,busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude)),
+    updateBusStop: (id,busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) =>
+      dispatch(updateBusStop(id,busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service)),
     RouteUser: () => dispatch(RouteUser()),
+    getService: ()=> dispatch(getService())
   };
 }
 
@@ -21,6 +23,8 @@ const mapStateToProps = state => ({
   routes: state.route.routes,
   isAuthenticated: state.auth.isAuthenticated,
   busStops: state.busStop.busStops,
+  services: state.service.services,
+
 
 });
 
@@ -34,10 +38,12 @@ const BusStopModalUpdate = (props)=> {
     routes,
     RouteUser,
     isAuthenticated,
-    busStops
+    busStops,
+    getService,
+    services
   } = props;
 
-  const [formData, setFormData] = useState({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: ''});
+  const [formData, setFormData] = useState({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: '', service: ''});
 const [newBusStop, setNewBusStop] = useState([]);
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const {
@@ -50,13 +56,14 @@ const [newBusStop, setNewBusStop] = useState([]);
     altitudeaccuracy,
     altitude,
     longitude,
-    latitude
+    latitude,
+    service
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    updateBusStop(id, busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude);
-    setFormData({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: ''})
+    updateBusStop(id, busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service);
+    setFormData({busstopcode: '',busstop: '',routecode: '', heading: '', speed: '', accuracy: '', altitudeaccuracy: '', altitude: '', longitude: '', latitude: '', service: ''})
 
   };
 
@@ -64,8 +71,8 @@ const [newBusStop, setNewBusStop] = useState([]);
     newBusStop.map(busStop => {
       if(busStop.id === id) {
         setFormData({
-          busstopcode: busStop.busstopcode,
-          busstop: busStop.busstop,
+          busstopcode: busStop.stationcode,
+          busstop: busStop.station,
           routecode: busStop.routecode,
           heading: busStop.direction,
           speed: busStop.space,
@@ -73,7 +80,9 @@ const [newBusStop, setNewBusStop] = useState([]);
           altitudeaccuracy: busStop.altitudeaccuracy,
           altitude: busStop.altitude,
           longitude: busStop.longitude,
-          latitude: busStop.latitude})
+          latitude: busStop.latitude,
+          service: busStop.service
+        })
       }
     })
 
@@ -96,6 +105,7 @@ const [newBusStop, setNewBusStop] = useState([]);
   useEffect(()=>{
     if(isAuthenticated) {
       RouteUser();
+      getService();
     }
   },[]);
 
@@ -131,6 +141,22 @@ const [newBusStop, setNewBusStop] = useState([]);
                   <option value="">Select Route</option>
                   {routes && routes.map((route, index) =>
                     <option value={route.route} key={index}>{route.route}</option>
+                  )}
+                </Input>
+              </Col>
+              <Col md="6">
+                <Label for="name" className="font-weight-bold mb-0 ">Service</Label>
+                <Input
+                  style={{cursor: 'pointer'}}
+                  type="select"
+                  name="service"
+                  value={service}
+                  onChange={onChange}
+                  required
+                >
+                  <option value="">Select Service</option>
+                  {services && services.map((service, index) =>
+                    <option value={service.service} key={index}>{service.service}</option>
                   )}
                 </Input>
               </Col>

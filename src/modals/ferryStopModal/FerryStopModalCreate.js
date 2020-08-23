@@ -7,11 +7,12 @@ import {createFerryStop, toggleFerryStopModalCreate} from "../../store/actions/f
 
 
 
+
 function mapDispatchToProps(dispatch) {
   return {
     toggleFerryStopModalCreate: () => dispatch(toggleFerryStopModalCreate()),
-    createFerryStop: (trainstopcode,trainstop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) =>
-      dispatch(createFerryStop(trainstopcode,trainstop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude)),
+    createFerryStop: (busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) =>
+      dispatch(createFerryStop(busstopcode,busstop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service)),
     getService: () => dispatch(getService()),
   };
 }
@@ -42,18 +43,18 @@ const FerryStopModalCreate = (props) => {
   },[]);
 
 
-  const [formData, setFormData] = useState({ ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: ""});
+  const [formData, setFormData] = useState({ ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: "", routecode: 'None', heading: ''});
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const {
-    ferrystopcode,ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude
+    ferrystopcode,ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude, routecode, heading
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    createFerryStop( ferrystopcode, ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude);
-    setFormData({ferrystopcode: "",ferrystop: "" ,service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: ""})
+    createFerryStop(  ferrystopcode,ferrystop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service);
+    setFormData({ferrystopcode: "",ferrystop: "" ,service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: "", routecode: '', heading: ''})
 
   };
 

@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
 import {getService} from "../../store/actions/serviceAction";
-import {toggleFerryStopModalUpdate, updateFerryStop
+import {
+  toggleFerryStopModalUpdate, updateFerryStop
 } from "../../store/actions/ferryStopAction";
+
 
 
 
@@ -11,8 +13,8 @@ import {toggleFerryStopModalUpdate, updateFerryStop
 function mapDispatchToProps(dispatch) {
   return {
     toggleFerryStopModalUpdate: () => dispatch(toggleFerryStopModalUpdate()),
-    updateFerryStop: (id, trainstopcode,trainstop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude) =>
-      dispatch(updateFerryStop(id, trainstopcode,trainstop, service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude)),
+    updateFerryStop: (id,ferrystopcode, ferrystop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service) =>
+      dispatch(updateFerryStop(id,ferrystopcode, ferrystop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service)),
     getService: () => dispatch(getService()),
   };
 }
@@ -47,19 +49,19 @@ const FerryStopModalUpdate = (props) => {
   },[]);
 
 
-  const [formData, setFormData] = useState({ ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: ""});
+  const [formData, setFormData] = useState({ ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: "", routecode: '', heading: ''});
 
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const {
-    ferrystopcode,ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude
+    ferrystopcode, ferrystop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service
   } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    updateFerryStop(id, ferrystopcode, ferrystop ,service, speed, accuracy, altitudeaccuracy, altitude, longitude,latitude);
-    setFormData({ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: ""})
+    updateFerryStop(id, ferrystopcode, ferrystop,routecode, heading, speed, accuracy, altitudeaccuracy, altitude, longitude, latitude, service);
+    setFormData({ferrystopcode: "", ferrystop: "", service: "", speed: "", accuracy: "", altitudeaccuracy: "", altitude: "", longitude: "",latitude: "", routecode: '', heading: ''})
 
   };
 
@@ -68,14 +70,14 @@ const FerryStopModalUpdate = (props) => {
     if(ferryStops && id) {
       ferryStops.map(ferryStop => {
         if(ferryStop.id === id) {
-          setFormData({ferrystopcode: ferryStop.ferrystopcode, ferrystop: ferryStop.ferrystop, service: ferryStop.service, speed: ferryStop.speed, accuracy: ferryStop.accuracy, altitudeaccuracy: ferryStop.altitudeaccuracy, altitude: ferryStop.altitude, longitude: ferryStop.longitude, latitude: ferryStop.latitude})
+          setFormData({ferrystopcode: ferryStop.stationcode, ferrystop: ferryStop.station, service: ferryStop.service, speed: ferryStop.speed, accuracy: ferryStop.accuracy, altitudeaccuracy: ferryStop.altitudeaccuracy, altitude: ferryStop.altitude, longitude: ferryStop.longitude, latitude: ferryStop.latitude, routecode: ferryStop.routecode, heading: ferryStop.heading})
         }
       })
     }
   },[id, ferryStops])
 
 
-
+console.log(service, 'ddddddd')
   const toggle = () => {toggleFerryStopModalUpdate()};
 
   return (
