@@ -19,6 +19,7 @@ import {getVehicles} from "../../../store/actions/vehicleAction";
 function UserRow(props) {
   const user = props.user;
   const vehicles = props.vehicles;
+  console.log(vehicles, 'kkkkkkkk')
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -31,10 +32,10 @@ function UserRow(props) {
     <tr key={user.id}>
       <td>{user.name}</td>
       <td>{user.phoneNo}</td>
-      <td>{user.email}</td>
-      <td>{user.officeAddress}</td>
-      {/*<td>{user.numberOfVehicle}</td>*/}
-      {vehicles ? <td>{vehicles.filter(vehicle => vehicle.partner_id === user.id).length}</td>
+      {!isLamata &&  <td>{user.email}</td>}
+      {!isLamata &&<td>{user.officeAddress}</td>}
+      {/*<td>{user.id}</td>*/}
+      {vehicles ? <td>{vehicles.filter(vehicle => vehicle.partner_id == user.id).length}</td>
         :<td>0</td>}
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
@@ -133,10 +134,10 @@ useEffect(()=> {
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
-                  <th scope="col">Partner Name</th>
-                  <th scope="col">Partner Phone</th>
-                  <th scope="col">Partner Email</th>
-                  <th scope="col">Office Address</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Phone</th>
+                  {!isLamata &&<th scope="col">Email</th>}
+                  {!isLamata &&<th scope="col">Office Address</th>}
                   <th scope="col">Number of Vehicles</th>
                   <th scope="col">Status</th>
                   {(isAdmin || isOperator) && <th scope="col">Actions</th>}

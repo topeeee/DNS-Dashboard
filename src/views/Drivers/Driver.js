@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
 import api from "../../environments/environment";
+import {isLamata} from "../../environments/constants";
 
 
 const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, error, match, drivers})=> {
@@ -33,26 +34,30 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       })
     }
   }
-  function getDriverVehicle() {
-    axios.get(`${api.driverVehicles}/api/drivervehicles/`)
-      .then(res=> {
-        setDriverVehicle(res.data)
-      })
+ async function getDriverVehicle() {
+   try {
+   const res = await  axios.get(`${api.driverVehicles}/api/drivervehicles/`)
+     setDriverVehicle(res.data)
+   }catch (e) {
+
+   }
   }
 
-  function getVehicle(id) {
-    axios.get(`${api.vehicle}/api/vehicles/${id}/`)
-      .then(res=> {
-        setVehicle(res.data)
-      })
-  }
-
-  async function getOperator(id) {
+  async function getVehicle(id) {
     try {
-      const res = await axios.get(`${api.operator}/api/operators/?search=${id}`);
-      setOperatorName(res.data[0].name)
-    }catch (e) {}
+    const res = await  axios.get(`${api.vehicle}/api/vehicles/${id}/`)
+      setVehicle(res.data)
+    }catch (e) {
+
+    }
   }
+
+  // async function getOperator(id) {
+  //   try {
+  //     const res = await axios.get(`${api.operator}/api/operators/?search=${id}`);
+  //     setOperatorName(res.data[0].name)
+  //   }catch (e) {}
+  // }
   useEffect(()=>{
     getDrivers();
     getDriverVehicle();
@@ -68,11 +73,11 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     }
   },[vehicleId]);
 
-  useEffect(()=> {
-    if(operatorId) {
-      getOperator(operatorId);
-    }
-  },[operatorId]);
+  // useEffect(()=> {
+  //   if(operatorId) {
+  //     getOperator(operatorId);
+  //   }
+  // },[operatorId]);
 
   useEffect(()=> {
     if(match.params.id && driverVehicle){
@@ -89,8 +94,8 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       <Row className="d-flex align-items-center justify-content-center">
         <Col lg={6}>
           <Card>
-            <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>Driver id: {match.params.id}</strong>
+            <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+              <strong className="text-white"><i className="icon-info pr-1"></i>Driver id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>
@@ -164,7 +169,7 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
                 </tr>
                 <tr>
                   <td><strong>Operator</strong></td>
-                  <td>{operatorName}</td>
+                  <td>{newOperator.operatorid}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>

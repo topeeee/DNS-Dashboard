@@ -13,6 +13,8 @@ import {getStates} from "../../store/actions/stateAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {getModes} from "../../store/actions/modeAction";
 import api from "../../environments/environment";
+import {getService} from "../../store/actions/serviceAction";
+import {BusStopUser} from "../../store/actions/busStopAction";
 
 const animatedComponents = makeAnimated();
 
@@ -29,6 +31,8 @@ function mapDispatchToProps(dispatch) {
     ZoneUser: () => dispatch(ZoneUser()),
     getModes: () => dispatch(getModes()),
     getOperators: () => dispatch(getOperators()),
+    getService: () => dispatch(getService()),
+    getStations: () => dispatch(BusStopUser())
 
 
   };
@@ -40,6 +44,8 @@ const mapStateToProps = state => ({
   states: state.state.states,
   zones: state.zone.zones,
   modes: state.mode.modes,
+  services: state.service.services,
+  stations: state.busStop.busStops,
 
 });
 
@@ -57,18 +63,26 @@ const OperatorModalCreate = (props) => {
     getModes,
     modes,
     operatorCreated,
-    getOperators
+    getOperators,
+    services,
+    getService,
+    getStations,
+    stations
   } = props;
 
   const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: ""});
   const [selected, setSelected] = useState([]);
   const [selected1, setSelected1] = useState([]);
   const [selected2, setSelected2] = useState([]);
+  const [selected3, setSelected3] = useState([]);
   const [zoneSelected, setZoneSelected] = useState([]);
   const [stateSelected, setStateSelected] = useState([]);
   const [modeSelected, setModeSelected] = useState([]);
+  const [serviceSelected, setServiceSelected] = useState([]);
+  const [stationSelected, setStationSelected] = useState([]);
   const [form1, setForm1] = useState(true);
   const [form2, setForm2] = useState(false);
+  const [isZone, setIsZone] = useState(false);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const { name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail } = formData;
@@ -78,6 +92,8 @@ const OperatorModalCreate = (props) => {
     // await setOperatorVehicleTypes();
     await setOperatorZones();
     await setOperatorModes();
+    await setOperatorService();
+    await setOperatorStations();
     getOperators();
   };
 
@@ -93,22 +109,33 @@ const OperatorModalCreate = (props) => {
 
   };
 
-  // const setOperatorVehicleTypes = async () => {
-  //   try {
-  //   await  selected.forEach((res)=> {
-  //       const body = {vehicleType: res.value, operatorId: operatorCreated.id, operatorName: operatorCreated.name, partnerId:operatorCreated.id};
-  //       axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
-  //     })
-  //   }catch (e) {
-  //
-  //   }
-  // };
+  const setOperatorService = async () => {
+    try {
+    await  selected.forEach((res)=> {
+        const body = {servicecode: res.value, operator_name: operatorCreated.name};
+        axios.post(`${api.operatorService}/api/me/operatorservices/`, body)
+      })
+    }catch (e) {
+
+    }
+  };
 
   const setOperatorModes = async () => {
     try {
       await selected2.forEach((res)=> {
         const body = {modecode: res.value,  operator_name: operatorCreated.name};
         axios.post(`${api.operatorMode}/api/me/operatormodes/`, body)
+      })
+    }catch (e) {
+
+    }
+  };
+
+  const setOperatorStations = async () => {
+    try {
+      await selected3.forEach((res)=> {
+        const body = {stationcode: res.value,  operator_name: operatorCreated.name};
+        axios.post(`${api.operatorStation}/api/me/operatorstations/`, body)
       })
     }catch (e) {
 
@@ -125,6 +152,10 @@ const OperatorModalCreate = (props) => {
 
   const handleChange3 = (selected2) => {
     setSelected2(selected2);
+  };
+
+  const handleChange4 = (selected3) => {
+    setSelected3(selected3);
   };
 
   const toggle = () => {toggleOperatorModalCreate()};
@@ -144,7 +175,9 @@ const OperatorModalCreate = (props) => {
   useEffect(()=> {
     getStates();
     ZoneUser();
-    getModes()
+    getModes();
+    getService();
+    getStations();
   },[]);
 
   useEffect(()=> {
@@ -152,6 +185,16 @@ const OperatorModalCreate = (props) => {
       const body = [];
       zones.forEach((res)=> {
       body.push({ value: res.zone, label: res.zone });
+        setZoneSelected(body);
+      })
+    }
+  }, [zones]);
+
+  useEffect(()=> {
+    if (zones) {
+      const body = [];
+      zones.forEach((res)=> {
+        body.push({ value: res.zone, label: res.zone });
         setZoneSelected(body);
       })
     }
@@ -178,13 +221,43 @@ const OperatorModalCreate = (props) => {
     }
   }, [modes]);
 
-  const options = [
-    { value: 'First Mile Last Mile', label: 'First Mile Last Mile' },
-    { value: 'Ferry', label: 'Ferry' },
-    { value: 'Large Bus', label: 'Large Bus' },
-    { value: 'Mini Bus', label: 'Mini Bus' },
-    { value: 'Car', label: 'Mini Car' }
-  ];
+  useEffect(()=> {
+    if (services) {
+      const body = [];
+      services.forEach((res)=> {
+        body.push({ value: res.service, label: res.service });
+        setServiceSelected(body);
+      })
+    }
+  }, [services]);
+
+  useEffect(()=> {
+    if (stations) {
+      const body = [];
+      stations.forEach((res)=> {
+        body.push({ value: res.station, label: res.station });
+        setStationSelected(body);
+      })
+    }
+  }, [stations]);
+
+  // useEffect(()=> {
+  //   if(selected) {
+  //     selected.map(selectedService => {
+  //       if(selectedService.value === "First mile - Last mile") {
+  //         setIsZone(true)
+  //       } else {setIsZone(false)}
+  //     })
+  //   }
+  // },[selected])
+
+  // const options = [
+  //   { value: 'First Mile Last Mile', label: 'First Mile Last Mile' },
+  //   { value: 'Ferry', label: 'Ferry' },
+  //   { value: 'Large Bus', label: 'Large Bus' },
+  //   { value: 'Mini Bus', label: 'Mini Bus' },
+  //   { value: 'Car', label: 'Mini Car' }
+  // ];
 
 
   return (
@@ -242,7 +315,7 @@ const OperatorModalCreate = (props) => {
                   closeMenuOnSelect={false}
                   components={animatedComponents}
                   isMulti
-                  options={options}
+                  options={serviceSelected}
                   value={selected}
                   onChange={handleChange}/>
               </Col>
@@ -265,6 +338,19 @@ const OperatorModalCreate = (props) => {
                   value={selected1}
                   options={zoneSelected}
                   onChange={handleChange2}
+                  required
+                />
+
+              </Col>
+              <Col md="12">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Station</Label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  value={selected3}
+                  options={stationSelected}
+                  onChange={handleChange4}
                   required
                 />
 

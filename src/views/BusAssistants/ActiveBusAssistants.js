@@ -30,11 +30,11 @@ function UserRow(props) {
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.phoneNo}</td>
-      <td>{user.residentialAddress}</td>
-      <td>{user.email}</td>
+      {/*<td>{user.residentialAddress}</td>*/}
+      {/*<td>{user.email}</td>*/}
       {/*<td>{user.appstatus}</td>*/}
-      <td>Not Available</td>
-      <td>Not Available</td>
+      {/*<td>Not Available</td>*/}
+      {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -115,11 +115,11 @@ const ActiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isL
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  <th scope="col">Residential Address</th>
-                  <th scope="col">Email Address</th>
+                  {/*<th scope="col">Residential Address</th>*/}
+                  {/*<th scope="col">Email Address</th>*/}
                   {/*<th scope="col">App status</th>*/}
-                  <th scope="col">Rating</th>
-                  <th scope="col">Review</th>
+                  {/*<th scope="col">Rating</th>*/}
+                  {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>

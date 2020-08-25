@@ -37,6 +37,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-bootstrap-daterangepicker": "^4.1.0",
     "react-chartjs-2": "^2.7.6",
+    "react-crypt-gsm": "^1.0.4",
     "react-dom": "^16.8.6",
     "react-js-pagination": "^3.0.3",
     "react-redux": "^7.2.0",

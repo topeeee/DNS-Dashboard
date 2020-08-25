@@ -60,8 +60,8 @@ export const changeBusAssistants = (id, status) => async dispatch => {
 };
 
 
-export const createBusAssistants = (operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role) => async dispatch => {
-  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role
+export const createBusAssistants = (operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
   };
   try {
     const res = await axios.post(`${api.operationAssistant}/api/me/operationassistants/`, body);

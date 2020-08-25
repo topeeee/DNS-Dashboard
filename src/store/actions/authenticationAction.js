@@ -16,6 +16,7 @@ import React from "react";
 
 
 export const LogIn = (username, password) => async dispatch => {
+  sessionStorage.clear();
   const body = {username, password};
   // sessionStorage.setItem('isAdmin', username);
   try {
@@ -44,6 +45,7 @@ export const LogIn = (username, password) => async dispatch => {
 };
 
 export const LamataLogIn = (username, password) => async dispatch => {
+  sessionStorage.clear();
   const body = {username, password};
   // sessionStorage.setItem('isAdmin', username);
   try {

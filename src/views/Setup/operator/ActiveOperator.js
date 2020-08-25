@@ -3,7 +3,13 @@ import {connect} from "react-redux"
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
-import {getOperators, searchOperator} from "../../../store/actions/operatorAction";
+import {
+  getOperatorModes,
+  getOperators,
+  getOperatorServices,
+  getOperatorStations,
+  searchOperator
+} from "../../../store/actions/operatorAction";
 import OperatorHeader from "./components/OperatorHeader";
 import Spinner from "../../../spinner/Spinner";
 import OperatorActionBtn from "./components/OperatorActionBtn";
@@ -15,7 +21,9 @@ import {getVehicles} from "../../../store/actions/vehicleAction";
 
 function UserRow(props) {
   const user = props.user;
-  const vehicles = props.vehicles;
+  const operatorModes = props.operatorModes;
+  const operatorServices = props.operatorServices
+
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -24,14 +32,39 @@ function UserRow(props) {
           status === 'Banned' ? 'danger' :
             'primary'
   };
+
+  function operatorMode(operatorName) {
+    let operatorModeArr = [];
+    if(operatorModes) {
+      operatorModes.map(operatorMode => {
+        if(operatorMode.operator_name === operatorName) {
+          operatorModeArr.push(operatorMode.modecode)
+        }
+      })
+    }
+    return operatorModeArr.join(", ")
+  }
+
+  function operatorService(operatorName) {
+    let operatorServiceArr = [];
+    if(operatorServices) {
+      operatorServices.map(operatorService => {
+        if(operatorService.operator_name === operatorName) {
+          operatorServiceArr.push(operatorService.servicecode)
+        }
+      })
+    }
+    return operatorServiceArr.join(", ")
+  }
+
   return (
     <tr key={user.id}>
       <td>{user.name}</td>
       <td>{user.phoneNo}</td>
-      <td>{user.email}</td>
-      <td>{user.officeAddress}</td>
-      {vehicles ? <td>{vehicles.filter(vehicle => vehicle.operator === user.name).length}</td>
-        :<td>0</td>}
+      {/*{vehicles ? <td>{vehicles.filter(vehicle => vehicle.operator === user.name).length}</td>*/}
+      {/* :<td>0</td>}*/}
+      {(operatorModes && user ) && <td>{operatorMode(user.name)}</td>}
+      {(operatorServices && user ) && <td>{operatorService(user.name)}</td>}
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       <td> <OperatorActionBtn id={user.id} user={user} /> </td>
@@ -39,7 +72,7 @@ function UserRow(props) {
   )
 }
 
-const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchOperator, error, vehicles, getVehicles}) => {
+const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchOperator, error, vehicles, getVehicles, getOperatorStations, getOperatorServices, getOperatorModes,  operatorServices,  operatorModes,  operatorStations}) => {
   const [formData, setFormData] = useState('');
 
   useEffect(()=>{
@@ -48,7 +81,12 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
     }
   },[formData]);
 
-
+  useEffect(()=>{
+    getVehicles();
+    getOperatorModes();
+    getOperatorServices();
+    getOperatorStations();
+  },[operators]);
 
 
   const onChange = (e) =>{
@@ -61,7 +99,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
     e.preventDefault();
     searchOperator(formData)
   };
-
+// console.log(operatorModes)
   return (
     <div className="animated fadeIn">
       <Row>
@@ -71,7 +109,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         // placeholder="Search by Id"
+                    // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -86,7 +124,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
                 <FontAwesomeIcon className="text-danger py-2" title="Download Pdf" style={{fontSize: 40,  cursor: "pointer"}} icon={faFilePdf} />
               </div>
             </CardHeader>
-            <CardHeader className="d-flex align-items-center">
+            <CardHeader className="d-flex align-items-center" >
               <div className="w-25">
                Active Operators
               </div>
@@ -98,7 +136,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
               {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
               {/*{isLoading && loading()}*/}
               {(operators && operators.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Operator Available</div>}
               {((operators && operators.length > 0) || operator) &&
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
@@ -107,16 +145,16 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
                   {/*<th scope="col">Area Code</th>*/}
                   <th scope="col">Company Name</th>
                   <th scope="col">Company Phone</th>
-                  <th scope="col">Company Email</th>
-                  <th scope="col">Office Address</th>
-                  <th scope="col">Number of Vehicles</th>
+                  <th scope="col">Mode(s)</th>
+                  <th scope="col">Service(s)</th>
+                  {/*<th scope="col">Number of Vehicles</th>*/}
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {operators &&  operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
-                  <UserRow key={index} user={operator} vehicles={vehicles}/>
+                {operators && operators.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
+                  <UserRow key={index} user={operator} vehicles={vehicles}  operatorModes={operatorModes} operatorServices={operatorServices}  />
                 )}
                 {operator &&
                 <UserRow user={operator}/>
@@ -137,6 +175,9 @@ function mapDispatchToProps(dispatch) {
     getOperators: () => dispatch(getOperators()),
     searchOperator: (id) => dispatch(searchOperator(id)),
     getVehicles: () => dispatch(getVehicles()),
+    getOperatorStations: () => dispatch(getOperatorStations()),
+    getOperatorServices: () => dispatch(getOperatorServices()),
+    getOperatorModes: () => dispatch(getOperatorModes()),
   };
 }
 
@@ -146,9 +187,13 @@ const mapStateToProps = state => ({
   error: state.operator.error,
   isLoading: state.operator.isLoading,
   vehicles: state.vehicle.vehicles,
+  operatorServices: state.operator.operatorServices,
+  operatorStations: state.operator.operatorStations,
+  operatorModes: state.operator.operatorModes,
 
 
 });
+
 export default connect(mapStateToProps,mapDispatchToProps)(ActiveOperators);
 
 

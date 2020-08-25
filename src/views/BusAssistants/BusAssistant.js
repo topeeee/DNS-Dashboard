@@ -4,6 +4,7 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import {getBusAssistants} from "../../store/actions/busAssistantAction";
 import api from "../../environments/environment";
+import {isLamata} from "../../environments/constants";
 
 
 const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  searchOperator, error, match, busAssistants})=> {
@@ -77,8 +78,8 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
       <Row className="d-flex align-items-center justify-content-center">
         <Col lg={6}>
           <Card>
-            <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+            <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+              <strong className="text-white"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>
@@ -105,21 +106,25 @@ const BusAssistant = ({getBusAssistants, operators, operator, isLoading,  search
                   <td>{newOperator.residentialAddress}</td>
                 </tr>
                 <tr>
-                  <td><strong>Bank Name</strong></td>
-                  <td>{newOperator.bankName}</td>
+                  <td><strong>Mode</strong></td>
+                  <td>{newOperator.assignedMode}</td>
                 </tr>
-                <tr>
-                  <td><strong>Account Name</strong></td>
-                  <td>{newOperator.accountName}</td>
-                </tr>
-                <tr>
-                  <td><strong>Account Number</strong></td>
-                  <td>{newOperator.accountNumber}</td>
-                </tr>
-                <tr>
-                  <td><strong>Role</strong></td>
-                  <td>{newOperator.role}</td>
-                </tr>
+                {/*<tr>*/}
+                {/*  <td><strong>Bank Name</strong></td>*/}
+                {/*  <td>{newOperator.bankName}</td>*/}
+                {/*</tr>*/}
+                {/*<tr>*/}
+                {/*  <td><strong>Account Name</strong></td>*/}
+                {/*  <td>{newOperator.accountName}</td>*/}
+                {/*</tr>*/}
+                {/*<tr>*/}
+                {/*  <td><strong>Account Number</strong></td>*/}
+                {/*  <td>{newOperator.accountNumber}</td>*/}
+                {/*</tr>*/}
+                {/*<tr>*/}
+                {/*  <td><strong>Role</strong></td>*/}
+                {/*  <td>{newOperator.role}</td>*/}
+                {/*</tr>*/}
                 {/*<tr>*/}
                 {/*  <td><strong>Area</strong></td>*/}
                 {/*  <td>{newOperator.area}</td>*/}

@@ -8,12 +8,19 @@ import {
   OPERATOR_ERROR,
   SEARCH_OPERATOR,
   REMOVE_OPERATOR_ERROR,
-  REGISTER_OPERATOR, OPERATOR_MODAL_UPDATE, CREATE_OPERATOR, OPERATOR_MODAL_SUSPEND, OPERATOR_MODAL_REACTIVATE
+  REGISTER_OPERATOR,
+  OPERATOR_MODAL_UPDATE,
+  CREATE_OPERATOR,
+  OPERATOR_MODAL_SUSPEND,
+  OPERATOR_MODAL_REACTIVATE, OPERATOR_MODE, OPERATOR_SERVICE, OPERATOR_STATION
 } from "../actionTypes";
 
 const initialState = {
   operators: null,
   operator: null,
+  operatorServices: null,
+  operatorModes: null,
+  operatorStations: null,
   OperatorModalCreate: false,
   OperatorModalSuspend: false,
   OperatorModalReactivate: false,
@@ -44,6 +51,30 @@ function operatorReducer(state = initialState, action) {
 
       };
     }
+
+    case OPERATOR_MODE: {
+      return {
+        ...state,
+        operatorModes: payload,
+
+      };
+    }
+    case OPERATOR_SERVICE: {
+      return {
+        ...state,
+        operatorServices: payload,
+
+      };
+    }
+    case OPERATOR_STATION: {
+      return {
+        ...state,
+        operatorStations: payload,
+
+      };
+    }
+
+
     case REGISTER_OPERATOR: {
       return {
         ...state,

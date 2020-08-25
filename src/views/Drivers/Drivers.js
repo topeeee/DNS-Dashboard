@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
@@ -9,15 +9,36 @@ import {getDrivers, searchDriver, approveDriver, clearDriverVehicleId} from "../
 import DriverActionBtn from "./components/DriverActionBtn";
 import axios from "axios";
 import api from "../../environments/environment";
-// import Pagination from "../../pagination/Pagination";
 import Pagination from "react-js-pagination";
 import {isAdmin, isLamata, isOperator} from "../../environments/constants";
+import {getVehicles} from "../../store/actions/vehicleAction";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
+  // const driverVehicles = props.driverVehicles;
+  // const vehicles = props.vehicles
+
+  // function getMode(driverId) {
+  //   let driverMode;
+  //   if(driverVehicles) {
+  //     driverVehicles.map(driverVehicle => {
+  //       if(driverVehicle.driverId === driverId) {
+  //         console.log(driverVehicle.driverId, 'lllllllllll')
+  //         // console.log(driverVehicle, 'ffffffff')
+  //         vehicles.map(vehicle => {
+  //           if(vehicle.id === driverVehicle.vehicleId) {
+  //             driverMode = vehicle.mode
+  //           }
+  //         })
+  //       }
+  //       return driverMode
+  //     })
+  //
+  //   }
+  // }
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -32,11 +53,12 @@ function UserRow(props) {
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
       <td>{user.phoneno}</td>
-      <td>{user.residentialaddress}</td>
-      <td>{user.email}</td>
-      {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
-      {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
-      {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+      {/*{(user && driverVehicles) && <td>{getMode(user.id)}</td>}*/}
+      <td>{user.operatorid}</td>
+      {/*<td>{user.email}</td>*/}
+      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
+      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
+      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
       {/*<td>Not available</td>*/}
       {/*<td>Not Available</td>*/}
       {/*<td>Not Available</td>*/}
@@ -48,7 +70,7 @@ function UserRow(props) {
   )
 }
 
-const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId}) => {
+const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,46 +80,20 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => parseFloat(b.id) - parseFloat(a.id));
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
-
-  // const search = currentPosts.filter(post => {
-  //  setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
-  // });
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
 
-// function search() {
-//   if(drivers){
-//    return  drivers.filter(post => {
-//       return post.firstname.toLowerCase().includes(formData.toLowerCase())
-//     })
-//   }
-// }
 
-
-
-// useEffect(()=> {
-//   if(formData && drivers) {
-//     setPosts(search())
-//   } else {
-//     setPosts(drivers)
-//   }
-// },[formData]);
-  //
-  // function search() {
-  //  posts.filter((post => {
-  //    setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
-  //  }))
-  // }
 
 useEffect(()=> {
   if(formData && drivers){
     setCurrentPage(1)
     const search = drivers.filter(post => {
-      return post.firstname.toLowerCase().includes(formData.toLowerCase())
+      return (post.firstname.toLowerCase().includes(formData.toLowerCase()) || post.lastname.toLowerCase().includes(formData.toLowerCase()))
     });
     setPosts(search)
   }
@@ -105,13 +101,14 @@ useEffect(()=> {
 
 useEffect(()=> {
   if(drivers && !formData) {
-    setPosts(drivers)
+    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
   }
 },[drivers, formData]);
 
 
   useEffect(()=>{
       getDrivers();
+      getVehicles();
       },[]);
 
   function getDriverVehicle() {
@@ -168,6 +165,8 @@ useEffect(()=> {
     searchDriver(formData)
   };
 
+  // console.log(driverVehicle, 'ppppppppp')
+
   return (
     <div className="animated fadeIn">
       <Row>
@@ -212,9 +211,10 @@ useEffect(()=> {
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  <th scope="col">Residential Address</th>
-                  <th scope="col">Email Address</th>
-                  <th scope="col">App status</th>
+                  {/*<th scope="col">Mode</th>*/}
+                  <th scope="col">Operator</th>
+                  {/*<th scope="col">Email Address</th>*/}
+                  {/*<th scope="col">App status</th>*/}
                   {/*<th scope="col">Rating</th>*/}
                   {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>
@@ -223,7 +223,7 @@ useEffect(()=> {
                 </thead>
                 <tbody>
                 {posts && currentPosts.map((user, index) =>
-                  <UserRow key={index} user={user} approved={approveDriver} driverVehicle={driverVehicle}/>
+                  <UserRow key={index} user={user} approved={approveDriver} driverVehicles={driverVehicle} vehicles={vehicles}/>
                 )}
                 {driver &&
                 <UserRow user={driver} approved={approveDriver}/>
@@ -241,7 +241,8 @@ useEffect(()=> {
           </Card>
         </Col>
       </Row>
-      <div className="d-flex justify-content-end align-items-center">
+      {!isLoading &&
+      <div className="d-flex justify-content-end align-items-center mb-0">
         <Pagination
           activePage={currentPage}
           itemClass="page-item"
@@ -251,6 +252,7 @@ useEffect(()=> {
           onChange={paginate}
         />
       </div>
+      }
     </div>
   )
 };
@@ -259,7 +261,8 @@ function mapDispatchToProps(dispatch) {
     getDrivers: () => dispatch(getDrivers()),
     searchDriver: (id) => dispatch(searchDriver(id)),
     approveDriver: (id) =>dispatch(approveDriver(id)),
-    clearDriverVehicleId: () =>dispatch(clearDriverVehicleId())
+    clearDriverVehicleId: () =>dispatch(clearDriverVehicleId()),
+    getVehicles: () => dispatch(getVehicles()),
   };
 }
 
@@ -270,7 +273,8 @@ const mapStateToProps = state => ({
   isLoading: state.driver.isLoading,
   approveId: state.driver.approveId,
   getDriverVehicleId: state.driver.getDriverVehicleId,
-  getDriverVehicleId2: state.driver.getDriverVehicleId2
+  getDriverVehicleId2: state.driver.getDriverVehicleId2,
+  vehicles: state.vehicle.vehicles,
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(Drivers);

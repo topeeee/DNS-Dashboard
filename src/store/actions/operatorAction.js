@@ -13,7 +13,9 @@ import {
   REMOVE_OPERATOR_ERROR,
   SEARCH_OPERATOR,
   UPDATE_OPERATOR,
-  OPERATOR_MODAL_SUSPEND, OPERATOR_MODAL_REACTIVATE
+  OPERATOR_MODAL_SUSPEND,
+  OPERATOR_MODAL_REACTIVATE,
+  OPERATOR_STATION, OPERATOR_MODE, OPERATOR_SERVICE
 } from "../actionTypes"
 import axios from 'axios'
 import api from "../../environments/environment";
@@ -207,3 +209,34 @@ export function isLoading() {
     type: LOADING_OPERATOR,
   };
 }
+
+
+export const getOperatorStations = () => async dispatch => {
+  try {
+    const res = await axios.get(`${api.operatorStation}/api/operatorstations/`);
+    dispatch({
+      type:  OPERATOR_STATION,
+      payload: res.data
+    });
+  } catch (err) {}
+};
+
+export const getOperatorServices = () => async dispatch => {
+  try {
+    const res = await axios.get(`${api.operatorService}/api/operatorservices/`);
+    dispatch({
+      type:  OPERATOR_SERVICE,
+      payload: res.data
+    });
+  } catch (err) {}
+};
+
+export const getOperatorModes = () => async dispatch => {
+  try {
+    const res = await axios.get(`${api.operatorMode}/api/operatormodes/`);
+    dispatch({
+      type:  OPERATOR_MODE,
+      payload: res.data
+    });
+  } catch (err) {}
+};

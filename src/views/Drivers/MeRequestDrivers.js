@@ -34,11 +34,12 @@ function UserRow(props) {
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
       <td>{user.phoneno}</td>
+      <td>{user.operatorid}</td>
       <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
-      {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
-      {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
+      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
+      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
       {/*<td>Not available</td>*/}
       {/*<td>Not Available</td>*/}
       {/*<td>Not Available</td>*/}
@@ -214,7 +215,7 @@ useEffect(()=> {
                   <th scope="col"> Phone No</th>
                   <th scope="col">Residential Address</th>
                   <th scope="col">Email Address</th>
-                  <th scope="col">App status</th>
+                  {/*<th scope="col">App status</th>*/}
                   {/*<th scope="col">Rating</th>*/}
                   {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>

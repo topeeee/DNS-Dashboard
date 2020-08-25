@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import {getVehicles} from "../../store/actions/vehicleAction";
-import {isAdmin} from "../../environments/constants";
+import {isAdmin, isLamata} from "../../environments/constants";
 
 
 const Operator = ({getVehicles, match, vehicles})=> {
@@ -40,8 +40,8 @@ const Operator = ({getVehicles, match, vehicles})=> {
       <Row className="d-flex align-items-center justify-content-center">
         <Col lg={6}>
           <Card>
-            <CardHeader className="bg-dark">
-              <strong><i className="icon-info pr-1"></i>Vehicle id: {match.params.id}</strong>
+            <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+              <strong className="text-white"><i className="icon-info pr-1"></i>Vehicle id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>

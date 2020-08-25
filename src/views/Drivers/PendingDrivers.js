@@ -30,11 +30,12 @@ function UserRow(props) {
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
       <td>{user.phoneno}</td>
-      <td>{user.residentialaddress}</td>
-      <td>{user.email}</td>
-      {(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
-      {(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
-      {(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+      <td>{user.operatorid}</td>
+      {/*<td>{user.residentialaddress}</td>*/}
+      {/*<td>{user.email}</td>*/}
+      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
+      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
+      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
       {/*<td>Not Available</td>*/}
       {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -118,9 +119,10 @@ const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  <th scope="col">Residential Address</th>
-                  <th scope="col">Email Address</th>
-                  <th scope="col">App status</th>
+                  <th scope="col">Operator</th>
+                  {/*<th scope="col">Residential Address</th>*/}
+                  {/*<th scope="col">Email Address</th>*/}
+                  {/*<th scope="col">App status</th>*/}
                   {/*<th scope="col">Rating</th>*/}
                   {/*<th scope="col">Review</th>*/}
                   <th scope="col">Status</th>

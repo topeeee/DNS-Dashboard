@@ -77,7 +77,6 @@ const FerryStopModalUpdate = (props) => {
   },[id, ferryStops])
 
 
-console.log(service, 'ddddddd')
   const toggle = () => {toggleFerryStopModalUpdate()};
 
   return (

@@ -9,6 +9,8 @@ import {getStates} from "../../store/actions/stateAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {getModes} from "../../store/actions/modeAction";
 import api from "../../environments/environment";
+import {getService} from "../../store/actions/serviceAction";
+import {BusStopUser} from "../../store/actions/busStopAction";
 
 const animatedComponents = makeAnimated();
 
@@ -24,7 +26,8 @@ function mapDispatchToProps(dispatch) {
     getModes: () => dispatch(getModes()),
     getOperators: () => dispatch(getOperators()),
     updateOperator: (id, name, email, phoneNo, officeAddress,  numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(updateOperator(id, name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
-
+    getService: () => dispatch(getService()),
+    getStations: () => dispatch(BusStopUser())
 
   };
 }
@@ -38,6 +41,8 @@ const mapStateToProps = state => ({
   operatorUpdateId: state.operator.operatorUpdateId,
   operators: state.operator.operators,
   isAuthenticated: state.auth.isAuthenticated,
+  services: state.service.services,
+  stations: state.busStop.busStops,
 
 });
 
@@ -56,18 +61,25 @@ const OperatorModalUpdate = (props) => {
     operatorUpdateId,
     operators,
     updateOperator,
-    isAuthenticated
+    isAuthenticated,
+    services,
+    getService,
+    getStations,
+    stations
+
   } = props;
 
   const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: ""});
-  // const [pin, setPin] = useState({});
   const [selected, setSelected] = useState([]);
   const [selected1, setSelected1] = useState([]);
   const [selected2, setSelected2] = useState([]);
   const [selected3, setSelected3] = useState([]);
+  const [selected4, setSelected4] = useState([]);
   const [zoneSelected, setZoneSelected] = useState([]);
   const [stateSelected, setStateSelected] = useState([]);
   const [modeSelected, setModeSelected] = useState([]);
+  const [serviceSelected, setServiceSelected] = useState([]);
+  const [stationSelected, setStationSelected] = useState([]);
   const [form1, setForm1] = useState(true);
   const [form2, setForm2] = useState(false);
   const [newOperator, setNewOperator] = useState([]);
@@ -75,6 +87,8 @@ const OperatorModalUpdate = (props) => {
   const [operatorVehicle, setOperatorVehicle] = useState([]);
   const [operatorZone, setOperatorZone] = useState([]);
   const [operatorMode, setOperatorMode] = useState([]);
+  const [operatorService, setOperatorService] = useState([]);
+  const [operatorStation, setOperatorStation] = useState([]);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   const { name, email, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail } = formData;
@@ -82,10 +96,14 @@ const OperatorModalUpdate = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     updateOperator(operatorUpdateId, name, email, phoneNo, officeAddress,  numberOfVehicle, contactName, contactPhoneNo, contactEmail);
-    await setOperatorVehicleTypes();
+    // await setOperatorVehicleTypes();
     await setOperatorZones();
     await setOperatorModes();
+    await setOperatorServices();
+    await setOperatorStations();
     getOperators();
+    setForm2(false)
+    setForm1(true)
   };
 
 
@@ -103,19 +121,19 @@ const OperatorModalUpdate = (props) => {
     }
   };
 
-  const setOperatorVehicleTypes = async () => {
-    try {
-     await selected.forEach((res)=> {
-        const body = {vehicleType: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
-        axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
-     });
-    await  operatorVehicle.forEach((res)=> {
-        axios.delete(`${api.operatorVehicleTypes}/admin/operatorvehicletypes/${res.id}/`)
-    })
-    }catch (e) {
-
-    }
-  };
+  // const setOperatorVehicleTypes = async () => {
+  //   try {
+  //    await selected.forEach((res)=> {
+  //       const body = {vehicleType: res.value, operatorId: operatorUpdateId, operatorName: operatorName};
+  //       axios.post(`${api.operatorVehicleTypes}/api/me/operatorvehicletypes/`, body)
+  //    });
+  //   await  operatorVehicle.forEach((res)=> {
+  //       axios.delete(`${api.operatorVehicleTypes}/admin/operatorvehicletypes/${res.id}/`)
+  //   })
+  //   }catch (e) {
+  //
+  //   }
+  // };
 
   const setOperatorModes = async () => {
     try {
@@ -123,10 +141,37 @@ const OperatorModalUpdate = (props) => {
         const body = {modecode: res.value,  operator_name: operatorName};
         axios.post(`${api.operatorMode}/api/me/operatormodes/`, body)
       });
-
     await  operatorMode.forEach((res)=> {
         axios.delete(`${api.operatorMode}/admin/operatormodes/${res.id}/`)
     })
+    }catch (e) {
+
+    }
+  };
+
+  const setOperatorServices = async () => {
+    try {
+      await selected3.forEach((res)=> {
+        const body = {servicecode: res.value,  operator_name: operatorName};
+        axios.post(`${api.operatorService}/api/me/operatorservices/`, body)
+      });
+      await  operatorService.forEach((res)=> {
+        axios.delete(`${api.operatorService}/admin/operatorservices/${res.id}/`)
+      })
+    }catch (e) {
+
+    }
+  };
+
+  const setOperatorStations = async () => {
+    try {
+      await selected4.forEach((res)=> {
+        const body = {stationcode: res.value,  operator_name: operatorName};
+        axios.post(`${api.operatorStation}/api/me/operatorstations/`, body)
+      });
+      await  operatorStation.forEach((res)=> {
+        axios.delete(`${api.operatorStation}/admin/operatorstations/${res.id}/`)
+      })
     }catch (e) {
 
     }
@@ -143,14 +188,14 @@ const OperatorModalUpdate = (props) => {
       }
   }
 
-  async function getOperatorVehicle(id) {
-    try {
-     const res =  await axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${id}`);
-      setOperatorVehicle(res.data);
-    }catch (e) {
-
-    }
-  }
+  // async function getOperatorVehicle(id) {
+  //   try {
+  //    const res =  await axios.get(`${api.operatorVehicleTypes}/api/operators/?operatorId=${id}`);
+  //     setOperatorVehicle(res.data);
+  //   }catch (e) {
+  //
+  //   }
+  // }
 
     async function getOperatorMode(operatorname) {
     try {
@@ -170,16 +215,39 @@ const OperatorModalUpdate = (props) => {
     }
   }
 
-  const handleChange = (selected) => {
-    setSelected(selected);
+  async function getOperatorService(operatorname) {
+    try {
+      const res = await axios.get(`${api.operatorService}/api/mode/?operator_name=${operatorname}`)
+
+      setOperatorService(res.data);
+    }catch (e) {
+
+    }
+  }
+
+  async function getOperatorStation(operatorname) {
+    try {
+      const res = await axios.get(`${api.operatorStation}/api/station/?operator_name=${operatorname}`)
+      setOperatorStation(res.data);
+    }catch (e) {
+
+    }
+  }
+
+  const handleChange = (value) => {
+    setSelected3(value);
   };
 
-  const handleChange2 = (selected1) => {
-    setSelected1(selected1);
+  const handleChange1 = (value) => {
+    setSelected1(value);
   };
 
-  const handleChange3 = (selected2) => {
-    setSelected2(selected2);
+  const handleChange2 = (value) => {
+    setSelected2(value);
+  };
+
+  const handleChange3 = (value) => {
+    setSelected4(value);
   };
 
   const toggle = () => {toggleOperatorModalUpdate()};
@@ -197,27 +265,29 @@ const OperatorModalUpdate = (props) => {
 
   useEffect(()=> {
   if(operatorUpdateId && operatorName) {
-    getOperatorVehicle(operatorUpdateId);
+    // getOperatorVehicle(operatorUpdateId);
     getOperatorMode(operatorName);
-    getOperatorZone(operatorUpdateId)
+    getOperatorZone(operatorUpdateId);
+    getOperatorService(operatorName);
+    getOperatorStation(operatorName);
   }
 },[operatorUpdateId, operatorName]);
 
-  useEffect(()=> {
-    if (operatorVehicle) {
-      const body = [];
-      operatorVehicle.forEach((res)=> {
-        body.push({ value: res.vehicleType, label: res.vehicleType });
-        setSelected(body);
-      })
-    }
-  }, [operatorVehicle]);
+  // useEffect(()=> {
+  //   if (operatorVehicle) {
+  //     const body = [];
+  //     operatorVehicle.forEach((res)=> {
+  //       body.push({ value: res.vehicleType, label: res.vehicleType });
+  //       setSelected(body);
+  //     })
+  //   }
+  // }, [operatorVehicle]);
 
-  useEffect(()=> {
-    if (selected) {
-
-    }
-  }, [selected]);
+  // useEffect(()=> {
+  //   if (selected) {
+  //
+  //   }
+  // }, [selected]);
 
   useEffect(()=> {
     if (operatorZone) {
@@ -239,6 +309,26 @@ const OperatorModalUpdate = (props) => {
     }
   }, [operatorMode]);
 
+  useEffect(()=> {
+    if (operatorService) {
+      const body = [];
+      operatorService.forEach((res)=> {
+        body.push({ value: res.servicecode, label: res.servicecode });
+        setSelected3(body);
+      })
+    }
+  }, [operatorService]);
+
+  useEffect(()=> {
+    if (operatorStation) {
+      const body = [];
+      operatorStation.forEach((res)=> {
+        body.push({ value: res.stationcode, label: res.stationcode });
+        setSelected4(body);
+      })
+    }
+  }, [operatorStation]);
+
 
   useEffect(()=> {
     // setId(operatorUpdateId);
@@ -251,9 +341,11 @@ const OperatorModalUpdate = (props) => {
 
   useEffect(()=> {
     if(isAuthenticated) {
-      getStates();
+      // getStates();
       ZoneUser();
-      getModes()
+      getModes();
+      getService();
+      getStations();
     }
   },[]);
 
@@ -268,16 +360,16 @@ const OperatorModalUpdate = (props) => {
   }, [zones]);
 
 
-  useEffect(()=> {
-    if (states) {
-      const body = [];
-      states.forEach((res)=> {
-        body.push({ value: res.xstate, label: res.xstate });
-        setStateSelected(body);
-        setSelected3(body)
-      })
-    }
-  }, [states]);
+  // useEffect(()=> {
+  //   if (states) {
+  //     const body = [];
+  //     states.forEach((res)=> {
+  //       body.push({ value: res.xstate, label: res.xstate });
+  //       setStateSelected(body);
+  //       setSelected3(body)
+  //     })
+  //   }
+  // }, [states]);
 
   useEffect(()=> {
     if (modes) {
@@ -289,13 +381,34 @@ const OperatorModalUpdate = (props) => {
     }
   }, [modes]);
 
-  const options = [
-    { value: 'Train', label: 'Train' },
-    { value: 'Ferry', label: 'Ferry' },
-    { value: 'Large Bus', label: 'Large Bus' },
-    { value: 'Mini Bus', label: 'Mini Bus' },
-    { value: 'Car', label: 'Mini Car' }
-  ];
+  useEffect(()=> {
+    if (services) {
+      const body = [];
+      services.forEach((res)=> {
+        body.push({ value: res.service, label: res.service });
+        setServiceSelected(body);
+      })
+    }
+  }, [services]);
+
+  useEffect(()=> {
+    if (stations) {
+      const body = [];
+      stations.forEach((res)=> {
+        body.push({ value: res.station, label: res.station });
+        setStationSelected(body);
+      })
+    }
+  }, [stations]);
+
+
+  // const options = [
+  //   { value: 'Train', label: 'Train' },
+  //   { value: 'Ferry', label: 'Ferry' },
+  //   { value: 'Large Bus', label: 'Large Bus' },
+  //   { value: 'Mini Bus', label: 'Mini Bus' },
+  //   { value: 'Car', label: 'Mini Car' }
+  // ];
 
   return (
     <div>
@@ -373,6 +486,16 @@ const OperatorModalUpdate = (props) => {
 
               {/*</Col>*/}
               <Col md="12">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Service(s)</Label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  options={serviceSelected}
+                  value={selected3}
+                  onChange={handleChange}/>
+              </Col>
+              <Col md="12">
                 <Label for="name" className="font-weight-bold mb-0 text-info">Mode(s)</Label>
                 <Select
                   closeMenuOnSelect={false}
@@ -380,17 +503,31 @@ const OperatorModalUpdate = (props) => {
                   isMulti
                   options={modeSelected}
                   value={selected2}
-                  onChange={handleChange3}/>
+                  onChange={handleChange2}/>
               </Col>
               <Col md="12">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Zone</Label>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Zone(s)</Label>
                 <Select
                   closeMenuOnSelect={false}
                   components={animatedComponents}
                   isMulti
                   value={selected1}
                   options={zoneSelected}
-                  onChange={handleChange2}
+                  onChange={handleChange1}
+                  required
+                />
+
+              </Col>
+
+              <Col md="12">
+                <Label for="name" className="font-weight-bold mb-0 text-info">Station(s)</Label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  value={selected4}
+                  options={stationSelected}
+                  onChange={handleChange3}
                   required
                 />
 

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import {getUsers} from "../../store/actions/userAction";
+import {isLamata} from "../../environments/constants";
 
 
 const Operator = ({getUsers,match, users})=> {
@@ -47,8 +48,8 @@ useEffect(()=> {
       <Row className="d-flex align-items-center justify-content-center">
         <Col lg={6}>
           <Card>
-            <CardHeader className="bg-dark">
-              <strong className="text-info"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+            <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+              <strong className="text-white"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >
               <Table>

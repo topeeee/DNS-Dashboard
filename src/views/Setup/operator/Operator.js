@@ -5,13 +5,16 @@ import {connect} from "react-redux";
 import axios from "axios"
 import api from "../../../environments/environment";
 import {getVehicles} from "../../../store/actions/vehicleAction";
+import {isLamata} from "../../../environments/constants";
 
 
 const Operator = ({getOperators, operators, match, states, vehicles, getVehicles})=> {
 
   const [operator, setOperator] = useState({});
-  const [operatorZone, setOperatorZone] = useState([]);
+  const [operatorZone, setOperatorZone] = useState('');
+  const [operatorStation, setOperatorStation] = useState('');
   const [operatorMode, setOperatorMode] = useState('');
+  const [operatorService, setOperatorService] = useState('')
   const [suspension, setSuspension] = useState('');
   const [penalty, setPenalty] = useState('')
 
@@ -38,13 +41,49 @@ const Operator = ({getOperators, operators, match, states, vehicles, getVehicles
   }
 
  async function getOperatorZone() {
+   const zoneArray = [];
+   try {
+     const res = await axios.
+     get(`${api.operatorZone}/api/operators/?operatorId=${match.params.id}`)
+     res.data.map(zone=> {
+       zoneArray.push(zone.zoneCode)
+     })
+     setOperatorZone(zoneArray.join(", "));
+
+   } catch (e) {
+
+   }
+ }
+
+
+  async function getOperatorStation() {
+    const stationArray = [];
     try {
-      const res = await axios.get(`${api.operatorZone}/api/operators/?operatorId=${match.params.id}`)
-      setOperatorZone(res.data);
+      const res = await axios.get(`${api.operatorStation}/api/station/?operator_name=${operator.name}`)
+      res.data.map(station=> {
+        stationArray.push(station.stationcode)
+      })
+      setOperatorStation(stationArray.join(", "));
     }catch (e) {
 
     }
   }
+
+  async function getOperatorService() {
+    const serviceArray = [];
+    try {
+      const res = await axios.get(`${api.operatorService}/api/mode/?operator_name=${operator.name}`)
+      res.data.map(service=> {
+        serviceArray.push(service.servicecode)
+      })
+      setOperatorService(serviceArray.join(", "));
+    }catch (e) {
+
+    }
+  }
+
+
+
 
   async function getComment() {
     try {
@@ -65,7 +104,6 @@ const Operator = ({getOperators, operators, match, states, vehicles, getVehicles
   }
   useEffect(()=>{
     getOperators();
-    getOperatorZone();
     getComment();
     getVehicles();
   },[]);
@@ -77,6 +115,9 @@ useEffect(()=>{
   useEffect(()=>{
   if(operator.name) {
     getOperatorMode()
+    getOperatorZone();
+    getOperatorStation();
+    getOperatorService();
   }
   },[operator]);
 
@@ -86,8 +127,8 @@ useEffect(()=>{
         <Row className="d-flex align-items-center justify-content-center">
           <Col lg={6}>
             <Card>
-              <CardHeader className="bg-dark">
-                <strong><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
+              <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <strong className="text-white"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
               </CardHeader>
               <CardBody >
                 <Table>
@@ -135,10 +176,16 @@ useEffect(()=>{
                     <td>{operatorMode}</td>
                   </tr>
                   <tr>
-                    <td><strong>Zone</strong></td>
-                    {operatorZone && operatorZone.map((zone, index) =>
-                      <td  key={index}>{zone.zoneCode}</td>
-                    )}
+                    <td><strong>Zone(s)</strong></td>
+                    <td>{operatorZone}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Station(s)</strong></td>
+                      <td>{operatorStation}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Service(s)</strong></td>
+                    <td>{operatorService}</td>
                   </tr>
                   {/*<tr>*/}
                   {/*  <td><strong>State</strong></td>*/}

@@ -24,6 +24,13 @@ export default {
 
         },
         {
+          name: 'Modes',
+          url: '/operator/modes',
+          // icon: 'icon-puzzle',
+          attributes: { className: "bg-white", style: { color: "black" }}
+
+        },
+        {
           name: 'Zones',
           url: '/operator/zones',
           // icon: 'icon-puzzle',
@@ -218,30 +225,30 @@ export default {
       ],
     },
     {
-      name: 'Operator Assistants',
+      name: 'Operation Assistants',
       icon: 'icon-user',
       children: [
         {
           name: 'All',
-          url: '/operator/busassisstants',
+          url: '/operator/operationassisstants',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Active',
-          url: '/operator/busassisstants/active',
+          url: '/operator/operationassisstants/active',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Inactive',
-          url: '/operator/busassisstants/inactive',
+          url: '/operator/operationassisstants/inactive',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Pending',
-          url: '/operator/busassisstants/pending',
+          url: '/operator/operationassisstants/pending',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
