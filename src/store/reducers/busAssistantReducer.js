@@ -7,7 +7,7 @@ import {
   BUS_ASSISTANT_VEHICLE_ID, BUS_ASSISTANT_VEHICLE_ID2, CLEAR_BUS_ASSISTANT_VEHICLE_ID,
   CLOSE_MODAL_DELETE_BUS_ASSISTANT,
   DELETE_BUS_ASSISTANT,
-  LOADING_BUS_ASSISTANT, REMOVE_BUS_ASSISTANT_ERROR,
+  LOADING_BUS_ASSISTANT, OPERATION_ASSISTANT_STATION, REMOVE_BUS_ASSISTANT_ERROR,
   SEARCH_BUS_ASSISTANT
 } from "../actionTypes";
 
@@ -25,7 +25,8 @@ const initialState = {
   UpdateBusAssistantId: null,
   approveId: null,
   getBusAssistantVehicleId: null,
-  getBusAssistantVehicleId2: null
+  getBusAssistantVehicleId2: null,
+  oaStations: null
 };
 
 function busAssistantReducer(state = initialState, action) {
@@ -38,6 +39,13 @@ function busAssistantReducer(state = initialState, action) {
         error: null,
         busAssistants: payload,
         isLoading: false,
+      };
+    }
+
+    case OPERATION_ASSISTANT_STATION: {
+      return {
+        ...state,
+        oaStations: payload,
       };
     }
     case SEARCH_BUS_ASSISTANT: {

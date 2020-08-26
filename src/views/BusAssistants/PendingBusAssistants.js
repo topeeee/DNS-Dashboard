@@ -4,9 +4,7 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {getBusAssistants, searchBusAssistants} from "../../store/actions/busAssistantAction";
-import axios from "axios";
-import api from "../../environments/environment";
+import {getBusAssistants, getOsStation, searchBusAssistants} from "../../store/actions/busAssistantAction";
 import BusAssistantHeader from "./components/BusAssistantHeader";
 import BusAssistantActionBtn from "./components/BusAssistantActionBtn";
 import {isLamata} from "../../environments/constants";
@@ -16,6 +14,16 @@ import {isLamata} from "../../environments/constants";
 
 function UserRow(props) {
   const user = props.user;
+  const oaStations = props.oaStations
+
+
+  const getStation = (id) => {
+    const stationArr = [];
+    oaStations.filter(station => station.operationassitantId == id).map(oaStation=> {
+      stationArr.push(oaStation.stationCode)
+    })
+    return stationArr.join(", ")
+  }
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -30,9 +38,9 @@ function UserRow(props) {
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.phoneNo}</td>
+      {(user && oaStations) &&  <td>{getStation(user.id)}</td>}
       {/*<td>{user.residentialAddress}</td>*/}
       {/*<td>{user.email}</td>*/}
-      {/*<td>{user.appstatus}</td>*/}
       {/*<td>Not Available</td>*/}
       {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -43,12 +51,8 @@ function UserRow(props) {
   )
 }
 
-const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error}) => {
+const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error, getOaStation, oaStations}) => {
   const [formData, setFormData] = useState('');
-
-
-
-
 
 
   useEffect(()=>{
@@ -58,8 +62,9 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
     }
   },[formData]);
 
-
-
+  useEffect(()=> {
+    getOaStation();
+  },[busAssistants])
 
 
   const onChange = (e) =>{
@@ -82,7 +87,7 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         // placeholder="Search by Id"
+                    // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -99,18 +104,16 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Pending Operation Assistants
+                Operation Assistants
               </div>
               <BusAssistantHeader />
-              {/*<BusAssistantHeader />*/}
             </CardHeader>
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {/*{isLoading && loading()}*/}
               {(busAssistants && busAssistants.length === 0) &&
-              <div className="animated fadeIn pt-1 text-center">No Bus Assistants Available</div>}
+              <div className="animated fadeIn pt-1 text-center">No Bus Assistant Available</div>}
               {((busAssistants && busAssistants.length > 0) || busAssistant) &&
               <Table responsive hover>
                 <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
@@ -118,18 +121,14 @@ const PendingBusAssistants = ({getBusAssistants, busAssistants, busAssistant, is
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  {/*<th scope="col">Residential Address</th>*/}
-                  {/*<th scope="col">Email Address</th>*/}
-                  {/*<th scope="col">App status</th>*/}
-                  {/*<th scope="col">Rating</th>*/}
-                  {/*<th scope="col">Review</th>*/}
+                  <th scope="col">Station(s)</th>
                   <th scope="col">Status</th>
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 {busAssistants && busAssistants.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === "").map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} oaStations={oaStations}/>
                 )}
                 {busAssistant &&
                 <UserRow user={busAssistant}/>
@@ -148,6 +147,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getBusAssistants: () => dispatch(getBusAssistants()),
     searchBusAssistants: (id) => dispatch(searchBusAssistants(id)),
+    getOaStation: () => dispatch(getOsStation())
   };
 }
 
@@ -156,6 +156,7 @@ const mapStateToProps = state => ({
   busAssistant: state.busAssistants.busAssistant,
   error: state.busAssistants.error,
   isLoading: state.busAssistants.isLoading,
+  oaStations: state.busAssistants.oaStations,
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(PendingBusAssistants);

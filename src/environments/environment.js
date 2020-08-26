@@ -31,7 +31,8 @@
    ferryStop: "http://165.22.116.11:7069",
    message: "http://165.22.116.11:7058",
    operatorService: "http://165.22.116.11:7068",
-   operatorStation: "http://165.22.116.11:7067"
+   operatorStation: "http://165.22.116.11:7067",
+   oastation: "http://165.22.116.11:7055"
 };
 
 export default api

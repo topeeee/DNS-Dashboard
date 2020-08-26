@@ -1360,17 +1360,6 @@ class TripsOverView extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-info">
               <CardBody className="pb-0">
-                {/*<ButtonGroup className="float-right">*/}
-                {/*  <Dropdown id='card18' isOpen={this.state.card18} toggle={() => { this.setState({ card18: !this.state.card18 }); }}>*/}
-                {/*    <DropdownToggle caret className="p-0" color="transparent" style={{color: "black"}}>*/}
-                {/*      <i className="icon-settings"></i>*/}
-                {/*    </DropdownToggle>*/}
-                {/*    <DropdownMenu right>*/}
-                {/*      <DropdownItem>View Records</DropdownItem>*/}
-                {/*      <DropdownItem>Search Records</DropdownItem>*/}
-                {/*    </DropdownMenu>*/}
-                {/*  </Dropdown>*/}
-                {/*</ButtonGroup>*/}
                 <div className="text-value">50</div>
                 <div>Total Transit Trips </div>
               </CardBody>
@@ -1383,17 +1372,6 @@ class TripsOverView extends Component {
           <Col xs="12" sm="6" lg="3">
             <Card className="text-white bg-success">
               <CardBody className="pb-0">
-                {/*<ButtonGroup className="float-right">*/}
-                {/*  <Dropdown id='card19' isOpen={this.state.card19} toggle={() => { this.setState({ card19: !this.state.card19 }); }}>*/}
-                {/*    <DropdownToggle caret className="p-0" color="transparent" style={{color: "black"}}>*/}
-                {/*      <i className="icon-settings"></i>*/}
-                {/*    </DropdownToggle>*/}
-                {/*    <DropdownMenu right>*/}
-                {/*      <DropdownItem>View Records</DropdownItem>*/}
-                {/*      <DropdownItem>Search Records</DropdownItem>*/}
-                {/*    </DropdownMenu>*/}
-                {/*  </Dropdown>*/}
-                {/*</ButtonGroup>*/}
                 <div className="text-value">50</div>
                 <div>Total Completed Trips</div>
               </CardBody>

@@ -8,15 +8,13 @@ import {
   REMOVE_BUS_ASSISTANT_ERROR,
   BUS_ASSISTANT_STATUS,
   BUS_ASSISTANT_MODAL_UPDATE,
-  UPDATE_BUS_ASSISTANT
+  UPDATE_BUS_ASSISTANT,
+  OPERATION_ASSISTANT_STATION
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
 import {isAdmin, isLamata, isOperator, OperatorId} from "../../environments/constants";
 import {createUser} from "./userAction";
-
-
-
 
 export const getBusAssistants = () => async dispatch => {
   let BusApi;
@@ -40,6 +38,7 @@ export const getBusAssistants = () => async dispatch => {
 
   }
 };
+
 export const changeBusAssistants = (id, status) => async dispatch => {
   try {
     await axios.put(`${api.operationAssistant}/api/status/${id}/`, {status});
@@ -48,20 +47,12 @@ export const changeBusAssistants = (id, status) => async dispatch => {
       type: BUS_ASSISTANT_STATUS,
     });
     dispatch(getBusAssistants());
-  } catch (err) {
-    // dispatch({
-    //   type: OPERATOR_ERROR,
-    //   payload: "Opps! Something Went Wrong Try Again"
-    // });
-    // setTimeout(() => dispatch({
-    //   type: REMOVE_OPERATOR_ERROR
-    // }), 5000)
-  }
+  } catch (err) {}
 };
 
 
-export const createBusAssistants = (operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea) => async dispatch => {
-  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+export const createBusAssistants = (operatorid, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode,  geoFencedArea, stationSelected) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, geoFencedArea
   };
   try {
     const res = await axios.post(`${api.operationAssistant}/api/me/operationassistants/`, body);
@@ -71,6 +62,7 @@ export const createBusAssistants = (operatorid, firstName, lastName, pin, reside
     });
     if(res.data) {
       dispatch(createUser(firstName, lastName, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+      dispatch(setOsStation(stationSelected, res.data.id, operatorid))
     }
     dispatch(getBusAssistants());
     dispatch(toggleBusAssistantsModalCreate());
@@ -87,14 +79,17 @@ export const createBusAssistants = (operatorid, firstName, lastName, pin, reside
   }
 };
 
-export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role) => async dispatch => {
-  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, role};
+export const updateBusAssistants = (id, operatorid,  firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea, selected, oaStation) => async dispatch => {
+  const body = { firstName, lastName, pin, operatorid, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea};
   try {
     const res = await axios.put(`${api.operationAssistant}/api/operationassistants/${id}/`, body);
     dispatch({
       type: UPDATE_BUS_ASSISTANT,
       payload: res.data
     });
+
+    dispatch(setOsStation(selected, id, operatorid))
+    dispatch(deleteOsStation(oaStation))
     dispatch(getBusAssistants());
     dispatch(toggleBusAssistantsModalUpdate());
   } catch (err) {
@@ -127,7 +122,33 @@ export const searchBusAssistants = (id) => async dispatch => {
   }
 };
 
+export const setOsStation = (value , operationassitantId, operatorId) => async dispatch => {
+  try {
+    await  value.forEach((res)=> {
+      const body = {stationCode: res.value, operationassitantId, operatorId};
+      axios.post(`${api.oastation}/api/me/oastations/`, body);
+    })
+  } catch (err) {}
+};
 
+export const deleteOsStation = (value) => async dispatch => {
+  try {
+    await  value.forEach((res)=> {
+      axios.delete(`${api.oastation}/admin/oastations/${res.id}/`);
+    })
+  } catch (err) {}
+};
+
+
+export const getOsStation = () => async dispatch => {
+  try {
+    const res = await axios.get(`${api.oastation}/api/oastations/`)
+    dispatch({
+      type: OPERATION_ASSISTANT_STATION,
+      payload: res.data
+    });
+  } catch (err) {}
+};
 
 export function toggleBusAssistantsModalCreate() {
   return {

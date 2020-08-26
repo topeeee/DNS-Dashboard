@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Col} from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input, Col} from 'reactstrap';
 import { connect } from "react-redux";
 import {toggleBusAssistantsModalCreate, createBusAssistants} from "../../store/actions/busAssistantAction";
 import {ZoneUser} from "../../store/actions/zoneAction";
 import {RouteUser} from "../../store/actions/routeAction";
-import Select from "react-select";
 import makeAnimated from "react-select/animated/dist/react-select.esm";
 import  axios from "axios";
 import {getOperators} from "../../store/actions/operatorAction";
 import {getVehicles} from "../../store/actions/vehicleAction";
 import {getAreas} from "../../store/actions/areaAction";
-
 import api from '../../environments/environment'
-import {isAdmin, OperatorName, isOperator} from "../../environments/constants";
 import {getModes} from "../../store/actions/modeAction";
+import Select from "react-select";
+import {BusStopUser} from "../../store/actions/busStopAction";
+import {isOperator, OperatorName} from "../../environments/constants";
 
 const animatedComponents = makeAnimated();
 
@@ -25,16 +25,17 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleBusAssistantsModalCreate: () => dispatch(toggleBusAssistantsModalCreate()),
-    createBusAssistants: (operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+    createBusAssistants: (operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, geoFencedArea, stationSelected
     ) =>
-      dispatch(createBusAssistants(operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
+      dispatch(createBusAssistants(operatorId, firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, geoFencedArea, stationSelected
       )),
     ZoneUser: () => dispatch(ZoneUser()),
     RouteUser: () => dispatch(RouteUser()),
     getOperators: () => dispatch(getOperators()),
     getVehicles: () => dispatch(getVehicles()),
     getAreas: () => dispatch(getAreas()),
-    getModes: () => dispatch(getModes())
+    getModes: () => dispatch(getModes()),
+    getStations: () => dispatch(BusStopUser())
 
   };
 }
@@ -49,6 +50,7 @@ const mapStateToProps = state => ({
   operators: state.operator.operators,
   vehicles: state.vehicle.vehicles,
   areas: state.area.areas,
+  stations: state.busStop.busStops,
 
 
 });
@@ -59,44 +61,20 @@ const BusAssistantModalCreate = (props) => {
     toggleBusAssistantsModalCreate,
     BusAssistantModalCreate,
     createBusAssistants,
-    zones,
-    routes,
-    ZoneUser,
-    RouteUser,
     isAuthenticated,
-    operators,
-    getOperators,
-    vehicles,
-    getVehicles,
-    getAreas,
-    areas,
-    modes
+    stations,
+    getStations
   } = props;
 
- async function getOperatorZone() {
-    try {
-    const res = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
-          setOperatorZone(res.data);
-    }catch (e) {
 
-    }
-  }
 
-  async function getOperatorMode() {
-    try {
-    const res = await  axios.get(`${api.operatorMode}/api/me/operatormodes/`);
-          setOperatorMode(res.data);
-    }catch (e) {
 
-    }
-  }
 
 
   useEffect(()=>{
    if(isAuthenticated) {
-     getOperatorZone();
-     getOperatorMode();
      getModes();
+     getStations();
    }
   },[]);
 
@@ -108,74 +86,26 @@ const BusAssistantModalCreate = (props) => {
   });
   const [form1, setForm1] = useState(true);
   const [form2, setForm2] = useState(false);
-  const [form3, setForm3] = useState(false);
-  const [form4, setForm4] = useState(false);
-  const [routeSelected, setRouteSelected] = useState([]);
-  const [selected2, setSelected2] = useState([]);
   const [regPin, setRegpin] = useState('');
-  const [operatorInput, setOperatorInput] = useState('');
-  const [vehicleInput, setVehicleInput] = useState('');
-  const [plateInput, setPlateInput] = useState('');
-  const [zoneInput, setZoneInput] = useState('');
-  const [areaInput, setAreaInput] = useState('');
-  const [routeInput, setRouteInput] = useState('');
-  const [vehicleId, setVehicleId] = useState('');
-  // const [modeInput, setModeInput] = useState('');
-  const [operatorZone, setOperatorZone] = useState([]);
-  const [operatorMode, setOperatorMode] = useState([]);
-  const [operatorId, setOperatorId] = useState('');
+  const [operatorId] = useState(isOperator? OperatorName: '');
+  const [selected, setSelected] = useState([]);
+  const [stationSelected, setStationSelected] = useState([]);
 
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-
-
-
-
   const onClickContinue1 = () => {
     register();
     setForm1(false);
-    setForm3(false);
     setForm2(true);
-    setForm4(false);
   };
 
-  const onClickContinue2 = () => {
-    setForm1(false);
-    setForm3(true);
-    setForm2(false);
-    setForm4(false);
-  };
-  const onClickContinue3 = () => {
-    setForm1(false);
-    setForm3(false);
-    setForm2(false);
-    setForm4(true);
-  };
 
   const onClickBack1 = () => {
     setForm1(true);
-    setForm3(false);
     setForm2(false);
-    setForm4(false);
   };
 
-  const onClickBack2 = () => {
-    setForm1(false);
-    setForm3(false);
-    setForm2(true);
-    setForm4(false);
-  };
-  const onClickBack3 = () => {
-    setForm1(false);
-    setForm3(true);
-    setForm2(false);
-    setForm4(false);
-  };
-
-  // useEffect(()=> {
-  //   console.log(areas)
-  // }, [areas]);
 
   const {
     firstName, lastName, pin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zone, area, route, geoFencedArea
@@ -190,91 +120,33 @@ const BusAssistantModalCreate = (props) => {
     }
   }
 
-
-
-
-  const handleChange3 = (selected2) => {
-    setSelected2(selected2);
-  };
-
-
   const onSubmit = async (e) => {
      e.preventDefault();
-    createBusAssistants(operatorId, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, zoneInput, areaInput, routeInput, geoFencedArea
+    createBusAssistants(operatorId, firstName, lastName, regPin, residentialAddress, email, status, phoneNo, bankName, accountName, accountNumber, assignedMode, geoFencedArea, selected
     );
     setFormData({
       firstName: "", lastName: "", pin: "", residentialAddress: "", email: "", status: "", phoneNo: "", bankName: "", accountName: "", accountNumber: "", assignedMode: "", zone: "", area: "", route: "", geoFencedArea: ""
 
     });
     setForm1(true);
-    setForm3(false);
     setForm2(false);
-    setForm4(false);
 
   };
 
-
-
-
-  useEffect(()=> {
-    if (routes && areaInput) {
+ useEffect(()=> {
+    if (stations) {
       const body = [];
-      routes.filter((user) => user.areacode === areaInput).forEach((res)=> {
-        body.push({ value: res.route, label: res.route });
-        setRouteSelected(body);
+      stations.forEach((res)=> {
+        body.push({ value: res.station, label: res.station });
+        setStationSelected(body);
       })
     }
-  }, [areaInput]);
-
-  useEffect(()=> {
-    if(routeSelected){
-      const body = [];
-      routeSelected.forEach(res=> {
-        body.push(res.value);
-        setRouteInput(body.toString())
-      })
-    }
-  },[routeSelected]);
+  }, [stations]);
 
 
-  useEffect(()=> {
-    if(vehicles && plateInput) {
-      vehicles.map(vehicle => {
-        if(vehicle.plate_number === plateInput) {
-          setVehicleId(vehicle.id);
-        }
-      })
-    }
-  }, [plateInput]);
-
-
-  useEffect(()=> {
-    if(isOperator) {
-      setOperatorInput(OperatorName)
-    }
-  }, [isOperator]);
-
-  useEffect(()=>{
-    if(isAuthenticated) {
-      RouteUser();
-      ZoneUser();
-      getOperators();
-      getVehicles();
-      getAreas()
-    }
-  }, [operatorInput]);
-
-  useEffect(()=> {
-    if(operators && operatorInput) {
-      operators.map(operator=> {
-        if(operator.name === operatorInput) {
-          setOperatorId(operator.id)
-        }
-      })
-    }
-  },[operators, operatorInput]);
-
-
+  const handleChange = (selected) => {
+    setSelected(selected);
+  };
 
   const toggle = () => {toggleBusAssistantsModalCreate()};
 
@@ -309,152 +181,30 @@ const BusAssistantModalCreate = (props) => {
             </FormGroup>}
             {form2 &&
             <FormGroup row>
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Role</Label>*/}
-              {/*  <Input type="text"  name="role" onChange={onChange} value={role} required />*/}
-              {/*</Col>*/}
               <Col md="12">
-              <Label for="name" className="font-weight-bold mb-0 text-info">Modes</Label>
-              <Input
-                style={{cursor: 'pointer'}}
-                type="select"
-                name="assignedMode"
-                value={assignedMode}
-                onChange={onChange}
-                required
-              >
-                <option value="">Select Mode</option>
-                {modes && modes.map((mode, index) =>
-                  <option value={mode.mode} key={index}>{mode.mode}</option>
-                )}
-              </Input>
+                <Label for="name" className="font-weight-bold mb-0 text-info">Station</Label>
+                <Select
+                  closeMenuOnSelect={false}
+                  components={animatedComponents}
+                  isMulti
+                  value={selected}
+                  options={stationSelected}
+                  onChange={handleChange}
+                  required
+                />
+
               </Col>
             </FormGroup>}
-            {/*{form3 &&*/}
-            {/*<FormGroup row>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Mode</Label>*/}
-              {/*  <Input*/}
-              {/*    style={{cursor: 'pointer'}}*/}
-              {/*    type="select"*/}
-              {/*    name="zoneInput"*/}
-              {/*    value={modeInput}*/}
-              {/*    onChange={e=>setModeInput(e.target.value)}*/}
-              {/*    // required*/}
-              {/*  >*/}
-              {/*    <option value="">select Mode</option>*/}
-              {/*    {(operatorMode && operatorInput) && operatorMode.filter((user) => user.operator_name === operatorInput).map((mode, index) =>*/}
-              {/*      <option value={mode.modecode} key={index}>{mode.modecode}</option>*/}
-              {/*    )}*/}
-              {/*  </Input>*/}
-              {/*</Col>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Zone</Label>*/}
-              {/*  <Input*/}
-              {/*    style={{cursor: 'pointer'}}*/}
-              {/*    type="select"*/}
-              {/*    name="zoneInput"*/}
-              {/*    value={zoneInput}*/}
-              {/*    onChange={e=>setZoneInput(e.target.value)}*/}
-              {/*    // required*/}
-              {/*  >*/}
-              {/*    <option value="">select Zone</option>*/}
-              {/*    {(operatorZone) && operatorZone.map((zone, index) =>*/}
-              {/*      <option value={zone.zoneCode} key={index}>{zone.zoneCode}</option>*/}
-              {/*    )}*/}
-              {/*  </Input>*/}
-              {/*</Col>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Area</Label>*/}
-              {/*  <Input*/}
-              {/*    style={{cursor: 'pointer'}}*/}
-              {/*    type="select"*/}
-              {/*    name="areaInput"*/}
-              {/*    value={areaInput}*/}
-              {/*    onChange={e=>setAreaInput(e.target.value)}*/}
-              {/*    // required*/}
-              {/*  >*/}
-              {/*    <option value="">select Area</option>*/}
-              {/*    {(areas && zoneInput) && areas.filter((user) => user.zonecode === zoneInput).map((area, index) =>*/}
-              {/*      <option value={area.xarea} key={index}>{area.xarea}</option>*/}
-              {/*    )}*/}
-              {/*  </Input>*/}
-              {/*</Col>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Route</Label>*/}
-              {/*  <Select*/}
-              {/*    closeMenuOnSelect={false}*/}
-              {/*    components={animatedComponents}*/}
-              {/*    isMulti*/}
-              {/*    options={routeSelected}*/}
-              {/*    value={selected2}*/}
-              {/*    onChange={handleChange3}/>*/}
-              {/*  /!*<Input*!/*/}
-              {/*  /!*  style={{cursor: 'pointer'}}*!/*/}
-              {/*  /!*  type="select"*!/*/}
-              {/*  /!*  name="routeInput"*!/*/}
-              {/*  /!*  value={routeInput}*!/*/}
-              {/*  /!*  onChange={e=>setRouteInput(e.target.value)}*!/*/}
-              {/*  /!*  // required*!/*/}
-              {/*  /!*>*!/*/}
-              {/*  /!*  <option value="">select Route</option>*!/*/}
-              {/*  /!*  {(routes && areaInput) && routes.filter((user) => user.areacode === areaInput).map((route, index) =>*!/*/}
-              {/*  /!*    <option value={route.route} key={index}>{route.route}</option>*!/*/}
-              {/*  /!*  )}*!/*/}
-              {/*  /!*</Input>*!/*/}
-              {/*</Col>*/}
-              {/*<Col md="12">*/}
-              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Route</Label>*/}
-              {/*  <Select*/}
-              {/*    closeMenuOnSelect={false}*/}
-              {/*    components={animatedComponents}*/}
-              {/*    isMulti*/}
-              {/*    options={modeSelected}*/}
-              {/*    value={selected2}*/}
-              {/*    onChange={handleChange3}/>*/}
-              {/*</Col>*/}
-            {/*</FormGroup>}*/}
-            {/*{form4 &&*/}
-            {/*<FormGroup row>*/}
-            {/*  <Col md="6">*/}
-            {/*    <Label for="name" className="font-weight-bolder mb-0 text-info">Bank Name</Label>*/}
-            {/*    <Input type="text"  name="bankName" onChange={onChange} value={bankName}  required/>*/}
-            {/*  </Col>*/}
-            {/*  <Col md="6">*/}
-            {/*    <Label for="name" className="font-weight-bold mb-0 text-info"> Bank Account Name</Label>*/}
-            {/*    <Input type="text"  name="accountName" onChange={onChange} value={accountName} required />*/}
-            {/*  </Col>*/}
-            {/*  <Col md="6">*/}
-            {/*    <Label for="name" className="font-weight-bold mb-0 text-info">Bank Account Number</Label>*/}
-            {/*    <Input type="text"  name="accountNumber" onChange={onChange} value={accountNumber} required />*/}
-            {/*  </Col>*/}
-            {/*</FormGroup>*/}
-            {/*}*/}
-
             <div className="d-flex justify-content-md-end">
               {form2  &&
               <Button color="primary" type="button" className="mr-1" onClick={onClickBack1} >Back</Button>
               }
-              {/*{form3  &&*/}
-              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickBack2} >Back</Button>*/}
-              {/*}*/}
-              {/*{form4  &&*/}
-              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickBack3} >Back</Button>*/}
-              {/*}*/}
               {form1 &&
               <Button color="primary" type="button" className="mr-1" onClick={onClickContinue1}>Continue</Button>
               }
-              {/*{form2 &&*/}
-              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickContinue2}>Next</Button>*/}
-              {/*}*/}
-              {/*{form3 &&*/}
-              {/*<Button color="primary" type="button" className="mr-1" onClick={onClickContinue3}>Next</Button>*/}
-              {/*}*/}
               {form2 &&
               <Button color="primary" type="submit" className="mr-1" >Submit</Button>
               }
-              {/*<Button color="primary" type="submit" className="mr-1" >Submit</Button>{' '}*/}
-              {/*<Button color="secondary" onClick={toggle}>Cancel</Button>*/}
             </div>
           </Form>
         </ModalBody>

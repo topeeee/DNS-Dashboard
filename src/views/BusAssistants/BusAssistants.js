@@ -4,7 +4,7 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {getBusAssistants, searchBusAssistants} from "../../store/actions/busAssistantAction";
+import {getBusAssistants, getOsStation, searchBusAssistants} from "../../store/actions/busAssistantAction";
 import BusAssistantHeader from "./components/BusAssistantHeader";
 import BusAssistantActionBtn from "./components/BusAssistantActionBtn";
 import {isLamata} from "../../environments/constants";
@@ -14,6 +14,16 @@ import {isLamata} from "../../environments/constants";
 
 function UserRow(props) {
   const user = props.user;
+  const oaStations = props.oaStations
+
+
+  const getStation = (id) => {
+    const stationArr = [];
+    oaStations.filter(station => station.operationassitantId == id).map(oaStation=> {
+      stationArr.push(oaStation.stationCode)
+    })
+    return stationArr.join(", ")
+  }
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -28,10 +38,7 @@ function UserRow(props) {
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.phoneNo}</td>
-      {/*<td>{user.residentialAddress}</td>*/}
-      {/*<td>{user.email}</td>*/}
-      {/*<td>Not Available</td>*/}
-      {/*<td>Not Available</td>*/}
+      {(user && oaStations) &&  <td>{getStation(user.id)}</td>}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -40,13 +47,8 @@ function UserRow(props) {
   )
 }
 
-const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error}) => {
+const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading,  searchBusAssistants, error, getOaStation, oaStations}) => {
   const [formData, setFormData] = useState('');
-
-
-
-
-
 
 
   useEffect(()=>{
@@ -55,6 +57,10 @@ const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading
 
     }
   },[formData]);
+
+  useEffect(()=> {
+    getOaStation();
+  },[busAssistants])
 
 
   const onChange = (e) =>{
@@ -111,6 +117,7 @@ const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
+                  <th scope="col">Station(s)</th>
                   {/*<th scope="col">Residential Address</th>*/}
                   {/*<th scope="col">Email Address</th>*/}
                   {/*<th scope="col">App status</th>*/}
@@ -122,7 +129,7 @@ const BusAssistants = ({getBusAssistants, busAssistants, busAssistant, isLoading
                 </thead>
                 <tbody>
                 {busAssistants && busAssistants.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} oaStations={oaStations}/>
                 )}
                 {busAssistant &&
                 <UserRow user={busAssistant}/>
@@ -141,6 +148,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getBusAssistants: () => dispatch(getBusAssistants()),
     searchBusAssistants: (id) => dispatch(searchBusAssistants(id)),
+    getOaStation: () => dispatch(getOsStation())
   };
 }
 
@@ -149,6 +157,7 @@ const mapStateToProps = state => ({
   busAssistant: state.busAssistants.busAssistant,
   error: state.busAssistants.error,
   isLoading: state.busAssistants.isLoading,
+  oaStations: state.busAssistants.oaStations,
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(BusAssistants);
