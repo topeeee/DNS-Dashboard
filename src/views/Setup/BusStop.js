@@ -12,7 +12,7 @@ import BusStopActionBtn from "./components/BusStopActionBtn";
 import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
 import {getAreas} from "../../store/actions/areaAction";
 import api from "../../environments/environment";
-import  { encrypt , decrypt } from 'react-crypt-gsm';
+
 
 
 

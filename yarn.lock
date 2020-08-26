@@ -9345,11 +9345,6 @@ react-chartjs-2@^2.7.6:
     lodash "^4.17.4"
     prop-types "^15.5.8"
 
-react-crypt-gsm@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-crypt-gsm/-/react-crypt-gsm-1.0.4.tgz#d777a945544268d5676b6464ae0559aec29173f7"
-  integrity sha512-Yt+JHSb6/zBNpAPcAj6LFf5dqgGcjChDBSu85FU3oAsS+0qbgkwDq4uHUM7GnjuTDJZBmIE6am9Pfyi8wMVtXA==
-
 react-dev-utils@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.2.1.tgz#f6de325ae25fa4d546d09df4bb1befdc6dd19c19"
