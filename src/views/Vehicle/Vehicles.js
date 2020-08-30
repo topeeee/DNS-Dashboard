@@ -122,7 +122,7 @@ const Vehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, er
               <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
               {((vehicles && vehicles.length > 0) || vehicle) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Mode</th>
                   {(isAdmin || isOperator || isPartner) &&  <th scope="col">Vehicle Make</th>}

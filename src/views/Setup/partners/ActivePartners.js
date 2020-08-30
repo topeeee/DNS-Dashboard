@@ -7,9 +7,7 @@ import Spinner from "../../../spinner/Spinner";
 import PartnerActionBtn from "./components/PartnerActionBtn";
 import {getPartners} from "../../../store/actions/partnerAction";
 import PartnerHeader from "./components/PartnerHeader";
-import axios from "axios";
-import api from "../../../environments/environment";
-import {isAdmin, isLamata, isOperator, OperatorName} from "../../../environments/constants";
+import {isAdmin, isLamata, isOperator} from "../../../environments/constants";
 import {getVehicles} from "../../../store/actions/vehicleAction";
 
 
@@ -45,46 +43,11 @@ function UserRow(props) {
 
 const ActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
-  const [partnerId, setPartnerId] = useState([]);
-  const [operatorPartner, setOperatorPartner] = useState([]);
-
-  async function getPartnerId() {
-    try {
-      const res = await axios.get(`${api.vehicle}/api/operator/partners?operator=${OperatorName}`);
-      setPartnerId(res.data.partnerId)
-
-    }catch (e) {
-
-    }
-  }
 
   useEffect(()=>{
     getPartners();
     getVehicles();
   },[]);
-
-  useEffect(()=> {
-    if(isOperator) {
-      getPartnerId();
-    }
-  },[isOperator]);
-
-  useEffect(()=> {
-    if(partnerId.length > 0 && partners) {
-      let operatorPartner = [];
-      partnerId.forEach((id=> {
-        partners.map(partner=> {
-          if(partner.id == id) {
-            operatorPartner.push(partner)
-          }
-        })
-      }));
-      setOperatorPartner(operatorPartner)
-    }
-  },[partnerId, partners]);
-
-
-
 
   const onChange = (e) =>{
     e.preventDefault();
@@ -130,7 +93,7 @@ const ActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicles
               <div className="animated fadeIn pt-1 text-center">No Partners Available</div>}
               {((partners && partners.length > 0)) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}
@@ -144,10 +107,7 @@ const ActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicles
                 </tr>
                 </thead>
                 <tbody>
-                {(partners && (isAdmin || isLamata))? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
-                  <UserRow key={index} user={operator} vehicles={vehicles}/>
-                ):null}
-                {(operatorPartner && isOperator)? operatorPartner.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
+                {partners ? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 1).map((operator, index) =>
                   <UserRow key={index} user={operator} vehicles={vehicles}/>
                 ):null}
                 </tbody>

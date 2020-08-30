@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {isLamata, isOperator, OperatorId} from "../../environments/constants";
+import {isAdmin, isLamata, isOperator, OperatorId} from "../../environments/constants";
 import api from "../../environments/environment";
 
 
@@ -128,7 +128,7 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
               <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
               {((users && users.length > 0) || user) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">ID</th>*/}
                   {/*<th scope="col">Zeno PIN</th>*/}

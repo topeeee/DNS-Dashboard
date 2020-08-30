@@ -114,7 +114,7 @@ const PendingDrivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, 
               <div className="animated fadeIn pt-1 text-center">No Driver Available</div>}
               {((drivers && drivers.length > 0) || driver) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>

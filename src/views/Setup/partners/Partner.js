@@ -4,11 +4,10 @@ import {getOperators, searchOperator} from "../../../store/actions/operatorActio
 import {connect} from "react-redux";
 import axios from "axios"
 import api from "../../../environments/environment";
-import {isLamata} from "../../../environments/constants";
+import {isAdmin, isLamata} from "../../../environments/constants";
 
 
 const Operator = ({getOperators, operators, operator, isLoading,  searchOperator, error, match, states})=> {
-  // const [operator, setOperator] = useState([]);
   const [newOperator, setNewOperator] = useState({});
   const [operatorVehicle, setOperatorVehicle] = useState([]);
   const [operatorZone, setOperatorZone] = useState([]);
@@ -75,7 +74,7 @@ useEffect(()=>{
         <Row className="d-flex align-items-center justify-content-center">
           <Col lg={6}>
             <Card>
-              <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+              <CardHeader className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <strong className="text-white"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
               </CardHeader>
               <CardBody >

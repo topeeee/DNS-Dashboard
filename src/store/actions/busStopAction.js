@@ -74,7 +74,6 @@ export const updateBusStop = (id,stationcode,station,routecode, direction, speed
 export const searchBusStop = (id) => async dispatch => {
   try {
     const res = await axios.get(`${api.busStop}${id}/`);
-    console.log(res.data)
     // dispatch({
     //   type: SEARCH_BUS_STOP,
     //   payload: res.data

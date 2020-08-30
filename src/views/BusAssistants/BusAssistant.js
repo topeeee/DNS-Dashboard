@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import {getBusAssistants, getOsStation} from "../../store/actions/busAssistantAction";
-import {isLamata} from "../../environments/constants";
+import {isAdmin, isLamata} from "../../environments/constants";
 
 
 const BusAssistant = ({getBusAssistants, match, busAssistants, getOaStation, oaStations})=> {
@@ -60,7 +60,7 @@ const BusAssistant = ({getBusAssistants, match, busAssistants, getOaStation, oaS
       <Row className="d-flex align-items-center justify-content-center">
         <Col lg={6}>
           <Card>
-            <CardHeader className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+            <CardHeader className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
               <strong className="text-white"><i className="icon-info pr-1"></i>User id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >

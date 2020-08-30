@@ -65,7 +65,7 @@ const Mode = ({getModes, modes, mode, isLoading,  searchMode, error, getStates, 
   //   }
   // },[modes]);
 
-// console.log(operatorMode, 'ffffffffff')
+
 
   const onChange = (e) =>{
     e.preventDefault();

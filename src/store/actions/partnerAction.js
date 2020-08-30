@@ -13,14 +13,28 @@ import {
 import  axios from 'axios'
 import api from "../../environments/environment";
 import {createUser} from "./userAction";
+import {isOperator, OperatorName} from "../../environments/constants";
 
 export const getPartners = () => async dispatch => {
   try {
     dispatch(isLoading());
     const res = await axios.get(`${api.partner}/api/all/partners/`);
+    let operatorPartner = [];
+   if(isOperator) {
+     const res1 = await axios.get(`${api.vehicle}/api/operator/partners?operator=${OperatorName}`);
+     if(res1.data.partnerId.length > 0 && res.data.length > 0) {
+       res1.data.partnerId.forEach((id=> {
+         res.data.map(partner=> {
+           if(partner.id == id) {
+             operatorPartner.push(partner)
+           }
+         })
+       }));
+     }
+   }
     dispatch({
       type:  PARTNER_BY_USER,
-      payload: res.data
+      payload: isOperator ? operatorPartner: res.data
     });
   } catch (err) {
     dispatch({

@@ -13,7 +13,7 @@ import {
 import OperatorHeader from "./components/OperatorHeader";
 import Spinner from "../../../spinner/Spinner";
 import OperatorActionBtn from "./components/OperatorActionBtn";
-import {isLamata} from "../../../environments/constants";
+import {isAdmin, isLamata} from "../../../environments/constants";
 import {getVehicles} from "../../../store/actions/vehicleAction";
 
 
@@ -139,7 +139,7 @@ const ActiveOperators = ({getOperators, operators, operator, isLoading,  searchO
               <div className="animated fadeIn pt-1 text-center">No Operator Available</div>}
               {((operators && operators.length > 0) || operator) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}

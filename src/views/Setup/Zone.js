@@ -64,7 +64,7 @@ const [operatorZone, setOperatorZone] = useState('');
               {isLoading && <Spinner />}
               {(zones && !isLoading) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Zone</th>
                   <th scope="col">Zone code</th>

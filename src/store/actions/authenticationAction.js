@@ -12,13 +12,11 @@ import {
 import  axios from 'axios'
 import api from "../../environments/environment";
 import React from "react";
-// import {admin} from "../../environments/constants";
 
 
 export const LogIn = (username, password) => async dispatch => {
   sessionStorage.clear();
   const body = {username, password};
-  // sessionStorage.setItem('isAdmin', username);
   try {
     const res = await axios.post(`${api.login}/api/login/`, body);
     const token  = res.data.Authorized;
@@ -29,8 +27,6 @@ export const LogIn = (username, password) => async dispatch => {
     });
     if(res.data) {
       dispatch(getAdmin(username));
-      dispatch(getOperator(username));
-      dispatch(getPartner(username));
     }
   } catch (err) {
     dispatch({
@@ -47,7 +43,6 @@ export const LogIn = (username, password) => async dispatch => {
 export const LamataLogIn = (username, password) => async dispatch => {
   sessionStorage.clear();
   const body = {username, password};
-  // sessionStorage.setItem('isAdmin', username);
   try {
     const res = await axios.post(`${api.login}/api/login/`, body);
     const token  = res.data.Authorized;
@@ -70,6 +65,60 @@ export const LamataLogIn = (username, password) => async dispatch => {
     }), 5000)
   }
 };
+
+
+export const OperatorLogIn = (username, password) => async dispatch => {
+  sessionStorage.clear();
+  const body = {username, password};
+  try {
+    const res = await axios.post(`${api.login}/api/login/`, body);
+    const token  = res.data.Authorized;
+    sessionStorage.setItem("token", token);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: token
+    });
+    if(res.data) {
+      dispatch(getOperator(username));
+    }
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err.response
+    });
+
+    setTimeout(() => dispatch({
+      type: REMOVE_AUTH_ERROR
+    }), 5000)
+  }
+};
+
+export const PartnerLogIn = (username, password) => async dispatch => {
+  sessionStorage.clear();
+  const body = {username, password};
+  try {
+    const res = await axios.post(`${api.login}/api/login/`, body);
+    const token  = res.data.Authorized;
+    sessionStorage.setItem("token", token);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: token
+    });
+    if(res.data) {
+      dispatch(getPartner(username));
+    }
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: err.response
+    });
+
+    setTimeout(() => dispatch({
+      type: REMOVE_AUTH_ERROR
+    }), 5000)
+  }
+};
+
 
 
 export function LogOut() {

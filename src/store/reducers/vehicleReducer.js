@@ -8,7 +8,10 @@ import {
   VEHICLE_ERROR,
   SEARCH_VEHICLE,
   REMOVE_VEHICLE_ERROR,
-  VEHICLE_MODAL_UPDATE, VEHICLE_BY_ALL, VEHICLE_BY_ME
+  VEHICLE_MODAL_UPDATE,
+  VEHICLE_BY_ALL,
+  VEHICLE_BY_ME,
+  VEHICLES_MONTH_QUERY
 } from "../actionTypes";
 
 const initialState = {
@@ -23,7 +26,8 @@ const initialState = {
   error: null,
   vehicleId: null,
   vehiclesAll: null,
-  vehiclesMe: null
+  vehiclesMe: null,
+  vehicleMonthQuery: null
 };
 
 function vehicleReducer(state = initialState, action) {
@@ -123,6 +127,13 @@ function vehicleReducer(state = initialState, action) {
       return {
         ...state,
         error: null,
+
+      };
+    }
+    case VEHICLES_MONTH_QUERY: {
+      return {
+        ...state,
+        vehicleMonthQuery: payload,
 
       };
     }

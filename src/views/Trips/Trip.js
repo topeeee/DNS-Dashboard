@@ -5,6 +5,7 @@ import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
 import Spinner from "../../spinner/Spinner";
 import api from "../../environments/environment";
+import {isAdmin} from "../../environments/constants";
 
 
 const Trip = ({match, getDrivers, drivers})=> {
@@ -132,7 +133,7 @@ useEffect(()=> {
         <Col lg={6}>
           {(trip && driverDetails && userDetails && stateDetails && vehicle) &&
           <Card>
-            <CardHeader className="bg-dark">
+            <CardHeader className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
               <strong><i className="icon-info pr-1"></i>Trip id: {match.params.id}</strong>
             </CardHeader>
             <CardBody >

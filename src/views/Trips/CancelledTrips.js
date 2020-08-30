@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table,Input} from 'reactstrap';
 import {getTrips, searchTrip} from "../../store/actions/tripAction";
-import DateRangePicker from "react-bootstrap-daterangepicker";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import TripActionBtn from "./components/TripActionBtn";
+import {isAdmin} from "../../environments/constants";
 
 
 
@@ -104,7 +104,7 @@ const CancelledTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error}) 
               {/*{(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}*/}
               {/*{((trips && trips.length > 0) || trip ) &&*/}
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">ID</th>*/}
                   <th scope="col">PIN</th>

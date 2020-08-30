@@ -88,7 +88,7 @@ const Service = ({getService, services, service, isLoading,  searchService, erro
                 <div className="animated fadeIn pt-1 text-center">No States Available</div> }
                 {((services && services.length > 0) || service ) &&
                 <Table responsive hover>
-                  <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                  <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                   <tr>
                     <th scope="col">Service</th>
                     <th scope="col">Service Code</th>

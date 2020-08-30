@@ -13,7 +13,8 @@ import {
   UPDATE_VEHICLE,
   VEHICLE_MODAL_UPDATE,
   VEHICLE_BY_ALL,
-  VEHICLE_BY_ME
+  VEHICLE_BY_ME,
+  VEHICLES_MONTH_QUERY
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -274,6 +275,16 @@ export const RequestAll= (id) => async dispatch => {
       type: REMOVE_VEHICLE_ERROR
     }), 5000)
   }
+};
+
+export const getVehiclesMonthQuery = (year) => async dispatch => {
+  try {
+    const res = await axios.get(`${api.vehicle}/api/monthquery/?year=${year}`)
+    dispatch({
+      type: VEHICLES_MONTH_QUERY,
+      payload: res.data
+    });
+  } catch (err) {}
 };
 
 

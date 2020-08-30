@@ -18,12 +18,12 @@ import {
 } from 'reactstrap';
 import zeno from "../../../assets/img/brand/mini-New-Logo-RGB.png";
 import {AppNavbarBrand} from "@coreui/react";
-import {LamataLogIn} from "../../../store/actions/authenticationAction";
+import {OperatorLogIn} from "../../../store/actions/authenticationAction";
 
 
 
 
-const LamataLogin  = ({LogIn, isAuthenticated, errors, admin, operator, partner, lamata}) => {
+const OperatorLogin  = ({LogIn, isAuthenticated, errors, operator}) => {
   const [formData, setFormData] = useState({username: '', password: ''});
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ const LamataLogin  = ({LogIn, isAuthenticated, errors, admin, operator, partner,
   const { username, password } = formData;
 
   function  setError() {
-    if( !lamata && errors ) {
+    if( !operator && errors ) {
       setIsLoading(false);
       setIsError(true);
       setTimeout(()=> {
@@ -49,18 +49,18 @@ const LamataLogin  = ({LogIn, isAuthenticated, errors, admin, operator, partner,
 
 useEffect(()=> {
   setError();
-},[lamata, errors]);
+},[operator, errors]);
 
 
-  const isLamata = sessionStorage.getItem('isLamata');
+  const isOperator = sessionStorage.getItem('isOperator');
   const token = sessionStorage.getItem("token");
 
-  if ((isAuthenticated && lamata) || (isLamata && token)) {
-    sessionStorage.setItem('isLamata', lamata);
+  if ((isAuthenticated && operator) || (isOperator && token)) {
+    sessionStorage.setItem('isOperator', operator);
     setTimeout(()=> {
       window.location.reload()
     },0);
-    return <Redirect to="/lamata" />;
+    return <Redirect to="/operator" />;
   }
 
 
@@ -131,7 +131,7 @@ useEffect(()=> {
     );
   };
 
-LamataLogin.propTypes = {
+OperatorLogin.propTypes = {
   LogIn: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
@@ -139,17 +139,14 @@ LamataLogin.propTypes = {
 
 function mapDispatchToProps(dispatch) {
   return {
-    LogIn: (username, password) => dispatch(LamataLogIn(username,  password))
+    LogIn: (username, password) => dispatch(OperatorLogIn(username,  password))
   };
 }
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  admin: state.auth.admin,
-  lamata: state.auth.lamata,
   operator: state.auth.operator,
-  partner: state.auth.partner,
   errors: state.auth.errors
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LamataLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(OperatorLogin);

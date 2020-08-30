@@ -9,7 +9,8 @@ import {
   BUS_ASSISTANT_STATUS,
   BUS_ASSISTANT_MODAL_UPDATE,
   UPDATE_BUS_ASSISTANT,
-  OPERATION_ASSISTANT_STATION
+  OPERATION_ASSISTANT_STATION,
+  OPERATION_ASSISTANT_MONTH_QUERY
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -170,3 +171,13 @@ export function isLoading() {
     type: LOADING_BUS_ASSISTANT,
   };
 }
+
+export const getOperationAssistantsMonthQuery = (year) => async dispatch => {
+  try {
+    const res = await axios.get(`${api.operationAssistant}/api/monthquery/?year=${year}`)
+    dispatch({
+      type: OPERATION_ASSISTANT_MONTH_QUERY,
+      payload: res.data
+    });
+  } catch (err) {}
+};

@@ -77,7 +77,7 @@ const Routes = ({RouteUser, routes, isLoading, areas, getAreas}) => {
               {(routes && routes.length === 0 && !isLoading) && <div className="animated fadeIn pt-1 text-center">No Routes Available</div>}
               {(routes && routes.length > 0 && !isLoading) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">Route</th>
                   <th scope="col">Route code</th>

@@ -7,7 +7,7 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import Spinner from "../../spinner/Spinner";
 import TripActionBtn from "./components/TripActionBtn";
 import {getUsers} from "../../store/actions/userAction";
-import {isLamata} from "../../environments/constants";
+import {isAdmin, isLamata} from "../../environments/constants";
 
 
 
@@ -124,7 +124,7 @@ const CompletedTrips = ({getTrips, trips, trip, isLoading,  searchTrip, error, u
               {(trips && trips.length === 0) && <div className="animated fadeIn pt-1 text-center">No Trips Available</div>}
               {((trips && trips.length > 0) || trip ) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">PIN</th>

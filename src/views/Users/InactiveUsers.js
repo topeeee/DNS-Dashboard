@@ -128,7 +128,7 @@ const InactiveUsers = ({getUsers, users, user, isLoading,  searchUser, error}) =
               <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
               {((users && users.length > 0) || user) &&
               <Table responsive hover>
-                <thead className="bg-dark">
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">ID</th>*/}
                   <th scope="col">PIN</th>

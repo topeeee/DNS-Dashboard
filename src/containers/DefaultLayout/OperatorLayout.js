@@ -23,7 +23,7 @@ import Spinner from "../../spinner/Spinner";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
-const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
+const DefaultHeader = React.lazy(() => import('./OperatorHeader'));
 
 class OperatorLayout extends Component {
 
@@ -33,13 +33,13 @@ class OperatorLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed className="bg-dark" style={{border: "none"}}>
+        <AppHeader fixed  style={{border: 'none', backgroundColor: "#00BFFF"}}>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader />
           </Suspense>
         </AppHeader>
         <div className="app-body">
-          <AppSidebar fixed display="lg">
+          <AppSidebar fixed display="lg" style={{backgroundColor: "#00BFFF"}}>
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
@@ -76,7 +76,7 @@ class OperatorLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter className="bg-dark">
+        <AppFooter className="bg-twitter">
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

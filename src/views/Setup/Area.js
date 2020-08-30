@@ -108,7 +108,7 @@ const Area = ({getAreas, areas, area, isLoading,  searchArea, error, zones,  Zon
               <div className="animated fadeIn pt-1 text-center">No Area Available</div>}
               {((areas && areas.length > 0) || area) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   {/*<th scope="col">Id</th>*/}
                   {/*<th scope="col">Area Code</th>*/}

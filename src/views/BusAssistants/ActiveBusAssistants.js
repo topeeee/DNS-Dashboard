@@ -7,7 +7,7 @@ import Spinner from "../../spinner/Spinner";
 import {getBusAssistants, getOsStation, searchBusAssistants} from "../../store/actions/busAssistantAction";
 import BusAssistantHeader from "./components/BusAssistantHeader";
 import BusAssistantActionBtn from "./components/BusAssistantActionBtn";
-import {isLamata} from "../../environments/constants";
+import {isAdmin, isLamata} from "../../environments/constants";
 
 
 
@@ -116,7 +116,7 @@ const ActiveBusAssistants = ({getBusAssistants, busAssistants, busAssistant, isL
               <div className="animated fadeIn pt-1 text-center">No Bus Assistant Available</div>}
               {((busAssistants && busAssistants.length > 0) || busAssistant) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>

@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../../spinner/Spinner";
 import PartnerActionBtn from "./components/PartnerActionBtn";
 import {getPartners} from "../../../store/actions/partnerAction";
 import PartnerHeader from "./components/PartnerHeader";
-import axios from "axios";
-import api from "../../../environments/environment";
-import {isAdmin, isLamata, isOperator, OperatorName} from "../../../environments/constants";
+import {isAdmin, isLamata, isOperator} from "../../../environments/constants";
 import {getVehicles} from "../../../store/actions/vehicleAction";
 
 
@@ -33,7 +31,6 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       {!isLamata &&<td>{user.email}</td>}
       {!isLamata &&<td>{user.officeAddress}</td>}
-      {/*<td>{user.numberOfVehicle}</td>*/}
       {vehicles ? <td>{vehicles.filter(vehicle => vehicle.partner_id == user.id).length}</td>
         :<td>0</td>}
       {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
@@ -45,48 +42,13 @@ function UserRow(props) {
 
 const InActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
-  const [partnerId, setPartnerId] = useState([]);
-  const [operatorPartner, setOperatorPartner] = useState([]);
-
-  async function getPartnerId() {
-    try {
-      const res = await axios.get(`${api.vehicle}/api/operator/partners?operator=${OperatorName}`);
-      setPartnerId(res.data.partnerId)
-
-    }catch (e) {
-
-    }
-  }
 
   useEffect(()=>{
     getPartners();
     getVehicles();
   },[]);
 
-  useEffect(()=> {
-    if(isOperator) {
-      getPartnerId();
-    }
-  },[isOperator]);
-
-  useEffect(()=> {
-    if(partnerId.length > 0 && partners) {
-      let operatorPartner = [];
-      partnerId.forEach((id=> {
-        partners.map(partner=> {
-          if(partner.id == id) {
-            operatorPartner.push(partner)
-          }
-        })
-      }));
-      setOperatorPartner(operatorPartner)
-    }
-  },[partnerId, partners]);
-
-
-
-
-  const onChange = (e) =>{
+   const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
@@ -124,16 +86,12 @@ const InActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicl
             {isLoading && <Spinner />}
             {!isLoading &&
             <CardBody>
-              {/*{error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}*/}
-              {/*{isLoading && loading()}*/}
               {(partners && partners.length === 0) &&
               <div className="animated fadeIn pt-1 text-center">No Partners Available</div>}
               {((partners && partners.length > 0)) &&
               <Table responsive hover>
-                <thead className={isLamata? 'bg-twitter': 'bg-dark'} style={{color: '#696969'}}>
+                <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
-                  {/*<th scope="col">Id</th>*/}
-                  {/*<th scope="col">Area Code</th>*/}
                   <th scope="col">Name</th>
                   <th scope="col">Phone</th>
                   {!isLamata &&<th scope="col">Email</th>}
@@ -144,10 +102,7 @@ const InActivePartners = ({getPartners, partners, isLoading, vehicles, getVehicl
                 </tr>
                 </thead>
                 <tbody>
-                {(partners && (isAdmin || isLamata))? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
-                  <UserRow key={index} user={operator} vehicles={vehicles}/>
-                ):null}
-                {(operatorPartner && isOperator)? operatorPartner.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
+                {partners ? partners.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status == 0).map((operator, index) =>
                   <UserRow key={index} user={operator} vehicles={vehicles}/>
                 ):null}
                 </tbody>

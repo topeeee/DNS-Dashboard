@@ -14,12 +14,12 @@ const propTypes = {
 
 const defaultProps = {};
 
-class LamataHeader extends Component {
+class PartnerHeader extends Component {
   signOut(e) {
     e.preventDefault();
     this.props.LogOut()
     sessionStorage.clear()
-    return <Redirect to="/lamata/login" />
+    return <Redirect to="/partner/login" />
   }
   render() {
 
@@ -89,8 +89,8 @@ class LamataHeader extends Component {
   }
 }
 
-LamataHeader.propTypes = propTypes;
-LamataHeader.defaultProps = defaultProps;
+PartnerHeader.propTypes = propTypes;
+PartnerHeader.defaultProps = defaultProps;
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -98,4 +98,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(LamataHeader);
+export default connect(null, mapDispatchToProps)(PartnerHeader);

@@ -6,6 +6,8 @@ import {LogIn} from "../../store/actions/authenticationAction";
 import Spinner from "../../spinner/Spinner";
 import {isAdmin} from "../../environments/constants";
 import LamataLogin from "../Pages/Login/LamataLogin";
+import OperatorLogin from "../Pages/Login/OperatorLogin";
+import PartnerLogin from "../Pages/Login/PartnerLogin";
 // import PrivateRoute from "../../routes/PrivateRoutes";
 
 
@@ -32,10 +34,10 @@ const PrivateRoute = ({ isLoggedIn, isAdmin, stored, ...props }) =>
   ((isLoggedIn && isAdmin) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
 
 const OperatorRoute = ({ isLoggedIn, isOperator, stored, ...props }) =>
-  ((isLoggedIn && isOperator) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
+  ((isLoggedIn && isOperator) || stored) ? <Route { ...props } /> : <Redirect to="/operator/login" />;
 
 const PartnerRoute = ({ isLoggedIn, isPartner, stored, ...props }) =>
-  ((isLoggedIn && isPartner) || stored) ? <Route { ...props } /> : <Redirect to="/login" />;
+  ((isLoggedIn && isPartner) || stored) ? <Route { ...props } /> : <Redirect to="/partner/login" />;
 
 const LamataRoute = ({ isLoggedIn, isLamata, stored, ...props }) =>
   ((isLoggedIn && isLamata) || stored) ? <Route { ...props } /> : <Redirect to="/lamata/login" />;
@@ -75,6 +77,8 @@ const Home = ({ isAuthenticated, operator, admin, token, partner, lamata}) => {
             <Switch>
               <Route exact path="/login" name="Login Page" render={props => <Login {...props}/>} />
               <Route exact path="/lamata/login" name="Lamata Login Page" render={props => <LamataLogin {...props}/>} />
+              <Route exact path="/operator/login" name="Operator Login Page" render={props => <OperatorLogin {...props}/>} />
+              <Route exact path="/partner/login" name="Partner Login Page" render={props => <PartnerLogin {...props}/>} />
               <Route exact path="/register" name="Register Page" render={props => <Register {...props}/>} />
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
               <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />

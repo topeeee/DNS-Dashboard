@@ -1,5 +1,3 @@
-// const OperatorName = sessionStorage.getItem('OperatorName');
-
 import {PartnerName} from "./environments/constants";
 
 export default {
@@ -7,20 +5,13 @@ export default {
 
     {
       title: true,
-      name: PartnerName,
+      name: `${PartnerName} DashBoard`,
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center, text-success'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-center, text-dark'             // optional class names space delimited list for title item ex: "text-center"
     },
-
-
-
-
-
-
-
     {
       name: 'Vehicles',
       icon: 'icon-people',
