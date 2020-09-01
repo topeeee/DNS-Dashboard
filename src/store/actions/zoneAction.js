@@ -8,16 +8,30 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {isOperator, OperatorName} from "../../environments/constants";
 
 
 
 export const ZoneUser = () => async dispatch => {
   try {
     dispatch(isLoading());
+    const operatorZones = [];
     const res = await axios.get(`${api.zone}/api/zones/`);
+    if(isOperator && res.data.length > 0) {
+      const res1 = await axios.get(`${api.operatorZone}/api/operatorzones/?search=${OperatorName}`);
+      if(res1.data.length > 0) {
+        res1.data.map(operatorZone => {
+          res.data.map(zone => {
+            if(zone.zone === operatorZone.zoneCode){
+              operatorZones.push(zone)
+            }
+          })
+        })
+      }
+    }
     dispatch({
       type: ZONE_BY_USER,
-      payload: res.data
+      payload: isOperator ? operatorZones : res.data
     });
   } catch (err) {}
 };

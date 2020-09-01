@@ -29,30 +29,6 @@ export default {
 
         },
         {
-          name: 'Zones',
-          url: '/operator/zones',
-          // icon: 'icon-puzzle',
-          attributes: { className: "bg-white", style: { color: "black" }}
-        },
-        {
-          name: 'Areas',
-          url: '/operator/areas',
-          // icon: 'icon-puzzle',
-          attributes: { className: "bg-white", style: { color: "black" }}
-        },
-        {
-          name: 'Routes',
-          url: '/operator/routes',
-          // icon: 'icon-puzzle',
-          attributes: { className: "bg-white", style: { color: "black" }}
-        },
-        {
-          name: 'Bus Stop',
-          url: '/operator/busstops',
-          // icon: 'icon-puzzle',
-          attributes: { className: "bg-white", style: { color: "black" }}
-        },
-        {
           name: 'Geo Fences',
           // url: '/base/jumbotrons',
           // icon: 'icon-puzzle',

@@ -323,7 +323,7 @@ export default {
       ]
     },
     {
-      name: 'Operation Assistants',
+      name: 'Operation Assis...',
       icon: 'icon-user',
       children: [
         {

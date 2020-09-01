@@ -7,9 +7,9 @@ import {
   LOADING_USER,
   USER_ERROR,
   SEARCH_USER,
-  CREATE_USER,
   REMOVE_USER_ERROR,
-  USER_STATUS
+  USER_STATUS,
+  USER_MONTH_QUERY
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
@@ -122,3 +122,13 @@ export function isLoading() {
     type: LOADING_USER,
   };
 }
+
+export const getUsersMonthQuery = (year) => async dispatch => {
+  try {
+    const res = await axios.get(`${api.user}/api/monthquery/?year=${year}`)
+    dispatch({
+      type: USER_MONTH_QUERY,
+      payload: res.data
+    });
+  } catch (err) {}
+};

@@ -12,6 +12,7 @@ import {
 import  axios from 'axios'
 import api from "../../environments/environment";
 import React from "react";
+import {OperatorName} from "../../environments/constants";
 
 
 export const LogIn = (username, password) => async dispatch => {
@@ -193,6 +194,7 @@ export const getAdmin = (username) => async dispatch => {
 export const getOperator = (username) => async dispatch => {
   try {
     const res = await axios.get(`${api.operator}/api/operators/`);
+    const res1 = await axios.get(`${api.operatorZone}/api/operatorzones/`);
     res.data.map(operator => {
       if(operator.email === username) {
         dispatch({
@@ -201,6 +203,13 @@ export const getOperator = (username) => async dispatch => {
         });
         sessionStorage.setItem('OperatorName', operator.name);
         sessionStorage.setItem('OperatorId', operator.id);
+        if(res1.data) {
+          res1.data.map(operatorZone => {
+            if(operatorZone.operatorName === operator.name) {
+              sessionStorage.setItem('OperatorZone', 'yes');
+            }
+          })
+        }
       } else {
         dispatch({
           type: AUTH_ERROR,

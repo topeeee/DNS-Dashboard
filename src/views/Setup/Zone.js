@@ -29,23 +29,23 @@ function UserRow(props) {
 const Zones = ({ZoneUser, zones, getStates, states, isLoading}) => {
 const [operatorZone, setOperatorZone] = useState('');
 
- async function getOperatorZone() {
-   try {
-     const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
-         res.data.map(operatorZone => {
-           if(operatorZone.operatorName === OperatorName) {
-             setOperatorZone(operatorZone.zoneCode)
-           }
-         })
-   }catch (e) {
-
-   }
-  }
+ // async function getOperatorZone() {
+ //   try {
+ //     const res = await axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+ //         res.data.map(operatorZone => {
+ //           if(operatorZone.operatorName === OperatorName) {
+ //             setOperatorZone(operatorZone.zoneCode)
+ //           }
+ //         })
+ //   }catch (e) {
+ //
+ //   }
+ //  }
 
   useEffect(()=>{
     ZoneUser();
     getStates();
-    getOperatorZone()
+    // getOperatorZone()
   },[]);
 
   return (
@@ -73,12 +73,12 @@ const [operatorZone, setOperatorZone] = useState('');
                 </tr>
                 </thead>
                 <tbody>
-                {(zones && (isAdmin || isLamata)) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {zones  ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
                   <UserRow key={index} user={user} state={states}/>
                 ): null}
-                {(zones && operatorZone && isOperator) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>
-                  <UserRow key={index} user={user} state={states}/>
-                ): null}
+                {/*{(zones && operatorZone && isOperator) ? zones.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.zone === operatorZone).map((user, index) =>*/}
+                {/*  <UserRow key={index} user={user} state={states}/>*/}
+                {/*): null}*/}
                 </tbody>
               </Table>}
             </CardBody>

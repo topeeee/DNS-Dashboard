@@ -69,10 +69,10 @@ const PartnerModalCreate = (props) => {
                 <Label for="name" className="font-weight-bold mb-0 text-info">Office Address</Label>
                 <Input type="text"  name="officeAddress" onChange={onChange}  value={officeAddress} required />
               </Col>
-              <Col md="6">
-                <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>
-                <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />
-              </Col>
+              {/*<Col md="6">*/}
+              {/*  <Label for="name" className="font-weight-bold mb-0 text-info">Number of Vehicles</Label>*/}
+              {/*  <Input type="number"  name="numberOfVehicle" onChange={onChange} value={numberOfVehicle} required />*/}
+              {/*</Col>*/}
             </FormGroup>
             <div className="d-flex justify-content-md-end">
               <Button color="primary" type="submit" className="mr-1 float-right">Submit</Button>

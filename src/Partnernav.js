@@ -5,12 +5,12 @@ export default {
 
     {
       title: true,
-      name: `${PartnerName} DashBoard`,
+      name: "partner dashboard",
       wrapper: {            // optional wrapper object
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-center, text-dark'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-center, text-white'             // optional class names space delimited list for title item ex: "text-center"
     },
     {
       name: 'Vehicles',

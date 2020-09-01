@@ -7,7 +7,8 @@ import {
   LOADING_USER,
   USER_ERROR,
   SEARCH_USER,
-  REMOVE_USER_ERROR
+  REMOVE_USER_ERROR,
+  USER_MONTH_QUERY
 } from "../actionTypes";
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
   DeleteID: null,
   DeleteRes: null,
   isLoading: false,
-  error: null
+  error: null,
+  userMonthQuery: null
 };
 
 function userReducer(state = initialState, action) {
@@ -90,6 +92,14 @@ function userReducer(state = initialState, action) {
 
       };
     }
+    case USER_MONTH_QUERY: {
+      return {
+        ...state,
+        userMonthQuery: payload,
+
+      };
+    }
+
     default:
       return state
   }

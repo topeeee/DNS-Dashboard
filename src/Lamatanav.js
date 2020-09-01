@@ -8,7 +8,7 @@ export default {
         element: '',        // required valid HTML5 element tag
         attributes: {}        // optional valid JS object with JS API naming ex: { className: "my-class", style: { fontFamily: "Verdana" }, id: "my-id"}
       },
-      class: 'text-white, font-weight-bold'             // optional class names space delimited list for title item ex: "text-center"
+      class: 'text-white'             // optional class names space delimited list for title item ex: "text-center"
     },
     // {
     //   name: 'Profile',
@@ -325,7 +325,7 @@ export default {
       ]
     },
     {
-      name: 'OperationAssistants',
+      name: 'Operation Assis...',
       icon: 'icon-user',
       class: "font-weight-bold",
       attributes: { style: { color: "white" }},

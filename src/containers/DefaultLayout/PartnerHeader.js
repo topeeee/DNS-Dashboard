@@ -7,6 +7,7 @@ import {AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import lamata from '../../assets/img/brand/mini-New-Logo-RGB.png'
 import {LogOut} from "../../store/actions/authenticationAction";
 import {connect} from "react-redux";
+import {PartnerName} from "../../environments/constants";
 
 const propTypes = {
   children: PropTypes.node,
@@ -58,9 +59,9 @@ class PartnerHeader extends Component {
           {/*<NavItem className="d-md-down-none">*/}
           {/*  <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>*/}
           {/*</NavItem>*/}
-          {/*<NavItem className="d-md-down-none">*/}
-          {/*  <NavLink to="#" className="nav-link"><i className="icon-location-pin"></i></NavLink>*/}
-          {/*</NavItem>*/}
+          <NavItem className="d-md-down-none">
+            <NavLink to="#" className="nav-link">{PartnerName}</NavLink>
+          </NavItem>
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
               <img src={'../../assets/img/avatars/avatar.webp'} className="img-avatar bg-white" alt="avatar" />

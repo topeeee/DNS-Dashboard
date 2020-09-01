@@ -16,14 +16,17 @@ import {
   AppSidebarNav2 as AppSidebarNav,
 } from '@coreui/react';
 // sidebar nav config
-import Operatornav from '../../Operatornav';
+import Operatornav1 from '../../Operatornav';
+import Operatornav2 from '../../Operatornav2';
 // routes config
 import Operatorroutes from '../../Operatorroutes';
 import Spinner from "../../spinner/Spinner";
+import {OperatorZone} from "../../environments/constants";
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'));
 const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./OperatorHeader'));
+const Operatornav = OperatorZone ? Operatornav1: Operatornav2
 
 class OperatorLayout extends Component {
 
@@ -33,7 +36,7 @@ class OperatorLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed  style={{border: 'none', backgroundColor: "#00BFFF"}}>
+        <AppHeader fixed  style={{border: "none", backgroundColor: "#00BFFF"}}>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader />
           </Suspense>

@@ -7,3 +7,4 @@ export const isOperator = sessionStorage.getItem('isOperator');
 export const PartnerName = sessionStorage.getItem('PartnerName');
 export const PartnerId = sessionStorage.getItem('PartnerId');
 export const isPartner = sessionStorage.getItem('isPartner');
+export const OperatorZone = sessionStorage.getItem('OperatorZone');
