@@ -67,6 +67,12 @@ useEffect(()=> {
   return (
       <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
         <Container>
+          <Row className="justify-content-center mb-3">
+            <Col md="12" className="text-center text-capitalize font-italic font-weight-bold text-primary">THE LAGOS STATE INTERMODAL TRANSPORTATION SOLUTION</Col>
+          </Row>
+          <Row className="justify-content-center mb-5">
+            <small className="font-italic">Powered by Zeno Digital Limited</small>
+          </Row>
           <Row className="justify-content-center">
             <Col md="5">
               <CardGroup>
@@ -119,6 +125,9 @@ useEffect(()=> {
                         </Col>
                       </Row>
                       <Row>
+                        <Col className="d-flex align-items-center justify-content-center">
+                          <span className="text-primary py-2 cursor" style={{cursor: "default"}} >Forget password?</span>
+                        </Col>
                       </Row>
                     </Form>
                   </CardBody>

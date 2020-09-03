@@ -1518,7 +1518,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#5F9EA0'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#2F4F4F"}}>
-                  <i className="fa fa-money fa-lg"></i>
+                  <i className="fa fa-money fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#2F4F4F"}}>N10,234,710</div>
                 <div style={{color: "#2F4F4F"}}>Gross Revenue</div>
@@ -1533,7 +1533,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#000000'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#FAEBD7"}}>
-                  <i className="fa fa-money fa-lg"></i>
+                  <i className="fa fa-money fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#FAEBD7"}}>N2,234,710</div>
                 <div style={{color: "#FAEBD7"}}>Zeno Gross Revenue </div>
@@ -1548,7 +1548,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#B8860B'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "black"}}>
-                  <i className="fa fa-money fa-lg"></i>
+                  <i className="fa fa-money fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "black"}}>N6,234,170</div>
                 <div style={{color: "black"}}>Operator Gross Revenue </div>
@@ -1563,7 +1563,7 @@ const year = new Date().getFullYear()
             <Card className="text-white bg-white" style={{borderColor: 'white'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#800000"}}>
-                  <i className="fa fa-money fa-lg"></i>
+                  <i className="fa fa-money fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#800000"}}>N1,000,2000</div>
                 <div style={{color: "#800000"}}>Maintenance Revenue</div>
@@ -1581,7 +1581,7 @@ const year = new Date().getFullYear()
             <Card className="text-white bg-warning" >
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "red"}}>
-                  <i className="large material-icons">person</i>
+                  <i className="fa fa-user fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "red"}} >{users? users.length: 0}</div>
                 <div style={{color: "red"}}>Total Users</div>
@@ -1596,7 +1596,7 @@ const year = new Date().getFullYear()
             <Card className="text-white bg-primary" >
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "green"}}>
-                  <i className="large material-icons">work</i>
+                  <i className="fa fa-briefcase fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "green"}}>{operators? operators.length: 0}</div>
                 <div style={{color: "green"}}>Total Operators</div>
@@ -1611,7 +1611,7 @@ const year = new Date().getFullYear()
             <Card className="text-white bg-danger">
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "purple"}}>
-                  <i className="large material-icons">group</i>
+                  <i className="fa fa-user fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "purple"}}>{drivers? drivers.length: 0}</div>
                 <div style={{color: "purple"}}>Total Drivers</div>
@@ -1626,7 +1626,7 @@ const year = new Date().getFullYear()
             <Card className="text-white bg-success" >
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "white"}}>
-                  <i className="large material-icons">person</i>
+                  <i className="fa fa-user fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "white"}}>{busAssistants? busAssistants.length: 0}</div>
                 <div style={{color: "white"}}>Total Operation Assistants</div>
@@ -1642,7 +1642,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#BDB76B'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#8B008B"}}>
-                  <i className="large material-icons">slow_motion_video</i>
+                  <i className="fa fa-check-circle-o fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#8B008B"}}>{trips? trips.filter((user) => user.pickStatus === "1" && user.dropStatus === "1").length: 0}</div>
                 <div style={{color: "#8B008B"}}>Total Completed Trips</div>
@@ -1656,7 +1656,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#2F4F4F'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#F0FFF0"}}>
-                  <i className="large material-icons">error</i>
+                  <i className="fa fa-window-close fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#F0FFF0"}}>{trips? trips.filter((user) => user.pickStatus === "2" && user.dropStatus === "2").length: 0}</div>
                 <div style={{color: "#F0FFF0"}}>Total Cancelled Trips</div>
@@ -1672,7 +1672,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#808000'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "black"}}>
-                  <i className="large material-icons">access_alarm</i>
+                  <i className="fa fa-clock-o fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "black"}}>{trips? trips.filter((user) => user.pickStatus === "0" && user.dropStatus === "0").length: 0}</div>
                 <div style={{color: "black"}}>Total Waiting Trips</div>
@@ -1688,7 +1688,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#F4A460'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#6A5ACD"}}>
-                  <i className="large material-icons">trending_up</i>
+                  <i className="fa fa-dashboard fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#6A5ACD"}}>{trips? trips.filter((user) => user.pickStatus === "1" && user.dropStatus === "0").length: 0}</div>
                 <div style={{color: "#6A5ACD"}}> Total Transit Trips</div>
@@ -1704,7 +1704,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#FAF0E6'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "green"}}>
-                  <i className="large material-icons">access_time</i>
+                  <i className="fa fa-clock-o fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "green"}}>13,067 hours</div>
                 <div style={{color: "green"}}>Total Transit Time</div>
@@ -1719,7 +1719,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#800000'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#B0C4DE"}}>
-                  <i className="large material-icons">rotate_right</i>
+                  <i className="fa fa-history fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#B0C4DE"}}>25,456 km</div>
                 <div style={{color: "#B0C4DE"}}>Total Distance Covered</div>
@@ -1733,7 +1733,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#4B0082'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#FFFFE0"}}>
-                  <i className="large material-icons">local_taxi</i>
+                  <i className="fa fa-automobile fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#FFFFE0"}}>{vehicles? vehicles.length:0}</div>
                 <div style={{color: "#FFFFE0"}}>Total Vehicles</div>
@@ -1748,7 +1748,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#CD5C5C'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "black"}}>
-                  <i className="large material-icons">map</i>
+                  <i className="fa fa-map-o fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "black"}}>100</div>
                 <div style={{color: "black"}}>Total Geo-Fenced Areas </div>
@@ -1765,7 +1765,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#D2691E'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#B22222"}}>
-                  <i className="large material-icons">rounded_corner</i>
+                  <i className="fa fa-map-marker fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#B22222"}}>{zones? zones.length:0}</div>
                 <div style={{color: "#B22222"}}>Total Zones </div>
@@ -1780,7 +1780,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#556B2F'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#F0E68C"}}>
-                  <i className="large material-icons">texture</i>
+                  <i className="fa fa-map-signs fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#F0E68C"}}>{areas? areas.length:0}</div>
                 <div style={{color: "#F0E68C"}}>Total Areas </div>
@@ -1795,7 +1795,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#DEB887'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#A52A2A"}}>
-                  <i className="large material-icons">swap_vert</i>
+                  <i className="fa fa-exchange fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#A52A2A"}}>{routes? routes.length:0}</div>
                 <div style={{color: "#A52A2A"}}>Total Routes </div>
@@ -1810,7 +1810,7 @@ const year = new Date().getFullYear()
             <Card className="text-white" style={{backgroundColor: '#FF7F50'}}>
               <CardBody className="pb-0">
                 <div className="float-right" style={{color: "#FFF8DC"}}>
-                  <i className="large material-icons">system_update_alt</i>
+                  <i className="fa fa-arrow-circle-o-down fa-2x"></i>
                 </div>
                 <div className="text-value" style={{color: "#FFF8DC"}}>{busStops? busStops.length:0}</div>
                 <div style={{color: "#FFF8DC"}}>Total Bus Stops </div>

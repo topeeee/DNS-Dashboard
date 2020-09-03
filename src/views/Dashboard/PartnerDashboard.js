@@ -108,7 +108,7 @@ const PartnerDashboard  = (props) => {
           <Card className="text-white" style={{backgroundColor: '#00BFFF'}}>
             <CardBody className="pb-0">
               <div className="float-right" style={{color: "white"}}>
-                <i className="large material-icons">local_taxi</i>
+                <i className="fa fa-automobile fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "white"}}>{vehicles? vehicles.length:0}</div>
               <div style={{color: "white"}}>Total Vehicles</div>
