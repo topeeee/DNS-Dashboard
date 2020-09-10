@@ -8,24 +8,42 @@ import {
   LOADING_BUS_STOP} from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {isOperator, OperatorName} from "../../environments/constants";
 
 
 
 export const BusStopUser = () => async dispatch => {
   try {
     dispatch(isLoading());
+    const operatorBusStops = [];
     const res = await axios.get(`${api.busStop}/api/stations/`);
+    if(isOperator) {
+      const res1 = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
+      const res2 = await axios.get(`${api.area}/api/xareas/`);
+      const res3 = await axios.get(`${api.route}/api/routes/`);
+      res1.data.map(operatorZone => {
+        if(operatorZone.operatorName === OperatorName) {
+         res2.data.map(area => {
+           if(area.zonecode === operatorZone.zoneCode) {
+             res3.data.map(route => {
+               if(route.areacode === area.xarea) {
+                 res.data.map(busStops => {
+                   if(busStops.routecode === route.route) {
+                     operatorBusStops.push(busStops)
+                   }
+                 })
+               }
+             })
+           }
+         })
+        }
+      })
+    }
     dispatch({
       type: BUS_STOP_BY_USER,
-      payload: res.data
+      payload: isOperator ? operatorBusStops: res.data
     });
-  } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: err.response
-    // });
-
-  }
+  } catch (err) {}
 };
 
 

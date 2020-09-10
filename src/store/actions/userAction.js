@@ -13,6 +13,7 @@ import {
 } from "../actionTypes"
 import  axios from 'axios'
 import api from "../../environments/environment";
+import {isOperator, OperatorId} from "../../environments/constants";
 
 
 
@@ -20,10 +21,23 @@ import api from "../../environments/environment";
 export const getUsers = () => async dispatch => {
   try {
     dispatch(isLoading());
+    const operatorUser = [];
     const res = await axios.get(`${api.user}/api/userdetails/`);
+    if(res.data && isOperator) {
+      const res1 = await axios.get(`${api.trip}/api/operator/passenger?operatorId=${OperatorId}`);
+      if(res1.data.length > 0) {
+        res1.data.forEach((pin=> {
+          res.data.map(user=> {
+            if(user.pin === pin) {
+              operatorUser.push(user)
+            }
+          })
+        }));
+      }
+    }
     dispatch({
       type: USER_BY_USER,
-      payload: res.data
+      payload: isOperator? operatorUser: res.data
     });
   } catch (err) {
     dispatch({

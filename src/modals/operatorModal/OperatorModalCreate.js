@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader} from 'reactstrap';
 import {connect} from "react-redux";
 import {
+  createOperator,
   getOperators,
   registerOperator,
   toggleOperatorModalCreate
@@ -25,8 +26,8 @@ const animatedComponents = makeAnimated();
 function mapDispatchToProps(dispatch) {
   return {
     toggleOperatorModalCreate: () => dispatch(toggleOperatorModalCreate()),
-    // createOperator: (pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(createOperator(pin, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
-    registerOperator: (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(registerOperator(username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
+    createOperator: (pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(createOperator(pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
+    // registerOperator: (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => dispatch(registerOperator(username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail)),
     getStates: () => dispatch(getStates()),
     ZoneUser: () => dispatch(ZoneUser()),
     getModes: () => dispatch(getModes()),
@@ -51,11 +52,10 @@ const mapStateToProps = state => ({
 
 const OperatorModalCreate = (props) => {
   const {
-    buttonLabel,
     className,
     operatorModalCreate,
     toggleOperatorModalCreate,
-    registerOperator,
+    createOperator,
     zones,
     states,
     getStates,
@@ -70,7 +70,7 @@ const OperatorModalCreate = (props) => {
     stations
   } = props;
 
-  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "1", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: ""});
+  const [formData, setFormData] = useState({name: "", email: "", phoneNo: "", officeAddress: "", status: "", numberOfVehicle: "", contactName: "", contactPhoneNo: "", contactEmail: "", pin: ""});
   const [selected, setSelected] = useState([]);
   const [selected1, setSelected1] = useState([]);
   const [selected2, setSelected2] = useState([]);
@@ -82,10 +82,9 @@ const OperatorModalCreate = (props) => {
   const [stationSelected, setStationSelected] = useState([]);
   const [form1, setForm1] = useState(true);
   const [form2, setForm2] = useState(false);
-  const [isZone, setIsZone] = useState(false);
 
   const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const { name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail } = formData;
+  const { name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail, pin } = formData;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -162,7 +161,7 @@ const OperatorModalCreate = (props) => {
 
   const onClickContinue1 = async (e) => {
     e.preventDefault();
-    registerOperator(email, "password",  name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail);
+    createOperator(pin, name, email,email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail);
     setForm1(false);
     setForm2(true);
   };
@@ -234,7 +233,7 @@ const OperatorModalCreate = (props) => {
   useEffect(()=> {
     if (stations) {
       const body = [];
-      stations.forEach((res)=> {
+      stations.filter(station => station.service !== 'First mile - Last mile').forEach((res)=> {
         body.push({ value: res.station, label: res.station });
         setStationSelected(body);
       })

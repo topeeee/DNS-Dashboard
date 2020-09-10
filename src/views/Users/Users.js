@@ -1,36 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import axios from "axios"
-import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {getUsers, searchUser} from "../../store/actions/userAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 import UserActionBtn from "./components/UserActionBtn";
-import {isAdmin, isLamata, isOperator, OperatorId} from "../../environments/constants";
-import api from "../../environments/environment";
+import {isAdmin, isLamata} from "../../environments/constants";
+import Pagination from "react-js-pagination";
 
 
 
 
 function UserRow(props) {
   const user = props.user;
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Inactive' ? 'danger' :
-            'primary'
-  };
+
   return (
     <tr key={user.id}>
-      {/*<td>{user.pin}</td>*/}
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
-      {/*{user.phoneNumber?<td>{'0' + user.phoneNumber.substr(4)}</td>: null}*/}
-      {/*<td>{user.email}</td>*/}
-      {/*{(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}*/}
-      {/*{(user.status === "0" || user.status === null) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}*/}
       <td> <UserActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
@@ -38,52 +26,43 @@ function UserRow(props) {
 
 const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
   const [formData, setFormData] = useState('');
-  const [userPin, setUserPin] = useState([]);
-  const [operatorPassenger, setOperatorPassenger] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
 
-  const isAdmin = sessionStorage.getItem('isAdmin');
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
-  async function getUsersPin() {
-    try {
-      const res = await axios.get(`${api.trip}/api/operator/passenger?operatorId=${OperatorId}`);
-      setUserPin(res.data.pins);
-    }catch (e) {
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0)
+  };
 
-    }
-  }
-
-  useEffect(()=>{
-    if(formData === ''){
-      getUsers()
+  useEffect(()=> {
+    if(formData && users){
+      setCurrentPage(1)
+      const search = users.filter(post => {
+        return (post.firstName.toLowerCase().includes(formData.toLowerCase()) || post.lastName.toLowerCase().includes(formData.toLowerCase()))
+      });
+      setPosts(search)
     }
   },[formData]);
 
   useEffect(()=> {
-    if(isOperator) {
-      getUsersPin()
+    if(users && !formData) {
+      setPosts(users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
     }
-  },[isOperator]);
+  },[users, formData]);
 
-  useEffect(()=> {
-    if(userPin.length > 0 && users) {
-      let operatorUser = [];
-      userPin.forEach((pin=> {
-        users.map(user=> {
-          if(user.pin === pin) {
-            operatorUser.push(user)
-          }
-        })
-      }));
-      setOperatorPassenger(operatorUser)
-    }
-  },[userPin, users]);
-
+  useEffect(()=>{
+    getUsers()
+  },[]);
 
   const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
-
 
   const onSearch = e => {
     e.preventDefault();
@@ -123,28 +102,19 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {/*{isLoading && loading()}*/}
               {(users && users.length === 0) &&
               <div className="animated fadeIn pt-1 text-center">No Users Available</div>}
               {((users && users.length > 0) || user) &&
               <Table responsive hover>
                 <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
-                  {/*<th scope="col">ID</th>*/}
-                  {/*<th scope="col">Zeno PIN</th>*/}
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
-                  {/*<th scope="col">Phone Number</th>*/}
-                  {/*<th scope="col">Email</th>*/}
-                  {/*<th scope="col">Status</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                {(users && (isAdmin || isLamata) ) && users.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
-                  <UserRow key={index} user={user}/>
-                )}
-                {(operatorPassenger && isOperator) && operatorPassenger.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((user, index) =>
+                {users  && currentPosts.map((user, index) =>
                   <UserRow key={index} user={user}/>
                 )}
                 {user &&
@@ -157,6 +127,18 @@ const Users = ({getUsers, users, user, isLoading,  searchUser, error}) => {
           </Card>
         </Col>
       </Row>
+      {(!isLoading && currentPosts.length > 0) &&
+      <div className="d-flex justify-content-end align-items-center mb-0">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
+      }
     </div>
   )
 };

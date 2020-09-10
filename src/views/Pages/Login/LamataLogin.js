@@ -65,15 +65,12 @@ useEffect(()=> {
 
 
   return (
-      <div className="app flex-row align-items-center" style={{background: "lightblue"}}>
+      <div className="app flex-row align-items-center" style={{background: "#fafafa"}}>
         <Container>
-          <Row className="justify-content-center mb-3">
-            <Col md="12" className="text-center text-capitalize font-italic font-weight-bold text-primary">THE LAGOS STATE INTERMODAL TRANSPORTATION SOLUTION</Col>
-          </Row>
           <Row className="justify-content-center mb-5">
-            <small className="font-italic">Powered by Zeno Digital Limited</small>
+            <Col md="12" className="text-center text-capitalize  font-weight-bold font-2xl text-primary">THE LAGOS STATE INTERMODAL TRANSPORTATION SYSTEM</Col>
           </Row>
-          <Row className="justify-content-center">
+          <Row className="justify-content-center mt-5">
             <Col md="5">
               <CardGroup>
                 <Card className="px-4 bg-white">
@@ -91,11 +88,10 @@ useEffect(()=> {
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-user text-primary"/>
+                            <i className="icon-user text-primary" title="Username"/>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
-
                           placeholder="Username"
                           autoComplete="username"
                           name="username"
@@ -107,7 +103,7 @@ useEffect(()=> {
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="icon-lock text-primary"/>
+                            <i className="icon-lock text-primary" title="Password"/>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input
@@ -134,6 +130,9 @@ useEffect(()=> {
                 </Card>
               </CardGroup>
             </Col>
+          </Row>
+          <Row className="justify-content-center mt-5">
+            <small className="font-italic">Powered by Zeno Digital Limited</small>
           </Row>
         </Container>
       </div>

@@ -15,7 +15,9 @@ import {
   UPDATE_OPERATOR,
   OPERATOR_MODAL_SUSPEND,
   OPERATOR_MODAL_REACTIVATE,
-  OPERATOR_STATION, OPERATOR_MODE, OPERATOR_SERVICE
+  OPERATOR_STATION,
+  OPERATOR_MODE,
+  OPERATOR_SERVICE, APPROVE_OPERATOR
 } from "../actionTypes"
 import axios from 'axios'
 import api from "../../environments/environment";
@@ -39,17 +41,21 @@ export const getOperators = () => async dispatch => {
   }
 };
 
-export const registerOperator = (username, password, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
+export const registerOperator = (id, username, password, name, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
   const body = {username, password};
+
   try {
     const res = await axios.post(`${api.register}/admin/users/`, body);
     dispatch({
       type:  REGISTER_OPERATOR,
       payload: res.data
     });
-    if(res) {
-      dispatch(createOperator(res.data.id, name, name, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail))
-      dispatch(createUser(name, name, email, email, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+    if(res.data) {
+      const body2 = {id, name, email:username, usernameMain:username, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail, pin:res.data.id};
+      dispatch(createUser(name, name, username, username, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+      await axios.put(`${api.operator}/api/operators/${id}/`, body2);
+      // dispatch(updateOperator(id, name,username, username, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail, res.data.id))
+      dispatch(changeOperatorStatus(id, '1'))
     }
   } catch (err) {
     dispatch({
@@ -236,6 +242,19 @@ export const getOperatorModes = () => async dispatch => {
     const res = await axios.get(`${api.operatorMode}/api/operatormodes/`);
     dispatch({
       type:  OPERATOR_MODE,
+      payload: res.data
+    });
+  } catch (err) {}
+};
+
+export const approveOperator = (id) => async dispatch => {
+  try {
+    const res = await axios.get(`${api.operator}/api/operators/${id}/`);
+    if(res.data) {
+      dispatch(registerOperator(res.data.id, res.data.email, "password", res.data.name, res.data.phoneNo, res.data.officeAddress, res.data.numberOfVehicle, res.data.contactName, res.data.contactPhoneNo, res.data.contactEmail))
+    }
+    dispatch({
+      type:  APPROVE_OPERATOR,
       payload: res.data
     });
   } catch (err) {}

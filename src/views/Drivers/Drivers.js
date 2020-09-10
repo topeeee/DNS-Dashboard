@@ -76,7 +76,6 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [posts, setPosts] = useState([]);
-  // const [activePage, setActivePage] = useState(1);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -85,6 +84,7 @@ const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error, 
 
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
   };
 
 
@@ -159,11 +159,11 @@ useEffect(()=> {
   };
 
 
-  const onSearch = e => {
-    e.preventDefault();
-    // setCurrentPage(1)
-    searchDriver(formData)
-  };
+  // const onSearch = e => {
+  //   e.preventDefault();
+  //   // setCurrentPage(1)
+  //   searchDriver(formData)
+  // };
 
   // console.log(driverVehicle, 'ppppppppp')
 
@@ -174,7 +174,7 @@ useEffect(()=> {
           <Card>
             <CardHeader className="bg-secondary d-flex">
               <div className="w-75 d-flex align-items-center ">
-                <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
+                <form className="w-100 d-flex align-items-center">
                   <Input type="text"
                          // placeholder="Search by Id"
                          className="w-25"

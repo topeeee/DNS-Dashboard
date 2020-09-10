@@ -394,7 +394,7 @@ const OperatorModalUpdate = (props) => {
   useEffect(()=> {
     if (stations) {
       const body = [];
-      stations.forEach((res)=> {
+      stations.filter(station => station.service !== 'First mile - Last mile').forEach((res)=> {
         body.push({ value: res.station, label: res.station });
         setStationSelected(body);
       })

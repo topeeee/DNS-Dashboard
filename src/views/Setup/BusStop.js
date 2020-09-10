@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import axios from "axios";
 import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {BusStopUser, searchBusStop} from "../../store/actions/busStopAction";
 import BusStopHeader from "./components/BusStopHeader";
@@ -9,9 +8,9 @@ import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-
 import {RouteUser} from "../../store/actions/routeAction";
 import Spinner from "../../spinner/Spinner";
 import BusStopActionBtn from "./components/BusStopActionBtn";
-import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin} from "../../environments/constants";
 import {getAreas} from "../../store/actions/areaAction";
-import api from "../../environments/environment";
+import Pagination from "react-js-pagination";
 
 
 
@@ -34,9 +33,40 @@ function UserRow(props) {
 
 const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, getAreas}) => {
   const [formData, setFormData] = useState('');
-  const [operatorZone, setOperatorZone] = useState('');
-  const [area, setArea] = useState('');
-  const [route, setRoute] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
+
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+
+
+  useEffect(()=> {
+    if(formData && busStops){
+      setCurrentPage(1)
+      const search = busStops.filter(post => {
+        return (post.station.toLowerCase().includes(formData.toLowerCase()) || post.routecode.toLowerCase().includes(formData.toLowerCase()))
+      });
+      setPosts(search)
+    }
+  },[formData]);
+
+  useEffect(()=> {
+    if(busStops && !formData) {
+      setPosts(busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
+    }
+  },[busStops, formData]);
+
+
+
 
 
 
@@ -45,43 +75,11 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
     setFormData(e.target.value );
   };
 
- async function getOperatorZone() {
-   try {
-    const res = await  axios.get(`${api.operatorZone}/api/all/operatorzones/`);
-     res.data.map(operatorZone => {
-          if(operatorZone.operatorName === OperatorName) {
-            setOperatorZone(operatorZone.zoneCode)
-          }
-        })
-   }catch (e) {
-   }
-  }
 
-  useEffect(()=> {
-    if(areas && operatorZone) {
-      areas.map(area=> {
-        if(area.zonecode === operatorZone) {
-          setArea(area.xarea)
-        }
-      })
-    }
-  },[areas, operatorZone]);
 
-  useEffect(()=> {
-    if(area && routes) {
-      routes.map(route=> {
-        if(route.areacode === area) {
-          setRoute(route.route)
-        }
-      })
-    }
-  },[area, route]);
 
   useEffect(()=>{
     BusStopUser();
-    RouteUser();
-    getAreas();
-    getOperatorZone();
   },[]);
 
   return (
@@ -89,7 +87,6 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
       <Row>
         <Col xl={12}>
           <Card>
-            {formData}
             <CardHeader className="bg-secondary d-flex">
               <div className="w-75 d-flex align-items-center ">
                 <Input type="text"
@@ -131,10 +128,7 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
                 </tr>
                 </thead>
                 <tbody>
-                {(busStops && (isAdmin || isLamata)) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user => user.service === 'First mile - Last mile').map((user, index) =>
-                  <UserRow key={index} user={user} route={routes}/>
-                ): null}
-                {(busStops && route && isOperator) ? busStops.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.routecode === route).map((user, index) =>
+                {posts ? currentPosts.filter(user => user.service === 'First mile - Last mile').map((user, index) =>
                   <UserRow key={index} user={user} route={routes}/>
                 ): null}
                 </tbody>
@@ -143,6 +137,18 @@ const BusStops = ({BusStopUser, busStops, isLoading,RouteUser, routes, areas, ge
           </Card>
         </Col>
       </Row>
+      {!isLoading &&
+      <div className="d-flex justify-content-end align-items-center">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
+      }
     </div>
   )
 };

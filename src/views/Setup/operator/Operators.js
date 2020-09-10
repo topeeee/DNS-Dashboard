@@ -65,8 +65,9 @@ function UserRow(props) {
       {/* :<td>0</td>}*/}
       {(operatorModes && user ) && <td>{operatorMode(user.name)}</td>}
       {(operatorServices && user ) && <td>{operatorService(user.name)}</td>}
-      {(user.status == 1) && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
-      {(user.status == 0) && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
+      {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
+      {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
+      {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
       <td> <OperatorActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
