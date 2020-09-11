@@ -8,6 +8,7 @@ import Spinner from "../../spinner/Spinner";
 import VehicleHeader from "./components/VehicleHeader";
 import VehicleActionBtn from "./components/VehicleActionBtn";
 import {isAdmin, isLamata, isOperator, isPartner} from "../../environments/constants";
+import Pagination from "react-js-pagination";
 
 
 function UserRow(props) {
@@ -28,11 +29,8 @@ function UserRow(props) {
       {(isAdmin || isOperator|| isPartner) &&<td>{user.plate_number}</td>}
       <td>{user.capacity}</td>
       {(isAdmin || isLamata)?  <td>{user.operator}</td>: null}
-      {/*<td>{user.assigned}</td>*/}
       {(((user.assigned_driver == "1") && (isAdmin || isOperator|| isPartner))) && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}
       {(((user.assigned_driver == null) && (isAdmin || isOperator|| isPartner)) ||((user.assigned_driver == "null") && (isAdmin || isOperator|| isPartner))) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}
-      {/*{(user.assigned_BA == "1") && <td><Badge color={getBadge("Active")}>Yes</Badge></td>}*/}
-      {/*{((user.assigned_BA == null) ||(user.assigned_BA == "null") ) && <td><Badge color={getBadge("Inactive")}>No</Badge></td>}*/}
       {(user.status == null) && <td><Badge color={getBadge("Pending")}>Pending</Badge></td>}
       {(user.status == "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td>}
       {(user.status == "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td>}
@@ -43,12 +41,41 @@ function UserRow(props) {
 
 const PendingVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
 
-  useEffect(()=>{
-    if(formData === ''){
-      getVehicles()
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
+
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+
+
+  useEffect(()=> {
+    if(formData && vehicles){
+      setCurrentPage(1)
+      const search = vehicles.filter(post => {
+        return post.mode.toLowerCase().includes(formData.toLowerCase())
+      });
+      setPosts(search)
     }
   },[formData]);
+
+  useEffect(()=> {
+    if(vehicles && !formData) {
+      setPosts(vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === null))
+    }
+  },[vehicles, formData]);
+
+  useEffect(()=>{
+      getVehicles()
+  },[]);
 
 
   const onChange = (e) =>{
@@ -116,7 +143,7 @@ const PendingVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehi
                 </tr>
                 </thead>
                 <tbody>
-                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.status === null).map((vehicle, index) =>
+                {posts && currentPosts.map((vehicle, index) =>
                   <UserRow key={index} user={vehicle}/>
                 )}
                 {vehicle &&
@@ -129,6 +156,18 @@ const PendingVehicles = ({getVehicles, vehicles, vehicle, isLoading,  searchVehi
           </Card>
         </Col>
       </Row>
+      {(!isLoading && posts.length > 0) &&
+      <div className="d-flex justify-content-end align-items-center">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
+      }
     </div>
   )
 };

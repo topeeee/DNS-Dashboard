@@ -41,22 +41,14 @@ export const getOperators = () => async dispatch => {
   }
 };
 
-export const registerOperator = (id, username, password, name, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
+export const registerOperator = (id, username, password, name, phoneNo) => async dispatch => {
   const body = {username, password};
 
   try {
     const res = await axios.post(`${api.register}/admin/users/`, body);
-    dispatch({
-      type:  REGISTER_OPERATOR,
-      payload: res.data
-    });
-    if(res.data) {
-      const body2 = {id, name, email:username, usernameMain:username, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail, pin:res.data.id};
+      dispatch(setOperatorPin(id, res.data.id))
       dispatch(createUser(name, name, username, username, 'not available', '+234' + phoneNo.substr(1), res.data.id))
-      await axios.put(`${api.operator}/api/operators/${id}/`, body2);
-      // dispatch(updateOperator(id, name,username, username, phoneNo, officeAddress, numberOfVehicle, contactName, contactPhoneNo, contactEmail, res.data.id))
       dispatch(changeOperatorStatus(id, '1'))
-    }
   } catch (err) {
     dispatch({
       type: OPERATOR_ERROR,
@@ -251,11 +243,17 @@ export const approveOperator = (id) => async dispatch => {
   try {
     const res = await axios.get(`${api.operator}/api/operators/${id}/`);
     if(res.data) {
-      dispatch(registerOperator(res.data.id, res.data.email, "password", res.data.name, res.data.phoneNo, res.data.officeAddress, res.data.numberOfVehicle, res.data.contactName, res.data.contactPhoneNo, res.data.contactEmail))
+      dispatch(registerOperator(res.data.id, res.data.email, "password", res.data.name, res.data.phoneNo))
     }
     dispatch({
       type:  APPROVE_OPERATOR,
       payload: res.data
     });
+  } catch (err) {}
+};
+
+
+export const setOperatorPin = (id, pin) => async dispatch => {
+  try {await axios.put(`${api.operator}http://165.22.116.11:7046/api/pin/${id}/?pin=${pin}`);
   } catch (err) {}
 };

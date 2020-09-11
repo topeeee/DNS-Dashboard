@@ -32,24 +32,24 @@ class PartnerLayout extends Component {
   render() {
     return (
       <div className="app">
-        <AppHeader fixed  style={{border: 'none', backgroundColor: "#00BFFF"}}>
+        <AppHeader fixed  style={{border: 'none', backgroundColor: "white", paddingTop: '20px'}}>
           <Suspense  fallback={this.loading()}>
             <DefaultHeader/>
           </Suspense>
         </AppHeader>
-        <div className="app-body">
-          <AppSidebar fixed display="lg" style={{backgroundColor: "#00BFFF"}}>
+        <div className="app-body" style={{backgroundColor: "white"}}>
+          <AppSidebar fixed display="lg" style={{backgroundColor: "#00BFFF", marginTop:'45px', border: '1px solid lightgrey'}}>
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
               <AppSidebarNav navConfig={Partnernav} {...this.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
-            <AppSidebarMinimizer />
+            {/*<AppSidebarMinimizer />*/}
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={Partnerroutes} router={router}/>
-            <Container fluid>
+            <AppBreadcrumb appRoutes={Partnerroutes} router={router} className="position-fixed w-100 headline" />
+            <Container fluid className="mt-5">
               <Suspense fallback={<Spinner />}>
                 <Switch>
                   {Partnerroutes.map((route, idx) => {
@@ -75,7 +75,7 @@ class PartnerLayout extends Component {
             </Suspense>
           </AppAside>
         </div>
-        <AppFooter className="bg-twitter">
+        <AppFooter style={{backgroundColor: "#00BFFF"}}>
           <Suspense fallback={this.loading()}>
             <DefaultFooter />
           </Suspense>

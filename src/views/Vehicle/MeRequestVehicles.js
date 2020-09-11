@@ -5,9 +5,10 @@ import {getVehiclesRequestMe, searchVehicle} from "../../store/actions/vehicleAc
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {isAdmin, isLamata, isOperator, OperatorName} from "../../environments/constants";
+import {isAdmin, isOperator} from "../../environments/constants";
 import {getPartners} from "../../store/actions/partnerAction";
 import MeRequestVehicleActionBtn from "./components/MeRequestVehicleActionBtn";
+import Pagination from "react-js-pagination";
 
 
 
@@ -31,7 +32,6 @@ function UserRow(props) {
         }
       })}
       {isAdmin?  <td>{user.operator}</td>: null}
-      {/*<td>{user.assigned}</td>*/}
       <td> <MeRequestVehicleActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
@@ -39,13 +39,43 @@ function UserRow(props) {
 
 const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
 
-  useEffect(()=>{
-    if(formData === ''){
-      getVehiclesRequestMe();
-      getPartners();
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
+
+
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+
+
+  useEffect(()=> {
+    if(formData && vehicles){
+      setCurrentPage(1)
+      const search = vehicles.filter(post => {
+        return post.mode.toLowerCase().includes(formData.toLowerCase())
+      });
+      setPosts(search)
     }
   },[formData]);
+
+  useEffect(()=> {
+    if(vehicles && !formData) {
+      setPosts(vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.approved_status === '0'))
+    }
+  },[vehicles, formData]);
+
+
+  useEffect(()=>{
+      getVehiclesRequestMe();
+      getPartners();
+      },[]);
 
 
   const onChange = (e) =>{
@@ -110,7 +140,7 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
                 </tr>
                 </thead>
                 <tbody>
-                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(user=>user.approved_status === '0').map((vehicle, index) =>
+                {posts && currentPosts.map((vehicle, index) =>
                   <UserRow key={index} user={vehicle} partners={partners}/>
                 )}
                 {vehicle &&
@@ -123,6 +153,18 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
           </Card>
         </Col>
       </Row>
+      {(!isLoading && posts.length > 0) &&
+      <div className="d-flex justify-content-end align-items-center">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
+      }
     </div>
   )
 };

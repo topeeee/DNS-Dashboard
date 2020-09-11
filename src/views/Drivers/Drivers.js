@@ -10,7 +10,7 @@ import DriverActionBtn from "./components/DriverActionBtn";
 import axios from "axios";
 import api from "../../environments/environment";
 import Pagination from "react-js-pagination";
-import {isAdmin, isLamata, isOperator} from "../../environments/constants";
+import {isAdmin, isOperator} from "../../environments/constants";
 import {getVehicles} from "../../store/actions/vehicleAction";
 
 
@@ -18,27 +18,6 @@ import {getVehicles} from "../../store/actions/vehicleAction";
 
 function UserRow(props) {
   const user = props.user;
-  // const driverVehicles = props.driverVehicles;
-  // const vehicles = props.vehicles
-
-  // function getMode(driverId) {
-  //   let driverMode;
-  //   if(driverVehicles) {
-  //     driverVehicles.map(driverVehicle => {
-  //       if(driverVehicle.driverId === driverId) {
-  //         console.log(driverVehicle.driverId, 'lllllllllll')
-  //         // console.log(driverVehicle, 'ffffffff')
-  //         vehicles.map(vehicle => {
-  //           if(vehicle.id === driverVehicle.vehicleId) {
-  //             driverMode = vehicle.mode
-  //           }
-  //         })
-  //       }
-  //       return driverMode
-  //     })
-  //
-  //   }
-  // }
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -53,15 +32,7 @@ function UserRow(props) {
       <td>{user.firstname}</td>
       <td>{user.lastname}</td>
       <td>{user.phoneno}</td>
-      {/*{(user && driverVehicles) && <td>{getMode(user.id)}</td>}*/}
       <td>{user.operatorid}</td>
-      {/*<td>{user.email}</td>*/}
-      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
-      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
-      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
-      {/*<td>Not available</td>*/}
-      {/*<td>Not Available</td>*/}
-      {/*<td>Not Available</td>*/}
       {(user.status === "1" || user.status === "3") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -70,7 +41,7 @@ function UserRow(props) {
   )
 }
 
-const Drivers = ({getDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId, vehicles, getVehicles}) => {
+const Drivers = ({getDrivers, drivers, driver, isLoading, error,  approveDriver, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId, vehicles, getVehicles}) => {
   const [formData, setFormData] = useState('');
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -151,21 +122,10 @@ useEffect(()=> {
     }
   },[getDriverVehicleId2]);
 
-
-
   const onChange = (e) =>{
     e.preventDefault();
     setFormData(e.target.value );
   };
-
-
-  // const onSearch = e => {
-  //   e.preventDefault();
-  //   // setCurrentPage(1)
-  //   searchDriver(formData)
-  // };
-
-  // console.log(driverVehicle, 'ppppppppp')
 
   return (
     <div className="animated fadeIn">
@@ -241,7 +201,7 @@ useEffect(()=> {
           </Card>
         </Col>
       </Row>
-      {!isLoading &&
+      {(!isLoading && posts.length > 0) &&
       <div className="d-flex justify-content-end align-items-center mb-0">
         <Pagination
           activePage={currentPage}

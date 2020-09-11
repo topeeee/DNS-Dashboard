@@ -1,15 +1,13 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
 import {connect} from "react-redux";
 import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
 import api from "../../environments/environment";
-import {isAdmin, isLamata} from "../../environments/constants";
+import {isAdmin} from "../../environments/constants";
 
 
-const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, error, match, drivers})=> {
-  const [operatorId, setOperatorId] = useState('');
-  const [operatorName, setOperatorName] = useState('');
+const Operator = ({getDrivers, match, drivers})=> {
   const [newOperator, setNewOperator] = useState({});
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [vehicleId, setVehicleId] = useState('');
@@ -29,7 +27,6 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
       drivers.map(op=> {
         if(op.id == match.params.id){
           setNewOperator(op);
-          setOperatorId(op.operatorid)
         }
       })
     }
@@ -52,12 +49,6 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     }
   }
 
-  // async function getOperator(id) {
-  //   try {
-  //     const res = await axios.get(`${api.operator}/api/operators/?search=${id}`);
-  //     setOperatorName(res.data[0].name)
-  //   }catch (e) {}
-  // }
   useEffect(()=>{
     getDrivers();
     getDriverVehicle();
@@ -73,11 +64,6 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
     }
   },[vehicleId]);
 
-  // useEffect(()=> {
-  //   if(operatorId) {
-  //     getOperator(operatorId);
-  //   }
-  // },[operatorId]);
 
   useEffect(()=> {
     if(match.params.id && driverVehicle){
@@ -193,20 +179,11 @@ const Operator = ({getDrivers, operators, operator, isLoading,  searchOperator, 
 function mapDispatchToProps(dispatch) {
   return {
     getDrivers: () => dispatch(getDrivers()),
-    // getOperators: () => dispatch(getOperators()),
-    // searchOperator: (id) => dispatch(searchOperator(id)),
   };
 }
 
 const mapStateToProps = state => ({
   drivers: state.driver.drivers,
-  // operators: state.operator.operators,
-  // operator: state.operator.operator,
-  // error: state.operator.error,
-  // isLoading: state.operator.isLoading,
-  // states: state.state.states,
-
-
 });
 
 export default connect(mapStateToProps,mapDispatchToProps)(Operator);

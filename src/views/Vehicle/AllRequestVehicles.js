@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {Card, CardBody, CardHeader, Col, Row, Table, Button, Input} from 'reactstrap';
+import {Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {getVehiclesRequestAll, searchVehicle} from "../../store/actions/vehicleAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-import {isAdmin, isLamata} from "../../environments/constants";
+import {isAdmin} from "../../environments/constants";
 import {getPartners} from "../../store/actions/partnerAction";
 import AllRequestVehicleActionBtn from "./components/AllRequestVehicleActionBtn";
+import Pagination from "react-js-pagination";
 
 
 
@@ -16,15 +17,7 @@ import AllRequestVehicleActionBtn from "./components/AllRequestVehicleActionBtn"
 function UserRow(props) {
   const user = props.user;
   const partners = props.partners;
-
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-          status === 'Inactive' ? 'danger' :
-            status === 'Pending' ? 'warning' :
-            'primary'
-  };
   return (
-
     <tr key={user.id}>
       <td>{user.mode}</td>
       <td>{user.vehicle_make}</td>
@@ -37,7 +30,6 @@ function UserRow(props) {
         }
       })}
       {isAdmin?  <td>{user.operator}</td>: null}
-      {/*<td>{user.assigned}</td>*/}
       <td> <AllRequestVehicleActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
@@ -45,16 +37,39 @@ function UserRow(props) {
 
 const Vehicles = ({getVehiclesRequestAll, vehicles, partners, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
-  // const [vehicles, setVehicles] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const [posts, setPosts] = useState([]);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
 
+  const paginate = pageNumber => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
 
-  useEffect(()=>{
-    if(formData === ''){
-      getVehiclesRequestAll();
+  useEffect(()=> {
+    if(formData && vehicles){
+      setCurrentPage(1)
+      const search = vehicles.filter(post => {
+        return post.mode.toLowerCase().includes(formData.toLowerCase())
+      });
+      setPosts(search)
     }
   },[formData]);
 
+  useEffect(()=> {
+    if(vehicles && !formData) {
+      setPosts(vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
+    }
+  },[vehicles, formData]);
+
+  useEffect(()=>{
+      getVehiclesRequestAll();
+  },[]);
 
   const onChange = (e) =>{
     e.preventDefault();
@@ -77,7 +92,6 @@ const Vehicles = ({getVehiclesRequestAll, vehicles, partners, vehicle, isLoading
               <div className="w-75 d-flex align-items-center ">
                 <form className="w-100 d-flex align-items-center" onSubmit={onSearch}>
                   <Input type="text"
-                         // placeholder="Search by Id"
                          className="w-25"
                          name="formData"
                          value={formData}
@@ -101,7 +115,6 @@ const Vehicles = ({getVehiclesRequestAll, vehicles, partners, vehicle, isLoading
             {!isLoading &&
             <CardBody>
               {error && <div className="animated fadeIn pt-1 text-center text-danger mb-2 font-italic">{error}</div>}
-              {/*{isLoading && loading()}*/}
               {(vehicles && vehicles.length === 0) &&
               <div className="animated fadeIn pt-1 text-center">No Vehicles Available</div>}
               {((vehicles && vehicles.length > 0) || vehicle) &&
@@ -118,7 +131,7 @@ const Vehicles = ({getVehiclesRequestAll, vehicles, partners, vehicle, isLoading
                 </tr>
                 </thead>
                 <tbody>
-                {vehicles && vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).map((vehicle, index) =>
+                {posts && currentPosts.map((vehicle, index) =>
                   <UserRow key={index} user={vehicle} partners={partners}/>
                 )}
                 {vehicle &&
@@ -131,6 +144,18 @@ const Vehicles = ({getVehiclesRequestAll, vehicles, partners, vehicle, isLoading
           </Card>
         </Col>
       </Row>
+      {(!isLoading && posts.length > 0) &&
+      <div className="d-flex justify-content-end align-items-center">
+        <Pagination
+          activePage={currentPage}
+          itemClass="page-item"
+          linkClass="page-link"
+          itemsCountPerPage={postsPerPage}
+          totalItemsCount={posts.length}
+          onChange={paginate}
+        />
+      </div>
+      }
     </div>
   )
 };

@@ -179,10 +179,10 @@ useEffect(()=>{
                     <td><strong>Zone(s)</strong></td>
                     <td>{operatorZone}</td>
                   </tr>
-                  <tr>
+                  {operatorStation && <tr>
                     <td><strong>Station(s)</strong></td>
-                      <td>{operatorStation}</td>
-                  </tr>
+                    <td>{operatorStation}</td>
+                  </tr>}
                   <tr>
                     <td><strong>Service(s)</strong></td>
                     <td>{operatorService}</td>

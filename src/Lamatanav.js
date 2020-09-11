@@ -190,15 +190,15 @@ export default {
       children: [
         {
           name: 'Modal',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // url: '/base/breadcrumbs',
+          attributes: { className: "bg-white", style: { color: "black" }},
+          url: '/lamata',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
         {
           name: 'Operator',
-          attributes: { className: "bg-white", style: { color: "black" }}
-          // url: '/base/carousels',
+          attributes: { className: "bg-white", style: { color: "black" }},
+          url: '/lamata',
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },

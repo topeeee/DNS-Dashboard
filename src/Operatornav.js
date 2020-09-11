@@ -54,7 +54,7 @@ export default {
         },
         {
           name: 'Geo Fences',
-          // url: '/base/jumbotrons',
+          url: '/operator',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
@@ -118,19 +118,19 @@ export default {
       children: [
         {
           name: 'Modal',
-          // url: '/base/breadcrumbs',
+          url: '/operator',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Revenue',
-          // url: '/base/cards',
+          url: '/operator',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },
         {
           name: 'Operator',
-          // url: '/base/carousels',
+          url: '/operator',
           // icon: 'icon-puzzle',
           attributes: { className: "bg-white", style: { color: "black" }}
         },

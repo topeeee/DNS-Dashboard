@@ -37,12 +37,6 @@ function UserRow(props) {
       <td>{user.operatorid}</td>
       <td>{user.residentialaddress}</td>
       <td>{user.email}</td>
-      {/*{(user.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }*/}
-      {/*{(user.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }*/}
-      {/*{(user.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }*/}
-      {/*<td>Not available</td>*/}
-      {/*<td>Not Available</td>*/}
-      {/*<td>Not Available</td>*/}
       {(user.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
       {(user.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
       {(user.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
@@ -51,50 +45,24 @@ function UserRow(props) {
   )
 }
 
-const MeRequestDrivers = ({getMeRequestDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, approveId, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId}) => {
+const MeRequestDrivers = ({getMeRequestDrivers, drivers, driver, isLoading,  searchDriver, error,  approveDriver, getDriverVehicleId, getDriverVehicleId2, clearDriverVehicleId}) => {
   const [formData, setFormData] = useState('');
   const [driverVehicle, setDriverVehicle] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [posts, setPosts] = useState([]);
-  // const [activePage, setActivePage] = useState(1);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => parseFloat(b.id) - parseFloat(a.id));
 
-
-  // const search = currentPosts.filter(post => {
-  //  setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
-  // });
-
   const paginate = pageNumber => {
     setCurrentPage(pageNumber);
   };
 
-// function search() {
-//   if(drivers){
-//    return  drivers.filter(post => {
-//       return post.firstname.toLowerCase().includes(formData.toLowerCase())
-//     })
-//   }
-// }
 
 
 
-// useEffect(()=> {
-//   if(formData && drivers) {
-//     setPosts(search())
-//   } else {
-//     setPosts(drivers)
-//   }
-// },[formData]);
-  //
-  // function search() {
-  //  posts.filter((post => {
-  //    setPosts(post.firstname.toLowerCase().includes(formData.toLowerCase()))
-  //  }))
-  // }
 
 useEffect(()=> {
   if(formData && drivers){
@@ -125,7 +93,7 @@ useEffect(()=> {
 
   function changeDriverVehicleStatus(id, status) {
     driverVehicle.map(DV=> {
-      if(DV.driverId == id) {
+      if(DV.driverId === id) {
         assignVehicle(DV.vehicleId, status)
       }
     })
