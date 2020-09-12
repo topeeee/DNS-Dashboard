@@ -173,19 +173,19 @@ useEffect(()=>{
                   </tr>
                   <tr>
                     <td><strong>Mode(s)</strong></td>
-                    <td>{operatorMode}</td>
+                    <td>{operatorMode.length > 0 ? operatorMode: 'Not Available'}</td>
                   </tr>
                   <tr>
                     <td><strong>Zone(s)</strong></td>
-                    <td>{operatorZone}</td>
+                    <td>{operatorZone.length > 0 ? operatorZone: 'Not Available'}</td>
                   </tr>
-                  {operatorStation && <tr>
+                  {operatorStation ? <tr>
                     <td><strong>Station(s)</strong></td>
                     <td>{operatorStation}</td>
-                  </tr>}
+                  </tr>:null}
                   <tr>
                     <td><strong>Service(s)</strong></td>
-                    <td>{operatorService}</td>
+                    <td>{operatorService.length > 0 ? operatorService: 'Not Available'}</td>
                   </tr>
                   {/*<tr>*/}
                   {/*  <td><strong>State</strong></td>*/}
@@ -210,6 +210,7 @@ useEffect(()=>{
                     <td><strong>Status</strong></td>
                     {(operator.status === "1") && <td><Badge color={getBadge("Active")}>Active</Badge></td> }
                     {(operator.status === "0") && <td><Badge color={getBadge("Inactive")}>Inactive</Badge></td> }
+                      {(operator.status === "") && <td><Badge color={getBadge("Pending")}>Pending</Badge></td> }
                   </tr>
                   </tbody>
                   }

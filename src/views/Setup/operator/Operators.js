@@ -42,7 +42,11 @@ function UserRow(props) {
        }
      })
    }
-    return operatorModeArr.join(", ")
+    if(operatorModeArr.length > 0) {
+      return operatorModeArr.join(", ")
+    } else {
+     return  operatorModeArr = ['Not Available'].join(", ")
+    }
   }
 
   function operatorService(operatorName) {
@@ -54,7 +58,11 @@ function UserRow(props) {
         }
       })
     }
-    return operatorServiceArr.join(", ")
+    if(operatorServiceArr.length > 0) {
+      return operatorServiceArr.join(", ")
+    } else {
+      return  operatorServiceArr = ['Not Available'].join(", ")
+    }
   }
 
   return (

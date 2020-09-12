@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {connect} from "react-redux"
 import {
-  approveOperator,
+  approveOperator, toggleOperatorModalApprove,
   toggleOperatorModalReactivate,
   toggleOperatorModalSuspend,
   toggleOperatorModalUpdate
@@ -17,6 +17,7 @@ function mapDispatchToProps(dispatch) {
     toggleOperatorModalUpdate: (id) => dispatch(toggleOperatorModalUpdate(id)),
     toggleOperatorModalSuspend: (id) => dispatch(toggleOperatorModalSuspend(id)),
     toggleOperatorModalReactivate: (id) => dispatch(toggleOperatorModalReactivate(id)),
+    toggleOperatorModalApprove: (id) => dispatch(toggleOperatorModalApprove(id)),
     approveOperator: (id) => dispatch(approveOperator(id)),
   };
 }
@@ -54,7 +55,7 @@ class OperatorActionBtn extends Component {
             <DropdownItem className='bg-info text-center p-0' onClick={()=>this.props.toggleOperatorModalUpdate(this.props.id)}>Update</DropdownItem>
             {(this.props.user.status === "1") && <DropdownItem className='bg-warning text-center p-0' onClick={()=>this.props.toggleOperatorModalSuspend(this.props.id)}>Suspend</DropdownItem>}
             {(this.props.user.status === "0") && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.toggleOperatorModalReactivate(this.props.id)}>Reactivate</DropdownItem>}
-            {(this.props.user.status === "") && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.approveOperator(this.props.id)}>Approve</DropdownItem>}
+            {(this.props.user.status === "") && <DropdownItem className='bg-success text-center p-0' onClick={()=>this.props.toggleOperatorModalApprove(this.props.id)}>Approve</DropdownItem>}
             <Link to={isAdmin? `/operators/${this.props.id}`: `/lamata/operators/${this.props.id}`} style={{textDecoration: "none"}}><DropdownItem className='bg-primary text-center p-0'>View</DropdownItem></Link>
             {/*<DropdownItem className='bg-warning text-center' onClick={()=>this.props.toggleBusAssistantModalStatus()}>Change Status</DropdownItem>*/}
           </DropdownMenu>

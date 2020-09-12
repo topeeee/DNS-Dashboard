@@ -6,7 +6,7 @@ import {
   OPERATOR_BY_USER,
   OPERATOR_ERROR,
   OPERATOR_MODAL_CREATE,
-  OPERATOR_MODAL_DELETE,
+  OPERATOR_MODAL_APPROVE,
   OPERATOR_MODAL_UPDATE,
   OPERATOR_STATUS,
   REGISTER_OPERATOR,
@@ -58,12 +58,29 @@ export const registerOperator = (id, username, password, name, phoneNo) => async
   }
 };
 
+export const DirectRegisterOperator = (id, username, password, name, phoneNo) => async dispatch => {
+  const body = {username, password};
+
+  try {
+    const res = await axios.post(`${api.register}/admin/users/`, body);
+    dispatch(setOperatorPin(id, res.data.id))
+    dispatch(createUser(name, name, username, username, 'not available', '+234' + phoneNo.substr(1), res.data.id))
+  } catch (err) {
+    dispatch({
+      type: OPERATOR_ERROR,
+      payload: "Opps! Something Went Wrong Try Again"
+    });
+
+  }
+};
+
 
 
 export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail) => async dispatch => {
   const body = {pin, name, usernameMain, email, phoneNo, officeAddress, status, numberOfVehicle, contactName, contactPhoneNo, contactEmail};
   try {
     const res = await axios.post(`${api.operator}/api/me/operators/`, body);
+    dispatch(DirectRegisterOperator(res.data.id, email, 'password', name, phoneNo))
     dispatch({
       type: CREATE_OPERATOR,
       payload: res.data
@@ -73,7 +90,7 @@ export const createOperator = (pin, name,usernameMain, email, phoneNo, officeAdd
       type:  OPERATOR_ERROR,
       payload: "Opps! Something Went Wrong Try Again"
     });
-    dispatch(toggleOperatorModalCreate());
+    // dispatch(toggleOperatorModalCreate());
     setTimeout(() => dispatch({
       type: REMOVE_OPERATOR_ERROR
     }), 5000)
@@ -111,14 +128,12 @@ export const changeOperatorStatus = (id, status) => async dispatch => {
       payload: res.data,
       type: OPERATOR_STATUS,
     });
-    dispatch(closeOperatorModalDelete())
     dispatch(getOperators());
   } catch (err) {
     dispatch({
       type: OPERATOR_ERROR,
       payload: "Opps! Something Went Wrong Try Again"
     });
-    dispatch(closeOperatorModalDelete());
     setTimeout(() => dispatch({
       type: REMOVE_OPERATOR_ERROR
     }), 5000)
@@ -189,9 +204,9 @@ export function toggleOperatorModalReactivate(id) {
   };
 }
 
-export function toggleOperatorModalDelete(id) {
+export function toggleOperatorModalApprove(id) {
   return {
-    type: OPERATOR_MODAL_DELETE,
+    type: OPERATOR_MODAL_APPROVE,
     payload: id
   };
 }
@@ -254,6 +269,7 @@ export const approveOperator = (id) => async dispatch => {
 
 
 export const setOperatorPin = (id, pin) => async dispatch => {
-  try {await axios.put(`${api.operator}http://165.22.116.11:7046/api/pin/${id}/?pin=${pin}`);
+  try {
+    await axios.put(`${api.operator}/api/pin/${id}/?pin=${pin}`);
   } catch (err) {}
 };

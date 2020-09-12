@@ -38,6 +38,7 @@ import FerryStopModalUpdate from "./ferryStopModal/FerryStopModalUpdate";
 import FerryStopModalCreate from "./ferryStopModal/FerryStopModalCreate";
 import LamataServiceModalCreate from "./serviceModal/LamataServiceModalCreate";
 import LamataModeModalCreate from "./operatorModal/LamataModeModalCreate";
+import OperatorModalApprove from "./operatorModal/LamataOperatorModalApprove";
 
 
 const CombineModal = () => {
@@ -82,6 +83,7 @@ const CombineModal = () => {
      <FerryStopModalCreate />
      <LamataServiceModalCreate />
      <LamataModeModalCreate />
+     <OperatorModalApprove />
     </div>
   );
 };
