@@ -9,6 +9,8 @@ import {isAdmin, isOperator} from "../../environments/constants";
 import {getPartners} from "../../store/actions/partnerAction";
 import MeRequestVehicleActionBtn from "./components/MeRequestVehicleActionBtn";
 import Pagination from "react-js-pagination";
+import axios from "axios";
+import api from "../../environments/environment";
 
 
 
@@ -26,7 +28,7 @@ function UserRow(props) {
       <td>{user.vehicle_model}</td>
       <td>{user.plate_number}</td>
       <td>{user.capacity}</td>
-      {partners.map(partner=> {
+      {partners.length > 0 && partners.map(partner=> {
         if(partner.id == user.partner_id) {
           return <td key={[partner.id]}>{partner.name}</td>
         }
@@ -37,11 +39,13 @@ function UserRow(props) {
   )
 }
 
-const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehicle, isLoading,  searchVehicle, error}) => {
+const Vehicles = ({getVehiclesRequestMe,  getPartners,
+                    vehicles, vehicle, isLoading,  searchVehicle, error}) => {
   const [formData, setFormData] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
   const [posts, setPosts] = useState([]);
+  const [partners, setPartners] = useState([]);
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -53,7 +57,14 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
     window.scrollTo(0, 0);
   };
 
+const getPartner = async () => {
+  try {
+    const res = await axios.get(`${api.partner}/api/all/partners/`);
+    setPartners(res.data)
+  }catch (e) {
 
+  }
+}
 
   useEffect(()=> {
     if(formData && vehicles){
@@ -67,14 +78,14 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
 
   useEffect(()=> {
     if(vehicles && !formData) {
-      setPosts(vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.approved_status === '0'))
+      setPosts(vehicles.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter((user) => user.approved_status == '0'))
     }
   },[vehicles, formData]);
 
 
   useEffect(()=>{
       getVehiclesRequestMe();
-      getPartners();
+    getPartner();
       },[]);
 
 
@@ -88,6 +99,7 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
     e.preventDefault();
     searchVehicle(formData)
   };
+
 
   return (
     <div className="animated fadeIn">
@@ -134,7 +146,7 @@ const Vehicles = ({getVehiclesRequestMe,  getPartners, partners, vehicles, vehic
                   <th scope="col">Vehicle Model</th>
                   <th scope="col">Vehicle Plate number</th>
                   <th scope="col">Capacity</th>
-                  <th scope="col">Partner</th>
+                   <th scope="col">Partner</th>
                   {isAdmin ?  <th scope="col">Operator</th>: null}
                   {isAdmin || isOperator?  <th scope="col">Actions</th>: null}
                 </tr>
