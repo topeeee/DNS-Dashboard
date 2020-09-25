@@ -233,6 +233,27 @@ export default {
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
+        {
+          name: 'Trained',
+          url: '/lamata/traineddrivers',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Untrained',
+          url: '/lamata/untraineddrivers',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Certified',
+          url: '/lamata/certifieddrivers',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
         // {
         //   name: 'Active',
         //   url: '/lamata/drivers/active',

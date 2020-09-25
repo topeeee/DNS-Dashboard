@@ -41,7 +41,7 @@ function UserRow(props) {
   )
 }
 
-const Drivers = ({getDrivers, drivers, isLoading, error}) => {
+const UntrainedDrivers = ({getDrivers, drivers, isLoading, error}) => {
   const [formData, setFormData] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -71,7 +71,7 @@ useEffect(()=> {
 
 useEffect(()=> {
   if(drivers && !formData) {
-    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
+    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '0'))
   }
 },[drivers, formData]);
 
@@ -111,7 +111,7 @@ useEffect(()=> {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-                Drivers
+              Untrained  Drivers
               </div>
               {/*<DriverHeader/>*/}
             </CardHeader>
@@ -172,4 +172,4 @@ const mapStateToProps = state => ({
   isLoading: state.driver.isLoading,
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(Drivers);
+export default connect(mapStateToProps,mapDispatchToProps)(UntrainedDrivers);
