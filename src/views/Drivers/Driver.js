@@ -9,9 +9,6 @@ import {isAdmin} from "../../environments/constants";
 
 const Operator = ({getDrivers, match, drivers})=> {
   const [newOperator, setNewOperator] = useState({});
-  const [driverVehicle, setDriverVehicle] = useState([]);
-  const [vehicleId, setVehicleId] = useState('');
-  const [vehicle, setVehicle] = useState({});
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -31,49 +28,18 @@ const Operator = ({getDrivers, match, drivers})=> {
       })
     }
   }
- async function getDriverVehicle() {
-   try {
-   const res = await  axios.get(`${api.driverVehicles}/api/drivervehicles/`)
-     setDriverVehicle(res.data)
-   }catch (e) {
 
-   }
-  }
 
-  async function getVehicle(id) {
-    try {
-    const res = await  axios.get(`${api.vehicle}/api/vehicles/${id}/`)
-      setVehicle(res.data)
-    }catch (e) {
 
-    }
-  }
 
   useEffect(()=>{
     getDrivers();
-    getDriverVehicle();
   },[]);
 
   useEffect(()=>{
     setDriver();
   },[drivers]);
 
-  useEffect(()=> {
-    if(vehicleId) {
-      getVehicle(vehicleId)
-    }
-  },[vehicleId]);
-
-
-  useEffect(()=> {
-    if(match.params.id && driverVehicle){
-      driverVehicle.map((driver=> {
-        if(driver.driverId == match.params.id){
-          setVehicleId(driver.vehicleId);
-        }
-      }))
-    }
-  },[match.params.id, driverVehicle]);
 
   return (
     <div className="animated fadeIn">
@@ -89,15 +55,15 @@ const Operator = ({getDrivers, match, drivers})=> {
                 <tbody>
                 <tr>
                   <td><strong>Driver  FirstName</strong></td>
-                  <td>{newOperator.firstname}</td>
+                  <td>{newOperator.firstName}</td>
                 </tr>
                   <tr className="w-100">
                     <td><strong>Driver LastName</strong></td>
-                    <td>{newOperator.lastname}</td>
+                    <td>{newOperator.lastName}</td>
                   </tr>
                 <tr className="w-100">
                   <td><strong>Driver Phone</strong></td>
-                  <td>{newOperator.phoneno}</td>
+                  <td>{newOperator.phoneNo}</td>
                 </tr>
                 <tr>
                   <td><strong>Driver Email</strong></td>
@@ -105,57 +71,43 @@ const Operator = ({getDrivers, match, drivers})=> {
                 </tr>
                 <tr>
                   <td><strong>Driver Address</strong></td>
-                  <td>{newOperator.residentialaddress}</td>
+                  <td>{newOperator.residentialAddress}</td>
                 </tr>
                 <tr>
-                  <td><strong>App Status</strong></td>
-                  {(newOperator.appstatus === "1") && <td><Badge color={getBadge("Active")}>online</Badge></td> }
-                  {(newOperator.appstatus === "0") && <td><Badge color={getBadge("Inactive")}>offline</Badge></td> }
-                  {(newOperator.appstatus === "") && <td><Badge color={getBadge("Refunds")}>not available</Badge></td> }
+                  <td><strong>License Number</strong></td>
+                  <td>{newOperator.licenseNo}</td>
                 </tr>
                 <tr>
-                  <td><strong>Bank Name</strong></td>
-                  <td>{newOperator.bankname}</td>
+                  <td><strong>Date Of Birth</strong></td>
+                  <td>{newOperator.dateOfBirth}</td>
                 </tr>
                 <tr>
-                  <td><strong>Account Name</strong></td>
-                  <td>{newOperator.accountname}</td>
+                  <td><strong>State Of Origin</strong></td>
+                  <td>{newOperator.stateOfOrigin}</td>
                 </tr>
                 <tr>
-                  <td><strong>Account Number</strong></td>
-                  <td>{newOperator.accountnumber}</td>
+                  <td><strong>Eye Glasses</strong></td>
+                  <td>{newOperator.eyeGlasses}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Plate No</strong></td>
-                  <td>{vehicle.plate_number}</td>
+                  <td><strong>Blood Group</strong></td>
+                  <td>{newOperator.bloodGroup}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Make</strong></td>
-                  <td>{vehicle.vehicle_make}</td>
+                  <td><strong>Facial Mark</strong></td>
+                  <td>{newOperator.facialMark}</td>
                 </tr>
                 <tr>
-                  <td><strong>Vehicle Model</strong></td>
-                  <td>{vehicle.vehicle_model}</td>
+                  <td><strong>Disability</strong></td>
+                  <td>{newOperator.disability}</td>
                 </tr>
                 <tr>
-                  <td><strong>Mode</strong></td>
-                  <td>{vehicle.mode}</td>
+                  <td><strong>NIN</strong></td>
+                  <td>{newOperator.nin}</td>
                 </tr>
                 <tr>
-                  <td><strong>Route</strong></td>
-                  <td>{newOperator.route}</td>
-                </tr>
-                <tr>
-                  <td><strong>Area</strong></td>
-                  <td>{newOperator.area}</td>
-                </tr>
-                <tr>
-                  <td><strong>Zone</strong></td>
-                  <td>{newOperator.zone}</td>
-                </tr>
-                <tr>
-                  <td><strong>Operator</strong></td>
-                  <td>{newOperator.operatorid}</td>
+                  <td><strong>LASDRI Id</strong></td>
+                  <td>{newOperator.lasdriId}</td>
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>

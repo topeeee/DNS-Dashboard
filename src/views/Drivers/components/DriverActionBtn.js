@@ -49,9 +49,9 @@ const DriverActionBtn = (props) => {
           <DropdownToggle caret>
           </DropdownToggle>
           <DropdownMenu>
-            {(isAdmin || isOperator) && <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleDriverModalUpdate(props.id)}>Update</DropdownItem>}
+            {/*{(isAdmin || isOperator) && <DropdownItem className='bg-info text-center p-0' onClick={()=>props.toggleDriverModalUpdate(props.id)}>Update</DropdownItem>}*/}
             {(props.user.status === "1" && isAdmin) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Suspend</DropdownItem>}
-            {((props.user.status === "1" || props.user.status === "3") && isLamata) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.toggleDriverModalFlag(props.id)}}>Flag</DropdownItem>}
+            {/*{((props.user.status === "1" || props.user.status === "3") && isLamata) && <DropdownItem className='bg-warning text-center p-0' onClick={()=>{props.toggleDriverModalFlag(props.id)}}>Flag</DropdownItem>}*/}
             {(props.user.status === "0" && (isAdmin)) && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '1'); props.getDriverVehicleId2(props.id)}}>Reactivate</DropdownItem>}
             {(props.user.status === "" && isAdmin ) && <DropdownItem className='bg-success text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '1');props.getDriverVehicleId2(props.id)}}>Approve</DropdownItem>}
             {(props.user.status === "" && (isAdmin)) && <DropdownItem className='bg-danger text-center p-0' onClick={()=>{props.changeDriverStatus(props.id, '0'); props.getDriverVehicleId(props.id)}}>Deny</DropdownItem>}

@@ -81,7 +81,7 @@ useEffect(()=> {
     <div className="app flex-row align-items-center" style={{background: "#fafafa"}}>
         <Container>
           <Row className="justify-content-center mb-5">
-            <Col md="12" className="text-center text-capitalize  font-weight-bold font-2xl text-primary">THE LAGOS STATE INTERMODAL TRANSPORTATION SYSTEM</Col>
+            <Col md="12" className="text-center text-capitalize  font-weight-bold font-2xl text-primary">THE LAGOS STATE DRIVER MANAGEMENT SYSTEM</Col>
           </Row>
           <Row className="justify-content-center mt-5">
             <Col md="5">
