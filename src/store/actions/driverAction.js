@@ -42,7 +42,7 @@ export const getDrivers = () => async dispatch => {
     const res = await axios.get(driverApi);
     dispatch({
       type: DRIVER_BY_USER,
-      payload: res.data
+      payload: res.data.length > 0? res.data.filter(driver=> driver._type === 1): []
     });
   } catch (err) {
     dispatch({

@@ -4,9 +4,7 @@ import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactst
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
-// import DriverHeader from "./components/DriverHeader";
 import {getDrivers} from "../../store/actions/driverAction";
-import DriverActionBtn from "./components/DriverActionBtn";
 import Pagination from "react-js-pagination";
 import {isAdmin} from "../../environments/constants";
 
@@ -14,34 +12,26 @@ import {isAdmin} from "../../environments/constants";
 
 
 
-function UserRow(props) {
-  const user = props.user;
+// function UserRow(props) {
+//   const user = props.user;
+//
+//   const getBadge = (status) => {
+//     return status === 'Active' ? 'success' :
+//       status === 'Refunds' ? 'secondary' :
+//         status === 'Pending' ? 'warning' :
+//           status === 'Inactive' ? 'danger' :
+//             'primary'
+//   };
+//
+//   return (
+//     <tr key={user.id}>
+//       <td>FirstName</td>
+//       <td>lastName</td>
+//     </tr>
+//   )
+// }
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Refunds' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Inactive' ? 'danger' :
-            'primary'
-  };
-
-  return (
-    <tr key={user.id}>
-      <td>{user.firstName}</td>
-      <td>{user.lastName}</td>
-      <td>{user.phoneNo}</td>
-      {(user.lasdriIdStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
-      {(user.lasdriIdStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
-      {/*{(user.licenseStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
-      {/*{(user.licenseStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
-      {/*{(user.ninStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
-      {/*{(user.ninStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
-      <td> <DriverActionBtn id={user.id} user={user} /> </td>
-    </tr>
-  )
-}
-
-const TrainedDrivers = ({getDrivers, drivers, isLoading, error}) => {
+const Operators = ({getDrivers, drivers, isLoading, error}) => {
   const [formData, setFormData] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -71,7 +61,7 @@ useEffect(()=> {
 
 useEffect(()=> {
   if(drivers && !formData) {
-    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '1'))
+    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '0'))
   }
 },[drivers, formData]);
 
@@ -111,7 +101,7 @@ useEffect(()=> {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-              Trained  Drivers
+                operators
               </div>
               {/*<DriverHeader/>*/}
             </CardHeader>
@@ -125,38 +115,40 @@ useEffect(()=> {
               <Table responsive hover>
                 <thead className={isAdmin? 'bg-dark': 'bg-twitter'} style={{color: '#696969'}}>
                 <tr>
-                  <th scope="col">First Name</th>
-                  <th scope="col">Last Name</th>
-                  <th scope="col"> Phone No</th>
-                  <th scope="col">LASDRI Verified</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone No</th>
+                  <th scope="col">Number of Vehicles</th>
+                  <th scope="col">Number of Drivers</th>
+                  {/*<th scope="col">LASDRI Verified</th>*/}
                   {/*<th scope="col">Driver License Verified</th>*/}
                   {/*<th scope="col">NIN Verified</th>*/}
-                  <th scope="col">Action</th>
+                  {/*<th scope="col">Action</th>*/}
                 </tr>
                 </thead>
-                <tbody>
-                {posts && currentPosts.map((user, index) =>
-                  <UserRow key={index} user={user}/>
-                )}
-                </tbody>
+                {/*<tbody>*/}
+                {/*{posts && currentPosts.map((user, index) =>*/}
+                {/*  <UserRow key={index} user={user}/>*/}
+                {/*)}*/}
+                {/*</tbody>*/}
               </Table>}
             </CardBody>
             }
           </Card>
         </Col>
       </Row>
-      {(!isLoading && posts.length > 0) &&
-      <div className="d-flex justify-content-end align-items-center mb-0">
-        <Pagination
-          activePage={currentPage}
-          itemClass="page-item"
-          linkClass="page-link"
-          itemsCountPerPage={postsPerPage}
-          totalItemsCount={posts.length}
-          onChange={paginate}
-        />
-      </div>
-      }
+      {/*{(!isLoading && posts.length > 0) &&*/}
+      {/*<div className="d-flex justify-content-end align-items-center mb-0">*/}
+      {/*  <Pagination*/}
+      {/*    activePage={currentPage}*/}
+      {/*    itemClass="page-item"*/}
+      {/*    linkClass="page-link"*/}
+      {/*    itemsCountPerPage={postsPerPage}*/}
+      {/*    totalItemsCount={posts.length}*/}
+      {/*    onChange={paginate}*/}
+      {/*  />*/}
+      {/*</div>*/}
+      {/*}*/}
     </div>
   )
 };
@@ -172,4 +164,4 @@ const mapStateToProps = state => ({
   isLoading: state.driver.isLoading,
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(TrainedDrivers);
+export default connect(mapStateToProps,mapDispatchToProps)(Operators);

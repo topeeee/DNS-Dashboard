@@ -1551,7 +1551,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-user fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "purple"}}>{drivers? drivers.length: 0}</div>
-              <div style={{color: "purple"}}>Total Drivers</div>
+              <div style={{color: "purple"}}>Total Unconfirmed drivers</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '70px' }}>
               <Line data={cardChartData3} options={cardChartOpts3} height={70} />
@@ -1566,7 +1566,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-user fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "white"}}>{busAssistants? busAssistants.length: 0}</div>
-              <div style={{color: "white"}}>Total Operation Assistants</div>
+              <div style={{color: "white"}}>Total confirmed driver</div>
             </CardBody>
             <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
               <Line data={operatorAssistantsCardChartData} options={operatorAssistantsCardChartOpts} height={70} />
@@ -1582,7 +1582,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-check-circle-o fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "#8B008B"}}>{trips? trips.filter((user) => user.pickStatus === "1" && user.dropStatus === "1").length: 0}</div>
-              <div style={{color: "#8B008B"}}>Total Completed Trips</div>
+              <div style={{color: "#8B008B"}}>Total Unverified drivers</div>
             </CardBody>
             <div className="chart-wrapper" style={{ height: '70px' }}>
               <Bar data={cardChartData7} options={cardChartOpts7} height={70} />
@@ -1596,7 +1596,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-window-close fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "#F0FFF0"}}>{trips? trips.filter((user) => user.pickStatus === "2" && user.dropStatus === "2").length: 0}</div>
-              <div style={{color: "#F0FFF0"}}>Total Cancelled Trips</div>
+              <div style={{color: "#F0FFF0"}}>Total Active drivers</div>
             </CardBody>
             <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
               <Bar data={cardChartData9} options={cardChartOpts9} height={70} />
@@ -1612,7 +1612,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-clock-o fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "black"}}>{trips? trips.filter((user) => user.pickStatus === "0" && user.dropStatus === "0").length: 0}</div>
-              <div style={{color: "black"}}>Total Waiting Trips</div>
+              <div style={{color: "black"}}>Total inactive drivers</div>
             </CardBody>
             <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
               <Bar data={cardChartData50} options={cardChartOpts50} height={70} />
@@ -1628,7 +1628,7 @@ const LamataDashboard  = (props) => {
                 <i className="fa fa-dashboard fa-2x"></i>
               </div>
               <div className="text-value" style={{color: "#6A5ACD"}}>{trips? trips.filter((user) => user.pickStatus === "1" && user.dropStatus === "0").length: 0}</div>
-              <div style={{color: "#6A5ACD"}}> Total Transit Trips</div>
+              <div style={{color: "#6A5ACD"}}>Total blacklisted drivers</div>
             </CardBody>
             <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
               <Bar data={cardChartData40} options={cardChartOpts40} height={70} />
@@ -1637,126 +1637,126 @@ const LamataDashboard  = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#FAF0E6'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "green"}}>
-                <i className="fa fa-clock-o fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "green"}}>13,067 hours</div>
-              <div style={{color: "green"}}>Total Transit Time</div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Bar data={cardChartData10} options={cardChartOpts10} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#FAF0E6'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "green"}}>*/}
+        {/*        <i className="fa fa-clock-o fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "green"}}>13,067 hours</div>*/}
+        {/*      <div style={{color: "green"}}>Total Transit Time</div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Bar data={cardChartData10} options={cardChartOpts10} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#800000'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#B0C4DE"}}>
-                <i className="fa fa-history fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#B0C4DE"}}>25,456 km</div>
-              <div style={{color: "#B0C4DE"}}>Total Distance Covered</div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '70px' }}>
-              <Line data={cardChartData11} options={cardChartOpts11} height={70} />
-            </div>
-          </Card>
-        </Col>
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#4B0082'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#FFFFE0"}}>
-                <i className="fa fa-automobile fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#FFFFE0"}}>{vehicles? vehicles.length:0}</div>
-              <div style={{color: "#FFFFE0"}}>Total Vehicles</div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Line data={cardChartData5} options={cardChartOpts5} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#800000'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#B0C4DE"}}>*/}
+        {/*        <i className="fa fa-history fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#B0C4DE"}}>25,456 km</div>*/}
+        {/*      <div style={{color: "#B0C4DE"}}>Total Distance Covered</div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper" style={{ height: '70px' }}>*/}
+        {/*      <Line data={cardChartData11} options={cardChartOpts11} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#4B0082'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#FFFFE0"}}>*/}
+        {/*        <i className="fa fa-automobile fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#FFFFE0"}}>{vehicles? vehicles.length:0}</div>*/}
+        {/*      <div style={{color: "#FFFFE0"}}>Total Vehicles</div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Line data={cardChartData5} options={cardChartOpts5} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#CD5C5C'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "black"}}>
-                <i className="fa fa-map-o fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "black"}}>100</div>
-              <div style={{color: "black"}}>Total Geo-Fenced Areas </div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Bar data={cardChartData16} options={cardChartOpts16} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#CD5C5C'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "black"}}>*/}
+        {/*        <i className="fa fa-map-o fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "black"}}>100</div>*/}
+        {/*      <div style={{color: "black"}}>Total Geo-Fenced Areas </div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Bar data={cardChartData16} options={cardChartOpts16} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
       </Row>
       <Row>
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#D2691E'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#B22222"}}>
-                <i className="fa fa-map-marker fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#B22222"}}>{zones? zones.length:0}</div>
-              <div style={{color: "#B22222"}}>Total Zones </div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Bar data={cardChartData12} options={cardChartOpts12} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#D2691E'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#B22222"}}>*/}
+        {/*        <i className="fa fa-map-marker fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#B22222"}}>{zones? zones.length:0}</div>*/}
+        {/*      <div style={{color: "#B22222"}}>Total Zones </div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Bar data={cardChartData12} options={cardChartOpts12} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#556B2F'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#F0E68C"}}>
-                <i className="fa fa-map-signs fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#F0E68C"}}>{areas? areas.length:0}</div>
-              <div style={{color: "#F0E68C"}}>Total Areas </div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Bar data={cardChartData13} options={cardChartOpts13} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#556B2F'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#F0E68C"}}>*/}
+        {/*        <i className="fa fa-map-signs fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#F0E68C"}}>{areas? areas.length:0}</div>*/}
+        {/*      <div style={{color: "#F0E68C"}}>Total Areas </div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Bar data={cardChartData13} options={cardChartOpts13} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#DEB887'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#A52A2A"}}>
-                <i className="fa fa-exchange fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#A52A2A"}}>{routes? routes.length:0}</div>
-              <div style={{color: "#A52A2A"}}>Total Routes </div>
-            </CardBody>
-            <div className="chart-wrapper mx-3" style={{ height: '70px' }}>
-              <Line data={cardChartData14} options={cardChartOpts14} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#DEB887'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#A52A2A"}}>*/}
+        {/*        <i className="fa fa-exchange fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#A52A2A"}}>{routes? routes.length:0}</div>*/}
+        {/*      <div style={{color: "#A52A2A"}}>Total Routes </div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper mx-3" style={{ height: '70px' }}>*/}
+        {/*      <Line data={cardChartData14} options={cardChartOpts14} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
-        <Col xs="12" sm="6" lg="3">
-          <Card className="text-white" style={{backgroundColor: '#FF7F50'}}>
-            <CardBody className="pb-0">
-              <div className="float-right" style={{color: "#FFF8DC"}}>
-                <i className="fa fa-arrow-circle-o-down fa-2x"></i>
-              </div>
-              <div className="text-value" style={{color: "#FFF8DC"}}>{busStops? busStops.length:0}</div>
-              <div style={{color: "#FFF8DC"}}>Total Bus Stops </div>
-            </CardBody>
-            <div className="chart-wrapper" style={{ height: '70px' }}>
-              <Line data={cardChartData15} options={cardChartOpts15} height={70} />
-            </div>
-          </Card>
-        </Col>
+        {/*<Col xs="12" sm="6" lg="3">*/}
+        {/*  <Card className="text-white" style={{backgroundColor: '#FF7F50'}}>*/}
+        {/*    <CardBody className="pb-0">*/}
+        {/*      <div className="float-right" style={{color: "#FFF8DC"}}>*/}
+        {/*        <i className="fa fa-arrow-circle-o-down fa-2x"></i>*/}
+        {/*      </div>*/}
+        {/*      <div className="text-value" style={{color: "#FFF8DC"}}>{busStops? busStops.length:0}</div>*/}
+        {/*      <div style={{color: "#FFF8DC"}}>Total Bus Stops </div>*/}
+        {/*    </CardBody>*/}
+        {/*    <div className="chart-wrapper" style={{ height: '70px' }}>*/}
+        {/*      <Line data={cardChartData15} options={cardChartOpts15} height={70} />*/}
+        {/*    </div>*/}
+        {/*  </Card>*/}
+        {/*</Col>*/}
 
       </Row>
     </div>

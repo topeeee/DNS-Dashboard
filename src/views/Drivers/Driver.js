@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table} from 'reactstrap';
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import {connect} from "react-redux";
-import axios from "axios"
 import {getDrivers} from "../../store/actions/driverAction";
-import api from "../../environments/environment";
 import {isAdmin} from "../../environments/constants";
 
 
 const Operator = ({getDrivers, match, drivers})=> {
   const [newOperator, setNewOperator] = useState({});
+  const [now, setNow] = useState(10)
+  const [variant, setVariant] = useState('danger')
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -29,7 +30,20 @@ const Operator = ({getDrivers, match, drivers})=> {
     }
   }
 
-
+useEffect(()=>{
+  if(newOperator) {
+    if(newOperator.lasdriIdStatus ==1 && newOperator.licenseStatus == 1 && newOperator.ninStatus == 1) {
+      setNow(100)
+      setVariant('success')
+    } else if(newOperator.lasdriIdStatus ==1 && newOperator.licenseStatus == 0 && newOperator.ninStatus ==0){
+      setNow(30)
+      setVariant('danger')
+    } else if(newOperator.lasdriIdStatus ==1 && ((newOperator.licenseStatus == 1 && newOperator.ninStatus ==0) || (newOperator.licenseStatus == 0 && newOperator.ninStatus == 1))){
+      setNow(60)
+      setVariant('warning')
+    }
+  }
+},[newOperator])
 
 
   useEffect(()=>{
@@ -40,6 +54,9 @@ const Operator = ({getDrivers, match, drivers})=> {
     setDriver();
   },[drivers]);
 
+
+
+  const progressInstance = <ProgressBar  variant={variant} now={now} label={`${now}%`} />;
 
   return (
     <div className="animated fadeIn">
@@ -53,6 +70,10 @@ const Operator = ({getDrivers, match, drivers})=> {
               <Table>
                 {newOperator &&
                 <tbody>
+                <tr>
+                  <td><strong>Progress</strong></td>
+                  <td>{progressInstance}</td>
+                </tr>
                 <tr>
                   <td><strong>Driver  FirstName</strong></td>
                   <td>{newOperator.firstName}</td>
@@ -74,10 +95,6 @@ const Operator = ({getDrivers, match, drivers})=> {
                   <td>{newOperator.residentialAddress}</td>
                 </tr>
                 <tr>
-                  <td><strong>License Number</strong></td>
-                  <td>{newOperator.licenseNo}</td>
-                </tr>
-                <tr>
                   <td><strong>Date Of Birth</strong></td>
                   <td>{newOperator.dateOfBirth}</td>
                 </tr>
@@ -95,19 +112,41 @@ const Operator = ({getDrivers, match, drivers})=> {
                 </tr>
                 <tr>
                   <td><strong>Facial Mark</strong></td>
-                  <td>{newOperator.facialMark}</td>
+                  {newOperator.facialMark == 0 &&<td>No</td>}
+                  {newOperator.facialMark == 1 &&<td>Yes</td>}
+                  {!newOperator.facialMark &&<td>Not Available</td>}
                 </tr>
                 <tr>
                   <td><strong>Disability</strong></td>
                   <td>{newOperator.disability}</td>
                 </tr>
                 <tr>
+                  <td><strong>License Number</strong></td>
+                  <td>{newOperator.licenseNo}</td>
+                </tr>
+
+                <tr>
                   <td><strong>NIN</strong></td>
-                  <td>{newOperator.nin}</td>
+                  <td>{newOperator.nin? newOperator.nin: 'Not Available'}</td>
                 </tr>
                 <tr>
                   <td><strong>LASDRI Id</strong></td>
-                  <td>{newOperator.lasdriId}</td>
+                  <td>{newOperator.lasdriId?newOperator.lasdriId: 'Not Available'}</td>
+                </tr>
+                <tr>
+                  <td><strong>License Number Verified</strong></td>
+                  {(newOperator.licenseStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
+                  {(newOperator.licenseStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
+                </tr>
+                <tr>
+                  <td><strong>NIN Verified</strong></td>
+                  {(newOperator.ninStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
+                  {(newOperator.ninStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
+                </tr>
+                <tr>
+                  <td><strong>LASDRI Verified</strong></td>
+                  {(newOperator.lasdriIdStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
+                  {(newOperator.lasdriIdStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
                 </tr>
                 <tr>
                   <td><strong>Status</strong></td>

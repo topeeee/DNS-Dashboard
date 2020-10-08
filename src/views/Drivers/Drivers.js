@@ -32,10 +32,10 @@ function UserRow(props) {
       <td>{user.phoneNo}</td>
       {(user.lasdriIdStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
       {(user.lasdriIdStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
-      {(user.licenseStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
-      {(user.licenseStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
-      {(user.ninStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
-      {(user.ninStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
+      {/*{(user.licenseStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
+      {/*{(user.licenseStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
+      {/*{(user.ninStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
+      {/*{(user.ninStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
       <td> <DriverActionBtn id={user.id} user={user} /> </td>
     </tr>
   )
@@ -71,7 +71,7 @@ useEffect(()=> {
 
 useEffect(()=> {
   if(drivers && !formData) {
-    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)))
+    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '0'))
   }
 },[drivers, formData]);
 
@@ -129,8 +129,8 @@ useEffect(()=> {
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
                   <th scope="col">LASDRI Verified</th>
-                  <th scope="col">Driver License Verified</th>
-                  <th scope="col">NIN Verified</th>
+                  {/*<th scope="col">Driver License Verified</th>*/}
+                  {/*<th scope="col">NIN Verified</th>*/}
                   <th scope="col">Action</th>
                 </tr>
                 </thead>

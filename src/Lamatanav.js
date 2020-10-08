@@ -227,7 +227,7 @@ export default {
       attributes: { style: { color: "white" }},
       children: [
         {
-          name: 'All',
+          name: 'Unverified',
           url: '/lamata/drivers',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
@@ -241,19 +241,41 @@ export default {
           // class: "menu_drop",
         },
         {
-          name: 'Untrained',
-          url: '/lamata/untraineddrivers',
+          name: 'Verified',
+          url: '/lamata/traineddrivers',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
+        // {
+        //   name: 'Unverified',
+        //   url: '/lamata/traineddrivers',
+        //   attributes: { className: "bg-white", style: { color: "black" }}
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
         {
-          name: 'Certified',
+          name: 'Trainees',
           url: '/lamata/certifieddrivers',
           attributes: { className: "bg-white", style: { color: "black" }}
           // icon: 'icon-puzzle',
           // class: "menu_drop",
         },
+        {
+          name: 'Active',
+          url: '/lamata/certifieddrivers',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/lamata/certifieddrivers',
+          attributes: { className: "bg-white", style: { color: "black" }}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+
         // {
         //   name: 'Active',
         //   url: '/lamata/drivers/active',
@@ -301,6 +323,68 @@ export default {
         //   class: "menu_drop",
         // },
       ],
+    },
+    {
+      name: 'Operators',
+      icon: 'icon-user',
+      class: "font-weight-bold",
+      // class: 'text-dark',
+      attributes: {style: {color: "white"}},
+      children: [
+        {
+          name: 'All',
+          url: '/lamata/operators',
+          attributes: {className: "bg-white", style: {color: "black"}}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+      ]
+    },
+    {
+      name: 'Vehicles',
+      icon: 'icon-user',
+      class: "font-weight-bold",
+      // class: 'text-dark',
+      attributes: {style: {color: "white"}},
+      children: [
+        {
+          name: 'Active',
+          url: '/lamata/vehicles',
+          attributes: {className: "bg-white", style: {color: "black"}}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        {
+          name: 'Inactive',
+          url: '/lamata/vehicles',
+          attributes: {className: "bg-white", style: {color: "black"}}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+      ]
+    },
+    {
+      name: 'Ratings and Rev...',
+      icon: 'icon-user',
+      class: "font-weight-bold",
+      // class: 'text-dark',
+      attributes: {style: {color: "white"}},
+      children: [
+        {
+          name: 'Driver Ratings',
+          url: '/lamata/driverratings',
+          attributes: {className: "bg-white", style: {color: "black"}}
+          // icon: 'icon-puzzle',
+          // class: "menu_drop",
+        },
+        // {
+        //   name: 'Inactive',
+        //   url: '/lamata/vehicles',
+        //   attributes: {className: "bg-white", style: {color: "black"}}
+        //   // icon: 'icon-puzzle',
+        //   // class: "menu_drop",
+        // },
+      ]
     },
 
     // {

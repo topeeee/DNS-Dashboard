@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from "react-redux"
+import StarRatings from 'react-star-ratings';
 import {Badge, Card, CardBody, CardHeader, Col, Row, Table, Input} from 'reactstrap';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelopeSquare, faFilePdf, faPrint} from "@fortawesome/free-solid-svg-icons";
 import Spinner from "../../spinner/Spinner";
 // import DriverHeader from "./components/DriverHeader";
 import {getDrivers} from "../../store/actions/driverAction";
-import DriverActionBtn from "./components/DriverActionBtn";
+import DriverRatingsActionBtn from "./components/DriverRatingsActionBtn";
 import Pagination from "react-js-pagination";
 import {isAdmin} from "../../environments/constants";
 
@@ -16,6 +17,7 @@ import {isAdmin} from "../../environments/constants";
 
 function UserRow(props) {
   const user = props.user;
+  const StarRatings = props.StarRatings
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -30,18 +32,26 @@ function UserRow(props) {
       <td>{user.firstName}</td>
       <td>{user.lastName}</td>
       <td>{user.phoneNo}</td>
-      {(user.lasdriIdStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }
-      {(user.lasdriIdStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }
+      <td>
+        <StarRatings
+          rating={3}
+          starRatedColor="#ffc107"
+          starDimension="20px"
+          // changeRating={this.changeRating}
+          numberOfStars={5}
+          name='rating'
+        />
+      </td>
       {/*{(user.licenseStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
       {/*{(user.licenseStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
       {/*{(user.ninStatus === '1') && <td><Badge color={getBadge("Active")}>Yes</Badge></td> }*/}
       {/*{(user.ninStatus === '0') && <td><Badge color={getBadge("Inactive")}>No</Badge></td> }*/}
-      <td> <DriverActionBtn id={user.id} user={user} /> </td>
+      <td> <DriverRatingsActionBtn id={user.id}  /> </td>
     </tr>
   )
 }
 
-const TrainedDrivers = ({getDrivers, drivers, isLoading, error}) => {
+const DriverRatings = ({getDrivers, drivers, isLoading, error}) => {
   const [formData, setFormData] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
@@ -71,7 +81,7 @@ useEffect(()=> {
 
 useEffect(()=> {
   if(drivers && !formData) {
-    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '1'))
+    setPosts(drivers.sort((a, b) => parseFloat(b.id) - parseFloat(a.id)).filter(driver => driver.lasdriIdStatus === '0'))
   }
 },[drivers, formData]);
 
@@ -111,7 +121,7 @@ useEffect(()=> {
             </CardHeader>
             <CardHeader className="d-flex align-items-center">
               <div className="w-25">
-              Trained  Drivers
+                Drivers Ratings
               </div>
               {/*<DriverHeader/>*/}
             </CardHeader>
@@ -128,7 +138,7 @@ useEffect(()=> {
                   <th scope="col">First Name</th>
                   <th scope="col">Last Name</th>
                   <th scope="col"> Phone No</th>
-                  <th scope="col">LASDRI Verified</th>
+                  <th scope="col">Rating</th>
                   {/*<th scope="col">Driver License Verified</th>*/}
                   {/*<th scope="col">NIN Verified</th>*/}
                   <th scope="col">Action</th>
@@ -136,7 +146,7 @@ useEffect(()=> {
                 </thead>
                 <tbody>
                 {posts && currentPosts.map((user, index) =>
-                  <UserRow key={index} user={user}/>
+                  <UserRow key={index} user={user} StarRatings={StarRatings}/>
                 )}
                 </tbody>
               </Table>}
@@ -172,4 +182,4 @@ const mapStateToProps = state => ({
   isLoading: state.driver.isLoading,
 });
 
-export default connect(mapStateToProps,mapDispatchToProps)(TrainedDrivers);
+export default connect(mapStateToProps,mapDispatchToProps)(DriverRatings);
